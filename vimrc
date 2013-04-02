@@ -1,22 +1,60 @@
 " Normally we use vim-extensions. If you want true vi-compatibility
 " remove change the following statements
-set nocompatible	" Use Vim defaults instead of 100% vi compatibility
-set backspace=2		" more powerful backspacing
+set nocompatible    " Use Vim defaults instead of 100% vi compatibility
+set backspace=2 " more powerful backspacing
 
 filetype off                   " required!
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+"""""""
+" Map " {{{1
+"""""""
+let mapleader = ","
+"set timeoutlen=500
+" <Leader>w used by vimwiki plugin
+
+inoremap <C-h> <Left>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
+inoremap jj <ESC>
+nnoremap < <<
+nnoremap <C-H> <C-w><
+nnoremap <C-J> <C-w>+
+nnoremap <C-K> <C-w>-
+nnoremap <C-L> <C-w>>
+nnoremap <C-n> gt<CR>
+nnoremap <C-p> gT<CR>
+nnoremap <Leader>fb :FufBuffer<CR>
+nnoremap <Leader>ff :FufFile<CR>
+nnoremap <Leader>fh :FufHelp<CR>
+nnoremap <Leader>fl :FufLine<CR>
+nnoremap <Leader>ft :FufTag<CR>
+nnoremap <Leader>q :q<CR>
+nnoremap <Leader>r :w<CR>
+nnoremap <Leader>s :SyntasticToggleMode<CR>
+nnoremap <Leader>vm :Voom markdown<CR>
+nnoremap <Leader>vn :Voom<CR>
+nnoremap <Leader>vv :VoomToggle<CR>
+nnoremap <Leader>vw :Voom vimwiki<CR>
+nnoremap <leader>wtt <Plug>VimwikiToggleListItem
+nnoremap > >>
+nnoremap tc :tabnew<CR>
+nnoremap tf :NERDTreeFind<CR>
+nnoremap tm :NERDTreeMirror<CR>
+nnoremap tt :NERDTreeToggle<CR>
+vnoremap < <gv
+vnoremap > >gv
 
 """"""""""""""""""""""""""""""
-" Modules && Module settings "
+" Modules && Module settings " {{{1
 """"""""""""""""""""""""""""""
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
 
 Bundle 'gmarik/vundle'
 let g:vundle_default_git_proto = 'git'
 
 Bundle 'scrooloose/syntastic'
-"let g:syntastic_javascript_jslint_conf = "--nomen --white"
 let g:syntastic_javascript_jshint_conf = "--config /Users/real/.jshint.json"
 let g:syntastic_mode_map = { 'mode': 'passive'}
 let g:syntastic_javascript_checker = 'jshint'
@@ -33,29 +71,33 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:UltiSnipsDontReverseSearchPath="1"
 let g:UltiSnipsSnippetDirectories = ["snipts", "UltiSnips"]
 
-Bundle 'ervandew/supertab'
-let g:SuperTabDefaultCompletionType = "<c-n>"
-
-Bundle 'vim-scripts/The-NERD-tree'
-let g:NERDTreeShowBookmarks=1
-
 Bundle 'vimwiki'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let nested_syntaxes = {
+            \    'lang-html': 'html',
+            \    'python': 'python',
+            \    'lang-sh': 'shell',
+            \    'lang--': 'txt',
+            \    'javascript': 'javascript'}
+
+let local_wiki = {}
+let local_wiki.path = '~/Documents/localwiki/wiki'
+let local_wiki.template_path = '~/Documents/whyreal.github.com/wiki/templates'
+let local_wiki.template_default = 'default'
+let local_wiki.template_ext = '.html'
+let local_wiki.nested_syntaxes = nested_syntaxes
+
+let github_wiki = {}
+let github_wiki.path = '~/Documents/whyreal.github.com/wiki'
+let github_wiki.template_path = '~/Documents/whyreal.github.com/wiki/templates'
+let github_wiki.template_default = 'default'
+let github_wiki.template_ext = '.html'
+let github_wiki.nested_syntaxes = nested_syntaxes
+
+let g:vimwiki_list = [local_wiki, github_wiki]
+
 " reference: http://wiki.ktmud.com/tips/vim/vimwiki-guide.html
 let g:vimwiki_camel_case = 0
-let g:vimwiki_list = [
-\   {
-\       'path': '~/Documents/whyreal.github.com/wiki',
-\       'path_html': '~/Documents/whyreal.github.com/',
-\       'template_path': '~/Documents/whyreal.github.com/wiki/templates',
-\       'template_ext': '.tpl'
-\   },{
-\       'path': '~/Documents/localwiki/wiki',
-\       'path_html': '~/Documents/localwiki/',
-\       'template_path': '~/Documents/whyreal.github.com/wiki/templates',
-\       'template_ext': '.tpl'
-\   }
-\]
 " 对中文用户来说，我们并不怎么需要驼峰英文成为维基词条
 let g:vimwiki_camel_case = 0
 " 标记为完成的 checklist 项目会有特别的颜色
@@ -69,57 +111,23 @@ let g:vimwiki_hl_cb_checked = 1
 
 "let g:vimwiki_valid_html_tags='b,i,s,u,sub,sup,kbd,del,br,hr,div,code,h1'
 let g:vimwiki_valid_html_tags = ''
+let g:vimwiki_list_ignore_newline = 0
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+Bundle 'ervandew/supertab'
+"let g:SuperTabDefaultCompletionType = "<c-n>"
 
 Bundle 'VOoM'
 Bundle 'vim-scripts/L9'
-Bundle 'Colortest'
 Bundle 'mattn/zencoding-vim'
-Bundle 'AutoComplPop'
-Bundle 'fsouza/go.vim'
-Bundle 'nsf/gocode'
 Bundle 'plasticboy/vim-markdown'
-
-filetype plugin on
-filetype indent on
-syntax on
-
-"""""""
-" Map "
-"""""""
-let mapleader = ","
-"set timeoutlen=500
-nmap <Leader>c :SyntasticToggleMode<CR>
-nmap <Leader>fb :FufBuffer<CR>
-nmap <Leader>ff :FufFile<CR>
-nmap <Leader>ft :FufTag<CR>
-nmap <Leader>q :q<CR>
-nmap <Leader>s :w<CR>
-nmap <Leader>v :VoomToggle<CR>
-nmap <Leader>vm :Voom markdown<CR>
-nmap <Leader>vn :Voom<CR>
-nmap <Leader>vw :Voom vimwiki<CR>
-
-nmap tp :tabprevious<CR>
-nmap tn :tabnext<CR>
-nmap tc :tabnew<CR>
-nmap tt :NERDTreeToggle<CR>
-nmap tf :NERDTreeFind<CR>
-nmap tm :NERDTreeMirror<CR>
-"nmap <Leader>l :FufLine<CR>
-
-inoremap jj <ESC>
-vnoremap > >gv
-vnoremap < <gv
-nmap > >>
-nmap < <<
-nmap <C-J> <C-w>+
-nmap <C-K> <C-w>-
-nmap <C-H> <C-w><
-nmap <C-L> <C-w>>
+Bundle 'vim-scripts/The-NERD-tree'
+"Bundle 'AutoComplPop'
+"Bundle 'fsouza/go.vim'
+"Bundle 'nsf/gocode'
 
 """""""""""
-" options "
+" Options " {{{1
 """""""""""
 " 粘贴开关
 set pastetoggle=<F11>
@@ -135,14 +143,15 @@ set wildmode=full
 
 " view "
 "set nu
-set background=dark
+set background=light
 "set fdc=4
 set tabstop=4
 set shiftwidth=4
 set autoindent
+"set smartindent
 set expandtab
-set textwidth=80
-set colorcolumn=81       " highlight column after 'textwidth'
+"set textwidth=80
+set colorcolumn=80       " highlight column after 'textwidth'
 "set list listchars=tab:\¦\ ,trail:·
 set list listchars=tab:»\ ,trail:·
 set laststatus=2
@@ -150,7 +159,7 @@ set statusline=%y\ %m%F%=%r\ line:\ %l\ column:\ %c\ %P
 
 " performance "
 "set synmaxcol=200
-set lazyredraw
+"set lazyredraw
 set scrolljump=5
 set scrolloff=5
 
@@ -159,24 +168,30 @@ set scrolloff=5
 if has('gui')
     colorscheme desert
     set cul
-    set guifont=Menlo\ Regular:h14
+    set guifont=Menlo:h14
     set guioptions-=T
     set guioptions-=R
     set guioptions-=l
     set guioptions-=L
-    set linespace=0
 endif
 
 """"""""
-" Misc "
+" Misc " {{{1
 """"""""
 set modeline
 set modelines=5
 set autochdir
 set smartcase
-"set ignorecase
+set smarttab
+set ignorecase
 set hlsearch
 set tags=tags;/
 set fileencodings+=gbk
 " E37 No write since last change
 set hidden
+
+
+filetype plugin on
+filetype indent on
+syntax on
+

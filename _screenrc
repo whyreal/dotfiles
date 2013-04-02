@@ -1,0 +1,4 @@
+vbell off
+startup_message off
+defescape ^Oo
+escape ^Oo
