@@ -64,12 +64,13 @@ let g:syntastic_warning_symbol='⚠'
 Bundle 'vim-scripts/FuzzyFinder'
 let g:fuf_fuzzyRefining = 1
 
-Bundle 'UltiSnips'
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-let g:UltiSnipsDontReverseSearchPath="1"
-let g:UltiSnipsSnippetDirectories = ["snipts", "UltiSnips"]
+Bundle 'snipMate'
+"Bundle 'UltiSnips'
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<tab>"
+"let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+"let g:UltiSnipsDontReverseSearchPath="1"
+"let g:UltiSnipsSnippetDirectories = ["snipts", "UltiSnips"]
 
 Bundle 'vimwiki'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -118,10 +119,10 @@ Bundle 'ervandew/supertab'
 "let g:SuperTabDefaultCompletionType = "<c-n>"
 
 Bundle 'VOoM'
-Bundle 'vim-scripts/L9'
 Bundle 'mattn/zencoding-vim'
 Bundle 'plasticboy/vim-markdown'
 Bundle 'vim-scripts/The-NERD-tree'
+Bundle 'vim-scripts/L9'
 "Bundle 'AutoComplPop'
 "Bundle 'fsouza/go.vim'
 "Bundle 'nsf/gocode'
