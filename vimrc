@@ -56,21 +56,21 @@ let g:vundle_default_git_proto = 'git'
 
 Bundle 'scrooloose/syntastic'
 let g:syntastic_javascript_jshint_conf = "--config /Users/real/.jshint.json"
-let g:syntastic_mode_map = { 'mode': 'passive'}
 let g:syntastic_javascript_checker = 'jshint'
+let g:syntastic_mode_map = { 'mode': 'passive'}
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 
 Bundle 'vim-scripts/FuzzyFinder'
 let g:fuf_fuzzyRefining = 1
 
-Bundle 'snipMate'
-"Bundle 'UltiSnips'
-"let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<tab>"
-"let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-"let g:UltiSnipsDontReverseSearchPath="1"
-"let g:UltiSnipsSnippetDirectories = ["snipts", "UltiSnips"]
+"Bundle 'snipMate'
+Bundle 'UltiSnips'
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsDontReverseSearchPath="1"
+let g:UltiSnipsSnippetDirectories = ["snippets", "UltiSnips"]
 
 Bundle 'vimwiki'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -118,11 +118,14 @@ let g:vimwiki_list_ignore_newline = 0
 Bundle 'ervandew/supertab'
 "let g:SuperTabDefaultCompletionType = "<c-n>"
 
+Bundle 'vim-scripts/The-NERD-tree'
+let g:NERDTreeShowBookmarks = 1
+
 Bundle 'VOoM'
 Bundle 'mattn/zencoding-vim'
 Bundle 'plasticboy/vim-markdown'
-Bundle 'vim-scripts/The-NERD-tree'
 Bundle 'vim-scripts/L9'
+Bundle 'vim-scripts/Colour-Sampler-Pack'
 "Bundle 'AutoComplPop'
 "Bundle 'fsouza/go.vim'
 "Bundle 'nsf/gocode'
@@ -136,7 +139,7 @@ set pastetoggle=<F11>
 " fold
 set foldmethod=indent
 set foldlevelstart=99
-set fillchars=vert:\ ,fold:\ 
+set fillchars=vert:\|,fold:\ 
 
 " 命令行补全
 set wildmenu
@@ -144,7 +147,7 @@ set wildmode=full
 
 " view "
 "set nu
-set background=light
+"set background=dark
 "set fdc=4
 set tabstop=4
 set shiftwidth=4
@@ -163,11 +166,12 @@ set statusline=%y\ %m%F%=%r\ line:\ %l\ column:\ %c\ %P
 "set lazyredraw
 set scrolljump=5
 set scrolloff=5
+colorscheme codeschool
 
 " gui "
 "set guioptions-=r
 if has('gui')
-    colorscheme desert
+    colorscheme codeschool
     set cul
     set guifont=Menlo:h14
     set guioptions-=T
