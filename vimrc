@@ -123,7 +123,8 @@ Bundle 'mattn/zencoding-vim'
 Bundle 'plasticboy/vim-markdown'
 Bundle 'vim-scripts/The-NERD-tree'
 Bundle 'vim-scripts/L9'
-"Bundle 'AutoComplPop'
+Bundle 'nginx.vim'
+Bundle 'AutoComplPop'
 "Bundle 'fsouza/go.vim'
 "Bundle 'nsf/gocode'
 
@@ -163,6 +164,7 @@ set statusline=%y\ %m%F%=%r\ line:\ %l\ column:\ %c\ %P
 "set lazyredraw
 set scrolljump=5
 set scrolloff=5
+colorscheme ir_black
 
 " gui "
 "set guioptions-=r
