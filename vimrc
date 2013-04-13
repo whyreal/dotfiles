@@ -167,11 +167,7 @@ set statusline=%y\ %m%F%=%r\ line:\ %l\ column:\ %c\ %P
 "set lazyredraw
 set scrolljump=5
 set scrolloff=5
-<<<<<<< HEAD
-colorscheme ir_black
-=======
 colorscheme codeschool
->>>>>>> 48a6d922c68a27834fe96489079e329a5d04fd9b
 
 " gui "
 "set guioptions-=r
