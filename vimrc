@@ -104,7 +104,7 @@ let g:vimwiki_camel_case = 0
 " 标记为完成的 checklist 项目会有特别的颜色
 let g:vimwiki_hl_cb_checked = 1
 " 我的 vim 是没有菜单的，加一个 vimwiki 菜单项也没有意义
-"let g:vimwiki_menu = ''
+let g:vimwiki_menu = ''
 " 是否开启按语法折叠  会让文件比较慢
 "let g:vimwiki_folding = 1
 " 是否在计算字串长度时用特别考虑中文字符
@@ -127,9 +127,12 @@ Bundle 'plasticboy/vim-markdown'
 Bundle 'vim-scripts/L9'
 Bundle 'nginx.vim'
 Bundle 'vim-scripts/Colour-Sampler-Pack'
+Bundle 'leafo/moonscript-vim'
 "Bundle 'AutoComplPop'
 "Bundle 'fsouza/go.vim'
 "Bundle 'nsf/gocode'
+"Bundle 'eclim'
+"let g:EclimJavaCompleteCaseSensitive=1
 
 """""""""""
 " Options " {{{1
@@ -167,7 +170,7 @@ set statusline=%y\ %m%F%=%r\ line:\ %l\ column:\ %c\ %P
 "set lazyredraw
 set scrolljump=5
 set scrolloff=5
-colorscheme codeschool
+colorscheme github
 
 " gui "
 "set guioptions-=r
@@ -177,6 +180,7 @@ if has('gui')
     set guifont=Menlo:h14
     set guioptions-=T
     set guioptions-=R
+    set guioptions-=r
     set guioptions-=l
     set guioptions-=L
 endif
@@ -195,7 +199,6 @@ set tags=tags;/
 set fileencodings+=gbk
 " E37 No write since last change
 set hidden
-
 
 filetype plugin on
 filetype indent on
