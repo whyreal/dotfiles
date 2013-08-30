@@ -12,38 +12,51 @@ let mapleader = ","
 "set timeoutlen=500
 " <Leader>w used by vimwiki plugin
 
+"nnoremap <C-H> <C-w><
+"nnoremap <C-J> <C-w>+
+"nnoremap <C-K> <C-w>-
+"nnoremap <C-L> <C-w>>
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
 inoremap <C-h> <Left>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <C-l> <Right>
 inoremap jj <ESC>
 nnoremap < <<
-nnoremap <C-H> <C-w><
-nnoremap <C-J> <C-w>+
-nnoremap <C-K> <C-w>-
-nnoremap <C-L> <C-w>>
+nnoremap > >>
+vnoremap < <gv
+vnoremap > >gv
+
 nnoremap <C-n> gt<CR>
 nnoremap <C-p> gT<CR>
+
 nnoremap <Leader>fb :FufBuffer<CR>
 nnoremap <Leader>ff :FufFile<CR>
 nnoremap <Leader>fh :FufHelp<CR>
 nnoremap <Leader>fl :FufLine<CR>
 nnoremap <Leader>ft :FufTag<CR>
+
 nnoremap <Leader>q :q<CR>
-nnoremap <Leader>r :w<CR>
-nnoremap <Leader>s :SyntasticToggleMode<CR>
-nnoremap <Leader>vm :Voom markdown<CR>
+nnoremap <Leader>s :w<CR>
+nnoremap <Leader>c :SyntasticToggleMode<CR>
+
 nnoremap <Leader>vn :Voom<CR>
+nnoremap <Leader>vm :Voom markdown<CR>
 nnoremap <Leader>vv :VoomToggle<CR>
 nnoremap <Leader>vw :Voom vimwiki<CR>
-nnoremap <leader>wtt <Plug>VimwikiToggleListItem
-nnoremap > >>
+
+nnoremap <Leader>wtt :VimwikiToggleListItem<CR>
+
 nnoremap tc :tabnew<CR>
+
 nnoremap tf :NERDTreeFind<CR>
 nnoremap tm :NERDTreeMirror<CR>
 nnoremap tt :NERDTreeToggle<CR>
-vnoremap < <gv
-vnoremap > >gv
+
 
 """"""""""""""""""""""""""""""
 " Modules && Module settings " {{{1
@@ -55,16 +68,18 @@ Bundle 'gmarik/vundle'
 let g:vundle_default_git_proto = 'git'
 
 Bundle 'scrooloose/syntastic'
-let g:syntastic_javascript_jshint_conf = "--config /Users/real/.jshint.json"
-let g:syntastic_javascript_checker = 'jshint'
-let g:syntastic_mode_map = { 'mode': 'passive'}
+"let g:syntastic_mode_map = { 'mode': 'passive'}
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
+
+let g:syntastic_javascript_jshint_conf = "--config /Users/real/.jshint.json"
+let g:syntastic_javascript_checker = 'jshint'
+
+let g:syntastic_ruby_checker = 'macruby'
 
 Bundle 'vim-scripts/FuzzyFinder'
 let g:fuf_fuzzyRefining = 1
 
-"Bundle 'snipMate'
 Bundle 'UltiSnips'
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
@@ -72,7 +87,7 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:UltiSnipsDontReverseSearchPath="1"
 let g:UltiSnipsSnippetDirectories = ["snippets", "UltiSnips"]
 
-Bundle 'vimwiki'
+Bundle 'vimwiki/vimwiki'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let nested_syntaxes = {
             \    'lang-html': 'html',
@@ -81,12 +96,26 @@ let nested_syntaxes = {
             \    'lang--': 'txt',
             \    'javascript': 'javascript'}
 
-let local_wiki = {}
-let local_wiki.path = '~/Documents/localwiki/wiki'
-let local_wiki.template_path = '~/Documents/whyreal.github.com/wiki/templates'
-let local_wiki.template_default = 'default'
-let local_wiki.template_ext = '.html'
-let local_wiki.nested_syntaxes = nested_syntaxes
+let xiaomi = {}
+let xiaomi.path = '~/Documents/xiaomi_wiki/wiki'
+let xiaomi.template_path = '~/Documents/whyreal.github.com/wiki/templates'
+let xiaomi.template_default = 'default'
+let xiaomi.template_ext = '.html'
+let xiaomi.nested_syntaxes = nested_syntaxes
+
+let sina = {}
+let sina.path = '~/Documents/sina_wiki/wiki'
+let sina.template_path = '~/Documents/whyreal.github.com/wiki/templates'
+let sina.template_default = 'default'
+let sina.template_ext = '.html'
+let sina.nested_syntaxes = nested_syntaxes
+
+let personal = {}
+let personal.path = '~/Documents/personal_wiki/wiki'
+let personal.template_path = '~/Documents/whyreal.github.com/wiki/templates'
+let personal.template_default = 'default'
+let personal.template_ext = '.html'
+let personal.nested_syntaxes = nested_syntaxes
 
 let github_wiki = {}
 let github_wiki.path = '~/Documents/whyreal.github.com/wiki'
@@ -95,7 +124,7 @@ let github_wiki.template_default = 'default'
 let github_wiki.template_ext = '.html'
 let github_wiki.nested_syntaxes = nested_syntaxes
 
-let g:vimwiki_list = [local_wiki, github_wiki]
+let g:vimwiki_list = [xiaomi, personal, github_wiki, sina]
 
 " reference: http://wiki.ktmud.com/tips/vim/vimwiki-guide.html
 let g:vimwiki_camel_case = 0
@@ -115,7 +144,7 @@ let g:vimwiki_valid_html_tags = ''
 let g:vimwiki_list_ignore_newline = 0
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-Bundle 'ervandew/supertab'
+"Bundle 'ervandew/supertab'
 "let g:SuperTabDefaultCompletionType = "<c-n>"
 
 Bundle 'vim-scripts/The-NERD-tree'
@@ -126,10 +155,12 @@ Bundle 'mattn/zencoding-vim'
 Bundle 'plasticboy/vim-markdown'
 Bundle 'vim-scripts/L9'
 Bundle 'nginx.vim'
-Bundle 'vim-scripts/Colour-Sampler-Pack'
-Bundle 'leafo/moonscript-vim'
+Bundle 'fsouza/go.vim'
+Bundle 'Command-T'
+"Bundle 'snipMate'
 "Bundle 'AutoComplPop'
-"Bundle 'fsouza/go.vim'
+"Bundle 'leafo/moonscript-vim'
+"Bundle 'vim-scripts/Colour-Sampler-Pack'
 "Bundle 'nsf/gocode'
 "Bundle 'eclim'
 "let g:EclimJavaCompleteCaseSensitive=1
@@ -137,8 +168,9 @@ Bundle 'leafo/moonscript-vim'
 """""""""""
 " Options " {{{1
 """""""""""
-" 粘贴开关
-set pastetoggle=<F11>
+set pastetoggle=<F11>         " 粘贴开关
+set clipboard=unnamed         " yank and paste with the system clipboard
+set autoread
 
 " fold
 set foldmethod=indent
@@ -151,7 +183,7 @@ set wildmode=full
 
 " view "
 "set nu
-"set background=dark
+set background=dark
 "set fdc=4
 set tabstop=4
 set shiftwidth=4
@@ -170,14 +202,15 @@ set statusline=%y\ %m%F%=%r\ line:\ %l\ column:\ %c\ %P
 "set lazyredraw
 set scrolljump=5
 set scrolloff=5
-colorscheme github
+set mouse=a
+colorscheme solarized
 
 " gui "
 "set guioptions-=r
 if has('gui')
-    colorscheme codeschool
+    "colorscheme codeschool
     set cul
-    set guifont=Menlo:h14
+    set guifont=Menlo:h12
     set guioptions-=T
     set guioptions-=R
     set guioptions-=r
@@ -192,15 +225,15 @@ set modeline
 set modelines=5
 set autochdir
 set smartcase
-set smarttab
+"set smarttab
 set ignorecase
 set hlsearch
+set incsearch
 set tags=tags;/
-set fileencodings+=gbk
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 " E37 No write since last change
 set hidden
 
 filetype plugin on
 filetype indent on
 syntax on
-
