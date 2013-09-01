@@ -204,6 +204,7 @@ set scrolljump=5
 set scrolloff=5
 set mouse=a
 colorscheme solarized
+set t_Co=256
 
 " gui "
 "set guioptions-=r
