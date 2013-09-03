@@ -12,14 +12,14 @@ let mapleader = ","
 "set timeoutlen=500
 " <Leader>w used by vimwiki plugin
 
-"nnoremap <C-H> <C-w><
-"nnoremap <C-J> <C-w>+
-"nnoremap <C-K> <C-w>-
-"nnoremap <C-L> <C-w>>
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
+nnoremap <C-H> <C-w><
+nnoremap <C-J> <C-w>+
+nnoremap <C-K> <C-w>-
+nnoremap <C-L> <C-w>>
+"map <C-h> <C-w>h
+"map <C-j> <C-w>j
+"map <C-k> <C-w>k
+"map <C-l> <C-w>l
 
 inoremap <C-h> <Left>
 inoremap <C-j> <Down>
@@ -51,11 +51,11 @@ nnoremap <Leader>vw :Voom vimwiki<CR>
 
 nnoremap <Leader>wtt :VimwikiToggleListItem<CR>
 
-nnoremap tc :tabnew<CR>
+nnoremap <Leader>tc :tabnew<CR>
 
-nnoremap tf :NERDTreeFind<CR>
-nnoremap tm :NERDTreeMirror<CR>
-nnoremap tt :NERDTreeToggle<CR>
+nnoremap <Leader>tf :NERDTreeFind<CR>
+nnoremap <Leader>tm :NERDTreeMirror<CR>
+nnoremap <Leader>tt :NERDTreeToggle<CR>
 
 
 """"""""""""""""""""""""""""""
@@ -182,7 +182,7 @@ set wildmenu
 set wildmode=full
 
 " view "
-"set nu
+set nu
 set background=dark
 "set fdc=4
 set tabstop=4
