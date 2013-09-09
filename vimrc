@@ -7,12 +7,13 @@ filetype off                   " required!
 
 """""""
 " Map " {{{1
+" 一些按键绑定, 关于这部分可以:help map.txt
 """""""
-let mapleader = ","
 "set timeoutlen=500
 " <Leader>w used by vimwiki plugin
 
-nnoremap <C-H> <C-w><
+let mapleader = "," "惯用法
+nnoremap <C-H> <C-w>< "快捷调整窗口大小
 nnoremap <C-J> <C-w>+
 nnoremap <C-K> <C-w>-
 nnoremap <C-L> <C-w>>
@@ -21,65 +22,55 @@ nnoremap <C-L> <C-w>>
 "map <C-k> <C-w>k
 "map <C-l> <C-w>l
 
-inoremap <C-h> <Left>
+inoremap <C-h> <Left> "插入模式下移动光标
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <C-l> <Right>
-inoremap jj <ESC>
+inoremap jj <ESC> "插入模式下按jj进入一般模式, 但是输入j时会有明显的延迟, 惯用法, 也有人用jk. 看习惯吧.
 nnoremap < <<
 nnoremap > >>
-vnoremap < <gv
+vnoremap < <gv "gv用来选中上次选中的内容, 这条map可以快速调整块缩进
 vnoremap > >gv
 
-nnoremap <C-n> gt<CR>
+nnoremap <C-n> gt<CR> "切换标签
 nnoremap <C-p> gT<CR>
 
-nnoremap <Leader>fb :FufBuffer<CR>
+nnoremap <Leader>q :q<CR>
+nnoremap <Leader>s :w<CR>
+nnoremap <Leader>tc :tabnew<CR>
+
+
+""""""""""""""""""""""""""""""
+" Modules && Module settings " {{{1
+" 模块的的help 在:help的最下面
+""""""""""""""""""""""""""""""
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+"vim 插件管理系统
+Bundle 'gmarik/vundle'
+let g:vundle_default_git_proto = 'git'
+
+"静态语法检查插件, 支持常见语言
+Bundle 'scrooloose/syntastic'
+nnoremap <Leader>c :SyntasticToggleMode<CR>
+"let g:syntastic_mode_map = { 'mode': 'passive'}
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='⚠'
+let g:syntastic_javascript_jshint_conf = "--config /Users/real/.jshint.json"
+let g:syntastic_javascript_checker = 'jshint'
+let g:syntastic_ruby_checker = 'macruby'
+
+"查找buffer, file, help等 
+Bundle 'vim-scripts/FuzzyFinder'
+let g:fuf_fuzzyRefining = 1
+nnoremap <Leader>fb :FufBuffer<CR> "
 nnoremap <Leader>ff :FufFile<CR>
 nnoremap <Leader>fh :FufHelp<CR>
 nnoremap <Leader>fl :FufLine<CR>
 nnoremap <Leader>ft :FufTag<CR>
 
-nnoremap <Leader>q :q<CR>
-nnoremap <Leader>s :w<CR>
-nnoremap <Leader>c :SyntasticToggleMode<CR>
-
-nnoremap <Leader>vn :Voom<CR>
-nnoremap <Leader>vm :Voom markdown<CR>
-nnoremap <Leader>vv :VoomToggle<CR>
-nnoremap <Leader>vw :Voom vimwiki<CR>
-
-nnoremap <Leader>wtt :VimwikiToggleListItem<CR>
-
-nnoremap <Leader>tc :tabnew<CR>
-
-nnoremap <Leader>tf :NERDTreeFind<CR>
-nnoremap <Leader>tm :NERDTreeMirror<CR>
-nnoremap <Leader>tt :NERDTreeToggle<CR>
-
-
-""""""""""""""""""""""""""""""
-" Modules && Module settings " {{{1
-""""""""""""""""""""""""""""""
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-Bundle 'gmarik/vundle'
-let g:vundle_default_git_proto = 'git'
-
-Bundle 'scrooloose/syntastic'
-"let g:syntastic_mode_map = { 'mode': 'passive'}
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='⚠'
-
-let g:syntastic_javascript_jshint_conf = "--config /Users/real/.jshint.json"
-let g:syntastic_javascript_checker = 'jshint'
-
-let g:syntastic_ruby_checker = 'macruby'
-
-Bundle 'vim-scripts/FuzzyFinder'
-let g:fuf_fuzzyRefining = 1
-
+"提供类似于textmate bundle的高级代码补全功能, 比snippets强大
 Bundle 'UltiSnips'
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
@@ -87,7 +78,44 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:UltiSnipsDontReverseSearchPath="1"
 let g:UltiSnipsSnippetDirectories = ["snippets", "UltiSnips"]
 
-Bundle 'vimwiki/vimwiki'
+"文件系统导航插件
+Bundle 'vim-scripts/The-NERD-tree'
+nnoremap <Leader>tf :NERDTreeFind<CR>
+nnoremap <Leader>tm :NERDTreeMirror<CR>
+nnoremap <Leader>tt :NERDTreeToggle<CR>
+let g:NERDTreeShowBookmarks = 1
+
+"markdown 语法高亮插件
+Bundle 'plasticboy/vim-markdown'
+let g:vim_markdown_folding_disabled=1
+
+"文件内导航插件, 支持wiki, markdown等多种格式, 同时支持自定义
+Bundle 'VOoM'
+nnoremap <Leader>vn :Voom<CR>
+nnoremap <Leader>vm :Voom markdown<CR>
+nnoremap <Leader>vv :VoomToggle<CR>
+nnoremap <Leader>vw :Voom vimwiki<CR>
+
+"基础函数库, 一些插件依赖该插件, 比如UltiSnips
+Bundle 'vim-scripts/L9'
+"nginx 配置高亮插件
+Bundle 'nginx.vim'
+" golang 语法高亮插件
+Bundle 'fsouza/go.vim'
+
+"---------- 一些我暂时不用的插件 ---------------"
+"Bundle 'mattn/zencoding-vim' "快速编写html, css, 很有名
+"Bundle 'Command-T' "类似于FuzzyFinder, 提供文件, buffer等的快速查询, 比FuzzyFinder快据说
+"Bundle 'snipMate' "高级代码补全, 类似于textmate
+"Bundle 'AutoComplPop' "自动打开vim补全菜单
+"Bundle 'leafo/moonscript-vim'
+"Bundle 'vim-scripts/Colour-Sampler-Pack'
+"Bundle 'nsf/gocode'
+"Bundle 'eclim' "在vim中集成eclipse的功能
+"let g:EclimJavaCompleteCaseSensitive=1
+"
+"Bundle 'vimwiki/vimwiki' "基于vim的wiki插
+"nnoremap <Leader>wtt :VimwikiToggleListItem<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "let nested_syntaxes = {
 "            \    'lang-html': 'html',
@@ -123,28 +151,8 @@ Bundle 'vimwiki/vimwiki'
 "let g:vimwiki_list_ignore_newline = 0
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"Bundle 'ervandew/supertab'
+"Bundle 'ervandew/supertab' "在Tab上绑定多个功能
 "let g:SuperTabDefaultCompletionType = "<c-n>"
-
-Bundle 'vim-scripts/The-NERD-tree'
-let g:NERDTreeShowBookmarks = 1
-
-Bundle 'plasticboy/vim-markdown'
-let g:vim_markdown_folding_disabled=1
-
-Bundle 'VOoM'
-Bundle 'mattn/zencoding-vim'
-Bundle 'vim-scripts/L9'
-Bundle 'nginx.vim'
-Bundle 'fsouza/go.vim'
-Bundle 'Command-T'
-"Bundle 'snipMate'
-"Bundle 'AutoComplPop'
-"Bundle 'leafo/moonscript-vim'
-"Bundle 'vim-scripts/Colour-Sampler-Pack'
-"Bundle 'nsf/gocode'
-"Bundle 'eclim'
-"let g:EclimJavaCompleteCaseSensitive=1
 
 """""""""""
 " Options " {{{1
@@ -155,7 +163,7 @@ set autoread
 
 " fold
 set fillchars=vert:\|,fold:\ 
-set nofoldenable
+set nofoldenable  "默认不折叠代码
 set foldmethod=indent
 
 " 命令行补全
@@ -163,14 +171,14 @@ set wildmenu
 set wildmode=full
 
 " view "
-set nu
-set background=dark
+set nu "显示行号
+set background=dark  "设置背景色, 某些theme会根据背景色的不同有不同的显示效果
 "set fdc=4
 set tabstop=4
 set shiftwidth=4
-set autoindent
+set autoindent       "自动缩进
 "set smartindent
-set expandtab
+set expandtab        "用空格替换tab, 有效防止python代码中tab/space混用的问题
 "set textwidth=80
 set colorcolumn=80       " highlight column after 'textwidth'
 "set list listchars=tab:\¦\ ,trail:·
@@ -178,14 +186,13 @@ set list listchars=tab:»\ ,trail:·
 set laststatus=2
 set statusline=%y\ %m%F%=%r\ line:\ %l\ column:\ %c\ %P
 
-" performance "
+" performance  mac自带的terminal性能貌似有些问题, 推荐使用iterm2
 "set synmaxcol=200
-"set lazyredraw
 set scrolljump=5
 set scrolloff=5
 set mouse=a
 colorscheme solarized
-set t_Co=256
+set t_Co=256     "mac 上在tmux中打开vim该选项有异常, 可能导致色彩显示异常
 
 " gui "
 "set guioptions-=r
@@ -193,7 +200,7 @@ if has('gui')
     "colorscheme codeschool
     set cul
     set guifont=Menlo:h12
-    set guioptions-=T
+    set guioptions-=T  "关闭菜单, 滚动条等UI元素
     set guioptions-=R
     set guioptions-=r
     set guioptions-=l
@@ -211,7 +218,7 @@ set smartcase
 set ignorecase
 set hlsearch
 set incsearch
-set tags=tags;/
+set tags=tags;/  "从打开文件所在的目录, 逐级目录向上查找tags文件. 通常在项目的根目录生成tags文件即可
 set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 " E37 No write since last change
 set hidden
