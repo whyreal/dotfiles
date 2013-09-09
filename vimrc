@@ -12,8 +12,11 @@ filetype off                   " required!
 "set timeoutlen=500
 " <Leader>w used by vimwiki plugin
 
-let mapleader = "," "惯用法
-nnoremap <C-H> <C-w>< "快捷调整窗口大小
+"惯用法
+let mapleader = ","
+
+"快捷调整窗口大小
+nnoremap <C-H> <C-w><
 nnoremap <C-J> <C-w>+
 nnoremap <C-K> <C-w>-
 nnoremap <C-L> <C-w>>
@@ -22,23 +25,28 @@ nnoremap <C-L> <C-w>>
 "map <C-k> <C-w>k
 "map <C-l> <C-w>l
 
-inoremap <C-h> <Left> "插入模式下移动光标
+"插入模式下移动光标
+inoremap <C-h> <Left>
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <C-l> <Right>
-inoremap jj <ESC> "插入模式下按jj进入一般模式, 但是输入j时会有明显的延迟, 惯用法, 也有人用jk. 看习惯吧.
-nnoremap < <<
-nnoremap > >>
-vnoremap < <gv "gv用来选中上次选中的内容, 这条map可以快速调整块缩进
+
+"插入模式下按jj进入一般模式, 但是输入j时会有明显的延迟, 惯用法, 也有人用jk. 看习惯吧.
+inoremap jj <ESC> 
+
+"gv用来选中上次选中的内容, 这条map可以快速调整块缩进
+vnoremap < <gv
 vnoremap > >gv
 
-nnoremap <C-n> gt<CR> "切换标签
+"切换标签
+nnoremap <C-n> gt<CR>
 nnoremap <C-p> gT<CR>
 
+nnoremap < <<
+nnoremap > >>
 nnoremap <Leader>q :q<CR>
 nnoremap <Leader>s :w<CR>
 nnoremap <Leader>tc :tabnew<CR>
-
 
 """"""""""""""""""""""""""""""
 " Modules && Module settings " {{{1
@@ -104,6 +112,9 @@ Bundle 'nginx.vim'
 
 " golang 语法高亮插件
 Bundle 'fsouza/go.vim'
+
+" origin zencoding
+Bundle 'vim-scripts/Emmet.vim'
 
 """""""""""
 " Options " {{{1
