@@ -89,59 +89,38 @@ let g:UltiSnipsSnippetDirectories = ["snippets", "UltiSnips"]
 
 Bundle 'vimwiki/vimwiki'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let nested_syntaxes = {
-            \    'lang-html': 'html',
-            \    'python': 'python',
-            \    'lang-sh': 'shell',
-            \    'lang--': 'txt',
-            \    'javascript': 'javascript'}
-
-let xiaomi = {}
-let xiaomi.path = '~/Documents/xiaomi_wiki/wiki'
-let xiaomi.template_path = '~/Documents/whyreal.github.com/wiki/templates'
-let xiaomi.template_default = 'default'
-let xiaomi.template_ext = '.html'
-let xiaomi.nested_syntaxes = nested_syntaxes
-
-let sina = {}
-let sina.path = '~/Documents/sina_wiki/wiki'
-let sina.template_path = '~/Documents/whyreal.github.com/wiki/templates'
-let sina.template_default = 'default'
-let sina.template_ext = '.html'
-let sina.nested_syntaxes = nested_syntaxes
-
-let personal = {}
-let personal.path = '~/Documents/personal_wiki/wiki'
-let personal.template_path = '~/Documents/whyreal.github.com/wiki/templates'
-let personal.template_default = 'default'
-let personal.template_ext = '.html'
-let personal.nested_syntaxes = nested_syntaxes
-
-let github_wiki = {}
-let github_wiki.path = '~/Documents/whyreal.github.com/wiki'
-let github_wiki.template_path = '~/Documents/whyreal.github.com/wiki/templates'
-let github_wiki.template_default = 'default'
-let github_wiki.template_ext = '.html'
-let github_wiki.nested_syntaxes = nested_syntaxes
-
-let g:vimwiki_list = [xiaomi, personal, github_wiki, sina]
-
-" reference: http://wiki.ktmud.com/tips/vim/vimwiki-guide.html
-let g:vimwiki_camel_case = 0
-" 对中文用户来说，我们并不怎么需要驼峰英文成为维基词条
-let g:vimwiki_camel_case = 0
-" 标记为完成的 checklist 项目会有特别的颜色
-let g:vimwiki_hl_cb_checked = 1
-" 我的 vim 是没有菜单的，加一个 vimwiki 菜单项也没有意义
-let g:vimwiki_menu = ''
-" 是否开启按语法折叠  会让文件比较慢
-"let g:vimwiki_folding = 1
-" 是否在计算字串长度时用特别考虑中文字符
-"let g:vimwiki_CJK_length = 1
-
-"let g:vimwiki_valid_html_tags='b,i,s,u,sub,sup,kbd,del,br,hr,div,code,h1'
-let g:vimwiki_valid_html_tags = ''
-let g:vimwiki_list_ignore_newline = 0
+"let nested_syntaxes = {
+"            \    'lang-html': 'html',
+"            \    'python': 'python',
+"            \    'lang-sh': 'shell',
+"            \    'lang--': 'txt',
+"            \    'javascript': 'javascript'}
+"
+"let xiaomi = {}
+"let xiaomi.path = '~/Documents/xiaomi_wiki/wiki'
+"let xiaomi.template_path = '~/Documents/whyreal.github.com/wiki/templates'
+"let xiaomi.template_default = 'default'
+"let xiaomi.template_ext = '.html'
+"let xiaomi.nested_syntaxes = nested_syntaxes
+"
+"let g:vimwiki_list = [xiaomi, personal, github_wiki, sina]
+"
+"" reference: http://wiki.ktmud.com/tips/vim/vimwiki-guide.html
+"let g:vimwiki_camel_case = 0
+"" 对中文用户来说，我们并不怎么需要驼峰英文成为维基词条
+"let g:vimwiki_camel_case = 0
+"" 标记为完成的 checklist 项目会有特别的颜色
+"let g:vimwiki_hl_cb_checked = 1
+"" 我的 vim 是没有菜单的，加一个 vimwiki 菜单项也没有意义
+"let g:vimwiki_menu = ''
+"" 是否开启按语法折叠  会让文件比较慢
+""let g:vimwiki_folding = 1
+"" 是否在计算字串长度时用特别考虑中文字符
+""let g:vimwiki_CJK_length = 1
+"
+""let g:vimwiki_valid_html_tags='b,i,s,u,sub,sup,kbd,del,br,hr,div,code,h1'
+"let g:vimwiki_valid_html_tags = ''
+"let g:vimwiki_list_ignore_newline = 0
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "Bundle 'ervandew/supertab'
@@ -150,9 +129,11 @@ let g:vimwiki_list_ignore_newline = 0
 Bundle 'vim-scripts/The-NERD-tree'
 let g:NERDTreeShowBookmarks = 1
 
+Bundle 'plasticboy/vim-markdown'
+let g:vim_markdown_folding_disabled=1
+
 Bundle 'VOoM'
 Bundle 'mattn/zencoding-vim'
-Bundle 'plasticboy/vim-markdown'
 Bundle 'vim-scripts/L9'
 Bundle 'nginx.vim'
 Bundle 'fsouza/go.vim'
@@ -173,9 +154,9 @@ set clipboard=unnamed         " yank and paste with the system clipboard
 set autoread
 
 " fold
-set foldmethod=indent
-set foldlevelstart=99
 set fillchars=vert:\|,fold:\ 
+set nofoldenable
+set foldmethod=indent
 
 " 命令行补全
 set wildmenu
