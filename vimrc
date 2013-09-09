@@ -98,61 +98,12 @@ nnoremap <Leader>vw :Voom vimwiki<CR>
 
 "基础函数库, 一些插件依赖该插件, 比如UltiSnips
 Bundle 'vim-scripts/L9'
+
 "nginx 配置高亮插件
 Bundle 'nginx.vim'
+
 " golang 语法高亮插件
 Bundle 'fsouza/go.vim'
-
-"---------- 一些我暂时不用的插件 ---------------"
-"Bundle 'mattn/zencoding-vim' "快速编写html, css, 很有名
-"Bundle 'Command-T' "类似于FuzzyFinder, 提供文件, buffer等的快速查询, 比FuzzyFinder快据说
-"Bundle 'snipMate' "高级代码补全, 类似于textmate
-"Bundle 'AutoComplPop' "自动打开vim补全菜单
-"Bundle 'leafo/moonscript-vim'
-"Bundle 'vim-scripts/Colour-Sampler-Pack'
-"Bundle 'nsf/gocode'
-"Bundle 'eclim' "在vim中集成eclipse的功能
-"let g:EclimJavaCompleteCaseSensitive=1
-"
-"Bundle 'vimwiki/vimwiki' "基于vim的wiki插
-"nnoremap <Leader>wtt :VimwikiToggleListItem<CR>
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"let nested_syntaxes = {
-"            \    'lang-html': 'html',
-"            \    'python': 'python',
-"            \    'lang-sh': 'shell',
-"            \    'lang--': 'txt',
-"            \    'javascript': 'javascript'}
-"
-"let xiaomi = {}
-"let xiaomi.path = '~/Documents/xiaomi_wiki/wiki'
-"let xiaomi.template_path = '~/Documents/whyreal.github.com/wiki/templates'
-"let xiaomi.template_default = 'default'
-"let xiaomi.template_ext = '.html'
-"let xiaomi.nested_syntaxes = nested_syntaxes
-"
-"let g:vimwiki_list = [xiaomi, personal, github_wiki, sina]
-"
-"" reference: http://wiki.ktmud.com/tips/vim/vimwiki-guide.html
-"let g:vimwiki_camel_case = 0
-"" 对中文用户来说，我们并不怎么需要驼峰英文成为维基词条
-"let g:vimwiki_camel_case = 0
-"" 标记为完成的 checklist 项目会有特别的颜色
-"let g:vimwiki_hl_cb_checked = 1
-"" 我的 vim 是没有菜单的，加一个 vimwiki 菜单项也没有意义
-"let g:vimwiki_menu = ''
-"" 是否开启按语法折叠  会让文件比较慢
-""let g:vimwiki_folding = 1
-"" 是否在计算字串长度时用特别考虑中文字符
-""let g:vimwiki_CJK_length = 1
-"
-""let g:vimwiki_valid_html_tags='b,i,s,u,sub,sup,kbd,del,br,hr,div,code,h1'
-"let g:vimwiki_valid_html_tags = ''
-"let g:vimwiki_list_ignore_newline = 0
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"Bundle 'ervandew/supertab' "在Tab上绑定多个功能
-"let g:SuperTabDefaultCompletionType = "<c-n>"
 
 """""""""""
 " Options " {{{1
