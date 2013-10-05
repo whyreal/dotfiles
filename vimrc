@@ -116,6 +116,15 @@ Bundle 'fsouza/go.vim'
 " origin zencoding
 Bundle 'vim-scripts/Emmet.vim'
 
+"
+Bundle "winmanager"
+
+Bundle "kakkyz81/evervim"
+source ~/.vim_evernot_developer_token
+
+Bundle "wting/rust.vim"
+Bundle "kchmck/vim-coffee-script"
+
 """""""""""
 " Options " {{{1
 """""""""""
@@ -134,7 +143,7 @@ set wildmode=full
 
 " view "
 set nu "显示行号
-set background=dark  "设置背景色, 某些theme会根据背景色的不同有不同的显示效果
+set background=light  "设置背景色, 某些theme会根据背景色的不同有不同的显示效果
 "set fdc=4
 set tabstop=4
 set shiftwidth=4
@@ -149,10 +158,14 @@ set laststatus=2
 set statusline=%y\ %m%F%=%r\ line:\ %l\ column:\ %c\ %P
 
 " performance  mac自带的terminal性能貌似有些问题, 推荐使用iterm2
-"set synmaxcol=200
+set synmaxcol=200
 set scrolljump=5
 set scrolloff=5
-set mouse=a
+set ttyfast " u got a fast terminal
+set ttyscroll=3
+set lazyredraw " to avoid scrolling problems
+"set mouse=a
+
 colorscheme solarized
 set t_Co=256     "mac 上在tmux中打开vim该选项有异常, 可能导致色彩显示异常
 
@@ -161,7 +174,8 @@ set t_Co=256     "mac 上在tmux中打开vim该选项有异常, 可能导致色�
 if has('gui')
     "colorscheme codeschool
     set cul
-    set guifont=Menlo:h12
+    set mouse=a
+    set guifont=Menlo:h14
     set guioptions-=T  "关闭菜单, 滚动条等UI元素
     set guioptions-=R
     set guioptions-=r
