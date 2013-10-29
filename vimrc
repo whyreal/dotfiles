@@ -44,9 +44,9 @@ nnoremap <C-p> gT<CR>
 
 nnoremap < <<
 nnoremap > >>
-nnoremap <Leader>q :q<CR>
-nnoremap <Leader>s :w<CR>
-nnoremap <Leader>tc :tabnew<CR>
+nnoremap <silent> <Leader>q :q<CR>
+nnoremap <silent> <Leader>s :w<CR>
+nnoremap <silent> <Leader>tc :tabnew<CR>
 
 """"""""""""""""""""""""""""""
 " Modules && Module settings " {{{1
@@ -125,6 +125,14 @@ source ~/.vim_evernot_developer_token
 Bundle "wting/rust.vim"
 Bundle "kchmck/vim-coffee-script"
 
+" dash
+Bundle 'rizzatti/funcoo.vim'
+Bundle 'rizzatti/dash.vim'
+nmap <silent> <leader>d <Plug>DashSearch
+let g:dash_map = {
+    \ 'python'     : 'py',
+    \ }
+
 """""""""""
 " Options " {{{1
 """""""""""
@@ -143,7 +151,7 @@ set wildmode=full
 
 " view "
 set nu "显示行号
-set background=light  "设置背景色, 某些theme会根据背景色的不同有不同的显示效果
+set background=dark  "设置背景色, 某些theme会根据背景色的不同有不同的显示效果
 "set fdc=4
 set tabstop=4
 set shiftwidth=4
@@ -166,13 +174,13 @@ set ttyscroll=3
 set lazyredraw " to avoid scrolling problems
 "set mouse=a
 
-colorscheme solarized
+"colorscheme solarized
 set t_Co=256     "mac 上在tmux中打开vim该选项有异常, 可能导致色彩显示异常
 
 " gui "
 "set guioptions-=r
 if has('gui')
-    "colorscheme codeschool
+    colorscheme solarized
     set cul
     set mouse=a
     set guifont=Menlo:h14

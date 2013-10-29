@@ -70,7 +70,13 @@ export GOPATH=/Users/real/Documents/whyreal/code_fun/golang
 export PATH=$PATH:$GOPATH/bin
 
 # zooview
-alias zooview='cd /Users/real/Documents/xiaomi/ZooViewer/target && ./zooviewer.sh > /dev/null 2>&1 &'
+alias zooview='(cd /Users/real/Code/xiaomi/ZooViewer/target && ./zooviewer.sh > /dev/null 2>&1 &)'
 
 # homebrew
 export PATH=/usr/local/sbin:$PATH
+
+# language
+export LANG="en_US.UTF-8"
+
+# WORDCHARS
+export WORDCHARS=":_-./\"'"
