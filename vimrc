@@ -132,6 +132,7 @@ nmap <silent> <leader>d <Plug>DashSearch
 let g:dash_map = {
     \ 'python'     : 'py',
     \ }
+Bundle 'terryma/vim-multiple-cursors'
 
 """""""""""
 " Options " {{{1
@@ -174,13 +175,13 @@ set ttyscroll=3
 set lazyredraw " to avoid scrolling problems
 "set mouse=a
 
-"colorscheme solarized
+colorscheme solarized
 set t_Co=256     "mac 上在tmux中打开vim该选项有异常, 可能导致色彩显示异常
 
 " gui "
 "set guioptions-=r
 if has('gui')
-    colorscheme solarized
+    colorscheme codeschool
     set cul
     set mouse=a
     set guifont=Menlo:h14
@@ -210,3 +211,5 @@ set hidden
 filetype plugin on
 filetype indent on
 syntax on
+
+au BufNewFile,BufRead *.pp setfiletype ruby
