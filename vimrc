@@ -10,26 +10,27 @@ filetype off                   " required!
 " 一些按键绑定, 关于这部分可以:help map.txt
 """""""
 "set timeoutlen=500
-" <Leader>w used by vimwiki plugin
 
 "惯用法
 let mapleader = ","
 
 "快捷调整窗口大小
-nnoremap <C-H> <C-w><
-nnoremap <C-J> <C-w>+
-nnoremap <C-K> <C-w>-
-nnoremap <C-L> <C-w>>
-"map <C-h> <C-w>h
-"map <C-j> <C-w>j
-"map <C-k> <C-w>k
-"map <C-l> <C-w>l
+"nnoremap <C-H> <C-w><
+"nnoremap <C-J> <C-w>+
+"nnoremap <C-K> <C-w>-
+"nnoremap <C-L> <C-w>>
+
+" Smart way to move between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
 
 "插入模式下移动光标
-inoremap <C-h> <Left>
-inoremap <C-j> <Down>
-inoremap <C-k> <Up>
-inoremap <C-l> <Right>
+"inoremap <C-h> <Left>
+"inoremap <C-j> <Down>
+"inoremap <C-k> <Up>
+"inoremap <C-l> <Right>
 
 "插入模式下按jj进入一般模式, 但是输入j时会有明显的延迟, 惯用法, 也有人用jk. 看习惯吧.
 inoremap jj <ESC> 
@@ -45,8 +46,16 @@ nnoremap <C-p> gT<CR>
 nnoremap < <<
 nnoremap > >>
 nnoremap <silent> <Leader>q :q<CR>
-nnoremap <silent> <Leader>s :w<CR>
-nnoremap <silent> <Leader>tc :tabnew<CR>
+nnoremap <silent> <Leader>w :w<CR>
+
+" Close the current buffer
+map <leader>c :Bclose<cr>
+
+" Useful mappings for managing tabs
+map <leader>tn :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove
 
 """"""""""""""""""""""""""""""
 " Modules && Module settings " {{{1
@@ -88,14 +97,14 @@ let g:UltiSnipsSnippetDirectories = ["snippets", "UltiSnips"]
 
 "文件系统导航插件
 Bundle 'vim-scripts/The-NERD-tree'
-nnoremap <Leader>tf :NERDTreeFind<CR>
-nnoremap <Leader>tm :NERDTreeMirror<CR>
-nnoremap <Leader>tt :NERDTreeToggle<CR>
+nnoremap <Leader>ntf :NERDTreeFind<CR>
+nnoremap <Leader>ntm :NERDTreeMirror<CR>
+nnoremap <Leader>ntt :NERDTreeToggle<CR>
 let g:NERDTreeShowBookmarks = 1
 
 "markdown 语法高亮插件
-Bundle 'plasticboy/vim-markdown'
-let g:vim_markdown_folding_disabled=1
+Bundle 'Markdown'
+Bundle 'instant-markdown.vim'
 
 "文件内导航插件, 支持wiki, markdown等多种格式, 同时支持自定义
 Bundle 'VOoM'
@@ -107,23 +116,12 @@ nnoremap <Leader>vw :Voom vimwiki<CR>
 "基础函数库, 一些插件依赖该插件, 比如UltiSnips
 Bundle 'vim-scripts/L9'
 
-"nginx 配置高亮插件
-Bundle 'nginx.vim'
-
-" golang 语法高亮插件
-Bundle 'fsouza/go.vim'
-
 " origin zencoding
 Bundle 'vim-scripts/Emmet.vim'
 
 "
-Bundle "winmanager"
-
 Bundle "kakkyz81/evervim"
 source ~/.vim_evernot_developer_token
-
-Bundle "wting/rust.vim"
-Bundle "kchmck/vim-coffee-script"
 
 " dash
 Bundle 'rizzatti/funcoo.vim'
@@ -132,7 +130,6 @@ nmap <silent> <leader>d <Plug>DashSearch
 let g:dash_map = {
     \ 'python'     : 'py',
     \ }
-Bundle 'terryma/vim-multiple-cursors'
 
 """""""""""
 " Options " {{{1
@@ -172,16 +169,15 @@ set scrolljump=5
 set scrolloff=5
 set ttyfast " u got a fast terminal
 set ttyscroll=3
-set lazyredraw " to avoid scrolling problems
+"set lazyredraw " to avoid scrolling problems
 "set mouse=a
 
-colorscheme solarized
+colorscheme codeschool
 set t_Co=256     "mac 上在tmux中打开vim该选项有异常, 可能导致色彩显示异常
 
 " gui "
 "set guioptions-=r
 if has('gui')
-    colorscheme codeschool
     set cul
     set mouse=a
     set guifont=Menlo:h14
@@ -197,7 +193,7 @@ endif
 """"""""
 set modeline
 set modelines=5
-set autochdir
+"set autochdir
 set smartcase
 "set smarttab
 set ignorecase
@@ -213,3 +209,11 @@ filetype indent on
 syntax on
 
 au BufNewFile,BufRead *.pp setfiletype ruby
+
+""""""""""""""""""""""""""""""
+" => Visual mode related
+""""""""""""""""""""""""""""""
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+vnoremap <silent> * :call VisualSelection('f')<CR>
+vnoremap <silent> # :call VisualSelection('b')<CR>
