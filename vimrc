@@ -21,16 +21,16 @@ let mapleader = ","
 "nnoremap <C-L> <C-w>>
 
 " Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+nnoremap <C-j> <C-W>j
+nnoremap <C-k> <C-W>k
+nnoremap <C-h> <C-W>h
+nnoremap <C-l> <C-W>l
 
 "插入模式下移动光标
-"inoremap <C-h> <Left>
-"inoremap <C-j> <Down>
-"inoremap <C-k> <Up>
-"inoremap <C-l> <Right>
+inoremap <C-h> <Left>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
 
 "插入模式下按jj进入一般模式, 但是输入j时会有明显的延迟, 惯用法, 也有人用jk. 看习惯吧.
 inoremap jj <ESC> 
@@ -76,7 +76,6 @@ let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 let g:syntastic_javascript_jshint_conf = "--config /Users/real/.jshint.json"
 let g:syntastic_javascript_checker = 'jshint'
-let g:syntastic_ruby_checker = 'macruby'
 
 "查找buffer, file, help等 
 Bundle 'vim-scripts/FuzzyFinder'
@@ -193,7 +192,7 @@ endif
 """"""""
 set modeline
 set modelines=5
-"set autochdir
+set autochdir
 set smartcase
 "set smarttab
 set ignorecase
