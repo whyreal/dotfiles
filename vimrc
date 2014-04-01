@@ -26,14 +26,20 @@ nnoremap <C-k> <C-W>k
 nnoremap <C-h> <C-W>h
 nnoremap <C-l> <C-W>l
 
+noremap <Up> <nop>
+noremap <Down> <nop>
+noremap <Left> <nop>
+noremap <Right> <nop>
+
 "插入模式下移动光标
-inoremap <C-h> <Left>
-inoremap <C-j> <Down>
-inoremap <C-k> <Up>
-inoremap <C-l> <Right>
+"inoremap <C-h> <Left>
+"inoremap <C-j> <Down>
+"inoremap <C-k> <Up>
+"inoremap <C-l> <Right>
 
 "插入模式下按jj进入一般模式, 但是输入j时会有明显的延迟, 惯用法, 也有人用jk. 看习惯吧.
-inoremap jj <ESC> 
+inoremap jk <ESC> 
+inoremap kj <ESC> 
 
 "gv用来选中上次选中的内容, 这条map可以快速调整块缩进
 vnoremap < <gv
@@ -80,19 +86,20 @@ let g:syntastic_javascript_checker = 'jshint'
 "查找buffer, file, help等 
 Bundle 'vim-scripts/FuzzyFinder'
 let g:fuf_fuzzyRefining = 1
-nnoremap <Leader>fb :FufBuffer<CR> "
+nnoremap <Leader>fb :FufBuffer<CR>
 nnoremap <Leader>ff :FufFile<CR>
 nnoremap <Leader>fh :FufHelp<CR>
 nnoremap <Leader>fl :FufLine<CR>
 nnoremap <Leader>ft :FufTag<CR>
 
-"提供类似于textmate bundle的高级代码补全功能, 比snippets强大
+""提供类似于textmate bundle的高级代码补全功能, 比snippets强大
 Bundle 'UltiSnips'
+let g:UltiSnipsDontReverseSearchPath="1"
+let g:UltiSnipsSnippetDirectories = ["snippets", "UltiSnips"]
+
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-let g:UltiSnipsDontReverseSearchPath="1"
-let g:UltiSnipsSnippetDirectories = ["snippets", "UltiSnips"]
 
 "文件系统导航插件
 Bundle 'vim-scripts/The-NERD-tree'
@@ -118,21 +125,31 @@ Bundle 'vim-scripts/L9'
 " origin zencoding
 Bundle 'vim-scripts/Emmet.vim'
 
-"
-Bundle "kakkyz81/evervim"
-source ~/.vim_evernot_developer_token
-
-" dash
-Bundle 'rizzatti/funcoo.vim'
-Bundle 'rizzatti/dash.vim'
-nmap <silent> <leader>d <Plug>DashSearch
-let g:dash_map = {
-    \ 'python'     : 'py',
-    \ }
+"" airline
+"Bundle 'bling/vim-airline'
+"let g:airline#extensions#tabline#enabled = 1
 
 """""""""""
 " Options " {{{1
 """""""""""
+set splitbelow
+set splitright
+
+" vim file/folder management
+" persistent undo
+if exists('+undofile')
+  set undofile
+  set undodir=/tmp/.vimcache/undo
+endif
+
+" backups
+set backup
+set backupdir=/tmp/.vimcache/backup
+
+" swap files
+set directory=/tmp/.vimcache/swap
+set noswapfile
+
 set pastetoggle=<F11>         " 粘贴开关
 set clipboard=unnamed         " yank and paste with the system clipboard
 set autoread
@@ -147,7 +164,9 @@ set wildmenu
 set wildmode=full
 
 " view "
-set nu "显示行号
+set number
+set relativenumber
+
 set background=dark  "设置背景色, 某些theme会根据背景色的不同有不同的显示效果
 "set fdc=4
 set tabstop=4
@@ -156,30 +175,42 @@ set autoindent       "自动缩进
 "set smartindent
 set expandtab        "用空格替换tab, 有效防止python代码中tab/space混用的问题
 "set textwidth=80
-set colorcolumn=80       " highlight column after 'textwidth'
+"set colorcolumn=80       " highlight column after 'textwidth'
 "set list listchars=tab:\¦\ ,trail:·
 set list listchars=tab:»\ ,trail:·
 set laststatus=2
 set statusline=%y\ %m%F%=%r\ line:\ %l\ column:\ %c\ %P
 
 " performance  mac自带的terminal性能貌似有些问题, 推荐使用iterm2
-set synmaxcol=200
+"set synmaxcol=200
 set scrolljump=5
 set scrolloff=5
 set ttyfast " u got a fast terminal
 set ttyscroll=3
 "set lazyredraw " to avoid scrolling problems
-"set mouse=a
+set mouse=a
 
-colorscheme codeschool
 set t_Co=256     "mac 上在tmux中打开vim该选项有异常, 可能导致色彩显示异常
+
+" im
+set noimdisable
+set iminsert=0
+set imsearch=0
+"set noimd
+"if has("gui_running")
+"    set imactivatekey=C-space
+"    inoremap <ESC> <ESC>:set iminsert=2<CR>
+"endif
+colorscheme desert
 
 " gui "
 "set guioptions-=r
 if has('gui')
+    colorscheme codeschool
     set cul
     set mouse=a
     set guifont=Menlo:h14
+    set transparency=10
     set guioptions-=T  "关闭菜单, 滚动条等UI元素
     set guioptions-=R
     set guioptions-=r

@@ -10,6 +10,9 @@ ZSH_THEME="candy"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+hash -d XC='/Users/real/Code/xiaomi'
+hash -d XC_xmq='/Users/real/Code/xiaomi/xiaomi-mq/'
+hash -d XC_ejabberd='/Users/real/Code/xiaomi/xiaomi-ejabberd/'
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -52,10 +55,8 @@ alias ll='ls -G -l'
 alias grep='grep --color'
 alias td='code/real_funcs/td'
 alias fq='python ~/Code/goagent/local/proxy.py > /dev/null 2>&1 '
-alias REMOTE='ssh rui.zhang@10.200.100.13'
-alias tmuxa='tmux attach -t'
-#alias sshvm='ssh real@localhost -p 10022'
-#alias sshvm2='ssh real@localhost -p 10023'
+alias v='open -a MacVim'
+alias remote='ssh rui.zhang@relay.xiaomi.com'
 
 # fix git problem for https
 export GIT_SSL_NO_VERIFY=true
@@ -79,4 +80,17 @@ export PATH=/usr/local/sbin:$PATH
 export LANG="en_US.UTF-8"
 
 # WORDCHARS
-export WORDCHARS=":_-./\"'"
+#export WORDCHARS=":_-./\"'"
+export WORDCHARS="~.-"
+
+# key binding
+#set -o vi
+
+# ediort
+# export EDITOR='mate -w'
+
+# gnu tools
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+export MANPATH="/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH"
+
+# . ~/Code/powerline/powerline/bindings/zsh/powerline.zsh

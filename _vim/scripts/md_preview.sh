@@ -2,9 +2,9 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-find /tmp -name 'md_preview_*.html' |xargs rm
+# find /tmp -name 'md_preview_*.html' |xargs rm
 
-output=/tmp/md_preview_$1.html
+output=$1.html
 
 cat <<eof > $output
 <link rel='stylesheet' href='/Users/real/code/markdown-css-themes/avenir-white.css'/>
@@ -18,3 +18,5 @@ $DIR/md2html.rb $1 >> $output
 cat <<eof >> $output
 eof
 open $output
+sleep 1
+rm $output
