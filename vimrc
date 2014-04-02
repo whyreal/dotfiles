@@ -124,6 +124,14 @@
 
         NeoBundle 'plasticboy/vim-markdown'
 
+    " unite-tag
+        NeoBundle 'tsukkee/unite-tag'
+
+    " unite-outline
+        NeoBundle 'h1mesuke/unite-outline'
+
+    " unite-help
+        NeoBundle 'tsukkee/unite-help'
 
     filetype plugin indent on
     syntax on
