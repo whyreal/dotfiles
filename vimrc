@@ -1,249 +1,213 @@
-" Normally we use vim-extensions. If you want true vi-compatibility
-" remove change the following statements
-set nocompatible    " Use Vim defaults instead of 100% vi compatibility
-set backspace=2 " more powerful backspacing
+" Neobundle
+    if has('vim_starting')
+        set nocompatible               " Be iMproved
+        set runtimepath+=~/.vim/bundle/neobundle.vim/
+    endif
+    call neobundle#rc(expand('~/.vim/bundle/'))
+    NeoBundleFetch 'Shougo/neobundle.vim'
 
-filetype off                   " required!
+    let mapleader = ","
 
-"""""""
-" Map " {{{1
-" 一些按键绑定, 关于这部分可以:help map.txt
-"""""""
-"set timeoutlen=500
+    " Plugings
+        NeoBundle 'Shougo/unite.vim'
+            nnoremap <leader>b :Unite buffer<CR>
+            nnoremap <leader>f :Unite file<CR>
 
-"惯用法
-let mapleader = ","
+        NeoBundle 'Shougo/neocomplete.vim'
+            " Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+            " Disable AutoComplPop.
+            let g:acp_enableAtStartup = 0
+            " Use neocomplete.
+            let g:neocomplete#enable_at_startup = 1
+            " Use smartcase.
+            let g:neocomplete#enable_smart_case = 1
+            " Set minimum syntax keyword length.
+            let g:neocomplete#sources#syntax#min_keyword_length = 3
+            let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
-"快捷调整窗口大小
-"nnoremap <C-H> <C-w><
-"nnoremap <C-J> <C-w>+
-"nnoremap <C-K> <C-w>-
-"nnoremap <C-L> <C-w>>
+            " Define dictionary.
+            let g:neocomplete#sources#dictionary#dictionaries = {
+                \ 'default' : '',
+                \ 'vimshell' : $HOME.'/.vimshell_hist',
+                \ 'scheme' : $HOME.'/.gosh_completions'
+                    \ }
 
-" Smart way to move between windows
-nnoremap <C-j> <C-W>j
-nnoremap <C-k> <C-W>k
-nnoremap <C-h> <C-W>h
-nnoremap <C-l> <C-W>l
+            " Define keyword.
+            if !exists('g:neocomplete#keyword_patterns')
+                let g:neocomplete#keyword_patterns = {}
+            endif
+            let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
-noremap <Up> <nop>
-noremap <Down> <nop>
-noremap <Left> <nop>
-noremap <Right> <nop>
+            " Plugin key-mappings.
+            inoremap <expr><C-g>     neocomplete#undo_completion()
+            inoremap <expr><C-l>     neocomplete#complete_common_string()
 
-"插入模式下移动光标
-"inoremap <C-h> <Left>
-"inoremap <C-j> <Down>
-"inoremap <C-k> <Up>
-"inoremap <C-l> <Right>
+            " Recommended key-mappings.
+            " <CR>: close popup and save indent.
+            inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+            function! s:my_cr_function()
+              return neocomplete#close_popup() . "\<CR>"
+              " For no inserting <CR> key.
+              "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+            endfunction
+            " <TAB>: completion.
+            inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+            " <C-h>, <BS>: close popup and delete backword char.
+            inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+            inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+            inoremap <expr><C-y>  neocomplete#close_popup()
+            inoremap <expr><C-e>  neocomplete#cancel_popup()
+            " Close popup by <Space>.
+            "inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
 
-"插入模式下按jj进入一般模式, 但是输入j时会有明显的延迟, 惯用法, 也有人用jk. 看习惯吧.
-inoremap jk <ESC> 
-inoremap kj <ESC> 
+            " For cursor moving in insert mode(Not recommended)
+            "inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
+            "inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
+            "inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
+            "inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
+            " Or set this.
+            "let g:neocomplete#enable_cursor_hold_i = 1
+            " Or set this.
+            "let g:neocomplete#enable_insert_char_pre = 1
 
-"gv用来选中上次选中的内容, 这条map可以快速调整块缩进
-vnoremap < <gv
-vnoremap > >gv
+            " AutoComplPop like behavior.
+            "let g:neocomplete#enable_auto_select = 1
 
-"切换标签
-nnoremap <C-n> gt<CR>
-nnoremap <C-p> gT<CR>
+            " Shell like behavior(not recommended).
+            "set completeopt+=longest
+            "let g:neocomplete#enable_auto_select = 1
+            "let g:neocomplete#disable_auto_complete = 1
+            "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
 
-nnoremap < <<
-nnoremap > >>
-nnoremap <silent> <Leader>q :q<CR>
-nnoremap <silent> <Leader>w :w<CR>
+            " Enable omni completion.
+            autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+            autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+            autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+            autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+            autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
-" Close the current buffer
-map <leader>c :Bclose<cr>
+            " Enable heavy omni completion.
+            if !exists('g:neocomplete#sources#omni#input_patterns')
+              let g:neocomplete#sources#omni#input_patterns = {}
+            endif
+            "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+            "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+            "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
-" Useful mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
+            " For perlomni.vim setting.
+            " https://github.com/c9s/perlomni.vim
+            let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
-""""""""""""""""""""""""""""""
-" Modules && Module settings " {{{1
-" 模块的的help 在:help的最下面
-""""""""""""""""""""""""""""""
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+        NeoBundle 'scrooloose/syntastic'
+            nnoremap <Leader>s :SyntasticToggleMode<CR>
+            "let g:syntastic_mode_map = { 'mode': 'passive'}
+            let g:syntastic_error_symbol='✗'
+            let g:syntastic_warning_symbol='⚠'
+            let g:syntastic_javascript_jshint_conf = "--config /Users/real/.jshint.json"
+            let g:syntastic_javascript_checker = 'jshint'
 
-"vim 插件管理系统
-Bundle 'gmarik/vundle'
-let g:vundle_default_git_proto = 'git'
+        NeoBundle 'SirVer/ultisnips'
+            " Snippets are separated from the engine. Add this if you want them:
+            NeoBundle 'honza/vim-snippets'
 
-"静态语法检查插件, 支持常见语言
-Bundle 'scrooloose/syntastic'
-nnoremap <Leader>c :SyntasticToggleMode<CR>
-"let g:syntastic_mode_map = { 'mode': 'passive'}
-let g:syntastic_error_symbol='✗'
-let g:syntastic_warning_symbol='⚠'
-let g:syntastic_javascript_jshint_conf = "--config /Users/real/.jshint.json"
-let g:syntastic_javascript_checker = 'jshint'
+            " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+            let g:UltiSnipsExpandTrigger="<tab>"
+            let g:UltiSnipsJumpForwardTrigger="<c-b>"
+            let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
-"查找buffer, file, help等 
-Bundle 'vim-scripts/FuzzyFinder'
-let g:fuf_fuzzyRefining = 1
-nnoremap <Leader>fb :FufBuffer<CR>
-nnoremap <Leader>ff :FufFile<CR>
-nnoremap <Leader>fh :FufHelp<CR>
-nnoremap <Leader>fl :FufLine<CR>
-nnoremap <Leader>ft :FufTag<CR>
+            " If you want :UltiSnipsEdit to split your window.
+            let g:UltiSnipsEditSplit="vertical"
 
-""提供类似于textmate bundle的高级代码补全功能, 比snippets强大
-Bundle 'UltiSnips'
-let g:UltiSnipsDontReverseSearchPath="1"
-let g:UltiSnipsSnippetDirectories = ["snippets", "UltiSnips"]
+        NeoBundle 'vim-scripts/The-NERD-tree'
+            nnoremap <Leader>t :NERDTreeToggle<CR>
+            let g:NERDTreeShowBookmarks = 1
 
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+        NeoBundle 'plasticboy/vim-markdown'
 
-"文件系统导航插件
-Bundle 'vim-scripts/The-NERD-tree'
-nnoremap <Leader>ntf :NERDTreeFind<CR>
-nnoremap <Leader>ntm :NERDTreeMirror<CR>
-nnoremap <Leader>ntt :NERDTreeToggle<CR>
-let g:NERDTreeShowBookmarks = 1
 
-"markdown 语法高亮插件
-Bundle 'Markdown'
-Bundle 'instant-markdown.vim'
+    filetype plugin indent on
+    syntax on
 
-"文件内导航插件, 支持wiki, markdown等多种格式, 同时支持自定义
-Bundle 'VOoM'
-nnoremap <Leader>vn :Voom<CR>
-nnoremap <Leader>vm :Voom markdown<CR>
-nnoremap <Leader>vv :VoomToggle<CR>
-nnoremap <Leader>vw :Voom vimwiki<CR>
+    NeoBundleCheck
 
-"基础函数库, 一些插件依赖该插件, 比如UltiSnips
-Bundle 'vim-scripts/L9'
+" Ui
+    set t_Co=256 
+    set fillchars=vert:\|,fold:\ 
+    set list listchars=tab:»\ ,trail:·
 
-" origin zencoding
-Bundle 'vim-scripts/Emmet.vim'
+    " split
+    set splitbelow
+    set splitright
 
-"" airline
-"Bundle 'bling/vim-airline'
-"let g:airline#extensions#tabline#enabled = 1
+    " nu
+    set number
+    set relativenumber
 
-"""""""""""
-" Options " {{{1
-"""""""""""
-set splitbelow
-set splitright
+    set background=dark
+    colorscheme desert
 
-" vim file/folder management
-" persistent undo
-if exists('+undofile')
-  set undofile
-  set undodir=/tmp/.vimcache/undo
-endif
+    if has('gui_running')
+        colorscheme solarized
+        set mouse=a
+        set cul
+        set mouse=a
+        set guifont=Menlo:h14
+        set transparency=2
+        set guioptions-=T  "关闭菜单, 滚动条等UI元素
+        set guioptions-=R
+        set guioptions-=r
+        set guioptions-=l
+        set guioptions-=L
+    endif
 
-" backups
-set backup
-set backupdir=/tmp/.vimcache/backup
+    set foldmethod=indent
 
-" swap files
-set directory=/tmp/.vimcache/swap
-set noswapfile
+    set hidden
 
-set pastetoggle=<F11>         " 粘贴开关
-set clipboard=unnamed         " yank and paste with the system clipboard
-set autoread
+" Edit
+    set tabstop=4
+    set shiftwidth=4
+    set autoindent       "自动缩进
+    set expandtab        "用空格替换tab, 有效防止python代码中tab/space混用的问题
+    set pastetoggle=<F11>         " 粘贴开关
+    set clipboard=unnamed         " yank and paste with the system clipboard
+    set autoread
+    set autochdir
+    set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+    " Im
+        set noimdisable
+        set iminsert=0
+        set imsearch=0
 
-" fold
-set fillchars=vert:\|,fold:\ 
-set nofoldenable  "默认不折叠代码
-set foldmethod=indent
+    " Map
+        nnoremap <leader>w :w<CR>
+        nnoremap <leader>q :q<CR>
 
-" 命令行补全
-set wildmenu
-set wildmode=full
+        vnoremap < <gv
+        vnoremap > >gv
+        nnoremap < <<
+        nnoremap > >>
 
-" view "
-set number
-set relativenumber
+    " undo/bak/swp
+        " persistent undo
+        if exists('+undofile')
+          set undofile
+          set undodir=/tmp/.vimcache/undo
+        endif
 
-set background=dark  "设置背景色, 某些theme会根据背景色的不同有不同的显示效果
-"set fdc=4
-set tabstop=4
-set shiftwidth=4
-set autoindent       "自动缩进
-"set smartindent
-set expandtab        "用空格替换tab, 有效防止python代码中tab/space混用的问题
-"set textwidth=80
-"set colorcolumn=80       " highlight column after 'textwidth'
-"set list listchars=tab:\¦\ ,trail:·
-set list listchars=tab:»\ ,trail:·
-set laststatus=2
-set statusline=%y\ %m%F%=%r\ line:\ %l\ column:\ %c\ %P
+        " backups
+        set backup
+        set backupdir=/tmp/.vimcache/backup
 
-" performance  mac自带的terminal性能貌似有些问题, 推荐使用iterm2
-"set synmaxcol=200
-set scrolljump=5
-set scrolloff=5
-set ttyfast " u got a fast terminal
-set ttyscroll=3
-"set lazyredraw " to avoid scrolling problems
-set mouse=a
+        " swap files
+        set directory=/tmp/.vimcache/swap
+        set noswapfile
 
-set t_Co=256     "mac 上在tmux中打开vim该选项有异常, 可能导致色彩显示异常
-
-" im
-set noimdisable
-set iminsert=0
-set imsearch=0
-"set noimd
-"if has("gui_running")
-"    set imactivatekey=C-space
-"    inoremap <ESC> <ESC>:set iminsert=2<CR>
-"endif
-colorscheme desert
-
-" gui "
-"set guioptions-=r
-if has('gui')
-    colorscheme codeschool
-    set cul
-    set mouse=a
-    set guifont=Menlo:h14
-    set transparency=10
-    set guioptions-=T  "关闭菜单, 滚动条等UI元素
-    set guioptions-=R
-    set guioptions-=r
-    set guioptions-=l
-    set guioptions-=L
-endif
-
-""""""""
-" Misc " {{{1
-""""""""
-set modeline
-set modelines=5
-set autochdir
-set smartcase
-"set smarttab
-set ignorecase
-set hlsearch
-set incsearch
-set tags=tags;/  "从打开文件所在的目录, 逐级目录向上查找tags文件. 通常在项目的根目录生成tags文件即可
-set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-" E37 No write since last change
-set hidden
-
-filetype plugin on
-filetype indent on
-syntax on
-
-au BufNewFile,BufRead *.pp setfiletype ruby
-
-""""""""""""""""""""""""""""""
-" => Visual mode related
-""""""""""""""""""""""""""""""
-" Visual mode pressing * or # searches for the current selection
-" Super useful! From an idea by Michael Naumann
-vnoremap <silent> * :call VisualSelection('f')<CR>
-vnoremap <silent> # :call VisualSelection('b')<CR>
+" Search
+    set smartcase
+    set ignorecase
+    set hlsearch
+    set incsearch
+    set tags=tags;/
+    set wildmenu
+    set wildmode=full
