@@ -81,13 +81,13 @@ export LANG="en_US.UTF-8"
 
 # WORDCHARS
 #export WORDCHARS=":_-./\"'"
-export WORDCHARS="~.-"
+export WORDCHARS="*~.-"
 
 # key binding
 #set -o vi
 
 # ediort
-# export EDITOR='mate -w'
+export EDITOR='vim'
 
 # gnu tools
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"

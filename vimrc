@@ -9,10 +9,61 @@
     let mapleader = ","
 
     " Plugings
+        " unite sources
         NeoBundle 'Shougo/unite.vim'
-            nnoremap <leader>b :Unite buffer<CR>
-            nnoremap <leader>f :Unite file<CR>
+            nnoremap <C-p> :Unite source<CR>
+            nnoremap <space>c :Unite command<CR>
+            nnoremap <space>b :Unite buffer<CR>
+            nnoremap <space>f :Unite file_rec<CR>
+            nnoremap <space>y :Unite history/yank<cr>
+                let g:unite_source_history_yank_enable = 1
+        NeoBundle 'Shougo/vimproc', {
+            \ 'build' : {
+            \     'windows' : 'make -f make_mingw32.mak',
+            \     'cygwin' : 'make -f make_cygwin.mak',
+            \     'mac' : 'make -f make_mac.mak',
+            \     'unix' : 'make -f make_unix.mak',
+            \    },
+            \ }
+            nnoremap <space>g :Unite grep:.<CR>
+        NeoBundle 'tsukkee/unite-tag'
+            nnoremap <space>t :Unite tag<CR>
+        NeoBundle 'h1mesuke/unite-outline'
+        NeoBundle 'tsukkee/unite-help'
+            nnoremap <space>h :Unite help<CR>
+        NeoBundle 'Shougo/neomru.vim'
+            nnoremap <space>m :Unite file_mru directory_mru<CR>
 
+        " colorscheme
+        NeoBundle 'altercation/vim-colors-solarized'
+        NeoBundle 'wesgibbs/vim-irblack'
+        NeoBundle 'vim-scripts/mayansmoke'
+        NeoBundle 'therubymug/vim-pyte'
+        NeoBundle 'vim-scripts/peaksea'
+
+        " syntax
+        NeoBundle 'plasticboy/vim-markdown'
+        NeoBundle 'greyblake/vim-preview'
+        NeoBundle 'scrooloose/syntastic'
+            nnoremap <Leader>s :SyntasticToggleMode<CR>
+            "let g:syntastic_mode_map = { 'mode': 'passive'}
+            let g:syntastic_error_symbol='✗'
+            let g:syntastic_warning_symbol='⚠'
+            let g:syntastic_javascript_jshint_conf = "--config /Users/real/.jshint.json"
+            let g:syntastic_javascript_checker = 'jshint'
+
+        " autocomplete
+        NeoBundle 'SirVer/ultisnips'
+            " Snippets are separated from the engine. Add this if you want them:
+            NeoBundle 'honza/vim-snippets'
+
+            " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+            let g:UltiSnipsExpandTrigger="<tab>"
+            let g:UltiSnipsJumpForwardTrigger="<c-b>"
+            let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+            " If you want :UltiSnipsEdit to split your window.
+            let g:UltiSnipsEditSplit="vertical"
         NeoBundle 'Shougo/neocomplete.vim'
             " Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
             " Disable AutoComplPop.
@@ -98,90 +149,72 @@
             " https://github.com/c9s/perlomni.vim
             let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
-        NeoBundle 'scrooloose/syntastic'
-            nnoremap <Leader>s :SyntasticToggleMode<CR>
-            "let g:syntastic_mode_map = { 'mode': 'passive'}
-            let g:syntastic_error_symbol='✗'
-            let g:syntastic_warning_symbol='⚠'
-            let g:syntastic_javascript_jshint_conf = "--config /Users/real/.jshint.json"
-            let g:syntastic_javascript_checker = 'jshint'
-
-        NeoBundle 'SirVer/ultisnips'
-            " Snippets are separated from the engine. Add this if you want them:
-            NeoBundle 'honza/vim-snippets'
-
-            " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-            let g:UltiSnipsExpandTrigger="<tab>"
-            let g:UltiSnipsJumpForwardTrigger="<c-b>"
-            let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-            " If you want :UltiSnipsEdit to split your window.
-            let g:UltiSnipsEditSplit="vertical"
-
+        " navigation
         NeoBundle 'vim-scripts/The-NERD-tree'
-            nnoremap <Leader>t :NERDTreeToggle<CR>
+            nnoremap <Leader>n :NERDTreeToggle<CR>
             let g:NERDTreeShowBookmarks = 1
 
-        NeoBundle 'plasticboy/vim-markdown'
+        NeoBundle 'vim-scripts/VisIncr'
+        NeoBundle 'tpope/vim-surround'
 
-    " unite-tag
-        NeoBundle 'tsukkee/unite-tag'
-
-    " unite-outline
-        NeoBundle 'h1mesuke/unite-outline'
-
-    " unite-help
-        NeoBundle 'tsukkee/unite-help'
+        NeoBundleCheck
 
     filetype plugin indent on
     syntax on
 
-    NeoBundleCheck
-
 " Ui
-    set t_Co=256 
-    set fillchars=vert:\|,fold:\ 
-    set list listchars=tab:»\ ,trail:·
-
     " split
     set splitbelow
     set splitright
-
     " nu
     set number
     set relativenumber
-
-    set background=dark
-    colorscheme desert
+    set fillchars=vert:\|
+    set list listchars=tab:»\ ,trail:· "XXXXX
+    set hidden
+    set list listchars=tab:»\ ,trail:·
+    set laststatus=2
+    set statusline=%y\ %m%F%=%r\ line:\ %l\ column:\ %c\ %P
+    set cc=80
+    set mouse=a
 
     if has('gui_running')
+        set bg=light
         colorscheme solarized
-        set mouse=a
         set cul
-        set mouse=a
-        set guifont=Menlo:h14
-        set transparency=2
+        set guifont=Menlo:h15
+        "set transparency=2
         set guioptions-=T  "关闭菜单, 滚动条等UI元素
         set guioptions-=R
         set guioptions-=r
         set guioptions-=l
         set guioptions-=L
+    else
+        set bg=dark
+        let g:solarized_termcolors=256
+        set t_Co=256
+        colorscheme desert
     endif
-
-    set foldmethod=indent
-
-    set hidden
 
 " Edit
     set tabstop=4
     set shiftwidth=4
-    set autoindent       "自动缩进
     set expandtab        "用空格替换tab, 有效防止python代码中tab/space混用的问题
+    set autoindent       "自动缩进
+
     set pastetoggle=<F11>         " 粘贴开关
     set clipboard=unnamed         " yank and paste with the system clipboard
     set autoread
-    set autochdir
     set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+
+    " Filetype
+        " default filetype
+        autocmd BufEnter * if &filetype == "" | setlocal ft=mkd | endif
+
+        "autocmd Syntax c,cpp,xml,html,xhtml setlocal foldmethod=syntax
+        "autocmd Syntax c,cpp,vim,xml,html,xhtml,perl normal zR
+        autocmd Syntax vim,python setlocal foldmethod=indent
+
     " Im
         set noimdisable
         set iminsert=0
@@ -211,11 +244,25 @@
         set directory=/tmp/.vimcache/swap
         set noswapfile
 
-" Search
-    set smartcase
-    set ignorecase
-    set hlsearch
-    set incsearch
-    set tags=tags;/
-    set wildmenu
-    set wildmode=full
+    " Search
+        set smartcase
+        set ignorecase
+        set hlsearch
+        set incsearch
+        set tags=tags;/
+        set wildmenu
+        set wildmode=full
+    " tab navigation
+        nnoremap th  :tabfirst<CR>
+        nnoremap tj  :tabprev<CR>
+        nnoremap tk  :tabnext<CR>
+        nnoremap tl  :tablast<CR>
+        nnoremap tn  :tabnew<CR>
+        nnoremap tm  :tabm<Space>
+        nnoremap tc  :tabclose<CR>
+        " Alternatively use
+        " "nnoremap th :tabnext<CR>
+        " "nnoremap tl :tabprev<CR>
+        " "nnoremap tn :tabnew<CR>
+
+" vim: foldmethod=indent
