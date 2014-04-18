@@ -1,0 +1,8 @@
+#!/bin/bash
+opts=""
+
+if [[ `vim --serverlist` != "" && $# -ge 1 ]]; then
+    opts="$opts --remote"
+fi
+
+vim $opts $*
