@@ -8,15 +8,15 @@
 
     let mapleader = ","
 
-    " Plugings
-        " unite sources
+    " Unite Sources
         NeoBundle 'Shougo/unite.vim'
-            nnoremap <C-p> :Unite source<CR>
-            nnoremap <space>c :Unite command<CR>
-            nnoremap <space>b :Unite buffer<CR>
-            nnoremap <space>f :Unite file_rec<CR>
-            nnoremap <space>y :Unite history/yank<cr>
-                let g:unite_source_history_yank_enable = 1
+            nnoremap <Space>s :Unite source<CR>
+            nnoremap <Space>c :Unite command<CR>
+            nnoremap <Space>b :Unite buffer<CR>
+            nnoremap <Space>f :Unite file_rec<CR>
+            nnoremap <Space>y :Unite history/yank<cr>
+            let g:unite_source_history_yank_enable = 1
+
         NeoBundle 'Shougo/vimproc', {
             \ 'build' : {
             \     'windows' : 'make -f make_mingw32.mak',
@@ -25,34 +25,26 @@
             \     'unix' : 'make -f make_unix.mak',
             \    },
             \ }
-            nnoremap <space>g :Unite grep:.<CR>
+            nnoremap <Space>g :Unite grep:.<CR>
+
         NeoBundle 'tsukkee/unite-tag'
-            nnoremap <space>t :Unite tag<CR>
+            nnoremap <Space>t :Unite tag<CR>
+
         NeoBundle 'h1mesuke/unite-outline'
+            nnoremap <Space>o :Unite outline<CR>
+
         NeoBundle 'tsukkee/unite-help'
-            nnoremap <space>h :Unite help<CR>
+            nnoremap <Space>h :Unite help<CR>
+
         NeoBundle 'Shougo/neomru.vim'
-            nnoremap <space>m :Unite file_mru directory_mru<CR>
+            nnoremap <Space>m :Unite file_mru directory_mru<CR>
 
-        " colorscheme
-        NeoBundle 'altercation/vim-colors-solarized'
-        NeoBundle 'wesgibbs/vim-irblack'
-        NeoBundle 'vim-scripts/mayansmoke'
-        NeoBundle 'therubymug/vim-pyte'
-        NeoBundle 'vim-scripts/peaksea'
-
-        " syntax
-        NeoBundle 'plasticboy/vim-markdown'
+    " Edit
+        NeoBundle 'vim-scripts/VisIncr'
+        NeoBundle 'tpope/vim-surround'
         NeoBundle 'greyblake/vim-preview'
-        NeoBundle 'scrooloose/syntastic'
-            nnoremap <Leader>s :SyntasticToggleMode<CR>
-            "let g:syntastic_mode_map = { 'mode': 'passive'}
-            let g:syntastic_error_symbol='✗'
-            let g:syntastic_warning_symbol='⚠'
-            let g:syntastic_javascript_jshint_conf = "--config /Users/real/.jshint.json"
-            let g:syntastic_javascript_checker = 'jshint'
+        NeoBundle 'jiangmiao/auto-pairs'
 
-        " autocomplete
         NeoBundle 'SirVer/ultisnips'
             " Snippets are separated from the engine. Add this if you want them:
             NeoBundle 'honza/vim-snippets'
@@ -64,6 +56,7 @@
 
             " If you want :UltiSnipsEdit to split your window.
             let g:UltiSnipsEditSplit="vertical"
+
         NeoBundle 'Shougo/neocomplete.vim'
             " Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
             " Disable AutoComplPop.
@@ -148,53 +141,33 @@
             " For perlomni.vim setting.
             " https://github.com/c9s/perlomni.vim
             let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+        NeoBundle 'scrooloose/syntastic'
+            nnoremap <Leader>s :SyntasticToggleMode<CR>
+            "let g:syntastic_mode_map = { 'mode': 'passive'}
+            let g:syntastic_error_symbol='✗'
+            let g:syntastic_warning_symbol='⚠'
+            let g:syntastic_javascript_jshint_conf = "--config /Users/real/.jshint.json"
+            let g:syntastic_javascript_checker = 'jshint'
 
-        " navigation
+    " syntax
+        NeoBundle 'plasticboy/vim-markdown'
+
+    " UI
+        NeoBundle 'altercation/vim-colors-solarized'
+        NeoBundle 'wesgibbs/vim-irblack'
+        NeoBundle 'vim-scripts/mayansmoke'
+        NeoBundle 'therubymug/vim-pyte'
+        NeoBundle 'vim-scripts/peaksea'
+
         NeoBundle 'vim-scripts/The-NERD-tree'
             nnoremap <Leader>n :NERDTreeToggle<CR>
+            nnoremap <F2> :NERDTreeToggle<CR>
             let g:NERDTreeShowBookmarks = 1
 
-        NeoBundle 'vim-scripts/VisIncr'
-        NeoBundle 'tpope/vim-surround'
-
-        NeoBundleCheck
+    NeoBundleCheck
 
     filetype plugin indent on
     syntax on
-
-" Ui
-    " split
-    set splitbelow
-    set splitright
-    " nu
-    set number
-    set relativenumber
-    set fillchars=vert:\|
-    set list listchars=tab:»\ ,trail:· "XXXXX
-    set hidden
-    set list listchars=tab:»\ ,trail:·
-    set laststatus=2
-    set statusline=%y\ %m%F%=%r\ line:\ %l\ column:\ %c\ %P
-    set cc=80
-    set mouse=a
-
-    if has('gui_running')
-        set bg=light
-        colorscheme solarized
-        set cul
-        set guifont=Menlo:h15
-        "set transparency=2
-        set guioptions-=T  "关闭菜单, 滚动条等UI元素
-        set guioptions-=R
-        set guioptions-=r
-        set guioptions-=l
-        set guioptions-=L
-    else
-        set bg=dark
-        let g:solarized_termcolors=256
-        set t_Co=256
-        colorscheme desert
-    endif
 
 " Edit
     set tabstop=4
@@ -202,67 +175,135 @@
     set expandtab        "用空格替换tab, 有效防止python代码中tab/space混用的问题
     set autoindent       "自动缩进
 
-    set pastetoggle=<F11>         " 粘贴开关
+    set pastetoggle=<F11>
     set clipboard=unnamed         " yank and paste with the system clipboard
     set autoread
     set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 
-    " Filetype
-        " default filetype
-        autocmd BufEnter * if &filetype == "" | setlocal ft=mkd | endif
+    nnoremap <F1> :tab help <CR>
 
-        "autocmd Syntax c,cpp,xml,html,xhtml setlocal foldmethod=syntax
-        "autocmd Syntax c,cpp,vim,xml,html,xhtml,perl normal zR
-        autocmd Syntax vim,python setlocal foldmethod=indent
+    " block edit
+    nnoremap <F10> :call r#toggle_option("virtualedit", "all", "") <CR>
 
-    " Im
-        set noimdisable
-        set iminsert=0
-        set imsearch=0
+    nnoremap <F5> :make<CR>
+    inoremap <F5> <Esc>:make<CR>
+    nnoremap <leader>w :w<CR>
+    nnoremap <leader>q :q<CR>
+    inoremap jj <Esc>
 
-    " Map
-        nnoremap <leader>w :w<CR>
-        nnoremap <leader>q :q<CR>
+    " Auto change input method (gui only)
+        if has('gui_running')
+            set noimdisable
+            set iminsert=0
+            set imsearch=0
+        endif
 
+    " Better Shift
         vnoremap < <gv
         vnoremap > >gv
         nnoremap < <<
         nnoremap > >>
 
-    " undo/bak/swp
-        " persistent undo
+    " Plugings
+
+" Fold
+    autocmd Syntax vim,python call r#use_my_indent_foldexpr()
+
+    autocmd Syntax * let &commentstring=" " . &commentstring
+    set foldtext=r#get_foldtext()
+
+" Tab
+    " Navigation
+        nnoremap tf  :tabfirst<CR>
+        nnoremap tp  :tabprev<CR>
+        nnoremap tn  :tabnext<CR>
+        nnoremap tl  :tablast<CR>
+        nnoremap tc  :tabnew<CR>
+        nnoremap tm  :tabm<Space>
+        nnoremap tx  :tabclose<CR>
+
+" Command Line
+    "Motion
+        cnoremap <C-a>  <Home>
+        cnoremap <C-e>  <End>
+        cnoremap <C-b>  <C-Left>
+        cnoremap <C-f>  <C-Right>
+        cnoremap <C-d>  <Delete>
+
+" Ui
+    set fillchars=vert:\|
+    "set list listchars=tab:»\ ,trail:· "XXXXX
+    set hidden
+    set textwidth=78
+    set cc=+1,+2
+    set mouse=a
+
+    if has('gui_running')
+        set bg=dark
+        let g:solarized_underline=0
+        colorscheme solarized
+        set macmeta
+        set cul
+        set guifont=Menlo:h15
+        "set transparency=2
+        set guioptions-=T
+        set guioptions-=R
+        set guioptions-=r
+        set guioptions-=l
+        set guioptions-=L
+    elseif $TERM_PROGRAM == "iTerm.app"
+        set bg=dark
+        set t_Co=256
+        "let g:solarized_termcolors=256
+        let g:solarized_underline=0
+        colorscheme solarized
+    else
+        colorscheme desert
+    endif
+
+    " Split
+        set splitbelow
+        set splitright
+
+    " Number
+        set number
+        set relativenumber
+        set ruler
+
+    " Status line
+        set laststatus=1
+        set statusline=%y\ %m%F%=%r\ line:\ %l\ column:\ %c\ %P
+
+" Filetype
+    " Default Filetype
+    autocmd BufEnter * call r#set_default_filetype("mkd")
+
+" undo/bak/swp file
+    " persistent undo
+        let s:undo_dir = $HOME . "/.vim/cache/undo"
         if exists('+undofile')
-          set undofile
-          set undodir=/tmp/.vimcache/undo
+            call r#check_dir_exist(s:undo_dir)
+            set undofile
+            let &undodir = s:undo_dir
         endif
 
-        " backups
+    " backups
+        let s:backup_dir = $HOME . "/.vim/cache/backup"
+        call r#check_dir_exist(s:backup_dir)
         set backup
-        set backupdir=/tmp/.vimcache/backup
+        let &backupdir = s:backup_dir
 
-        " swap files
-        set directory=/tmp/.vimcache/swap
+    " swap files
+        let s:swap_dir = $HOME . "/.vim/cache/swap"
+        call r#check_dir_exist(s:swap_dir)
         set noswapfile
+        let &directory = s:swap_dir
 
-    " Search
-        set smartcase
-        set ignorecase
-        set hlsearch
-        set incsearch
-        set tags=tags;/
-        set wildmenu
-        set wildmode=full
-    " tab navigation
-        nnoremap th  :tabfirst<CR>
-        nnoremap tj  :tabprev<CR>
-        nnoremap tk  :tabnext<CR>
-        nnoremap tl  :tablast<CR>
-        nnoremap tn  :tabnew<CR>
-        nnoremap tm  :tabm<Space>
-        nnoremap tc  :tabclose<CR>
-        " Alternatively use
-        " "nnoremap th :tabnext<CR>
-        " "nnoremap tl :tabprev<CR>
-        " "nnoremap tn :tabnew<CR>
-
-" vim: foldmethod=indent
+" Search
+    set smartcase
+    set ignorecase
+    set hlsearch
+    set incsearch
+    set tags=tags;/
+    set wildmenu
+    set wildmode=full
