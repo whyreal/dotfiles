@@ -30,9 +30,6 @@
         NeoBundle 'tsukkee/unite-tag'
             nnoremap <Space>t :Unite tag<CR>
 
-        NeoBundle 'h1mesuke/unite-outline'
-            nnoremap <Space>o :Unite outline<CR>
-
         NeoBundle 'tsukkee/unite-help'
             nnoremap <Space>h :Unite help<CR>
 
@@ -40,14 +37,12 @@
             nnoremap <Space>m :Unite file_mru directory_mru<CR>
 
     " Edit
-        NeoBundle 'vim-scripts/VisIncr'
-        NeoBundle 'tpope/vim-surround'
         NeoBundle 'greyblake/vim-preview'
-        NeoBundle 'jiangmiao/auto-pairs'
+            nnoremap <Space>p :Preview<CR>
+
+        NeoBundle 'honza/vim-snippets'
 
         NeoBundle 'SirVer/ultisnips'
-            " Snippets are separated from the engine. Add this if you want them:
-            NeoBundle 'honza/vim-snippets'
 
             " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
             let g:UltiSnipsExpandTrigger="<tab>"
@@ -68,6 +63,7 @@
             " Set minimum syntax keyword length.
             let g:neocomplete#sources#syntax#min_keyword_length = 3
             let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+            let g:neocomplete#enable_auto_close_preview = 0
 
             " Define dictionary.
             let g:neocomplete#sources#dictionary#dictionaries = {
@@ -160,8 +156,7 @@
         NeoBundle 'vim-scripts/peaksea'
 
         NeoBundle 'vim-scripts/The-NERD-tree'
-            nnoremap <Leader>n :NERDTreeToggle<CR>
-            nnoremap <F2> :NERDTreeToggle<CR>
+            nnoremap <Space>n :NERDTreeToggle<CR>
             let g:NERDTreeShowBookmarks = 1
 
     NeoBundleCheck
@@ -174,6 +169,7 @@
     set shiftwidth=4
     set expandtab        "用空格替换tab, 有效防止python代码中tab/space混用的问题
     set autoindent       "自动缩进
+    set autochdir
 
     set pastetoggle=<F11>
     set clipboard=unnamed         " yank and paste with the system clipboard
@@ -189,6 +185,7 @@
     inoremap <F5> <Esc>:make<CR>
     nnoremap <leader>w :w<CR>
     nnoremap <leader>q :q<CR>
+    nnoremap <C-c> <Esc>
     inoremap jj <Esc>
 
     " Auto change input method (gui only)
@@ -204,12 +201,10 @@
         nnoremap < <<
         nnoremap > >>
 
-    " Plugings
-
 " Fold
     autocmd Syntax vim,python call r#use_my_indent_foldexpr()
 
-    autocmd Syntax * let &commentstring=" " . &commentstring
+    "autocmd Syntax * let &commentstring=" " . &commentstring
     set foldtext=r#get_foldtext()
 
 " Tab
@@ -264,6 +259,7 @@
     " Split
         set splitbelow
         set splitright
+        set previewheight=5
 
     " Number
         set number

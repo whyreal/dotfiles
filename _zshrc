@@ -49,9 +49,7 @@ source $ZSH/oh-my-zsh.sh
 alias ls='ls -G'
 alias ll='ls -G -l'
 alias grep='grep --color'
-alias td='code/real_funcs/td'
 alias fq='python ~/Code/goagent/local/proxy.py > /dev/null 2>&1 '
-alias remote='ssh rui.zhang@relay.xiaomi.com'
 
 # fix git problem for https
 export GIT_SSL_NO_VERIFY=true
@@ -86,7 +84,7 @@ export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export MANPATH="/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH"
 
 # functions create by myself
-export PATH=~/.shell_funcs:$PATH
+export PATH=~/.zfunc:$PATH
 
 # powerline
 # . ~/Code/powerline/powerline/bindings/zsh/powerline.zsh
