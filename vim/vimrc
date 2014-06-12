@@ -15,6 +15,7 @@
             nnoremap <Space>b :Unite buffer<CR>
             nnoremap <Space>f :Unite file_rec<CR>
             nnoremap <Space>y :Unite history/yank<cr>
+            nnoremap <Space>j :Unite jump<cr>
             let g:unite_source_history_yank_enable = 1
 
         NeoBundle 'Shougo/vimproc', {
@@ -38,20 +39,20 @@
 
     " Edit
         NeoBundle 'greyblake/vim-preview'
-            nnoremap <Space>p :Preview<CR>
+            nnoremap <silent> <Space>p :Preview<CR>
 
         NeoBundle 'honza/vim-snippets'
 
         NeoBundle 'SirVer/ultisnips'
 
+        NeoBundle 'mattn/emmet-vim'
             " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
             let g:UltiSnipsExpandTrigger="<tab>"
-            let g:UltiSnipsJumpForwardTrigger="<c-b>"
-            let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+            let g:UltiSnipsJumpForwardTrigger="<c-l>"
+            let g:UltiSnipsJumpBackwardTrigger="<c-h>"
 
             " If you want :UltiSnipsEdit to split your window.
             let g:UltiSnipsEditSplit="vertical"
-
         NeoBundle 'Shougo/neocomplete.vim'
             " Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
             " Disable AutoComplPop.
@@ -137,16 +138,22 @@
             " For perlomni.vim setting.
             " https://github.com/c9s/perlomni.vim
             let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+
         NeoBundle 'scrooloose/syntastic'
-            nnoremap <Leader>s :SyntasticToggleMode<CR>
+            nnoremap <silent> <Leader>s :SyntasticToggleMode<CR>
             "let g:syntastic_mode_map = { 'mode': 'passive'}
             let g:syntastic_error_symbol='✗'
             let g:syntastic_warning_symbol='⚠'
             let g:syntastic_javascript_jshint_conf = "--config /Users/real/.jshint.json"
             let g:syntastic_javascript_checker = 'jshint'
 
+        NeoBundle 'rizzatti/dash.vim'
+            nmap <silent> <Space>d <Plug>DashSearch
+
+
     " syntax
         NeoBundle 'plasticboy/vim-markdown'
+        NeoBundle 'puppetlabs/puppet-syntax-vim'
 
     " UI
         NeoBundle 'altercation/vim-colors-solarized'
@@ -156,7 +163,7 @@
         NeoBundle 'vim-scripts/peaksea'
 
         NeoBundle 'vim-scripts/The-NERD-tree'
-            nnoremap <Space>n :NERDTreeToggle<CR>
+            nnoremap <silent> <Space>n :NERDTreeToggle<CR>
             let g:NERDTreeShowBookmarks = 1
 
     NeoBundleCheck
@@ -169,24 +176,25 @@
     set shiftwidth=4
     set expandtab        "用空格替换tab, 有效防止python代码中tab/space混用的问题
     set autoindent       "自动缩进
-    set autochdir
+    "set autochdir
 
     set pastetoggle=<F11>
     set clipboard=unnamed         " yank and paste with the system clipboard
     set autoread
     set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 
-    nnoremap <F1> :tab help <CR>
+    nnoremap <silent> <F1> :tab help <CR>
 
     " block edit
-    nnoremap <F10> :call r#toggle_option("virtualedit", "all", "") <CR>
+    nnoremap <silent> <F10> :call r#toggle_option("virtualedit", "all", "") <CR>
 
-    nnoremap <F5> :make<CR>
-    inoremap <F5> <Esc>:make<CR>
-    nnoremap <leader>w :w<CR>
-    nnoremap <leader>q :q<CR>
-    nnoremap <C-c> <Esc>
-    inoremap jj <Esc>
+    "nnoremap <F5> :make<CR>
+    "inoremap <F5> <Esc>:make<CR>
+    nnoremap <silent> <leader>w :w<CR>
+    nnoremap <silent> <leader>q :q<CR>
+    nnoremap <silent> <Leader>cd :cd %:p:h <CR>
+    nnoremap <silent> <C-c> <Esc>
+    "inoremap jj <Esc>
 
     " Auto change input method (gui only)
         if has('gui_running')
@@ -202,8 +210,7 @@
         nnoremap > >>
 
 " Fold
-    autocmd Syntax vim,python call r#use_my_indent_foldexpr()
-
+    "autocmd Syntax vim,python call r#use_my_indent_foldexpr()
     "autocmd Syntax * let &commentstring=" " . &commentstring
     set foldtext=r#get_foldtext()
 
@@ -229,36 +236,37 @@
     set fillchars=vert:\|
     "set list listchars=tab:»\ ,trail:· "XXXXX
     set hidden
-    set textwidth=78
-    set cc=+1,+2
+    set textwidth=79
+    set cc=+1
     set mouse=a
+    colorscheme desert
 
     if has('gui_running')
-        set bg=dark
-        let g:solarized_underline=0
-        colorscheme solarized
+        "set bg=light
+        "let g:solarized_underline=0
+        "colorscheme solarized
         set macmeta
         set cul
-        set guifont=Menlo:h15
-        "set transparency=2
-        set guioptions-=T
-        set guioptions-=R
-        set guioptions-=r
-        set guioptions-=l
-        set guioptions-=L
+        set guifont=Menlo:h14
+        "set transparency=10
+        "set guioptions-=T
+        "set guioptions-=R
+        "set guioptions-=r
+        "set guioptions-=l
+        "set guioptions-=L
     elseif $TERM_PROGRAM == "iTerm.app"
-        set bg=dark
+        set bg=light
         set t_Co=256
         "let g:solarized_termcolors=256
-        let g:solarized_underline=0
-        colorscheme solarized
+        "let g:solarized_underline=0
+        "colorscheme solarized
     else
-        colorscheme desert
+        colorscheme default
     endif
 
     " Split
-        set splitbelow
-        set splitright
+        "set splitbelow
+        "set splitright
         set previewheight=5
 
     " Number
@@ -267,7 +275,7 @@
         set ruler
 
     " Status line
-        set laststatus=1
+        set laststatus=2
         set statusline=%y\ %m%F%=%r\ line:\ %l\ column:\ %c\ %P
 
 " Filetype
