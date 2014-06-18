@@ -90,3 +90,6 @@ export PATH=~/.zfunc:$PATH
 
 # powerline
 # . ~/Code/powerline/powerline/bindings/zsh/powerline.zsh
+
+# Python
+export PATH="/Library/Python/2.7/site-packages/django/bin/:$PATH"
