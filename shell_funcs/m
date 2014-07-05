@@ -1,0 +1,10 @@
+#!/bin/bash
+opts="--remote-tab-silent"
+servername="vim"
+
+if [[ `vim --serverlist` == "" ]]; then
+    mvim --servername $servername
+    sleep 1
+fi
+
+vim --servername $servername $opts $*

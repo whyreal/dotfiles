@@ -48,10 +48,9 @@ source $ZSH/oh-my-zsh.sh
 
 alias ls='ls -G'
 alias ll='ls -G -l'
-alias m='mvim'
 alias grep='grep --color'
 alias fq='python ~/Code/goagent/local/proxy.py > /dev/null 2>&1 '
-alias relay='ssh -i .ssh/zhangrui4 zhangrui4@relay.op.ksyun.com'
+alias relay='ssh -i ~/.ssh/zhangrui4 zhangrui4@relay.op.ksyun.com'
 
 # fix git problem for https
 export GIT_SSL_NO_VERIFY=true
@@ -61,12 +60,11 @@ export HISTSIZE=5000
 export HISTFILESIZE=50000
 
 # golang
-export GOROOT=/usr/local/Cellar/go/1.1.2/
-export GOPATH=/Users/real/Documents/whyreal/code_fun/golang
-export PATH=$PATH:$GOPATH/bin
+export GOPATH=~/Code/whyreal/code_fun/golang
+export PATH=/Users/real/Code/whyreal/code_fun/golang/bin:$PATH
 
 # homebrew
-export PATH=/usr/local/sbin:$PATH
+#export PATH=/usr/local/sbin:$PATH
 
 # language
 export LANG="en_US.UTF-8"
@@ -82,8 +80,8 @@ export WORDCHARS="[]{}()*~.-_"
 export EDITOR='vim'
 
 # gnu tools
-export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-export MANPATH="/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH"
+#export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+#export MANPATH="/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH"
 
 # functions create by myself
 export PATH=~/.zfunc:$PATH
@@ -92,4 +90,4 @@ export PATH=~/.zfunc:$PATH
 # . ~/Code/powerline/powerline/bindings/zsh/powerline.zsh
 
 # Python
-export PATH="/Library/Python/2.7/site-packages/django/bin/:$PATH"
+#export PATH="/Library/Python/2.7/site-packages/django/bin/:$PATH"

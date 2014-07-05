@@ -6,7 +6,7 @@
     call neobundle#rc(expand('~/.vim/bundle/'))
     NeoBundleFetch 'Shougo/neobundle.vim'
 
-    let mapleader = ","
+    "let mapleader = ","
 
     " Unite Sources
         NeoBundle 'Shougo/unite.vim'
@@ -14,8 +14,6 @@
             nnoremap <Space>c :Unite command<CR>
             nnoremap <Space>b :Unite buffer<CR>
             nnoremap <Space>f :Unite file_rec<CR>
-            nnoremap <Space>y :Unite history/yank<cr>
-            nnoremap <Space>j :Unite jump<cr>
             let g:unite_source_history_yank_enable = 1
 
         NeoBundle 'Shougo/vimproc', {
@@ -39,7 +37,8 @@
 
     " Edit
         NeoBundle 'greyblake/vim-preview'
-            nnoremap <silent> <Space>p :Preview<CR>
+
+        NeoBundle 'Lokaltog/vim-easymotion'
 
         NeoBundle 'honza/vim-snippets'
 
@@ -140,7 +139,6 @@
             let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
         NeoBundle 'scrooloose/syntastic'
-            nnoremap <silent> <Leader>s :SyntasticToggleMode<CR>
             "let g:syntastic_mode_map = { 'mode': 'passive'}
             let g:syntastic_error_symbol='✗'
             let g:syntastic_warning_symbol='⚠'
@@ -154,6 +152,7 @@
     " syntax
         NeoBundle 'plasticboy/vim-markdown'
         NeoBundle 'puppetlabs/puppet-syntax-vim'
+        NeoBundle 'jnwhiteh/vim-golang'
 
     " UI
         NeoBundle 'altercation/vim-colors-solarized'
@@ -163,8 +162,8 @@
         NeoBundle 'vim-scripts/peaksea'
 
         NeoBundle 'vim-scripts/The-NERD-tree'
-            nnoremap <silent> <Space>n :NERDTreeToggle<CR>
             let g:NERDTreeShowBookmarks = 1
+            map <Leader>n :NERDTreeToggle<CR>
 
     NeoBundleCheck
 
@@ -188,13 +187,7 @@
     " block edit
     nnoremap <silent> <F10> :call r#toggle_option("virtualedit", "all", "") <CR>
 
-    "nnoremap <F5> :make<CR>
-    "inoremap <F5> <Esc>:make<CR>
-    nnoremap <silent> <leader>w :w<CR>
-    nnoremap <silent> <leader>q :q<CR>
-    nnoremap <silent> <Leader>cd :cd %:p:h <CR>
-    nnoremap <silent> <C-c> <Esc>
-    "inoremap jj <Esc>
+    inoremap jj <Esc>
 
     " Auto change input method (gui only)
         if has('gui_running')
@@ -239,15 +232,15 @@
     set textwidth=79
     set cc=+1
     set mouse=a
-    colorscheme desert
 
     if has('gui_running')
+        colorscheme desert
         "set bg=light
         "let g:solarized_underline=0
         "colorscheme solarized
         set macmeta
         set cul
-        set guifont=Menlo:h14
+        set guifont=Menlo:h15
         "set transparency=10
         "set guioptions-=T
         "set guioptions-=R
@@ -257,11 +250,12 @@
     elseif $TERM_PROGRAM == "iTerm.app"
         set bg=light
         set t_Co=256
+        colorscheme desert
         "let g:solarized_termcolors=256
         "let g:solarized_underline=0
         "colorscheme solarized
     else
-        colorscheme default
+        colorscheme desert
     endif
 
     " Split
@@ -311,3 +305,7 @@
     set tags=tags;/
     set wildmenu
     set wildmode=full
+
+" Functions & Command
+command CdCurrentDir :cd %:p:h
+command OpenCurrentDir :!open %:p:h
