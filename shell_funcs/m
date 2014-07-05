@@ -1,10 +1,17 @@
 #!/bin/bash
-opts="--remote-tab-silent"
 servername="vim"
 
-if [[ `vim --serverlist` == "" ]]; then
+function start_vim_server() {
     mvim --servername $servername
     sleep 1
+}
+
+if [[ `vim --serverlist` == "" ]]; then
+    echo "Starting vim server ..."
+    start_vim_server
 fi
 
-vim --servername $servername $opts $*
+if [[ $# != 0 ]]; then
+    vim --servername $servername --remote-tab $*  # send file
+fi
+
