@@ -51,6 +51,7 @@ alias ll='ls -G -l'
 alias grep='grep --color'
 alias fq='python ~/Code/goagent/local/proxy.py > /dev/null 2>&1 '
 alias relay='ssh -i ~/.ssh/zhangrui4 zhangrui4@relay.op.ksyun.com'
+alias e='emacs'
 
 # fix git problem for https
 export GIT_SSL_NO_VERIFY=true
@@ -64,7 +65,7 @@ export GOPATH=~/Code/whyreal/code_fun/golang
 export PATH=/Users/real/Code/whyreal/code_fun/golang/bin:$PATH
 
 # homebrew
-#export PATH=/usr/local/sbin:$PATH
+export PATH=/usr/local/sbin:$PATH
 
 # language
 export LANG="en_US.UTF-8"
@@ -85,9 +86,6 @@ export EDITOR='vim'
 
 # functions create by myself
 export PATH=~/.zfunc:$PATH
-
-# powerline
-# . ~/Code/powerline/powerline/bindings/zsh/powerline.zsh
 
 # Python
 #export PATH="/Library/Python/2.7/site-packages/django/bin/:$PATH"
