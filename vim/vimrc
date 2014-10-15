@@ -1,4 +1,4 @@
-" Neobundle
+" Bundles
     if has('vim_starting')
         set nocompatible               " Be iMproved
         set runtimepath+=~/.vim/bundle/neobundle.vim/
@@ -6,10 +6,10 @@
     call neobundle#rc(expand('~/.vim/bundle/'))
     NeoBundleFetch 'Shougo/neobundle.vim'
 
-    let mapleader = ","
-    nmap s [unitekey]
-    nmap \ [emotionkey]
-    nmap <C-T> [tabkey]
+	" Leader Key
+	let mapleader=","
+    nmap <C-l> [show]
+    nmap <C-T> [tab]
 
     " Unite Sources
         NeoBundle 'Shougo/unite.vim'
@@ -17,147 +17,43 @@
             \   'start_insert': 1,
             \   'winheight': 10,
             \ })
-            nnoremap [unitekey]s :Unite source<CR>
-            nnoremap [unitekey]c :Unite command<CR>
-            nnoremap [unitekey]b :Unite buffer<CR>
-            nnoremap [unitekey]f :Unite file_rec<CR>
-
-        NeoBundle 'tsukkee/unite-help'
-            nnoremap [unitekey]h :Unite help<CR>
-
-        NeoBundle 'Shougo/neomru.vim'
-            nnoremap [unitekey]m :Unite file_mru directory_mru<CR>
+            nnoremap [show]c :Unite command<CR>
+            nnoremap [show]b :Unite buffer<CR>
 
     " Edit
-        NeoBundle "rizzatti/dash.vim"
-            nmap [unitekey]d :Dash<CR>
-
         NeoBundle 'vim-scripts/DrawIt'
-
         NeoBundle 'greyblake/vim-preview'
-
-        NeoBundle 'Lokaltog/vim-easymotion'
-            nmap [emotionkey] <Plug>(easymotion-prefix)
-            nmap [emotionkey]. <Plug>(easymotion-next)
-            nmap [emotionkey], <Plug>(easymotion-prev)
-
-        NeoBundle 'honza/vim-snippets'
-
-        NeoBundle 'SirVer/ultisnips'
-
         NeoBundle 'mattn/emmet-vim'
-            " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-            let g:UltiSnipsExpandTrigger="<tab>"
-            let g:UltiSnipsJumpForwardTrigger="<c-l>"
-            let g:UltiSnipsJumpBackwardTrigger="<c-h>"
+		"NeoBundle 'Valloric/YouCompleteMe'
+		NeoBundle 'MarcWeber/vim-addon-errorformats'
 
-            " If you want :UltiSnipsEdit to split your window.
-            let g:UltiSnipsEditSplit="vertical"
+        NeoBundle "rizzatti/dash.vim"
+            nmap [show]d :Dash<CR>
 
-        NeoBundle 'Shougo/neocomplete.vim'
-            " Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
-            " Disable AutoComplPop.
-            let g:acp_enableAtStartup = 0
-            " Use neocomplete.
-            let g:neocomplete#enable_at_startup = 1
-            " Use smartcase.
-            let g:neocomplete#enable_smart_case = 1
-            " Set minimum syntax keyword length.
-            let g:neocomplete#sources#syntax#min_keyword_length = 3
-            let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-            let g:neocomplete#enable_auto_close_preview = 0
-
-            " Define dictionary.
-            let g:neocomplete#sources#dictionary#dictionaries = {
-                \ 'default' : '',
-                \ 'vimshell' : $HOME.'/.vimshell_hist',
-                \ 'scheme' : $HOME.'/.gosh_completions'
-                    \ }
-
-            " Define keyword.
-            if !exists('g:neocomplete#keyword_patterns')
-                let g:neocomplete#keyword_patterns = {}
-            endif
-            let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-            " Plugin key-mappings.
-            inoremap <expr><C-g>     neocomplete#undo_completion()
-            inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-            " Recommended key-mappings.
-            " <CR>: close popup and save indent.
-            inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-            function! s:my_cr_function()
-              return neocomplete#close_popup() . "\<CR>"
-              " For no inserting <CR> key.
-              "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-            endfunction
-            " <TAB>: completion.
-            inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-            " <C-h>, <BS>: close popup and delete backword char.
-            inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-            inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-            inoremap <expr><C-y>  neocomplete#close_popup()
-            inoremap <expr><C-e>  neocomplete#cancel_popup()
-            " Close popup by <Space>.
-            "inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
-
-            " For cursor moving in insert mode(Not recommended)
-            "inoremap <expr><Left>  neocomplete#close_popup() . "\<Left>"
-            "inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
-            "inoremap <expr><Up>    neocomplete#close_popup() . "\<Up>"
-            "inoremap <expr><Down>  neocomplete#close_popup() . "\<Down>"
-            " Or set this.
-            "let g:neocomplete#enable_cursor_hold_i = 1
-            " Or set this.
-            "let g:neocomplete#enable_insert_char_pre = 1
-
-            " AutoComplPop like behavior.
-            "let g:neocomplete#enable_auto_select = 1
-
-            " Shell like behavior(not recommended).
-            "set completeopt+=longest
-            "let g:neocomplete#enable_auto_select = 1
-            "let g:neocomplete#disable_auto_complete = 1
-            "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
-
-            " Enable omni completion.
-            autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-            autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-            autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-            "autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-            autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-            " Enable heavy omni completion.
-            if !exists('g:neocomplete#sources#omni#input_patterns')
-              let g:neocomplete#sources#omni#input_patterns = {}
-            endif
-            "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-            "let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-            "let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
-            " For perlomni.vim setting.
-            " https://github.com/c9s/perlomni.vim
-            let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+		NeoBundle 'msanders/snipmate.vim'
+			"ino <c-x><c-x> <c-r>=TriggerSnippet()<cr>
+			"snor <c-x><c-x> <esc>i<right><c-r>=TriggerSnippet()<cr>
 
         NeoBundle 'scrooloose/syntastic'
             let g:syntastic_check_on_open = 0
-            "let g:syntastic_mode_map = { 'mode': 'passive'}
+            let g:syntastic_mode_map = { 'mode': 'passive'}
             let g:syntastic_error_symbol='✗'
             let g:syntastic_warning_symbol='⚠'
-            let g:syntastic_javascript_jshint_conf = "--config /Users/real/.jshint.json"
+			let g:syntastic_javascript_jshint_conf = "--config /Users/real/.jshint.json"
             let g:syntastic_javascript_checker = 'jshint'
-
-        NeoBundle 'tpope/vim-fugitive'
 
     " syntax
         NeoBundle 'plasticboy/vim-markdown'
         NeoBundle 'puppetlabs/puppet-syntax-vim'
-        NeoBundle 'jnwhiteh/vim-golang'
+		NeoBundle 'gorodinskiy/vim-coloresque'
+
+		NeoBundle 'xolox/vim-lua-ftplugin'
+			NeoBundle 'xolox/vim-misc'
+
+		NeoBundle 'fatih/vim-go'
+			let g:go_disable_autoinstall = 1
 
     " UI
-        NeoBundle 'wesgibbs/vim-irblack'
-
         NeoBundle 'vim-scripts/The-NERD-tree'
             let g:NERDTreeShowBookmarks = 1
             let g:NERDTreeShowFiles = 1
@@ -173,23 +69,16 @@
     syntax on
 
 " Edit
-    set expandtab        "用空格替换tab, 有效防止python代码中tab/space混用的问题
-    set autoindent       "自动缩进
-    "set autochdir
-
     set pastetoggle=<F11>
     set clipboard=unnamed         " yank and paste with the system clipboard
     set autoread
     set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 
-    nnoremap <silent> <F1> :tab help <CR>
-
     " block edit
     nnoremap <silent> <F10> :call r#toggle_option("virtualedit", "all", "") <CR>
 
     inoremap jj <Esc>
-	nnoremap q; q:
-	vnoremap q; q:
+	noremap q; q:
 	nnoremap <Leader>w :w<CR>
 	nnoremap <Leader>q :q<CR>
 	nnoremap <Leader>g :grep -i
@@ -210,35 +99,28 @@
     nnoremap < <<
     nnoremap > >>
 
+	" Scroll viewport faster.
+	nnoremap <C-e> 3<C-e>
+	nnoremap <C-y> 3<C-y>
+
 " Fold
     "autocmd Syntax vim,python call r#use_my_indent_foldexpr()
     "autocmd Syntax * let &commentstring=" " . &commentstring
-    set foldtext=r#get_foldtext()
-    set foldlevel=99
+    "set foldtext=r#get_foldtext()
+    "set foldlevel=99
 
 " Tab
     " Navigation
-        nnoremap [tabkey]f  :tabfirst<CR>
-        nnoremap [tabkey]l  :tablast<CR>
-        nnoremap [tabkey]p  :tabprev<CR>
-        nnoremap [tabkey]n  :tabnext<CR>
-        nnoremap [tabkey]c  :tabnew<CR>
-
-" Command Line
-    "Motion
-        cnoremap <C-a>  <Home>
-        cnoremap <C-e>  <End>
-        cnoremap <C-b>  <C-Left>
-        cnoremap <C-f>  <C-Right>
-        cnoremap <C-d>  <Delete>
-        cnoremap <C-f>  <C-c>q:
+        nnoremap [tab]f  :tabfirst<CR>
+        nnoremap [tab]l  :tablast<CR>
+        nnoremap [tab]p  :tabprev<CR>
+        nnoremap [tab]n  :tabnext<CR>
+        nnoremap [tab]c  :tabnew<CR>
 
 " Ui
     set fillchars=vert:\|
     "set list listchars=tab:»\ ,trail:· "XXXXX
     set hidden
-    set textwidth=79
-    "set cc=+0
     set mouse=a
     set bg=dark
     colorscheme desert
@@ -246,7 +128,7 @@
     if has('gui_running')
         set macmeta
         set cul
-        set guifont=Menlo:h13
+        set guifont=Lucida\ Sans\ Typewriter:h14
         set transparency=0
         "set guioptions-=T
         "set guioptions-=R
@@ -261,17 +143,17 @@
     endif
 
     " Split
-    "set splitbelow
+    set splitbelow
     "set splitright
     set previewheight=5
 
     " Number
     "set number
     "set relativenumber
-    set ruler
     set foldcolumn=4
 
     " Status line
+    set ruler
     set laststatus=2
     set statusline=%y\ %m%F%=%r\ line:\ %l\ column:\ %c\ %P
 
@@ -279,20 +161,20 @@
     " persistent undo
         let s:undo_dir = $HOME . "/.vim/cache/undo"
         if exists('+undofile')
-            call r#check_dir_exist(s:undo_dir)
+            "call r#check_dir_exist(s:undo_dir)
             set undofile
             let &undodir = s:undo_dir
         endif
 
     " backups
         let s:backup_dir = $HOME . "/.vim/cache/backup"
-        call r#check_dir_exist(s:backup_dir)
+        "call r#check_dir_exist(s:backup_dir)
         set backup
         let &backupdir = s:backup_dir
 
     " swap files
         let s:swap_dir = $HOME . "/.vim/cache/swap"
-        call r#check_dir_exist(s:swap_dir)
+        "call r#check_dir_exist(s:swap_dir)
         set noswapfile
         let &directory = s:swap_dir
 
@@ -304,6 +186,7 @@
     set tags=tags;/
     set wildmenu
     set wildmode=full
+	set iskeyword=@,48-57,_,192-255,-,#,^.
 
 " Functions & Command
     command! CdCurrentDir :cd %:p:h
