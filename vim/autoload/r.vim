@@ -57,3 +57,7 @@ function! r#toggle_option(name, v1, v2)
     exe "set " . a:name . "=" . l:new_val
     echo a:name . " --> " . l:new_val
 endfunction
+
+function! r#test()
+	s/1111/222/g
+endfunction
