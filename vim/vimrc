@@ -13,37 +13,31 @@
 
 	NeoBundle 'mattn/emmet-vim'
 
-	NeoBundle 'Lokaltog/vim-easymotion'
+	"NeoBundle 'Lokaltog/vim-easymotion'
 
-	NeoBundle 'jnwhiteh/vim-golang'
-
-	NeoBundle 'scrooloose/nerdtree'
-		nmap <F2> :NERDTreeToggle <CR>
-		let g:NERDTreeShowBookmarks=1
+	"NeoBundle 'scrooloose/nerdtree'
+	"	nmap <F2> :NERDTreeToggle <CR>
+	"	let g:NERDTreeShowBookmarks=1
+	nmap <F2> :Explore <CR>
 
 	NeoBundle 'MarcWeber/vim-addon-errorformats'
 
-	NeoBundle "rizzatti/dash.vim"
-		nmap <Leader>d :Dash<CR>
-
 	NeoBundle 'msanders/snipmate.vim'
+    NeoBundle 'voom'
 
-	"NeoBundle 'kien/ctrlp.vim'
-
-	NeoBundle 'scrooloose/syntastic'
-		let g:syntastic_check_on_open = 0
-		let g:syntastic_mode_map = { 'mode': 'passive'}
-		let g:syntastic_error_symbol='✗'
-		let g:syntastic_warning_symbol='⚠'
-		let g:syntastic_javascript_jshint_conf = "--config /Users/real/.jshint.json"
-		let g:syntastic_javascript_checker = 'jshint'
+	"NeoBundle 'scrooloose/syntastic'
+	"	let g:syntastic_check_on_open = 0
+	"	let g:syntastic_mode_map = { 'mode': 'passive'}
+	"	let g:syntastic_error_symbol='✗'
+	"	let g:syntastic_warning_symbol='⚠'
+	"	let g:syntastic_javascript_jshint_conf = "--config /Users/real/.jshint.json"
+	"	let g:syntastic_javascript_checker = 'jshint'
 
 	NeoBundle 'plasticboy/vim-markdown'
 
 	NeoBundle 'greyblake/vim-preview'
 
-
-	NeoBundle 'vim-scripts/AutoComplPop'
+	"NeoBundle 'vim-scripts/AutoComplPop'
 	
     call neobundle#end()
 
@@ -51,8 +45,8 @@
     syntax on
 
 " Edit
-    set pastetoggle=<F11>
-    set clipboard=unnamed         " yank and paste with the system clipboard
+    set pastetoggle=<F9>
+    set clipboard+=unnamed         " yank and paste with the system clipboard
     set autoread
     set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 
@@ -82,34 +76,28 @@
     vnoremap < <gv
     vnoremap > >gv
 
-	" Scroll viewport faster.
-	"nnoremap <C-e> 3<C-e>
-	"nnoremap <C-y> 3<C-y>
-
 " Tab
-	nnoremap [tab]f  :tabfirst<CR>
-	nnoremap [tab]l  :tablast<CR>
-	nnoremap [tab]p  :tabprev<CR>
-	nnoremap [tab]n  :tabnext<CR>
-	nnoremap [tab]c  :tabnew 
+	"nnoremap [tab]f  :tabfirst<CR>
+	"nnoremap [tab]l  :tablast<CR>
+	"nnoremap [tab]p  :tabprev<CR>
+	"nnoremap [tab]n  :tabnext<CR>
+	"nnoremap [tab]c  :tabnew 
 
 " Ui
-	set foldlevel=99
+    set foldlevel=99
     set fillchars=vert:\|
     set hidden
-    set mouse=a
+    "set mouse=a
     set bg=dark
 	colorscheme desert
 
     if has('gui_running')
         set macmeta
         set cul
-        set guifont=Menlo:h12
+        set guifont=Menlo:h14
         set transparency=0
         set guioptions-=r
         set guioptions-=L
-    "elseif $TERM_PROGRAM == "iTerm.app"
-    "    set t_Co=256
     endif
 
     " Split
@@ -117,35 +105,21 @@
     set previewheight=5
 
     " Number
-    "set foldcolumn=4
-	"set relativenumber
 	set number
 
     " Status line
-    "set ruler
     set laststatus=2
     set statusline=%y\ %m%F%=%r\ line:\ %l\ column:\ %c\ %P
 
-" undo/bak/swp file
-"    " persistent undo
-"	let s:undo_dir = $HOME . "/.vim/cache/undo"
-"	if exists('+undofile')
-"		"call r#check_dir_exist(s:undo_dir)
-"		set undofile
-"		let &undodir = s:undo_dir
-"	endif
-"
-"    " backups
-"	let s:backup_dir = $HOME . "/.vim/cache/backup"
-"	"call r#check_dir_exist(s:backup_dir)
-"	set backup
-"	let &backupdir = s:backup_dir
-"
     " swap files
 	let s:swap_dir = $HOME . "/.vim/cache/swap"
 	"call r#check_dir_exist(s:swap_dir)
 	set noswapfile
 	let &directory = s:swap_dir
+
+" ModeLine
+set modeline
+set modelines=2
 
 " Search
     set smartcase
@@ -156,6 +130,9 @@
     set wildmenu
     set wildmode=full
 	set iskeyword=@,48-57,_,192-255,-,#,^.
+
+" Help
+set helplang=cn
 
 " Functions & Command
     command! CdCurrentDir :cd %:p:h
