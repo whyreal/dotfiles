@@ -33,6 +33,8 @@
     NeoBundle 'lervag/vimtex'
     NeoBundle 'plasticboy/vim-markdown'
 
+    NeoBundle 'whyreal/wr_vim'
+
 	"NeoBundle 'MarcWeber/vim-addon-errorformats'
     "NeoBundle 'tpope/vim-surround'
 	"NeoBundle 'scrooloose/syntastic'
