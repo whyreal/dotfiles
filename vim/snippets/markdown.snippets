@@ -1,0 +1,26 @@
+# Markdown
+
+# Includes octopress (http://octopress.org/) snippets
+
+snippet a
+	[${1:text}][${2:`system("echo $RANDOM")`}]${5}
+	[$2]: http://${3:url} "${4:title}"
+snippet a*
+	[${1:text}][${2:`system("echo $RANDOM")`]${5}
+	[$2]: ${3:`@*`} "${4:title}"
+
+snippet img
+	![${1:text}][${2:`system("echo $RANDOM")`}]${5}
+	[$2]: ${3:url} "${4:title}"
+snippet img*
+	![${1:text}][${2:`system("echo $RANDOM")`}]${5}
+	[$2]: ${3:`@*`} "${4:title}"
+
+snippet code
+	\`\`\`
+	codes
+	\`\`\`
+snippet code*
+	\`\`\`
+	`@*`
+	\`\`\`

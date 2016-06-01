@@ -11,20 +11,30 @@
     nmap <C-l> [show]
     nmap <C-T> [tab]
 
-	NeoBundle 'mattn/emmet-vim'
-
-	"NeoBundle 'Lokaltog/vim-easymotion'
-
-	"NeoBundle 'scrooloose/nerdtree'
-	"	nmap <F2> :NERDTreeToggle <CR>
-	"	let g:NERDTreeShowBookmarks=1
-	nmap <F2> :Explore <CR>
-
-	NeoBundle 'MarcWeber/vim-addon-errorformats'
-
-	NeoBundle 'msanders/snipmate.vim'
+    NeoBundle 'mattn/emmet-vim'
+    
+    NeoBundle 'Lokaltog/vim-easymotion'
+    
+    NeoBundle 'scrooloose/nerdtree'
+    	nmap <Leader>n :NERDTreeToggle <CR>
+    	let g:NERDTreeShowBookmarks=1
+    
+    NeoBundle 'msanders/snipmate.vim'
     NeoBundle 'voom'
+    
+    NeoBundle 'vim-markdown-preview'
+    
+    NeoBundle 'greyblake/vim-preview'
+    
+    NeoBundle 'vim-scripts/AutoComplPop'
+    
+    NeoBundle '29decibel/codeschool-vim-theme'
+    
+    NeoBundle 'lervag/vimtex'
+    NeoBundle 'plasticboy/vim-markdown'
 
+	"NeoBundle 'MarcWeber/vim-addon-errorformats'
+    "NeoBundle 'tpope/vim-surround'
 	"NeoBundle 'scrooloose/syntastic'
 	"	let g:syntastic_check_on_open = 0
 	"	let g:syntastic_mode_map = { 'mode': 'passive'}
@@ -33,11 +43,7 @@
 	"	let g:syntastic_javascript_jshint_conf = "--config /Users/real/.jshint.json"
 	"	let g:syntastic_javascript_checker = 'jshint'
 
-	NeoBundle 'plasticboy/vim-markdown'
-
-	NeoBundle 'greyblake/vim-preview'
-
-	"NeoBundle 'vim-scripts/AutoComplPop'
+    
 	
     call neobundle#end()
 
@@ -45,7 +51,7 @@
     syntax on
 
 " Edit
-    set pastetoggle=<F9>
+    set pastetoggle=<leader>p
     set clipboard+=unnamed         " yank and paste with the system clipboard
     set autoread
     set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
@@ -57,10 +63,6 @@
 	noremap q; q:
 	nnoremap <Leader>w :w<CR>
 	nnoremap <Leader>q :q<CR>
-	nnoremap <Leader>g :grep -i
-    nnoremap <Leader>r :make % <CR>
-    nnoremap <Leader>l :lopen <CR>
-    nnoremap <Leader>c :copen <CR>
 	nnoremap <Leader>bb :buffers <CR>
 	nnoremap <Leader>bn :bn <CR>
 	nnoremap <Leader>bp :bp <CR>
@@ -84,7 +86,10 @@
 	"nnoremap [tab]c  :tabnew 
 
 " Ui
-    set foldlevel=99
+    "set foldcolumn=4
+    "set foldlevel=99
+    set tw=80
+    set colorcolumn=+1
     set fillchars=vert:\|
     set hidden
     "set mouse=a
@@ -98,6 +103,7 @@
         set transparency=0
         set guioptions-=r
         set guioptions-=L
+        colorscheme codeschool
     endif
 
     " Split
@@ -105,7 +111,7 @@
     set previewheight=5
 
     " Number
-	set number
+	"set number
 
     " Status line
     set laststatus=2
@@ -134,6 +140,11 @@ set modelines=2
 " Help
 set helplang=cn
 
-" Functions & Command
-    command! CdCurrentDir :cd %:p:h
-    command! OpenCurrentDir :!open %:p:h
+" Stop using the arrow keys, Dude!
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+
+" cd to current directory.
+nnoremap <leader>cd :cd %:p:h<CR>
