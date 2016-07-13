@@ -12,29 +12,23 @@
     nmap <C-T> [tab]
 
     NeoBundle 'mattn/emmet-vim'
-    
-    NeoBundle 'Lokaltog/vim-easymotion'
-    
     NeoBundle 'scrooloose/nerdtree'
     	nmap <Leader>n :NERDTreeToggle <CR>
     	let g:NERDTreeShowBookmarks=1
-    
     NeoBundle 'msanders/snipmate.vim'
     NeoBundle 'voom'
-    
-    NeoBundle 'vim-markdown-preview'
-    
     NeoBundle 'greyblake/vim-preview'
-    
     NeoBundle 'vim-scripts/AutoComplPop'
-    
-    NeoBundle '29decibel/codeschool-vim-theme'
-    
-    NeoBundle 'lervag/vimtex'
+    NeoBundle 'gummesson/stereokai.vim'
+    NeoBundle 'vim-scripts/Perfect-Dark'
+    NeoBundle 'altercation/vim-colors-solarized'
+    NeoBundle 'tomasr/molokai'
     NeoBundle 'plasticboy/vim-markdown'
-
+    NeoBundle 'artur-shaik/vim-javacomplete2'
+    NeoBundle 'guns/xterm-color-table.vim'
     NeoBundle 'whyreal/wr_vim'
 
+    "NeoBundle 'Lokaltog/vim-easymotion'
 	"NeoBundle 'MarcWeber/vim-addon-errorformats'
     "NeoBundle 'tpope/vim-surround'
 	"NeoBundle 'scrooloose/syntastic'
@@ -56,7 +50,7 @@
     set pastetoggle=<leader>p
     set clipboard+=unnamed         " yank and paste with the system clipboard
     set autoread
-    set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+    set fileencodings=utf-8,gbk,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 
     " block edit
     nnoremap <silent> <F10> :call r#toggle_option("virtualedit", "all", "") <CR>
@@ -90,13 +84,12 @@
 " Ui
     "set foldcolumn=4
     "set foldlevel=99
-    set tw=80
     set colorcolumn=+1
     set fillchars=vert:\|
     set hidden
-    "set mouse=a
+    set mouse=a
     set bg=dark
-	colorscheme desert
+	colorscheme molokai
 
     if has('gui_running')
         set macmeta
@@ -105,7 +98,7 @@
         set transparency=0
         set guioptions-=r
         set guioptions-=L
-        colorscheme codeschool
+        colorscheme molokai
     endif
 
     " Split
@@ -142,11 +135,13 @@ set modelines=2
 " Help
 set helplang=cn
 
+set completeopt=longest,menuone
+
 " Stop using the arrow keys, Dude!
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
+"map <up> <nop>
+"map <down> <nop>
+"map <left> <nop>
+"map <right> <nop>
 
 " cd to current directory.
 nnoremap <leader>cd :cd %:p:h<CR>

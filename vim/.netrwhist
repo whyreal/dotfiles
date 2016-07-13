@@ -1,2 +1,9 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =0
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/Users/real/Code/zkzy/trading-platform/trunk/nfwjs-copyright-protection/build'
+let g:netrw_dirhist_2='/Users/real/.vim'
+let g:netrw_dirhist_3='/Users/real/Code/zkzy/sinosoft-sns/branches/copyright'
+let g:netrw_dirhist_4='/Users/real/Code/zkzy/trading-platform/trunk/nfwjs-copyright-trade'
+let g:netrw_dirhist_5='/Users/real/Code/zkzy/uias'
+let g:netrw_dirhist_6='/Users/real/Code/zkzy/trading-platform/trunk/nfwjs-copyright-protection'
+let g:netrw_dirhist_7='/Users/real/Code/zkzy/trading-platform/trunk/nfwjs-copyright-trade'
