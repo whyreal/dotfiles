@@ -93,7 +93,7 @@
     set hidden
     set mouse=a
     set bg=dark
-	colorscheme molokai
+	"colorscheme molokai
 
     if has('gui_running')
         set macmeta
