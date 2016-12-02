@@ -40,7 +40,7 @@ DISABLE_CORRECTION="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git)
+plugins=(git osx)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -49,6 +49,7 @@ source $ZSH/oh-my-zsh.sh
 alias grep='grep --color'
 alias fq='python ~/Code/goagent/local/proxy.py > /dev/null 2>&1 '
 alias w='wget'
+alias ls='ls -G'
 
 # fix git problem for https
 export GIT_SSL_NO_VERIFY=true
@@ -58,9 +59,9 @@ export HISTSIZE=5000
 export HISTFILESIZE=50000
 
 # golang
-export GOPATH=~/Code/whyreal/code_fun/golang
-export PATH=$PATH:/usr/local/opt/go/libexec/bin
-export PATH=/Users/real/Code/whyreal/code_fun/golang/bin:$PATH
+#export GOPATH=~/Code/whyreal/code_fun/golang
+#export PATH=$PATH:/usr/local/opt/go/libexec/bin
+#export PATH=/Users/real/Code/whyreal/code_fun/golang/bin:$PATH
 
 # homebrew
 export PATH=/usr/local/sbin:$PATH
@@ -92,3 +93,6 @@ export PATH=~/.zfunc:$PATH
 
 # JAVA
 export JAVA_HOME="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
+
+# custom scripts
+export PATH=/Users/Real/code/whyreal/dotfiles/scripts/:$PATH
