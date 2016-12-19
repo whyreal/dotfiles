@@ -10,16 +10,15 @@
 	let mapleader=","
 
     NeoBundle 'whyreal/wr_vim'
-
     NeoBundle 'garbas/vim-snipmate', {
     \   "depends": ['vim-scripts/vim-addon-mw-utils', 'tomtom/tlib_vim']
     \ }
 
-    NeoBundle 'kannokanno/previm'
-    NeoBundle 'plasticboy/vim-markdown'
-    let g:previm_show_header=0
-    NeoBundle 'voom'
-    let g:previm_open_cmd="/usr/bin/open"
+    "NeoBundle 'kannokanno/previm'
+    "NeoBundle 'plasticboy/vim-markdown'
+    "let g:previm_show_header=0
+    "NeoBundle 'voom'
+    "let g:previm_open_cmd="/usr/bin/open"
 
     "NeoBundle 'mattn/emmet-vim'
     "NeoBundle 'neilhwatson/vim_cf3'
@@ -29,7 +28,6 @@
     "NeoBundle 'scrooloose/nerdtree'
     "	let g:NERDTreeShowBookmarks=1
     "    nmap <Leader>n :NERDTreeToggle <CR>
-    "NeoBundle 'artur-shaik/vim-javacomplete2'
     "NeoBundle 'Lokaltog/vim-easymotion'
 	"NeoBundle 'MarcWeber/vim-addon-errorformats'
     "NeoBundle 'tpope/vim-surround'
@@ -40,6 +38,8 @@
 	"	let g:syntastic_warning_symbol='⚠'
 	"	let g:syntastic_javascript_jshint_conf = "--config /Users/real/.jshint.json"
 	"	let g:syntastic_javascript_checker = 'jshint'
+    "NeoBundle 'artur-shaik/vim-javacomplete2'
+    "autocmd FileType java setlocal omnifunc=javacomplete#Complete
     "
     "
     " COLOR
@@ -62,25 +62,23 @@
     set fileencodings=utf-8,gbk,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 
     " block edit
-    nnoremap <silent> <F10> :call r#toggle_option("virtualedit", "all", "") <CR>
+    "nnoremap <silent> <F10> :call r#toggle_option("virtualedit", "all", "") <CR>
 
     "map <c-c> <esc>
     inoremap jj <Esc>
-	noremap q; q:
-	nnoremap <Leader>w :w<CR>
-	nnoremap <Leader>q :q<CR>
-    nnoremap j gj
-    nnoremap k gk
-	nnoremap <Leader>bb :buffers <CR>
-	nnoremap <Leader>bn :bn <CR>
-	nnoremap <Leader>bp :bp <CR>
+	"noremap q; q:
+	"nnoremap <Leader>w :w<CR>
+	"nnoremap <Leader>q :q<CR>
+	"nnoremap <Leader>bb :buffers <CR>
+	"nnoremap <Leader>bn :bn <CR>
+	"nnoremap <Leader>bp :bp <CR>
 
     " Auto change input method (gui only)
-    if has('gui_running')
-        set noimdisable
-        set iminsert=0
-        set imsearch=0
-    endif
+    "if has('gui_running')
+    "    set noimdisable
+    "    set iminsert=0
+    "    set imsearch=0
+    "endif
 
     vnoremap < <gv
     vnoremap > >gv
@@ -94,19 +92,20 @@
     "set foldcolumn=4
     "set foldlevel=99
     "set colorcolumn=80
-    set nocursorline
-    set fillchars=vert:\|
+    "set nocursorline
+    "set fillchars=vert:\|
     set hidden
     set mouse=a
     set t_Co=256
+    colorscheme desert
 
     if has('gui_running')
-        set macmeta
-        set cul
-        set guifont=Menlo:h16
-        set transparency=0
-        set guioptions-=r
-        set guioptions-=L
+        "set macmeta
+        "set cul
+        "set guifont=Menlo:h14
+        "set transparency=0
+        "set guioptions-=r
+        "set guioptions-=L
     endif
 
     " Split
@@ -118,14 +117,13 @@
     "set relativenumber
 
     " Status line
-    "set laststatus=2
+    set laststatus=2
     "set statusline=%y\ %m%F%=%r\ line:\ %l\ column:\ %c\ %P
     " swap files
 	"let s:swap_dir = $HOME . "/.vim/cache/swap"
 	"call r#check_dir_exist(s:swap_dir)
 	"set noswapfile
-	"let &directory = s:swap_dir
-    nmap <Leader>n :Explore <CR>
+	set directory=/tmp
 
 " Search
     set smartcase
@@ -155,21 +153,17 @@
     "map <left> <nop>
     "map <right> <nop>
     " Help
-    set helplang=en
+    "set helplang=en
 
     " cd to current directory.
-    nnoremap <leader>cd :cd %:p:h<CR>
+    "nnoremap <leader>cd :cd %:p:h<CR>
 
     nnoremap <silent> ? :!open dict://<cword><CR><CR>
 
-	inoremap <F5> <C-R>=ListMonths()<CR>
-
-	func! ListMonths()
-	  call complete(col('.'), ['January', 'February', 'March',
-		\ 'April', 'May', 'June', 'July', 'August', 'September',
-		\ 'October', 'November', 'December'])
-	  return ''
-	endfunc
+    " unfold/fold with mouse
+    nnoremap <2-LeftMouse> za
 
     " generate tags file
     command! MakeTags !ctags -R .
+
+    command! Dos2unix %s///g

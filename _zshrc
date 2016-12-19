@@ -80,19 +80,16 @@ export WORDCHARS="[]{}()*~-_"
 export EDITOR='vim'
 
 # gnu tools
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-export MANPATH="/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH"
-
-# functions create by myself
-export PATH=~/.zfunc:$PATH
+#export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+#export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+#export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+#export MANPATH="/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH"
 
 # Python
 #export PATH="/Library/Python/2.7/site-packages/django/bin/:$PATH"
 
 # JAVA
-export JAVA_HOME="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
+#export JAVA_HOME="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
 
 # custom scripts
-export PATH=/Users/Real/code/whyreal/dotfiles/scripts/:$PATH
+export PATH=/Users/Real/code/whyreal/dotfiles/scripts:$PATH
