@@ -20,7 +20,6 @@
     syntax on
 
 " Edit
-    set pastetoggle=<leader>p
     set clipboard+=unnamed         " yank and paste with the system clipboard
     set autoread
     set fileencodings=utf-8,gbk,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1
@@ -28,6 +27,9 @@
     inoremap jj <Esc>
     vnoremap < <gv
     vnoremap > >gv
+    nnoremap q; q:
+    nnoremap <Leader>w :w<cr>
+    nnoremap <Leader>q :q<cr>
 
     " ModeLine
     set modeline
@@ -43,7 +45,10 @@
 
 	set directory=/tmp
 
+    set guifont=menlo:h14
+
 " Search
+    set regexpengine=2
     set smartcase
     set ignorecase
     set hlsearch
@@ -52,8 +57,6 @@
     set wildmenu
     set wildmode=full
 	set iskeyword=@,48-57,_,192-255,-,#,^.
-    noremap n nzz
-    noremap N Nzz
     set path+=**
 
 " Command mode
@@ -64,7 +67,17 @@
     cnoremap <C-A> <Home>
     cnoremap <C-E> <End>
 
+" Insert Mode motion
+    imap <M-j> <DOWN>
+    imap <M-k> <UP>
+    imap <M-h> <LEFT>
+    imap <M-l> <RIGHT>
+    imap <C-a> <HOME>
+    imap <C-e> <END>
+
 " Misc
+
+    set macmeta
 
     nnoremap <silent> ? :!open dict://<cword><CR><CR>
 
@@ -75,3 +88,5 @@
     command! MakeTags !ctags -R .
 
     command! Dos2unix %s///g
+
+    nnoremap <Leader>n :Explore<cr>

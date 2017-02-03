@@ -93,3 +93,10 @@ export EDITOR='vim'
 
 # custom scripts
 export PATH=/Users/Real/code/whyreal/dotfiles/scripts:$PATH
+
+# sqlplus
+
+DYLD_LIBRARY_PATH="/Applications/oracle/instantclient"
+export DYLD_LIBRARY_PATH
+export ORACLE_HOME=$DYLD_LIBRARY_PATH
+export PATH=$ORACLE_HOME:$PATH
