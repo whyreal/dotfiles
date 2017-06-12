@@ -16,16 +16,11 @@
     NeoBundle 'kannokanno/previm'
 	let g:previm_open_cmd = 'open'
 	"let g:previm_custom_css_path = '/Users/kanno/tmp/some.css'
-
+    NeoBundle 'majutsushi/tagbar'
     NeoBundle 'vim-scripts/VOoM'
     "NeoBundle 'plasticboy/vim-markdown'
-
     "NeoBundle 'junegunn/vim-easy-align'
-
-    NeoBundle 'majutsushi/tagbar'
-
     call neobundle#end()
-
     filetype plugin indent on
     syntax on
 
@@ -53,7 +48,7 @@
 
 " Ui
     set t_Co=256
-    colorscheme desert
+	colorscheme desert_mod
     set guifont=menlo:h14
 	set directory=/tmp
     set laststatus=2
@@ -90,17 +85,5 @@
     imap <M-l> <RIGHT>
     imap <C-a> <HOME>
     imap <C-e> <END>
-
-" Misc
-    set macmeta
-
-    nnoremap <silent> ? :!open dict://<cword><CR><CR>
-
-    " generate tags file
-    command! MakeTags !cd %:p:h && ctags -R .
-
-    command! Dos2unix %s///g
-
-    au BufWritePre * call wr#Delete_blank()
 
 " vim: fdm=indent ts=4 sw=4
