@@ -10,12 +10,14 @@
 	let mapleader=","
 
     NeoBundle 'whyreal/wr_vim'
-    NeoBundle 'garbas/vim-snipmate', {
-    \   "depends": ['vim-scripts/vim-addon-mw-utils', 'tomtom/tlib_vim']
-    \ }
+	NeoBundle 'SirVer/ultisnips'
+	let g:UltiSnipsSnippetsDir="~/.vim/bundle/wr_vim/UltiSnips/"
+	let g:UltiSnipsEnableSnipMate=0
+
     NeoBundle 'kannokanno/previm'
 	let g:previm_open_cmd = 'open'
 	"let g:previm_custom_css_path = '/Users/kanno/tmp/some.css'
+	"
     NeoBundle 'majutsushi/tagbar'
     NeoBundle 'vim-scripts/VOoM'
 	NeoBundle 'Glench/Vim-Jinja2-Syntax'
