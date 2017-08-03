@@ -48,8 +48,6 @@ source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
 
 alias grep='grep --color'
-alias fq='python ~/Code/goagent/local/proxy.py > /dev/null 2>&1 '
-alias w='wget'
 alias ls='ls -G'
 
 # fix git problem for https
@@ -58,14 +56,6 @@ export GIT_SSL_NO_VERIFY=true
 # history
 export HISTSIZE=5000
 export HISTFILESIZE=50000
-
-# golang
-#export GOPATH=~/Code/whyreal/code_fun/golang
-#export PATH=$PATH:/usr/local/opt/go/libexec/bin
-#export PATH=/Users/real/Code/whyreal/code_fun/golang/bin:$PATH
-
-# homebrew
-export PATH=/usr/local/sbin:$PATH
 
 # language
 export LANG="en_US.UTF-8"
@@ -80,31 +70,19 @@ export WORDCHARS="[]{}()*~-_"
 # ediort
 export EDITOR='vim'
 
-# gnu tools
-#export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-#export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-#export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-#export MANPATH="/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH"
-
-# Python
-#export PATH="/Library/Python/2.7/site-packages/django/bin/:$PATH"
-
-# JAVA
-#export JAVA_HOME="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
-
 # custom scripts
 export PATH=/Users/Real/code/whyreal/dotfiles/scripts:$PATH
 
 # sqlplus
-
 DYLD_LIBRARY_PATH="/Applications/oracle/instantclient"
 export DYLD_LIBRARY_PATH
 export ORACLE_HOME=$DYLD_LIBRARY_PATH
 export PATH=$ORACLE_HOME:$PATH
 
 
-# backup
-rsync -az .ssh/* Documents/backup/ssh
-
 # color
 export LSCOLORS='gxfxcxdxbxegedabagacad'
+export PATH="/usr/local/sbin:/usr/local/bin/:$PATH"
+
+# backup
+rsync -az .ssh/* Documents/backup/ssh
