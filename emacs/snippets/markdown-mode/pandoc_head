@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: head
+# key: head
+# --
+---
+title: ${1:title}
+toc-title: 目录
+...
+$0

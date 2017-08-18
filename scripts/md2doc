@@ -1,1 +1,2 @@
-pandoc --reference-docx=/Users/Real/Documents/pandoc_docx_template.docx -f markdown_phpextra -t docx --toc $1 -o $2
+#pandoc --reference-docx=/Users/Real/Documents/pandoc_docx_template.docx -f markdown_phpextra -t docx --toc $1 -o $2
+pandoc --toc -t docx --reference-docx=/Users/Real/Documents/pandoc_docx_template.docx $1 -o $2

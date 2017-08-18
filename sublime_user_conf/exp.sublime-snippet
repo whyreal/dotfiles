@@ -1,0 +1,9 @@
+<snippet>
+	<content><![CDATA[
+exp ${1:${2:USERNAME}/${3:PASSWORD}@${4:HOST}/${5:SID}} file=${6:dmpfile_path}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>exp</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<scope>source.sql</scope>
+</snippet>

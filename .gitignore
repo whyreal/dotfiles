@@ -1,1 +1,8 @@
+**.DS_Store
+**#*#
+
 vim/bundle/
+vim/.netrw*
+
+sublime_user_conf/Package\ Control*
+sublime_user_conf/*crt

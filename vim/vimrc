@@ -6,12 +6,7 @@
     call neobundle#begin(expand('/Users/Real/.vim/bundle'))
     NeoBundleFetch 'Shougo/neobundle.vim'
 
-    " Leader Key
-    let mapleader=","
-
     NeoBundle 'whyreal/wr_vim'
-
-    "let g:netrw_list_hide='\..*'
 
     call neobundle#end()
     filetype plugin indent on
@@ -30,17 +25,18 @@
     set modeline
 
     " Auto change input method (gui only)
-    if has('gui_running')
-        set noimdisable
-        set iminsert=0
-        set imsearch=0
-    endif
+    "if has('gui_running')
+    "    set noimdisable
+    "    set iminsert=0
+    "    set imsearch=0
+    "endif
 
 " Ui
-    set t_Co=256
-	colorscheme desert_mod
-    set guifont=menlo:h14
-	set directory=/tmp
+    if has('gui_running')
+    	set background=light
+	endif
+    set guifont=menlo:h12
+    set directory=/tmp
     set laststatus=2
     set hidden
 
@@ -48,15 +44,11 @@
     nnoremap <2-LeftMouse> za
 
 " Search
-    set regexpengine=2
     set smartcase
-	set ignorecase
+    set ignorecase
     set hlsearch
     set incsearch
-    "set tags=tags;/
     set wildmenu
     set wildmode=full
-	set iskeyword=@,48-57,_,192-255,-,#,^.
-    set path+=**
 
 " vim: fdm=indent ts=4 sw=4
