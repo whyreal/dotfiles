@@ -25,11 +25,11 @@
     set modeline
 
     " Auto change input method (gui only)
-    "if has('gui_running')
-    "    set noimdisable
-    "    set iminsert=0
-    "    set imsearch=0
-    "endif
+    if has('gui_running')
+        set noimdisable
+        set iminsert=0
+        set imsearch=0
+    endif
 
 " Ui
     if has('gui_running')

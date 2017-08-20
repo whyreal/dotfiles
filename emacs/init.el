@@ -13,6 +13,9 @@
 (tooltip-mode -1)
 (line-number-mode -1)
 
+;; temp file
+(setq make-backup-files nil)
+
 ;; Python
 (add-hook 'python-mode-hook 'jedi:setup)
 (setq jedi:complete-on-dot t)

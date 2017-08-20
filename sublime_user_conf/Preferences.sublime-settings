@@ -1,6 +1,9 @@
 {
+	"font_size": 12,
+	"highlight_line": true,
 	"ignored_packages":
 	[
 		"Vintage"
-	]
+	],
+	"word_wrap": true
 }
