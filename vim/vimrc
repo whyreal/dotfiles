@@ -7,7 +7,9 @@
     NeoBundleFetch 'Shougo/neobundle.vim'
 
     NeoBundle 'whyreal/wr_vim'
-
+	NeoBundle 'SirVer/ultisnips'
+	let g:UltiSnipsSnippetsDir="~/.vim/bundle/wr_vim/UltiSnips/"
+	let g:UltiSnipsEnableSnipMate=0
     call neobundle#end()
     filetype plugin indent on
     syntax on
@@ -31,24 +33,6 @@
         set imsearch=0
     endif
 
-" Command mode
-    cnoremap <C-F> <Right>
-    cnoremap <C-B> <Left>
-    cnoremap <M-F> <C-Right>
-    cnoremap <M-B> <C-Left>
-    cnoremap <C-A> <Home>
-    cnoremap <C-E> <End>
-
-" Insert Mode
-	set macmeta
-    inoremap <C-j> <DOWN>
-    inoremap <C-k> <UP>
-    inoremap <C-h> <LEFT>
-    inoremap <C-l> <RIGHT>
-	inoremap <C-a> <HOME>
-    inoremap <C-e> <END>
-    inoremap <M-p> <c-o>:
-
 " Ui
     if has('gui_running')
     	set background=light
@@ -68,5 +52,24 @@
     set incsearch
     set wildmenu
     set wildmode=full
+
+" Command mode
+    cnoremap <C-F> <Right>
+    cnoremap <C-B> <Left>
+    cnoremap <M-F> <C-Right>
+    cnoremap <M-B> <C-Left>
+    cnoremap <C-A> <Home>
+    cnoremap <C-E> <End>
+
+" Insert Mode
+	set macmeta
+    inoremap <C-j> <DOWN>
+    inoremap <C-k> <UP>
+    inoremap <C-h> <LEFT>
+    inoremap <C-l> <RIGHT>
+	inoremap <C-a> <HOME>
+    inoremap <C-e> <END>
+    inoremap <M-p> <c-o>:
+
 
 " vim: fdm=indent ts=4 sw=4
