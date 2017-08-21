@@ -31,6 +31,24 @@
         set imsearch=0
     endif
 
+" Command mode
+    cnoremap <C-F> <Right>
+    cnoremap <C-B> <Left>
+    cnoremap <M-F> <C-Right>
+    cnoremap <M-B> <C-Left>
+    cnoremap <C-A> <Home>
+    cnoremap <C-E> <End>
+
+" Insert Mode
+	set macmeta
+    inoremap <C-j> <DOWN>
+    inoremap <C-k> <UP>
+    inoremap <C-h> <LEFT>
+    inoremap <C-l> <RIGHT>
+	inoremap <C-a> <HOME>
+    inoremap <C-e> <END>
+    inoremap <M-p> <c-o>:
+
 " Ui
     if has('gui_running')
     	set background=light
