@@ -49,8 +49,7 @@ source $ZSH/oh-my-zsh.sh
 
 alias grep='grep --color'
 alias ls='ls -G'
-alias e='emacsclient'
-alias t='open -e'
+#alias e='emacsclient'
 
 # fix git problem for https
 export GIT_SSL_NO_VERIFY=true

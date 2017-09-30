@@ -12,6 +12,20 @@
 	let g:UltiSnipsSnippetsDir="~/.vim/bundle/wr_vim/UltiSnips/"
 	let g:UltiSnipsEnableSnipMate=0
 
+    NeoBundle 'kannokanno/previm'
+	let g:previm_open_cmd = 'open'
+	"let g:previm_custom_css_path = '/Users/kanno/tmp/some.css'
+    NeoBundle 'plasticboy/vim-markdown'
+
+    NeoBundle 'vim-scripts/VOoM'
+	NeoBundle 'Glench/Vim-Jinja2-Syntax'
+	NeoBundle 'scrooloose/nerdtree'
+
+    NeoBundle 'majutsushi/tagbar'
+	NeoBundle 'fatih/vim-go'
+
+    "NeoBundle 'junegunn/vim-easy-align'
+	"
     call neobundle#end()
     filetype plugin indent on
     syntax on
@@ -37,8 +51,8 @@
 
 " Ui
     if has('gui_running')
-    	set background=light
 	endif
+	colorscheme desert_mod
     set guifont=menlo:h12
     set directory=/tmp
     set laststatus=2
@@ -73,5 +87,8 @@
     inoremap <C-e> <END>
     inoremap <M-p> <c-o>:
 
+" Autocommand
+    " strip for end of line
+	"au BufWrite * %s/[ \t][ \t]*$//ge
 
 " vim: ts=4 sw=4

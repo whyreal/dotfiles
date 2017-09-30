@@ -28,7 +28,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(markdown-command "/usr/local/bin/pandoc")
+ '(markdown-command "/usr/local/bin/pandoc -s -f markdown -t html -c /Users/Real/.emacs.d/markdown.css")
  '(ns-pop-up-frames nil)
  '(package-selected-packages (quote (jedi jinja2-mode yasnippet markdown-mode))))
 (custom-set-faces

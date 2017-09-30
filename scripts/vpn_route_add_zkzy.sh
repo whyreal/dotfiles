@@ -1,1 +1,1 @@
-sudo route -n add 192.168.80/24 192.168.90.249
+sudo route -n add 192.168.80/24 -interface ppp0

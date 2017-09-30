@@ -1,5 +1,5 @@
 #!/bin/bash
-servername="vim"
+servername="VIMD"
 
 function start_vim_server() {
     mvim --servername $servername
@@ -14,4 +14,3 @@ fi
 if [[ $# != 0 ]]; then
     vim --servername $servername --remote-tab $*  # send file
 fi
-
