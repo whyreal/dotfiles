@@ -49,6 +49,8 @@ source $ZSH/oh-my-zsh.sh
 
 alias grep='grep --color'
 alias ls='ls -G'
+alias s='ssh -oStrictHostKeyChecking=no'
+alias update_gfwlist='genpac --format=pac --pac-proxy="SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080; DIRECT;" --user-rule-from=.ShadowsocksX/user-rule.txt > .ShadowsocksX/gfwlist.js'
 #alias e='emacsclient'
 
 # fix git problem for https
@@ -62,8 +64,7 @@ export HISTFILESIZE=50000
 export LANG="en_US.UTF-8"
 
 # WORDCHARS
-#export WORDCHARS=":_-./\"'"
-export WORDCHARS="[]{}()*~-_"
+export WORDCHARS="*?_-.[]~=/&;!#$%^(){}<>"
 
 # key binding
 #set -o vi
@@ -85,5 +86,9 @@ export PATH=$ORACLE_HOME:$PATH
 export LSCOLORS='gxfxcxdxbxegedabagacad'
 export PATH="/usr/local/sbin:/usr/local/bin:$PATH"
 
+export EDITOR='vim'
+
 # backup
-rsync -az /Users/Real/.ssh/* /Users/Real/Documents/backup/ssh
+#rsync -az /Users/Real/.ssh/* /Users/Real/Documents/backup/ssh
+
+#test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

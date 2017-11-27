@@ -21,9 +21,8 @@
 	NeoBundle 'Glench/Vim-Jinja2-Syntax'
 	NeoBundle 'scrooloose/nerdtree'
 
-    NeoBundle 'majutsushi/tagbar'
-	NeoBundle 'fatih/vim-go'
-
+    "NeoBundle 'majutsushi/tagbar'
+	"NeoBundle 'fatih/vim-go'
     "NeoBundle 'junegunn/vim-easy-align'
 	"
     call neobundle#end()
@@ -51,6 +50,9 @@
 
 " Ui
     if has('gui_running')
+		" disable error bells
+		set vb t_vb=
+		set cursorline
 	endif
 	colorscheme desert_mod
     set guifont=menlo:h12
