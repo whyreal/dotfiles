@@ -1,31 +1,55 @@
 " Bundles
     if has('vim_starting')
         set nocompatible               " Be iMproved
-	set runtimepath+=/Users/Real/.vim/bundle/neobundle.vim/
+    set runtimepath+=/Users/Real/.vim/bundle/neobundle.vim/
     endif
     call neobundle#begin(expand('/Users/Real/.vim/bundle'))
     NeoBundleFetch 'Shougo/neobundle.vim'
+	NeoBundle 'tpope/vim-sensible'
+	set macmeta
 
-	" snippets
+	" tmux
+	NeoBundle 'christoomey/vim-tmux-navigator'
+
+    " snippets
     NeoBundle 'whyreal/wr_vim'
-	NeoBundle 'SirVer/ultisnips'
-	let g:UltiSnipsSnippetsDir="~/.vim/bundle/wr_vim/UltiSnips/"
-	let g:UltiSnipsEnableSnipMate=0
+    NeoBundle 'scrooloose/nerdtree'
 
-    NeoBundle 'kannokanno/previm'
-	let g:previm_open_cmd = 'open'
-	"let g:previm_custom_css_path = '/Users/kanno/tmp/some.css'
+	" doc plugins
     NeoBundle 'plasticboy/vim-markdown'
-
     NeoBundle 'vim-scripts/VOoM'
-	NeoBundle 'Glench/Vim-Jinja2-Syntax'
-	NeoBundle 'scrooloose/nerdtree'
-	NeoBundle 'tpope/vim-surround'
+    NeoBundle 'kannokanno/previm'
+    let g:previm_open_cmd = 'open'
+    "let g:previm_custom_css_path = '/Users/kanno/tmp/some.css'
 
+	" developmnet plugins
+    NeoBundle 'SirVer/ultisnips'
+    let g:UltiSnipsSnippetsDir="~/.vim/bundle/wr_vim/UltiSnips/"
+    let g:UltiSnipsEnableSnipMate=0
+    NeoBundle 'tpope/vim-surround'
     "NeoBundle 'majutsushi/tagbar'
-	"NeoBundle 'fatih/vim-go'
+    "NeoBundle 'Glench/Vim-Jinja2-Syntax'
+	"NeoBundle 'vim-syntastic/syntastic'
+    "set statusline+=%#warningmsg#
+    "set statusline+=%{SyntasticStatuslineFlag()}
+    "set statusline+=%*
+    "let g:syntastic_always_populate_loc_list = 1
+    "let g:syntastic_auto_loc_list = 1
+    "let g:syntastic_check_on_open = 1
+    "let g:syntastic_check_on_wq = 0
+    "let g:syntastic_mode_map = {
+    "    \ "mode": "passive",
+    "    \ "active_filetypes": [],
+    "    \ "passive_filetypes": [] }
+    "NeoBundle 'fatih/vim-go'
     "NeoBundle 'junegunn/vim-easy-align'
-	"
+
+    " Man page
+    runtime! ftplugin/man.vim
+	let g:ft_man_open_mode = 'tab'
+	"autocmd FileType man setlocal foldmethod=indent foldenable
+	"NeoBundle 'vim-scripts/info.vim'
+
     call neobundle#end()
     filetype plugin indent on
     syntax on
@@ -51,14 +75,13 @@
 
 " Ui
     if has('gui_running')
-		" disable error bells
-		set vb t_vb=
-		set cursorline
-	endif
+        " disable error bells
+        set vb t_vb=
+        set cursorline
+    endif
 	colorscheme desert_mod
     set guifont=menlo:h12
     set directory=/tmp
-    set laststatus=2
     set hidden
 
     set mouse=a
@@ -69,29 +92,13 @@
     set ignorecase
     set hlsearch
     set incsearch
-    set wildmenu
     set wildmode=full
 
-" Command mode
-    cnoremap <C-F> <Right>
-    cnoremap <C-B> <Left>
-    cnoremap <M-F> <C-Right>
-    cnoremap <M-B> <C-Left>
-    cnoremap <C-A> <Home>
-    cnoremap <C-E> <End>
-
-" Insert Mode
-	set macmeta
-    inoremap <C-j> <DOWN>
-    inoremap <C-k> <UP>
-    inoremap <C-h> <LEFT>
-    inoremap <C-l> <RIGHT>
-	inoremap <C-a> <HOME>
-    inoremap <C-e> <END>
-    inoremap <M-p> <c-o>:
+" auto update pac file
+au BufWrite ~/.ShadowsocksX/user-rule.txt !genpac --format=pac --pac-proxy="SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080; DIRECT;" --user-rule-from=.ShadowsocksX/user-rule.txt > .ShadowsocksX/gfwlist.js
 
 " Autocommand
     " strip for end of line
-	"au BufWrite * %s/[ \t][ \t]*$//ge
+    "au BufWrite * %s/[ \t][ \t]*$//ge
 
 " vim: ts=4 sw=4
