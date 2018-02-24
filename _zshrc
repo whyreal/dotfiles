@@ -49,6 +49,7 @@ alias grep='grep --color'
 alias ls='ls -G'
 alias pg='ps aux | grep'
 alias s='sshrc'
+alias e='subl'
 
 # fix git problem for https
 export GIT_SSL_NO_VERIFY=true
@@ -65,13 +66,8 @@ export PATH=/Users/Real/code/whyreal/dotfiles/scripts:$PATH
 # use vim as man pager
 export MANPAGER="col -b | vim -c 'set ft=man nomodifiable' -"
 
-# sqlplus
-DYLD_LIBRARY_PATH="/Applications/oracle/instantclient"
-export DYLD_LIBRARY_PATH
-export ORACLE_HOME=$DYLD_LIBRARY_PATH
-export PATH=$ORACLE_HOME:$PATH
 #export LC_ALL="zh_CN.GB2312"
-if [[ $LC_CTYPE="zh_CN.eucCN" ]]; then
+if [[ $LC_CTYPE = "zh_CN.eucCN" ]]; then
 	export NLS_LANG=AMERICAN_AMERICA.ZHS16GBK
 fi
 
@@ -81,4 +77,12 @@ export LSCOLORS=GxFxCxDxBxegedabagaced
 #export LSCOLORS='gxfxcxdxbxegedabagacad'
 export PATH="/usr/local/sbin:/usr/local/bin:$PATH"
 
+# Oracle
+export ORACLE_HOME=/Applications/instantclient_12_2/
+export TNS_ADMIN=${ORACLE_HOME}/network/admin
+export PATH=${ORACLE_HOME}:/usr/local/ActivePerl-5.20/bin:${PATH}
+export DYLD_LIBRARY_PATH=${ORACLE_HOME}:${DYLD_LIBRARY_PATH}
+
 #bindkey -v
+#
+fpath=(/usr/local/share/zsh-completions $fpath)
