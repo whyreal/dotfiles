@@ -1,15 +1,16 @@
 #!/bin/bash
 
-function start_vim_server() {
-    mvim --servername $servername
-    sleep 1
-}
-
 servername="`vim --serverlist`"
 
 if [[ $servername == "" ]]; then
-    echo "Starting vim server ..."
-    start_vim_server
+    echo "Starting vim server VIM ..."
+    servername="VIM"
+    mvim --servername $servername
+    sleep 1
+fi
+
+if [[ $# -eq 0 ]]; then
+    mvim --servername $servername
 else
-    vim --servername $servername --remote-tab $*  # send file
+    mvim --servername $servername --remote-tab $@  # send file
 fi

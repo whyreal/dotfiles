@@ -13,4 +13,3 @@ if [[ $extension != "md" ]];then
 fi
 
 pandoc --toc -t docx --reference-doc=/Users/Real/Documents/pandoc_docx_template.docx $input -o $output
-#pandoc --toc -t docx --reference-docx=/Users/Real/Documents/pandoc_docx_template.docx $input -o $output

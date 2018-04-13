@@ -1,0 +1,390 @@
+{
+	"hostgroup": [
+		{
+			"_commant": "coding.net",
+			"hosts":[
+				"coding.net",
+				"123.59.85.127"
+			],
+			"global": [
+				"user whyreal",
+				"IdentityFile ~/.ssh/coding"
+			]
+		},
+		{
+			"_commant": "开源中国",
+			"hostname": false,
+			"hosts":[
+				"gitee.com"
+			],
+			"global": [
+				"user whyreal",
+				"IdentityFile ~/.ssh/oschina"
+			]
+		},
+		{
+			"_commant": "github",
+			"hostname": false,
+			"hosts":[
+				"github.com"
+			],
+			"global": [
+				"user whyreal",
+				"IdentityFile ~/.ssh/github"
+			]
+		},
+		{
+			"_commant": "本地虚拟机",
+			"hostname": false,
+			"hosts":[
+				"192.168.56.200"
+			],
+			"global": [
+				"user Administrator",
+				"IdentityFile ~/.ssh/localproxy"
+			]
+		},
+		{
+			"_commant": "公司服务器",
+			"hostname": true,
+			"host_prefix": "zkzy",
+			"hosts":[
+				"192.168.80.100",
+				"192.168.80.101",
+				"192.168.80.101",
+				"192.168.80.102",
+				"192.168.80.103",
+				"192.168.80.104",
+				"192.168.80.108",
+				"192.168.80.110",
+				"192.168.80.112",
+				"192.168.80.121",
+				"192.168.80.123",
+				"192.168.80.124",
+				"192.168.80.125",
+				"192.168.80.127",
+				"192.168.80.132",
+				"192.168.80.133",
+				"192.168.80.137",
+				"192.168.80.140",
+				"192.168.80.141",
+				"192.168.80.142",
+				"192.168.80.151",
+				"192.168.80.153",
+				"192.168.80.154",
+				"192.168.80.155",
+				"192.168.80.156",
+				"192.168.80.157",
+				"192.168.80.158",
+				"192.168.80.165",
+				"192.168.80.180",
+				"192.168.80.181",
+				"192.168.80.182",
+				"192.168.80.190",
+				"192.168.80.77",
+				"192.168.80.88",
+				"192.168.80.90",
+				"192.168.80.91",
+				"192.168.80.92",
+				"192.168.80.99"
+			],
+			"global": [
+				"user root",
+				"IdentityFile ~/.ssh/zkzy"
+			]
+		},
+		{
+			"_commant": "NAS",
+			"hostname": true,
+			"host_prefix": "zkzy",
+			"hosts":[
+				"192.168.80.110"
+			],
+			"global": [
+				"user admin",
+				"IdentityFile ~/.ssh/zkzy"
+			]
+		},
+		{
+			"_commant": "虚拟机隧道",
+			"hosts":["tunnel.vm"],
+			"hostname": false,
+			"global": [
+				"hostname 192.168.56.200",
+				"port 22",
+				"user Administrator",
+				"IdentityFile ~/.ssh/hnbq"
+			]
+		},
+		{
+			"_commant": "桂林政务",
+			"host_prefix": "glzw",
+			"hostname": true,
+			"hosts":[
+				"10.15.30.204",
+				"10.15.30.203"
+			],
+			"global": [
+				"user root",
+				"ProxyJump tunnel.vm",
+				"IdentityFile ~/.ssh/glzw"
+			]
+		},
+
+		{
+			"_commant": "郑州政务外网隧道",
+			"hosts":["tunnel.zzzw.mnet"],
+			"hostname": false,
+			"global": [
+				"hostname 222.143.52.71",
+				"user zhongh-jiaolei",
+				"port 60022",
+				"identityfile ~/.ssh/id_dsa"
+			]
+		},
+		{
+			"_commant": "郑州政务互联网",
+			"host_prefix": "zzzw.enet",
+			"hosts":[
+				"192.30.30.25",
+				"192.30.30.24",
+				"192.30.30.23",
+				"192.30.30.22",
+				"192.30.30.21",
+				"192.30.30.20",
+				"192.30.30.19",
+				"192.30.30.18",
+				"192.30.30.17",
+				"192.30.30.16"
+			],
+			"hostname": true,
+			"global": [
+				"user root",
+				"ProxyJump tunnel.zzzw.mnet",
+				"IdentityFile ~/.ssh/zzzw.mnet"
+			]
+		},
+		{
+			"_commant": "郑州政务办公网",
+			"host_prefix": "zzzw.mnet",
+			"hosts":[
+				"192.30.30.53",
+				"192.30.30.52",
+				"192.30.30.51",
+				"192.30.30.50",
+				"192.30.30.49",
+				"192.30.30.48",
+				"192.30.30.47",
+				"192.30.30.46",
+				"192.30.30.45",
+				"192.30.30.44",
+				"192.30.30.43",
+				"192.30.30.42",
+				"192.30.30.41",
+				"192.30.30.13",
+				"192.30.30.12",
+				"192.30.30.11",
+				"192.30.30.10",
+				"192.30.30.9",
+				"192.30.30.8",
+				"192.30.30.7",
+				"192.30.30.6",
+				"192.30.30.5",
+				"192.30.30.4"
+			],
+			"hostname": true,
+			"global": [
+				"user root",
+				"ProxyJump tunnel.zzzw.mnet",
+				"IdentityFile ~/.ssh/zzzw.mnet"
+			]
+		},
+		{
+			"_commant": "郑州政务测试环境",
+			"host_prefix": "zzzw.test",
+			"hostname": false,
+			"hosts":[
+				"192.30.30.54",
+				"192.30.30.55"
+			],
+			"global": [
+				"hostname 222.143.52.71",
+				"user zhongh-jiaolei",
+				"port 60022",
+				"identityfile ~/.ssh/id_dsa"
+			]
+		},
+		{
+			"_commant": "郑州政务培训环境隧道",
+			"hosts":["tunnel.zzzw.px"],
+			"hostname": false,
+			"global": [
+				"hostname 192.168.80.100",
+				"port 2822",
+				"user root",
+				"IdentityFile ~/.ssh/zzzw_inet"
+			]
+		},
+		{
+			"_commant": "郑州政务培训环境",
+			"host_prefix": "zzzw.px",
+			"hostname": false,
+			"hosts":[
+				"1.1.61.38",
+				"1.1.61.28"
+			],
+			"global": [
+				"hostname 192.168.80.100",
+				"port 2822",
+				"user root",
+				"IdentityFile ~/.ssh/zzzw_inet"
+			]
+		},
+		{
+			"_commant": "郑州政务专网隧道",
+			"hosts":["tunnel.zzzw.inet"],
+			"hostname": false,
+			"global": [
+				"hostname 192.168.80.100",
+				"port 9722",
+				"user root",
+				"IdentityFile ~/.ssh/zzzw_inet"
+			]
+		},
+		{
+			"_commant": "郑州政务专网",
+			"host_prefix": "zzzw.inet",
+			"hostname": false,
+			"hosts":[
+				"172.30.41.33",
+				"172.30.41.36",
+				"172.30.41.40",
+				"172.30.41.41",
+				"172.30.41.42",
+				"172.30.41.62",
+				"172.30.41.44"
+			],
+			"global": [
+				"user root",
+				"ProxyJump tunnel.zzzw.inet",
+				"IdentityFile ~/.ssh/zzzw_inet"
+			]
+		},
+		{
+			"_commant": "南方版权隧道",
+			"hosts":["tunnel.wjs"],
+			"hostname": false,
+			"global": [
+				"hostname 192.168.80.99",
+				"port 22",
+				"user Administrator",
+				"IdentityFile ~/.ssh/hnbq"
+			]
+		},
+		{
+			"_commant": "南方版权（一期）",
+			"host_prefix": "wjs1",
+			"hostname": true,
+			"hosts":[
+				"129.1.0.122",
+				"129.1.0.121",
+				"129.1.0.155",
+				"129.1.0.154",
+				"129.1.0.153",
+				"129.1.0.152",
+				"129.1.0.151",
+				"129.1.0.139",
+				"129.1.0.138",
+				"129.1.0.137",
+				"129.1.0.136",
+				"129.1.0.135",
+				"129.1.0.134",
+				"129.1.0.133",
+				"129.1.0.132",
+				"129.1.0.131",
+				"129.1.0.130",
+				"129.1.0.129",
+				"129.1.0.128",
+				"129.1.0.127",
+				"129.1.0.120",
+				"129.1.0.119",
+				"129.1.0.118",
+				"129.1.0.117",
+				"129.1.0.116",
+				"129.1.0.115",
+				"129.1.0.114",
+				"129.1.0.113",
+				"129.1.0.112"
+			],
+			"global": [
+				"user root",
+				"ProxyJump tunnel.wjs",
+				"IdentityFile ~/.ssh/hnbq"
+			]
+		},
+		{
+			"_commant": "南方版权（二期）",
+			"host_prefix": "wjs2",
+			"hostname": true,
+			"hosts":[
+				"129.1.1.122",
+				"129.1.1.121",
+				"129.1.1.155",
+				"129.1.1.154",
+				"129.1.1.153",
+				"129.1.1.152",
+				"129.1.1.151",
+				"129.1.1.139",
+				"129.1.1.138",
+				"129.1.1.137",
+				"129.1.1.136",
+				"129.1.1.135",
+				"129.1.1.134",
+				"129.1.1.133",
+				"129.1.1.132",
+				"129.1.1.131",
+				"129.1.1.130",
+				"129.1.1.129",
+				"129.1.1.128",
+				"129.1.1.127",
+				"129.1.1.120",
+				"129.1.1.119",
+				"129.1.1.118",
+				"129.1.1.117",
+				"129.1.1.116",
+				"129.1.1.115",
+				"129.1.1.114",
+				"129.1.1.113",
+				"129.1.1.112"
+			],
+			"global": [
+				"user root",
+				"ProxyJump tunnel.wjs",
+				"IdentityFile ~/.ssh/hnbq"
+			]
+		},
+		{
+			"_commant": "全局",
+			"hosts":["*"],
+			"hostname": false,
+			"global": [
+				"Compression yes",
+				"ForwardX11 yes",
+				"ForwardX11Trusted yes",
+				"ForwardAgent yes",
+				"AddKeysToAgent yes",
+				"ControlMaster auto",
+				"ControlPersist yes",
+				"ControlPath /tmp/ssh.%h:%p.%r",
+				"StrictHostKeyChecking=no",
+				"UserKnownHostsFile=/dev/null",
+				"GlobalKnownHostsFile=/dev/null",
+				"ServerAliveCountMax 300",
+				"ServerAliveInterval 120",
+				"TCPKeepAlive yes",
+				"LogLevel QUIET",
+				"PubkeyAcceptedKeyTypes +ssh-dss"
+			]
+		}
+	]
+}

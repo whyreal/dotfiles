@@ -1,103 +1,130 @@
-" Bundles
-    if has('vim_starting')
-        set nocompatible               " Be iMproved
-    set runtimepath+=/Users/Real/.vim/bundle/neobundle.vim/
-    endif
-    call neobundle#begin(expand('/Users/Real/.vim/bundle'))
-    NeoBundleFetch 'Shougo/neobundle.vim'
-    NeoBundle 'tpope/vim-sensible'
-    NeoBundle 'whyreal/wr_vim'
-    NeoBundle 'scrooloose/nerdtree'
-    "set macmeta
+" Bundles{{{1
+if 0 | endif
 
-    "NeoBundle 'fholgado/minibufexpl.vim'
-    "NeoBundle 'Shougo/denite.nvim'
+if &compatible
+    set nocompatible               " Be iMproved
+endif
 
-    " tmux
-    NeoBundle 'christoomey/vim-tmux-navigator'
+set runtimepath+=~/.vim/bundle/neobundle.vim/
 
-    " snippets
-    NeoBundle 'SirVer/ultisnips'
+call neobundle#begin(expand('~/.vim/bundle'))
+
+NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-sensible'
+NeoBundle 'whyreal/wr_vim'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'Valloric/YouCompleteMe'
+    let g:ycm_min_num_of_chars_for_completion = 2
+    let g:ycm_min_num_identifier_candidate_chars = 3
+    let g:ycm_filetype_whitelist = {
+                \ 'python': 1,
+                \ }
+    let g:ycm_python_binary_path = '/usr/local/bin/python3'
+    let g:ycm_autoclose_preview_window_after_insertion = 1
+
+"NeoBundle 'fholgado/minibufexpl.vim'
+"NeoBundle 'Shougo/denite.nvim'
+NeoBundle 'christoomey/vim-tmux-navigator'
+NeoBundle 'SirVer/ultisnips'
+    let g:UltiSnipsExpandTrigger="<c-j>"
     let g:UltiSnipsSnippetsDir="~/.vim/bundle/wr_vim/UltiSnips/"
     let g:UltiSnipsEnableSnipMate=0
-
-    " doc plugins
-    NeoBundle 'plasticboy/vim-markdown'
-    NeoBundle 'vim-scripts/VOoM'
-    NeoBundle 'kannokanno/previm'
+NeoBundle 'plasticboy/vim-markdown'
+NeoBundle 'vim-voom/VOoM'
+    let g:voom_tree_placement='right'
+NeoBundle 'kannokanno/previm'
     let g:previm_open_cmd = 'open'
-    "let g:previm_custom_css_path = '/Users/kanno/tmp/some.css'
+NeoBundle 'scrooloose/nerdcommenter'
+    let g:previm_custom_css_path = '/Users/Real/.vim/bundle/wr_vim/previm.css'
+"NeoBundle 'aklt/plantuml-syntax'
+"NeoBundle 'tpope/vim-surround'
+"NeoBundle 'majutsushi/tagbar'
+NeoBundle 'Glench/Vim-Jinja2-Syntax'
+"NeoBundle 'vim-syntastic/syntastic'
+"   set statusline+=%#warningmsg#
+"   set statusline+=%{SyntasticStatuslineFlag()}
+"   set statusline+=%*
+"   let g:syntastic_always_populate_loc_list = 1
+"   let g:syntastic_auto_loc_list = 1
+"   let g:syntastic_check_on_open = 1
+"   let g:syntastic_check_on_wq = 0
+"   let g:syntastic_mode_map = {
+"       \ "mode": "passive",
+"       \ "active_filetypes": [],
+"       \ "passive_filetypes": [] }
+"NeoBundle 'fatih/vim-go'
+"NeoBundle 'junegunn/vim-easy-align'
+runtime! ftplugin/man.vim
+let g:ft_man_open_mode = 'tab'
+"autocmd FileType man setlocal foldmethod=indent foldenable
+"NeoBundle 'vim-scripts/info.vim'
 
-    " developmnet plugins
-    "NeoBundle 'tpope/vim-surround'
-    "NeoBundle 'majutsushi/tagbar'
-    "NeoBundle 'Glench/Vim-Jinja2-Syntax'
-    "NeoBundle 'vim-syntastic/syntastic'
-    "set statusline+=%#warningmsg#
-    "set statusline+=%{SyntasticStatuslineFlag()}
-    "set statusline+=%*
-    "let g:syntastic_always_populate_loc_list = 1
-    "let g:syntastic_auto_loc_list = 1
-    "let g:syntastic_check_on_open = 1
-    "let g:syntastic_check_on_wq = 0
-    "let g:syntastic_mode_map = {
-    "    \ "mode": "passive",
-    "    \ "active_filetypes": [],
-    "    \ "passive_filetypes": [] }
-    "NeoBundle 'fatih/vim-go'
-    "NeoBundle 'junegunn/vim-easy-align'
+call neobundle#end()
+filetype plugin indent on
+syntax on
+"}}}
 
-    " Man page
-    runtime! ftplugin/man.vim
-    let g:ft_man_open_mode = 'tab'
-    "autocmd FileType man setlocal foldmethod=indent foldenable
-    "NeoBundle 'vim-scripts/info.vim'
+" Edit{{{1
+"set macmeta
+"set ffs=unix
+set foldlevel=99
+set clipboard+=unnamed         " yank and paste with the system clipboard
+set autoread
+set fileencodings=utf-8,gbk,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+let mapleader=","
 
-    call neobundle#end()
-    filetype plugin indent on
-    syntax on
+vnoremap < <gv
+vnoremap > >gv
+nnoremap q; q:
 
-" Edit
-    set clipboard+=unnamed         " yank and paste with the system clipboard
-    set autoread
-    set fileencodings=utf-8,gbk,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+" Auto change input method (gui only)
+if has('gui_running')
+    set noimdisable
+    set iminsert=0
+    set imsearch=0
+endif
 
-    vnoremap < <gv
-    vnoremap > >gv
-    nnoremap q; q:
+" ModeLine
+set modeline
+set modelines=3
+"}}}
 
-    " Auto change input method (gui only)
-    if has('gui_running')
-        set noimdisable
-        set iminsert=0
-        set imsearch=0
-    endif
+" Ui{{{1
+set statusline=\ %f%m%r%h%w\ %=%(%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y%)\ %([%l,%v][%p%%]\ %)
+set bg=dark
+if has('gui_running')
+    " disable error bells
+    set vb t_vb=
+    set cursorline
+    set bg=light
+    colorscheme delek
+    set linespace=2
+    set colorcolumn=+1
+endif
+" guioptions: e -> gui tab
+set guioptions='e'
 
-    " ModeLine
-    set modeline
-    set modelines=3
+set guifont=menlo:h12
+set directory=/tmp
+set hidden
+set splitbelow
+set previewheight=8
 
-" Ui
-    set statusline=\ %f%m%r%h%w\ %=%(%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y%)\ %([%l,%v][%p%%]\ %)
-    if has('gui_running')
-        " disable error bells
-        set vb t_vb=
-        set cursorline
-    endif
-    colorscheme desert
-    set guifont=menlo:h12
-    set directory=/tmp
-    set hidden
+set mouse=a
+nnoremap <2-LeftMouse> za
 
-    set mouse=a
-    nnoremap <2-LeftMouse> za
+" not display ~ for blank line
+highlight EndOfBuffer ctermfg=black guifg=bg
+"}}}
 
-" Search
+" Search{{{1
     set smartcase
     set ignorecase
     set hlsearch
     set incsearch
     set wildmode=full
+"}}}
 
 " auto update pac file
 au BufWrite ~/.ShadowsocksX/user-rule.txt !genpac --format=pac --pac-proxy="SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080; DIRECT;" --user-rule-from=.ShadowsocksX/user-rule.txt > .ShadowsocksX/gfwlist.js
@@ -106,4 +133,4 @@ au BufWrite ~/.ShadowsocksX/user-rule.txt !genpac --format=pac --pac-proxy="SOCK
     " strip for end of line
     "au BufWrite * %s/[ \t][ \t]*$//ge
 
-" vim: ts=4 sw=4
+" vim: ts=4 sw=4 et fdm=marker

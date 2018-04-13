@@ -45,12 +45,21 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
+
+# ALIAS {{{1
 alias grep='grep --color'
 alias ls='ls -G'
 alias pg='ps aux | grep'
 alias s='sshrc'
-alias e='subl'
+alias ....='cd ../../..'
+alias ...='cd ../..'
+alias ..='cd ..'
+alias e='open -t'
+alias plantuml='java -jar /Applications/plantuml.jar'
+alias note='mvim -c "Note"'
+# }}}
 
+# ENV VARIABLES {{{1
 # fix git problem for https
 export GIT_SSL_NO_VERIFY=true
 # history
@@ -68,7 +77,7 @@ export MANPAGER="col -b | vim -c 'set ft=man nomodifiable' -"
 
 #export LC_ALL="zh_CN.GB2312"
 if [[ $LC_CTYPE = "zh_CN.eucCN" ]]; then
-	export NLS_LANG=AMERICAN_AMERICA.ZHS16GBK
+    export NLS_LANG=AMERICAN_AMERICA.ZHS16GBK
 fi
 
 # color
@@ -83,6 +92,50 @@ export TNS_ADMIN=${ORACLE_HOME}/network/admin
 export PATH=${ORACLE_HOME}:/usr/local/ActivePerl-5.20/bin:${PATH}
 export DYLD_LIBRARY_PATH=${ORACLE_HOME}:${DYLD_LIBRARY_PATH}
 
+# Maven Wrap
+export PATH=~/.mvnw/bin:$PATH
+
 #bindkey -v
-#
 fpath=(/usr/local/share/zsh-completions $fpath)
+
+# python & virtualenv
+export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
+#export PIP_REQUIRE_VIRTUALENV=true # 强制pip使用虚拟环境
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+source /usr/local/bin/virtualenvwrapper.sh
+alias pipl='pip3 list --format=columns'
+#}}}
+
+# FUNCTIONS {{{1
+update_env(){
+    /Users/Real/.tmux/plugins/tpm/bin/update_plugins all
+    /Users/Real/.oh-my-zsh/tools/upgrade.sh
+    #brew upgrade
+    #brew cleanup
+    vim -c 'NeoBundleUpdate! | quit'
+}
+
+vpn.route.add.zkzy(){
+    sudo route -n add 192.168.80/24 -interface ppp0
+}
+
+vpn.route.del.zkzy(){
+    sudo route -n delete 192.168.80/24 -interface ppp0
+}
+
+safari.agent.default(){
+    defaults delete com.apple.Safari CustomUserAgent
+}
+
+safari.agent.ipad(){
+    defaults write com.apple.Safari CustomUserAgent "'Mozilla/5.0 (iPad; CPU OS 5_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9B176 Safari/7534.48.3'"
+}
+
+neobundle.install(){
+    curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh
+}
+
+# }}}
+
+# vim: fdm=marker sw=4 ts=4 et
