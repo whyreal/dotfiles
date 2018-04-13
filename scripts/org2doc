@@ -1,1 +1,0 @@
-pandoc --reference-docx=/Users/Real/Documents/pandoc_docx_template.docx -f org -t docx --toc $1 -o $2
