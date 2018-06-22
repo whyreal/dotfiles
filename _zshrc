@@ -1,3 +1,4 @@
+# oh-my-zsh {{{1
 # Path to your oh-my-zsh configuration.
 export ZSH=$HOME/.oh-my-zsh
 # Set name of the theme to load.
@@ -5,10 +6,6 @@ export ZSH=$HOME/.oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="candy"
-
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -42,10 +39,7 @@ DISABLE_CORRECTION="true"
 plugins=(git osx)
 
 source $ZSH/oh-my-zsh.sh
-
-# Customize to your needs...
-
-
+# }}}
 # ALIAS {{{1
 alias grep='grep --color'
 alias ls='ls -G'
@@ -56,9 +50,11 @@ alias ...='cd ../..'
 alias ..='cd ..'
 alias e='open -t'
 alias plantuml='java -jar /Applications/plantuml.jar'
-alias note='mvim -c "Note"'
+alias note='vim -c "Note"'
+alias ssh.add_key.zzzw='ssh-add ~/.ssh/zzzw_inet'
+alias ssh.tunnel.wjs.socks='ssh -NfD 10000 wjs.129.1.0.112'
+alias ssh.tunnel.wjs.win='ssh -NfL 3389:129.1.0.2:3389 zkzy.192.168.80.99'
 # }}}
-
 # ENV VARIABLES {{{1
 # fix git problem for https
 export GIT_SSL_NO_VERIFY=true
@@ -69,8 +65,6 @@ export HISTFILESIZE=50000
 export WORDCHARS="*?_-.[]~=/&;!#$%^(){}<>"
 # editor
 export EDITOR='vim'
-# custom scripts
-export PATH=/Users/Real/code/whyreal/dotfiles/scripts:$PATH
 #export LC_ALL="en_US.UTF-8"
 # use vim as man pager
 export MANPAGER="col -b | vim -c 'set ft=man nomodifiable' -"
@@ -93,48 +87,25 @@ export PATH=${ORACLE_HOME}:/usr/local/ActivePerl-5.20/bin:${PATH}
 export DYLD_LIBRARY_PATH=${ORACLE_HOME}:${DYLD_LIBRARY_PATH}
 
 # Maven Wrap
-export PATH=~/.mvnw/bin:$PATH
+#export PATH=~/.mvnw/bin:$PATH
 
 #bindkey -v
 fpath=(/usr/local/share/zsh-completions $fpath)
 
-# python & virtualenv
-export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache
-#export PIP_REQUIRE_VIRTUALENV=true # 强制pip使用虚拟环境
-export WORKON_HOME=$HOME/.virtualenvs
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
-source /usr/local/bin/virtualenvwrapper.sh
-alias pipl='pip3 list --format=columns'
+export PATH=/Users/Real/Documents/Note/scripts/:$PATH
+
+# MacVIM
+export PATH=/Applications/MacVim.app/Contents/bin/:$PATH
+
+# python
+export PATH=/Users/Real/Library/Python/2.7/bin/:$PATH
 #}}}
-
 # FUNCTIONS {{{1
-update_env(){
-    /Users/Real/.tmux/plugins/tpm/bin/update_plugins all
-    /Users/Real/.oh-my-zsh/tools/upgrade.sh
-    #brew upgrade
-    #brew cleanup
-    vim -c 'NeoBundleUpdate! | quit'
-}
 
-vpn.route.add.zkzy(){
-    sudo route -n add 192.168.80/24 -interface ppp0
-}
-
-vpn.route.del.zkzy(){
-    sudo route -n delete 192.168.80/24 -interface ppp0
-}
-
-safari.agent.default(){
-    defaults delete com.apple.Safari CustomUserAgent
-}
-
-safari.agent.ipad(){
-    defaults write com.apple.Safari CustomUserAgent "'Mozilla/5.0 (iPad; CPU OS 5_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9B176 Safari/7534.48.3'"
-}
-
-neobundle.install(){
-    curl https://raw.githubusercontent.com/Shougo/neobundle.vim/master/bin/install.sh | sh
-}
+# telnet(){
+#
+#    curl -v telnet://$1:$2
+#}
 
 # }}}
 

@@ -1,136 +1,196 @@
-" Bundles{{{1
-if 0 | endif
+" Package Manager {{{1
+let mapleader=","
 
-if &compatible
-    set nocompatible               " Be iMproved
-endif
+call plug#begin('~/.vim/plugged')
 
-set runtimepath+=~/.vim/bundle/neobundle.vim/
+Plug 'tpope/vim-sensible'
+Plug 'whyreal/wr_vim'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'rlue/vim-barbaric'
+let g:barbaric_default = 3
+let g:barbaric_scope = 'buffer'
 
-call neobundle#begin(expand('~/.vim/bundle'))
+" Markdown
+Plug 'plasticboy/vim-markdown'
+    let g:vim_markdown_toc_autofit = 1
+    "let g:vim_markdown_folding_style_pythonic = 1
+Plug 'kannokanno/previm'
+    let g:previm_custom_css_path='~/.vim/plugged/wr_vim/previm.css'
+    let g:previm_open_cmd='open'
 
-NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'tpope/vim-sensible'
-NeoBundle 'whyreal/wr_vim'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'Valloric/YouCompleteMe'
-    let g:ycm_min_num_of_chars_for_completion = 2
-    let g:ycm_min_num_identifier_candidate_chars = 3
-    let g:ycm_filetype_whitelist = {
-                \ 'python': 1,
-                \ }
-    let g:ycm_python_binary_path = '/usr/local/bin/python3'
-    let g:ycm_autoclose_preview_window_after_insertion = 1
+" 导航
+Plug 'scrooloose/nerdtree'
+    nnoremap <leader>e :NERDTree<CR>
+    let NERDTreeShowBookmarks = 1
+Plug 'vim-voom/VOoM'
+    let g:voom_tree_placement = 'right'
+    let g:voom_ft_modes = {'markdown': 'pandoc'}
+    let g:voom_always_allow_move_left = 1
+    au BufRead * call wr#DetectVoomType()
+    nnoremap <silent> <leader>v :Voom<CR>
 
-"NeoBundle 'fholgado/minibufexpl.vim'
-"NeoBundle 'Shougo/denite.nvim'
-NeoBundle 'christoomey/vim-tmux-navigator'
-NeoBundle 'SirVer/ultisnips'
+" 自动补全
+Plug 'SirVer/ultisnips'
     let g:UltiSnipsExpandTrigger="<c-j>"
-    let g:UltiSnipsSnippetsDir="~/.vim/bundle/wr_vim/UltiSnips/"
+    let g:UltiSnipsSnippetsDir="~/.vim/plugged/wr_vim/UltiSnips/"
     let g:UltiSnipsEnableSnipMate=0
-NeoBundle 'plasticboy/vim-markdown'
-NeoBundle 'vim-voom/VOoM'
-    let g:voom_tree_placement='right'
-NeoBundle 'kannokanno/previm'
-    let g:previm_open_cmd = 'open'
-NeoBundle 'scrooloose/nerdcommenter'
-    let g:previm_custom_css_path = '/Users/Real/.vim/bundle/wr_vim/previm.css'
-"NeoBundle 'aklt/plantuml-syntax'
-"NeoBundle 'tpope/vim-surround'
-"NeoBundle 'majutsushi/tagbar'
-NeoBundle 'Glench/Vim-Jinja2-Syntax'
-"NeoBundle 'vim-syntastic/syntastic'
-"   set statusline+=%#warningmsg#
-"   set statusline+=%{SyntasticStatuslineFlag()}
-"   set statusline+=%*
-"   let g:syntastic_always_populate_loc_list = 1
-"   let g:syntastic_auto_loc_list = 1
-"   let g:syntastic_check_on_open = 1
-"   let g:syntastic_check_on_wq = 0
-"   let g:syntastic_mode_map = {
-"       \ "mode": "passive",
-"       \ "active_filetypes": [],
-"       \ "passive_filetypes": [] }
-"NeoBundle 'fatih/vim-go'
-"NeoBundle 'junegunn/vim-easy-align'
-runtime! ftplugin/man.vim
-let g:ft_man_open_mode = 'tab'
-"autocmd FileType man setlocal foldmethod=indent foldenable
-"NeoBundle 'vim-scripts/info.vim'
+Plug 'Valloric/YouCompleteMe', {'frozen': 1, 'do': './install.py '}
+    "let g:ycm_python_binary_path = '/usr/local/bin/python3'
+    let g:ycm_filetype_blacklist = {}
+    let g:ycm_filetype_whitelist = {
+                \ 'python': 1
+                \ }
 
-call neobundle#end()
-filetype plugin indent on
-syntax on
+
+Plug 'junegunn/vim-easy-align'
+    " Start interactive EasyAlign in visual mode (e.g. vipga)
+    xmap ga <Plug>(EasyAlign)
+    " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+    nmap ga <Plug>(EasyAlign)
+
+
+"Plug 'tpope/vim-surround'
+"Plug 'lambdalisue/gina.vim'
+"Plug 'scrooloose/nerdcommenter'
+"Plug 'godlygeek/tabular'
+"Plug 'davidhalter/jedi-vim'
+"Plug 'aklt/plantuml-syntax'
+"Plug 'scrooloose/vim-slumlord'
+"Plug 'quafzi/vim-flow-diagram'
+"Plug 'skywind3000/asyncrun.vim'
+"Plug 'jsfaint/gen_tags.vim'
+"Plug 'mattn/emmet-vim'
+"    let g:user_emmet_install_global = 0
+"    autocmd FileType html,css EmmetInstall
+
+
+runtime! ftplugin/man.vim
+    let g:ft_man_open_mode = 'tab'
+" Syntax {{{2
+"Plug 'chr4/nginx.vim'
+"Plug 'Glench/Vim-Jinja2-Syntax'
+" }}}
+" Color Theme{{{2
+"Plug 'lmintmate/blue-mood-vim'
+"Plug 'NLKNguyen/papercolor-theme'
+"Plug 'dracula/vim'
+Plug 'sonph/onehalf', {'rtp': 'vim'}
+"Plug 'tomasr/molokai'
 "}}}
 
-" Edit{{{1
-"set macmeta
-"set ffs=unix
+call plug#end()
+
+filetype plugin indent on
+syntax enable
+"}}}
+" Operation {{{1
+"if has('gui_running')
+"    set noimdisable
+"    set iminsert=0
+"    set imsearch=0
+"endif
+
 set foldlevel=99
-set clipboard+=unnamed         " yank and paste with the system clipboard
+set clipboard+=unnamed
 set autoread
 set fileencodings=utf-8,gbk,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-let mapleader=","
+set modeline
+set modelines=3
+set smartcase
+set ignorecase
+set hlsearch
+set incsearch
+set wildmode=full
+set mouse=a
+set tags=./.tags;,.tags
 
 vnoremap < <gv
 vnoremap > >gv
 nnoremap q; q:
+nnoremap ; :
+nnoremap : ;
+vnoremap ; :
+vnoremap : ;
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap <expr> n  'Nn'[v:searchforward]
+nnoremap <expr> N  'nN'[v:searchforward]
+nnoremap <2-LeftMouse> za
 
-" Auto change input method (gui only)
-if has('gui_running')
-    set noimdisable
-    set iminsert=0
-    set imsearch=0
-endif
+" change to current directory
+nnoremap <silent> <leader>cd :lcd %:h<CR>
 
-" ModeLine
-set modeline
-set modelines=3
+" open tag in new tab
+"nnoremap <c-]> <c-w><c-]><c-w>T
 "}}}
-
 " Ui{{{1
-set statusline=\ %f%m%r%h%w\ %=%(%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y%)\ %([%l,%v][%p%%]\ %)
-set bg=dark
-if has('gui_running')
-    " disable error bells
-    set vb t_vb=
-    set cursorline
-    set bg=light
-    colorscheme delek
-    set linespace=2
-    set colorcolumn=+1
-endif
-" guioptions: e -> gui tab
-set guioptions='e'
+set statusline=\ %F%m%r%h%w\ %=%(%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y%)\ %([%l,%v][%p%%]\ %)
+"set synmaxcol=200
+let loaded_matchparen = 1
+set noerrorbells
+set novisualbell
+set t_vb=
 
-set guifont=menlo:h12
 set directory=/tmp
 set hidden
 set splitbelow
 set previewheight=8
 
-set mouse=a
-nnoremap <2-LeftMouse> za
+if has('gui_running')
+    set linespace=1
+    set colorcolumn=+1
+    autocmd InsertLeave,WinEnter * set cursorline
+    autocmd InsertEnter,WinLeave * set nocursorline
+    set guioptions='egk'
+    set guifont=Roboto\ Mono\ Medium\ for\ Powerline:h12
+    colorscheme onehalfdark
+    "colorscheme onehalflight
+endif
 
 " not display ~ for blank line
 highlight EndOfBuffer ctermfg=black guifg=bg
 "}}}
+" Command {{{1
 
-" Search{{{1
-    set smartcase
-    set ignorecase
-    set hlsearch
-    set incsearch
-    set wildmode=full
+" update pac file
+command! Ssconfig tabe ~/.ShadowsocksX/user-rule.txt
+au BufWritePost ~/.ShadowsocksX/user-rule.txt
+            \ !genpac --format=pac 
+            \ --pac-proxy="SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080; DIRECT;" 
+            \ --user-rule-from=~/.ShadowsocksX/user-rule.txt 
+            \ > ~/.ShadowsocksX/gfwlist.js
+
+command! Sshconfig tabe ~/Documents/Note/scripts/ssh.config.json
+" generate ssh config
+au BufWritePost ~/Documents/Note/scripts/ssh.config.json 
+            \ !cd ~/Documents/Note/scripts/ 
+            \ && ./jinja2.generater ssh.config.j2 ssh.config.json
+            \ > ~/.ssh/config
+
+command! VimrcEdit tabe ~/.vim/vimrc
+command! VimrcReload so ~/.vim/vimrc
+
+command! Dos2unix e ++ff=unix | %s///g
+command! Note tab new | lcd ~/Documents/Note/ | NERDTree
+
+command! -range SetTpl call wr#SetTemplate(<line1>, <line2>)
+command! UnSetTpl call wr#UnSetTemplate()
+command! -range Format call wr#Format(<line1>, <line2>)
+
+command! FormatJSON %!python -m json.tool
+
+nnoremap <silent> ? :!open dict://<cword><CR><CR>
 "}}}
+" Autocmd {{{1
+"
+autocmd FileType java setlocal fdm=indent ai ts=4 sw=4 tw=100
+autocmd FileType json,yaml,xml,html,css setlocal fdm=indent ai ts=2 sw=2 tw=80
+autocmd FileType markdown setlocal ts=4 sw=4
+autocmd FileType python setlocal fdm=indent ai ts=4 sw=4 tw=100 et
+autocmd FileType sh setlocal fdm=indent ai ts=4 sw=4 tw=80 et
+autocmd FileType vim setlocal ts=4 sw=4 et fdm=marker
 
-" auto update pac file
-au BufWrite ~/.ShadowsocksX/user-rule.txt !genpac --format=pac --pac-proxy="SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080; DIRECT;" --user-rule-from=.ShadowsocksX/user-rule.txt > .ShadowsocksX/gfwlist.js
+" default filetype
+"autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
 
-" Autocommand
-    " strip for end of line
-    "au BufWrite * %s/[ \t][ \t]*$//ge
-
-" vim: ts=4 sw=4 et fdm=marker
+" }}}
