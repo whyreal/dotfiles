@@ -1,0 +1,158 @@
+# system
+if [ -r /etc/profile ];then
+    source /etc/profile;
+fi
+if [ -r ~/.bash_profile ];then
+    source ~/.bash_profile
+elif [ -r ~/.bash_login ];then
+    source ~/.bash_login
+elif [ -r ~/.profile ];then
+    source ~/.profile
+fi
+
+# env {{{1
+SERVER_IP=$(echo $SSH_CONNECTION | awk '{print $3}')
+export PS1="\n\e[38;5;201m$SERVER_IP \h\e[m \e[38;5;46m\u\e[m\n[\w]\\$ "
+#export PS1="\n\e[38;5;201m$SERVER_IP\e[m \e[38;5;46m\u \e[38;5;21m\D{%m/%d/%Y} \t \e[m\n[\w]\\$ "
+export PATH=$PATH:$SSHHOME
+export EDITOR='vim'
+# inputrc
+bind 'set completion-ignore-case on'
+
+#}}}
+# vim {{{1
+export VIMINIT="let \$MYVIMRC='$SSHHOME/.sshrc.d/vim/vimrc' | source \$MYVIMRC "
+export LC_ALL="en_US.utf8"
+#}}}
+# command {{{1
+alias ....='cd ../../..'
+alias ...='cd ../..'
+alias ..='cd ..'
+alias curl='curl -v'
+alias grep='grep --color'
+alias ll="ls -lh"
+
+alias tail.catalina='tail -f logs/catalina.out'
+alias mkdir='mkdir -pv'
+alias port.list='netstat -antuplo'
+alias port.find='netstat -antuplo | grep'
+alias port.find.listen='netstat -antuplo | grep'
+
+alias file.path.abs='readlink -f'
+file.find(){
+    if [[ "" == $2 ]]; then
+        wd="."
+    else
+        wd=$2
+    fi
+    find $wd -iname "*$1*" -type f
+}
+
+file.find.abs(){
+    if [[ "" == $2 ]]; then
+        wd="."
+    else
+        wd=$2
+    fi
+    find $wd -iname "*$1*" -type f -exec readlink -f {} \;
+}
+
+process.find(){
+    ps -ef | grep "$1" | grep -v grep
+}
+
+process.find.port(){
+    local port=$1
+    local pid=`lsof -i "tcp:$port" | awk '/LISTEN/{print $2}'`
+    if [ -z "$pid" ];then
+        echo -e "$(tput setaf 9)404 NOT FOUND$(tput sgr0)" >&2
+    else
+        echo -e "$(tput setaf 10)Port: $port, PID: $pid$(tput sgr0)"
+        ps aux | grep $pid | grep -v grep
+    fi
+}
+
+color.print(){
+    for C in {40..47}; do
+        echo -en "\e[${C}m$C "
+    done
+
+    # high intensity colors
+    for C in {100..107}; do
+        echo -en "\e[${C}m$C "
+    done
+
+    # 256 colors https://en.wikipedia.org/wiki/ANSI_escape_code#24-bit
+    for C in {16..255}; do
+        echo -en "\e[48;5;${C}m$C "
+    done
+
+    echo -e "\e(B\e[m"
+}
+
+color.print.tput(){
+    for C in {0..255}; do
+        tput setab $C
+        echo -n "$C "
+    done
+    tput sgr0
+}
+
+pj.alias.init(){
+    for war in $(find /usr/local/tomcat*/webapps/  -maxdepth 1 -iname '*.war');do
+        war_file=$(basename $war)
+        war_name=$(awk -v war_file=$war_file 'BEGIN{print gensub(/(.*)\.war/, "\\1", "g", tolower(war_file))}')
+        tomcat_path=$(readlink -f $(dirname $war)/../)
+        alias "tomcat.$(basename $tomcat_path)"="cd $tomcat_path"
+        alias "pj.$war_name"="cd $tomcat_path"
+    done
+}
+
+yum.localrepo.setup(){
+    local path=$1
+    if [[ ! -z "$path" ]]; then
+        cat > /etc/yum.repos.d/local.repo <<eof
+[Local]
+name=CentOS - Media
+baseurl=file://$path
+gpgcheck=0
+enabled=1
+eof
+    fi
+}
+
+oracle.env.gb2312(){
+	echo export NLS_LANG=AMERICAN_AMERICA.ZHS16GBK
+}
+
+# tunnel
+tunnel.zzzw.inet.db.create(){
+    ssh -o "ServerAliveInterval 180" -NfL 192.168.80.100:1521:172.30.41.42:1521 -p 9722 localhost
+}
+
+tunnel.zzzw.inet.web.create(){
+	ssh -NfD 192.168.80.100:10000 -p 9722 localhost
+}
+
+tunnel.zzzw.px.web.create(){
+	ssh -NfD 192.168.80.100:10001 -p 2822 localhost
+}
+
+#}}}
+
+tomcat.change_port(){
+    if [[ $# -lt 1 ]]; then
+        echo "give me the config file" >& 2
+        return 1
+    fi
+    local config=`readlink -f $1`
+    local conn_port=`echo $config | sed -E 's/.*_([0-9]+)\/.*/\1/'`
+
+    local server_port=0
+    let "server_port=$conn_port+100"
+    sed -i -e 's/Server port="[^"]*"/Server port="'$server_port'"/' \
+        -e 's/Connector port="[^"]*" protocol="HTTP/Connector port="'$conn_port'" protocol="HTTP/' \
+        $config
+}
+
+# vim: ft=sh fdm=marker
