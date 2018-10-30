@@ -40,8 +40,10 @@
 
 (setq default-directory "~/")
 
-(setenv "PATH" (concat "/usr/local/bin/:"  (getenv "PATH")))
-(setq exec-path (append exec-path '("/usr/local/bin")))
+;;(setenv "PATH" (concat "/usr/local/bin/:"  (getenv "PATH")))
+;;(setq exec-path (append exec-path '("/usr/local/bin")))
+;;
+;;(setenv "PATH" (concat "/usr/local/sbin/:" (getenv "PATH")))
+;;(setq exec-path (append exec-path '("/usr/local/sbin")))
 
-(setenv "PATH" (concat "/usr/local/sbin/:" (getenv "PATH")))
-(setq exec-path (append exec-path '("/usr/local/sbin")))
+(put 'upcase-region 'disabled nil)

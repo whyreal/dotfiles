@@ -39,8 +39,13 @@ DISABLE_CORRECTION="true"
 plugins=(git osx)
 
 source $ZSH/oh-my-zsh.sh
+
+#bindkey -v
+fpath=(/usr/local/share/zsh-completions $fpath)
+
 # }}}
 # ALIAS {{{1
+alias o='open'
 alias grep='grep --color'
 alias ls='ls -G'
 alias pg='ps aux | grep'
@@ -62,7 +67,7 @@ export GIT_SSL_NO_VERIFY=true
 export HISTSIZE=5000
 export HISTFILESIZE=50000
 # WORDCHARS
-export WORDCHARS="*?_-.[]~=/&;!#$%^(){}<>"
+export WORDCHARS="@*?_-.[]~=/&;!#$%^(){}<>"
 # editor
 export EDITOR='vim'
 #export LC_ALL="en_US.UTF-8"
@@ -89,16 +94,25 @@ export DYLD_LIBRARY_PATH=${ORACLE_HOME}:${DYLD_LIBRARY_PATH}
 # Maven Wrap
 #export PATH=~/.mvnw/bin:$PATH
 
-#bindkey -v
-fpath=(/usr/local/share/zsh-completions $fpath)
-
 export PATH=/Users/Real/Documents/Note/scripts/:$PATH
 
 # MacVIM
 export PATH=/Applications/MacVim.app/Contents/bin/:$PATH
 
-# python
-export PATH=/Users/Real/Library/Python/2.7/bin/:$PATH
+# mysql
+export PATH=/usr/local/opt/mysql-client/bin:$PATH
+
+# golang
+export PATH=/Users/Real/go/bin:$PATH
+export GOPATH=/Users/Real/go
+
+# python virtualenv
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
+source /usr/local/bin/virtualenvwrapper.sh
+
+
+
 #}}}
 # FUNCTIONS {{{1
 

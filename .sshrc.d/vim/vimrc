@@ -13,6 +13,7 @@ let &runtimepath = printf('%s, %s/vim-sensible/', &runtimepath, s:portable)
 filetype plugin indent on
 syntax enable
 
+colorscheme desert
 set cursorline
 set foldlevel=99
 set clipboard+=unnamed
@@ -25,15 +26,9 @@ set ignorecase
 set hlsearch
 set incsearch
 set wildmode=full
-set mouse=a
 
 vnoremap < <gv
 vnoremap > >gv
-nnoremap q; q:
-nnoremap ; :
-nnoremap : ;
-vnoremap ; :
-vnoremap : ;
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap <expr> n  'Nn'[v:searchforward]

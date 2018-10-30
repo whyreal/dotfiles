@@ -14,7 +14,7 @@ fi
 SERVER_IP=$(echo $SSH_CONNECTION | awk '{print $3}')
 export PS1="\n\e[38;5;201m$SERVER_IP \h\e[m \e[38;5;46m\u\e[m\n[\w]\\$ "
 #export PS1="\n\e[38;5;201m$SERVER_IP\e[m \e[38;5;46m\u \e[38;5;21m\D{%m/%d/%Y} \t \e[m\n[\w]\\$ "
-export PATH=$PATH:$SSHHOME
+#export PATH=$PATH:$SSHHOME
 export EDITOR='vim'
 # inputrc
 bind 'set completion-ignore-case on'
@@ -55,6 +55,14 @@ file.find.abs(){
         wd=$2
     fi
     find $wd -iname "*$1*" -type f -exec readlink -f {} \;
+}
+
+file.find.list.abs(){
+    cat $1 | while read filename;do
+        echo "$filename"
+        find . -iname "*$filename*" -type f -exec readlink -f {} \;
+        echo "---------"
+    done
 }
 
 process.find(){
