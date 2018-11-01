@@ -6,11 +6,16 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-sensible'
 Plug 'whyreal/wr_vim'
 
+" 版本管理 {{{2
+Plug 'tpope/vim-fugitive'
+"}}}
+
 " 输入法切换{{{2
 Plug 'rlue/vim-barbaric'
 let g:barbaric_default = 3
 let g:barbaric_scope = 'buffer'
 "}}}
+
 " 导航{{{2
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'scrooloose/nerdtree'
@@ -24,6 +29,7 @@ Plug 'vim-voom/VOoM'
     nnoremap <silent> <leader>v :Voom<CR>
 Plug 'majutsushi/tagbar'
 "}}}
+
 " 自动补全{{{2
 Plug 'Valloric/YouCompleteMe', {
             \ 'frozen': 1,
@@ -46,12 +52,14 @@ Plug 'Valloric/YouCompleteMe', {
 "Plug 'zchee/deoplete-go', { 'do': 'make'}
 "Plug 'zchee/deoplete-jedi'
 "}}}
-" code snip{{{2
+
+" Code Snip{{{2
 Plug 'SirVer/ultisnips'
     let g:UltiSnipsExpandTrigger="<c-j>"
     let g:UltiSnipsSnippetsDir="~/.vim/plugged/wr_vim/UltiSnips/"
     let g:UltiSnipsEnableSnipMate=0
 "}}}
+
 " 对齐{{{2
 Plug 'junegunn/vim-easy-align'
     " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -59,6 +67,7 @@ Plug 'junegunn/vim-easy-align'
     " Start interactive EasyAlign for a motion/text object (e.g. gaip)
     nmap ga <Plug>(EasyAlign)
 "}}}
+
 " Markdown{{{2
 Plug 'plasticboy/vim-markdown'
     let g:vim_markdown_toc_autofit = 1
@@ -68,7 +77,8 @@ Plug 'kannokanno/previm'
     let g:previm_custom_css_path='~/.vim/plugged/wr_vim/previm.css'
     let g:previm_open_cmd='open'
 "}}}
-" golang{{{2
+
+" Golang{{{2
 Plug 'fatih/vim-go'
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
@@ -99,17 +109,17 @@ let g:tagbar_type_go = {
     \ }
 "}}}
 
-" perl {{{2
+" Perl {{{2
 Plug 'c9s/perlomni.vim'
 "}}}
 
-" lua {{{2
+" Lua {{{2
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-lua-ftplugin'
 let g:lua_complete_omni = 1
 "}}}
 
-" manpage{{{2
+" Manpage{{{2
 runtime! ftplugin/man.vim
     let g:ft_man_open_mode = 'tab'
 "}}}
@@ -132,6 +142,7 @@ Plug 'chr4/nginx.vim'
 Plug 'Glench/Vim-Jinja2-Syntax'
 "Plug 'aklt/plantuml-syntax'
 " }}}
+
 " Color Theme{{{2
 "Plug 'lmintmate/blue-mood-vim'
 "Plug 'NLKNguyen/papercolor-theme'
