@@ -1,65 +1,97 @@
-let mapleader=","
-
 " Package Manager {{{1
 call plug#begin('~/.vim/plugged')
 
+" basic plugins{{{2
+let mapleader=","
 Plug 'tpope/vim-sensible'
 Plug 'whyreal/wr_vim'
-
-" 版本管理 {{{2
-Plug 'tpope/vim-fugitive'
 "}}}
-
 " 输入法切换{{{2
 Plug 'rlue/vim-barbaric'
-let g:barbaric_default = 3
+let g:barbaric_default = 4
 let g:barbaric_scope = 'buffer'
 "}}}
-
 " 导航{{{2
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'scrooloose/nerdtree'
-    nnoremap <leader>e :NERDTree<CR>
+    nnoremap <leader>ve :NERDTreeToggle<CR>
     let NERDTreeShowBookmarks = 1
+
 Plug 'vim-voom/VOoM'
     let g:voom_tree_placement = 'right'
     let g:voom_ft_modes = {'markdown': 'pandoc'}
     let g:voom_always_allow_move_left = 1
     au BufRead * call wr#DetectVoomType()
-    nnoremap <silent> <leader>v :Voom<CR>
+    nnoremap <silent> <leader>vv :VoomToggle<CR>
+
 Plug 'majutsushi/tagbar'
+    nnoremap <leader>vt :TagbarToggle<cr>
 "}}}
-
 " 自动补全{{{2
-Plug 'Valloric/YouCompleteMe', {
-            \ 'frozen': 1,
-            \ 'do': './install.py
-            \ '}
-    let g:ycm_python_binary_path = '/usr/local/bin/python3'
-    let g:ycm_filetype_blacklist = {}
-    let g:ycm_filetype_whitelist = {
-                \ 'python': 1,
-                \ 'go': 1,
-                \ 'java': 1,
-                \ 'snippets': 1
+Plug 'w0rp/ale'
+    let g:ale_sign_column_always = 1
+    let g:ale_enabled = 1
+    let g:ale_set_balloons = 1
+    "let g:ale_fix_on_save = 0
+    "let g:ale_completion_max_suggestions = 1
+    "let g:ale_completion_enabled = 1
+    "let g:ale_python_auto_pipenv = 1
+    set completeopt=menu,menuone,preview,noselect,noinsert
+    let g:ale_fixers = {
+                \ '*': ['remove_trailing_lines', 'trim_whitespace'],
                 \ }
+    nnoremap <leader>sn :ALENext<cr>
+    nnoremap <leader>sp :ALEPrevious<cr>
+    nnoremap <leader>sd :ALEDetail<cr>
+    nnoremap <leader>sf :ALEFix<cr>
 
-"Plug 'Shougo/denite.nvim'
-"Plug 'Shougo/deoplete.nvim'
-"    Plug 'roxma/nvim-yarp'
-"    Plug 'roxma/vim-hug-neovim-rpc'
-"    let g:deoplete#enable_at_startup = 1
-"Plug 'zchee/deoplete-go', { 'do': 'make'}
-"Plug 'zchee/deoplete-jedi'
-"}}}
+Plug 'prabirshrestha/asyncomplete.vim'
+    "To enable fuzzy smart completion:
+    let g:asyncomplete_smart_completion = 1
+    let g:asyncomplete_auto_popup = 1
+    let g:asyncomplete_remove_duplicates = 1
 
-" Code Snip{{{2
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+    let g:lsp_signs_enabled = 1         " enable signs
+    let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
+    nnoremap <silent> <leader>gd :LspDefinition<cr>
+    if executable('pyls')
+        " pip install python-language-server
+        au User lsp_setup call lsp#register_server({
+            \ 'name': 'pyls',
+            \ 'cmd': {server_info->['pyls']},
+            \ 'whitelist': ['python'],
+            \ })
+    endif
+
+    if executable('go-langserver')
+        au User lsp_setup call lsp#register_server({
+            \ 'name': 'go-langserver',
+            \ 'cmd': {server_info->['go-langserver', '-gocodecompletion']},
+            \ 'whitelist': ['go'],
+            \ })
+    endif
+
+Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
+Plug 'prabirshrestha/asyncomplete-file.vim'
+
 Plug 'SirVer/ultisnips'
     let g:UltiSnipsExpandTrigger="<c-j>"
     let g:UltiSnipsSnippetsDir="~/.vim/plugged/wr_vim/UltiSnips/"
-    let g:UltiSnipsEnableSnipMate=0
-"}}}
+    let g:UltiSnipsEnableSnipMate=1
+    let g:UltiSnipsSnippetDirectories=["UltiSnips"]
+Plug 'honza/vim-snippets'
 
+Plug 'tpope/vim-surround'
+
+Plug 'jiangmiao/auto-pairs'
+    let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"'}
+"}}}
+" 注释{{{2
+Plug 'scrooloose/nerdcommenter'
+"}}}
 " 对齐{{{2
 Plug 'junegunn/vim-easy-align'
     " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -67,19 +99,19 @@ Plug 'junegunn/vim-easy-align'
     " Start interactive EasyAlign for a motion/text object (e.g. gaip)
     nmap ga <Plug>(EasyAlign)
 "}}}
-
 " Markdown{{{2
 Plug 'plasticboy/vim-markdown'
     let g:vim_markdown_toc_autofit = 1
     "let g:vim_markdown_folding_style_pythonic = 1
     let g:html_wrong_comments=1
+    "let g:vim_markdown_new_list_item_indent = 0
+
 Plug 'kannokanno/previm'
     let g:previm_custom_css_path='~/.vim/plugged/wr_vim/previm.css'
     let g:previm_open_cmd='open'
 "}}}
-
 " Golang{{{2
-Plug 'fatih/vim-go'
+"Plug 'fatih/vim-go',  { 'do': ':GoUpdateBinaries', 'frozen': 1}
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
     \ 'kinds'     : [
@@ -108,50 +140,44 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
     \ }
 "}}}
-
-" Perl {{{2
-Plug 'c9s/perlomni.vim'
+" 前端 {{{2
+"Plug 'mxw/vim-jsx'
+    "let g:jsx_ext_required = 0
+"Plug 'letientai299/vim-react-snippets', { 'branch': 'es6' }
+Plug 'mattn/emmet-vim'
+    let g:user_emmet_install_global = 0
+    autocmd FileType html,css,javascript EmmetInstall
+"Plug 'isRuslan/vim-es6'
 "}}}
-
-" Lua {{{2
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-lua-ftplugin'
-let g:lua_complete_omni = 1
+" Docker{{{2
+"Plug 'ekalinin/Dockerfile.vim'
 "}}}
-
 " Manpage{{{2
 runtime! ftplugin/man.vim
     let g:ft_man_open_mode = 'tab'
 "}}}
-
-"Plug 'tpope/vim-surround'
-"Plug 'lambdalisue/gina.vim'
-"Plug 'scrooloose/nerdcommenter'
-"Plug 'godlygeek/tabular'
-"Plug 'davidhalter/jedi-vim'
-"Plug 'scrooloose/vim-slumlord'
-"Plug 'quafzi/vim-flow-diagram'
-"Plug 'skywind3000/asyncrun.vim'
-"Plug 'jsfaint/gen_tags.vim'
-"Plug 'mattn/emmet-vim'
-"    let g:user_emmet_install_global = 0
-"    autocmd FileType html,css EmmetInstall
-
-" Syntax {{{2
-Plug 'chr4/nginx.vim'
-Plug 'Glench/Vim-Jinja2-Syntax'
-"Plug 'aklt/plantuml-syntax'
-" }}}
-
 " Color Theme{{{2
 "Plug 'lmintmate/blue-mood-vim'
 "Plug 'NLKNguyen/papercolor-theme'
 "Plug 'dracula/vim'
-Plug 'sonph/onehalf', {'rtp': 'vim'}
+"Plug 'sonph/onehalf', {'rtp': 'vim'}
+"Plug 'hukl/Smyck-Color-Scheme'
 "Plug 'tomasr/molokai'
 "}}}
 
 call plug#end()
+
+call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
+            \ 'name': 'ultisnips',
+            \ 'whitelist': ['*'],
+            \ 'completor': function('asyncomplete#sources#ultisnips#completor'),
+            \ }))
+
+call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+    \ 'name': 'file',
+    \ 'whitelist': ['*'],
+    \ 'completor': function('asyncomplete#sources#file#completor')
+    \ }))
 
 filetype plugin indent on
 syntax enable
@@ -171,24 +197,35 @@ set incsearch
 set wildmode=full
 set mouse=a
 set tags=./.tags;,.tags
+set iskeyword=-,@,48-57,_,192-255
+
+" make 前自动保存
+set autowrite
 
 vnoremap < <gv
 vnoremap > >gv
-"nnoremap ; q:i
-"nnoremap : ;
-"vnoremap ; q:i
-"vnoremap : ;
 nnoremap n nzz
 nnoremap N Nzz
-"nnoremap <expr> n  'Nn'[v:searchforward]
-"nnoremap <expr> N  'nN'[v:searchforward]
 nnoremap <2-LeftMouse> za
+
+set macmeta
+inoremap jj <ESC>
+
+noremap! <c-a> <Home>
+noremap! <c-e> <End>
+noremap! <c-f> <Right>
+noremap! <c-b> <Left>
+noremap! <c-j> <Down>
+noremap! <c-k> <Up>
+noremap! <c-d> <Del>
+
+nnoremap <leader>bp :bp<cr>
+nnoremap <leader>bn :bn<cr>
 
 " change to current directory
 nnoremap <silent> <leader>cd :lcd %:h<CR>
 
-" open tag in new tab
-"nnoremap <c-]> <c-w><c-]><c-w>T
+nnoremap 0 :call wr#ToggleHomeZero()<CR>
 "}}}
 " Ui{{{1
 set statusline=\ %F%m%r%h%w\ %=%(%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y%)\ %([%l,%v][%p%%]\ %)
@@ -200,66 +237,31 @@ set directory=/tmp
 set hidden
 set splitbelow
 set previewheight=8
-colorscheme desert
+"colorscheme smyck
+"set nu
 
 if has('gui_running')
     set linespace=1
-    set colorcolumn=+1
-    autocmd InsertLeave,WinEnter * set cursorline
-    autocmd InsertEnter,WinLeave * set nocursorline
     set guioptions='egk'
-    set guifont=Roboto\ Mono\ Medium\ for\ Powerline:h14
-    colorscheme onehalfdark
+    set guifont=menlo:h12
 endif
 
 " not display ~ for blank line
-highlight EndOfBuffer ctermfg=black guifg=bg
-"}}}
-" Command {{{1
-
-" update pac file
-command! Ssconfig tabe ~/.ShadowsocksX/user-rule.txt
-au BufWritePost ~/.ShadowsocksX/user-rule.txt 
-            \ !genpac --format=pac 
-            \ --pac-proxy="SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080; DIRECT;" 
-            \ --user-rule-from=~/.ShadowsocksX/user-rule.txt 
-            \ > ~/.ShadowsocksX/gfwlist.js
-
-command! Sshconfig tabe ~/Documents/Note/scripts/ssh.config.json
-" generate ssh config
-au BufWritePost ~/Documents/Note/scripts/ssh.config.json 
-            \ !cd ~/Documents/Note/scripts/ 
-            \ && ./jinja2.generater ssh.config.j2 ssh.config.json
-            \ > ~/.ssh/config
-
-command! VimrcEdit tabe ~/.vim/vimrc
-command! VimrcReload so ~/.vim/vimrc
-
-command! Dos2unix e ++ff=unix | %s///g
-command! Note tab new | lcd ~/Documents/Note/ | NERDTree
-
-command! -range SetTpl call wr#SetTemplate(<line1>, <line2>)
-command! UnSetTpl call wr#UnSetTemplate()
-command! -range Format call wr#Format(<line1>, <line2>)
-
-command! JSONFormat %!python -m json.tool
-
-nnoremap <silent> ? :!open dict://<cword><CR><CR>
+"highlight EndOfBuffer ctermfg=black guifg=bg
 "}}}
 " FileType {{{1
-"
-autocmd FileType java setlocal fdm=indent ai ts=4 sw=4 tw=100
-autocmd FileType go setlocal fdm=indent ai ts=4 sw=4 tw=100
-autocmd FileType nginx setlocal fdm=indent ai ts=4 sw=4 tw=100
+autocmd FileType java setlocal et fdm=indent ai ts=4 sw=4 tw=120
+autocmd FileType go setlocal fdm=indent ai ts=4 sw=4 tw=80
+autocmd FileType nginx setlocal fdm=indent ai ts=4 sw=4 tw=80
 autocmd FileType javascript,json,yaml,xml,html,css setlocal fdm=indent ai ts=2 sw=2 tw=80
-autocmd FileType markdown setlocal ts=4 sw=4
-autocmd FileType python setlocal fdm=indent ai ts=4 sw=4 tw=100 et
-autocmd FileType lua setlocal fdm=indent ai ts=4 sw=4 tw=100 et
+autocmd FileType markdown setlocal ts=4 sw=4 et
+autocmd FileType python setlocal fdm=indent ai ts=4 sw=4 tw=80 et
+autocmd FileType lua setlocal fdm=indent ai ts=4 sw=4 tw=80 et
 autocmd FileType sh setlocal fdm=indent ai ts=4 sw=4 tw=80 et
-autocmd FileType vim setlocal ts=4 sw=4 et fdm=marker
-
+autocmd FileType vim setlocal ts=4 sw=4 et fdm=marker tw=80
+autocmd FileType man setlocal fdm=indent
+autocmd filetype snippets setlocal ts=4 sw=4
 
 " default filetype
 autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
-
 " }}}

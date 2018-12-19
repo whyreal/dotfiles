@@ -36,7 +36,7 @@ DISABLE_CORRECTION="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git osx)
+plugins=(osx)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -59,6 +59,7 @@ alias note='vim -c "Note"'
 alias ssh.add_key.zzzw='ssh-add ~/.ssh/zzzw_inet'
 alias ssh.tunnel.wjs.socks='ssh -NfD 10000 wjs.129.1.0.112'
 alias ssh.tunnel.wjs.win='ssh -NfL 3389:129.1.0.2:3389 zkzy.192.168.80.99'
+alias npm='npm --no-optional'
 # }}}
 # ENV VARIABLES {{{1
 # fix git problem for https
@@ -67,10 +68,10 @@ export GIT_SSL_NO_VERIFY=true
 export HISTSIZE=5000
 export HISTFILESIZE=50000
 # WORDCHARS
-export WORDCHARS="@*?_-.[]~=/&;!#$%^(){}<>"
+#export WORDCHARS="@*?-.[]~/&;!#$%^(){}<>"
 # editor
 export EDITOR='vim'
-#export LC_ALL="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
 # use vim as man pager
 export MANPAGER="col -b | vim -c 'set ft=man nomodifiable' -"
 
@@ -106,21 +107,29 @@ export PATH=/usr/local/opt/mysql-client/bin:$PATH
 export PATH=/Users/Real/go/bin:$PATH
 export GOPATH=/Users/Real/go
 
+###################
 # python virtualenv
-export WORKON_HOME=$HOME/.virtualenvs
-export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
-source /usr/local/bin/virtualenvwrapper.sh
+###################
 
+export PATH=/Users/Real/Library/Python/3.7/bin/:$PATH
+
+#export PATH=/Users/Real/.local/bin:$PATH
+#export WORKON_HOME=$HOME/.virtualenvs
+#export VIRTUALENVWRAPPER_PYTHON=/Users/Real/.pyenv/shims/python
+#source /usr/local/bin/virtualenvwrapper.sh
+
+################
+# pyenv & pipenv
+################
+
+#export LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib -L/usr/local/opt/readline/lib"
+#export CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/readline/include -I/usr/local/opt/sqlite/include"
+#export PKG_CONFIG_PATH="/usr/local/opt/zlib/lib/pkgconfig /usr/local/opt/sqlite/lib/pkgconfig"
+
+#eval "$(pyenv init -)"
+#if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+#export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
 
 #}}}
-# FUNCTIONS {{{1
-
-# telnet(){
-#
-#    curl -v telnet://$1:$2
-#}
-
-# }}}
-
 # vim: fdm=marker sw=4 ts=4 et

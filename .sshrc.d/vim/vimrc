@@ -27,13 +27,18 @@ set hlsearch
 set incsearch
 set wildmode=full
 
+noremap! <c-a> <Home>
+noremap! <c-e> <End>
+noremap! <c-f> <Right>
+noremap! <c-b> <Left>
+noremap! <c-j> <Down>
+noremap! <c-k> <Up>
+noremap! <c-d> <Del>
+
 vnoremap < <gv
 vnoremap > >gv
 nnoremap n nzz
 nnoremap N Nzz
-nnoremap <expr> n  'Nn'[v:searchforward]
-nnoremap <expr> N  'nN'[v:searchforward]
-nnoremap <2-LeftMouse> za
 
 " change to current directory
 nnoremap <silent> <leader>cd :lcd %:h<CR>
@@ -61,7 +66,6 @@ highlight EndOfBuffer ctermfg=black guifg=bg
 command! Dos2unix e ++ff=unix | %s///g
 command! FormatJSON %!python -m json.tool
 
-nnoremap <silent> ? :!open dict://<cword><CR><CR>
 "}}}
 " Autocmd {{{1
 "
