@@ -45,7 +45,6 @@ fpath=(/usr/local/share/zsh-completions $fpath)
 
 # }}}
 # ALIAS {{{1
-alias o='open'
 alias grep='grep --color'
 alias ls='ls -G'
 alias pg='ps aux | grep'
@@ -53,7 +52,6 @@ alias s='sshrc'
 alias ....='cd ../../..'
 alias ...='cd ../..'
 alias ..='cd ..'
-alias e='open -t'
 alias plantuml='java -jar /Applications/plantuml.jar'
 alias note='vim -c "Note"'
 alias ssh.add_key.zzzw='ssh-add ~/.ssh/zzzw_inet'
@@ -72,7 +70,7 @@ export WORDCHARS='-*?_[]~=&;!#$%^(){}'
 export EDITOR='vim'
 export LC_ALL="en_US.UTF-8"
 # use vim as man pager
-export MANPAGER="col -b | vim -c 'set ft=man nomodifiable' -"
+export MANPAGER="vim -c 'MANPAGER' -c 'set fdm=indent ts=7 sw=7' -"
 
 #export LC_ALL="zh_CN.GB2312"
 if [[ $LC_CTYPE = "zh_CN.eucCN" ]]; then
@@ -133,20 +131,9 @@ export PATH=/Users/Real/Library/Python/3.7/bin/:$PATH
 
 #}}}
 
-#################
-# nvm
-#################
-
-#export NVM_DIR="$HOME/.nvm"
-#[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-#[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
-
-######################
-#       llvm          
-######################
-export PATH="/usr/local/opt/llvm/bin:$PATH"
-
-export LDFLAGS="-L/usr/local/opt/llvm/lib"
-export CPPFLAGS="-I/usr/local/opt/llvm/include"
+#######################################################################
+#                                 fzf                                 #
+#######################################################################
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # vim: fdm=marker sw=4 ts=4 et

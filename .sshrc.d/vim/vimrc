@@ -26,6 +26,7 @@ set ignorecase
 set hlsearch
 set incsearch
 set wildmode=full
+set nu
 
 noremap! <c-a> <Home>
 noremap! <c-e> <End>
@@ -71,5 +72,4 @@ command! FormatJSON %!python -m json.tool
 "
 autocmd FileType nginx setlocal fdm=indent ai ts=4 sw=4 tw=80
 autocmd FileType json,yaml,xml,html,css setlocal fdm=indent ai ts=2 sw=2 tw=80
-
 " }}}

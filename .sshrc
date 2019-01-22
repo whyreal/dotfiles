@@ -1,4 +1,4 @@
-# system
+#init {{{1 
 if [ -r /etc/profile ];then
     source /etc/profile;
 fi
@@ -9,7 +9,7 @@ elif [ -r ~/.bash_login ];then
 elif [ -r ~/.profile ];then
     source ~/.profile
 fi
-
+#}}}
 # env {{{1
 SERVER_IP=$(echo $SSH_CONNECTION | awk '{print $3}')
 export PS1="\n\e[38;5;201m$SERVER_IP \h\e[m \e[38;5;46m\u\e[m\n[\w]\\$ "
@@ -28,18 +28,20 @@ export LC_ALL="en_US.utf8"
 alias ....='cd ../../..'
 alias ...='cd ../..'
 alias ..='cd ..'
-alias curl='curl -v'
-alias grep='grep --color'
-alias ll="ls -lh"
 
-alias tail.catalina='tail -f logs/catalina.out'
+alias curl='curl -v'
+
+alias grep='grep --color'
+
+alias ll="ls -lh"
 alias mkdir='mkdir -pv'
-alias port.list='netstat -antuplo'
-alias port.find='netstat -antuplo | grep'
+
 alias port.find.listen='netstat -antuplo | grep'
+alias port.find='netstat -antuplo | grep'
+alias port.list='netstat -antuplo'
 
 alias file.path.abs='readlink -f'
-file.find(){
+file.find(){  # {{{2 用文件名查找文件
     if [[ "" == $2 ]]; then
         wd="."
     else
@@ -47,8 +49,8 @@ file.find(){
     fi
     find $wd -iname "*$1*" -type f
 }
-
-file.find.abs(){
+#}}}
+file.find.abs(){  # {{{2 用文件名查找文件,绝对路径
     if [[ "" == $2 ]]; then
         wd="."
     else
@@ -56,20 +58,21 @@ file.find.abs(){
     fi
     find $wd -iname "*$1*" -type f -exec readlink -f {} \;
 }
-
-file.find.list.abs(){
+#}}}
+file.find.list.abs(){  # {{{2 查找文件中包含的文件名，绝对路径
     cat $1 | while read filename;do
         echo "$filename"
         find . -iname "*$filename*" -type f -exec readlink -f {} \;
         echo "---------"
     done
 }
+#}}}
 
-process.find(){
+process.find(){  # {{{2 以进程名查找进程
     ps -ef | grep "$1" | grep -v grep
 }
 
-process.find.port(){
+process.find.port(){  # {{{2 查找某端口对应的进程
     local port=$1
     local pid=`lsof -i "tcp:$port" | awk '/LISTEN/{print $2}'`
     if [ -z "$pid" ];then
@@ -79,8 +82,56 @@ process.find.port(){
         ps aux | grep $pid | grep -v grep
     fi
 }
+#}}}
 
-color.print(){
+pj.alias.init(){  # {{{2 在/usr/local/tomcat*，目录下查找war包，并初始化相关 alias
+    for war in $(find /usr/local/tomcat*/webapps/  -maxdepth 1 -iname '*.war');do
+        war_file=$(basename $war)
+        war_name=$(awk -v war_file=$war_file 'BEGIN{print gensub(/(.*)\.war/, "\\1", "g", tolower(war_file))}')
+        tomcat_path=$(readlink -f $(dirname $war)/../)
+        alias "tomcat.$(basename $tomcat_path)"="cd $tomcat_path"
+        alias "pj.$war_name"="cd $tomcat_path"
+    done
+}
+#}}}
+
+yum.localrepo.setup(){  #{{{2 初始化本地yum
+    local path=$1
+    if [[ ! -z "$path" ]]; then
+        cat > /etc/yum.repos.d/local.repo <<eof
+[Local]
+name=CentOS - Media
+baseurl=file://$path
+gpgcheck=0
+enabled=1
+eof
+    fi
+}
+#}}}
+oracle.env.gb2312(){ #{{{2
+	echo export NLS_LANG=AMERICAN_AMERICA.ZHS16GBK
+}
+#}}}
+
+alias tomcat.catalina.less="less logs/catalina.out"
+alias tomcat.catalina.tail='tail -f logs/catalina.out'
+tomcat.change_port(){  # {{{2 在tomcat 路径中获取端口号，修改tomcat server.xml 中的端口
+    if [[ $# -lt 1 ]]; then
+        echo "give me the config file" >& 2
+        return 1
+    fi
+    local config=`readlink -f $1`
+    local conn_port=`echo $config | sed -E 's/.*_([0-9]+)\/.*/\1/'`
+
+    local server_port=0
+    let "server_port=$conn_port+100"
+    sed -i -e 's/Server port="[^"]*"/Server port="'$server_port'"/' \
+        -e 's/Connector port="[^"]*" protocol="HTTP/Connector port="'$conn_port'" protocol="HTTP/' \
+        $config
+}
+#}}}
+
+color.print(){    #{{{2
     for C in {40..47}; do
         echo -en "\e[${C}m$C "
     done
@@ -97,70 +148,28 @@ color.print(){
 
     echo -e "\e(B\e[m"
 }
-
-color.print.tput(){
+#}}}
+color.print.tput(){ #{{{2
     for C in {0..255}; do
         tput setab $C
         echo -n "$C "
     done
     tput sgr0
 }
-
-pj.alias.init(){
-    for war in $(find /usr/local/tomcat*/webapps/  -maxdepth 1 -iname '*.war');do
-        war_file=$(basename $war)
-        war_name=$(awk -v war_file=$war_file 'BEGIN{print gensub(/(.*)\.war/, "\\1", "g", tolower(war_file))}')
-        tomcat_path=$(readlink -f $(dirname $war)/../)
-        alias "tomcat.$(basename $tomcat_path)"="cd $tomcat_path"
-        alias "pj.$war_name"="cd $tomcat_path"
-    done
-}
-
-yum.localrepo.setup(){
-    local path=$1
-    if [[ ! -z "$path" ]]; then
-        cat > /etc/yum.repos.d/local.repo <<eof
-[Local]
-name=CentOS - Media
-baseurl=file://$path
-gpgcheck=0
-enabled=1
-eof
-    fi
-}
-
-oracle.env.gb2312(){
-	echo export NLS_LANG=AMERICAN_AMERICA.ZHS16GBK
-}
-
-# tunnel
-tunnel.zzzw.inet.db.create(){
-    ssh -o "ServerAliveInterval 180" -NfL 192.168.80.100:1521:172.30.41.42:1521 -p 9722 localhost
-}
-
-tunnel.zzzw.inet.web.create(){
-	ssh -NfD 192.168.80.100:10000 -p 9722 localhost
-}
-
-tunnel.zzzw.px.web.create(){
-	ssh -NfD 192.168.80.100:10001 -p 2822 localhost
-}
-
 #}}}
 
-tomcat.change_port(){
-    if [[ $# -lt 1 ]]; then
-        echo "give me the config file" >& 2
-        return 1
-    fi
-    local config=`readlink -f $1`
-    local conn_port=`echo $config | sed -E 's/.*_([0-9]+)\/.*/\1/'`
-
-    local server_port=0
-    let "server_port=$conn_port+100"
-    sed -i -e 's/Server port="[^"]*"/Server port="'$server_port'"/' \
-        -e 's/Connector port="[^"]*" protocol="HTTP/Connector port="'$conn_port'" protocol="HTTP/' \
-        $config
+tunnel.zzzw.inet.db.create(){ #{{{2
+    ssh -o "ServerAliveInterval 180" -NfL 192.168.80.100:1521:172.30.41.42:1521 -p 9722 localhost
 }
+#}}}
+tunnel.zzzw.inet.web.create(){ #{{{2
+	ssh -NfD 192.168.80.100:10000 -p 9722 localhost
+}
+#}}}
+tunnel.zzzw.px.web.create(){ #{{{2
+	ssh -NfD 192.168.80.100:10001 -p 2822 localhost
+}
+#}}}
+#}}}
 
 # vim: ft=sh fdm=marker

@@ -12,13 +12,18 @@ Plug 'rlue/vim-barbaric'
 let g:barbaric_default = 4
 let g:barbaric_scope = 'buffer'
 "}}}
+" fuzzy finder{{{2
+Plug 'junegunn/fzf', { 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+    nnoremap <leader>ff :Files<cr>
+    nnoremap <leader>fb :Buffers<cr>
+"}}}
 " 导航{{{2
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'scrooloose/nerdtree'
     nnoremap <leader>ve :NERDTreeToggle<CR>
-    let NERDTreeShowBookmarks = 1
+    let NERDTreeShowBookmarks = 0
     let NERDTreeBookmarksSort = 0
-
 
 Plug 'vim-voom/VOoM'
     let g:voom_tree_placement = 'right'
@@ -30,41 +35,48 @@ Plug 'vim-voom/VOoM'
 Plug 'majutsushi/tagbar'
     nnoremap <leader>vt :TagbarToggle<cr>
 "}}}
+" 语法检查{{{2
+"Plug 'w0rp/ale'
+"    let g:ale_sign_column_always = 1
+"    let g:ale_enabled = 0
+"    let g:ale_set_balloons = 1
+"    "let g:ale_fix_on_save = 0
+" 
+"
+"    " c, parse compile_commands.json
+"    "let g:ale_c_parse_compile_commands = 1
+"
+"    "let g:ale_completion_enabled = 1
+"    "let g:ale_python_auto_pipenv = 1
+"    "set completeopt=menu,menuone,preview,noselect,noinsert
+"    set completeopt=menu,menuone,preview
+"    let g:ale_fixers = {
+"                \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+"                \ }
+"    nnoremap <leader>sn :ALENext<cr>
+"    nnoremap <leader>sp :ALEPrevious<cr>
+"    nnoremap <leader>sd :ALEDetail<cr>
+"    nnoremap <leader>sf :ALEFix<cr>
+"}}}
 " 自动补全{{{2
-Plug 'w0rp/ale'
-    let g:ale_sign_column_always = 1
-    let g:ale_enabled = 1
-    let g:ale_set_balloons = 1
-    "let g:ale_fix_on_save = 0
- 
-    " c, parse compile_commands.json
-    "let g:ale_c_parse_compile_commands = 1
 
-    "let g:ale_completion_enabled = 1
-    "let g:ale_python_auto_pipenv = 1
-    "set completeopt=menu,menuone,preview,noselect,noinsert
-    set completeopt=menu,menuone,preview
-    let g:ale_fixers = {
-                \ '*': ['remove_trailing_lines', 'trim_whitespace'],
-                \ }
-    nnoremap <leader>sn :ALENext<cr>
-    nnoremap <leader>sp :ALEPrevious<cr>
-    nnoremap <leader>sd :ALEDetail<cr>
-    nnoremap <leader>sf :ALEFix<cr>
+" https://github.com/neoclide/coc.nvim
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+    " Use <c-space> for trigger completion.
+    inoremap <silent><expr> <c-space> coc#refresh()
 
-Plug 'prabirshrestha/asyncomplete.vim'
-"let g:lsp_log_verbose = 1
-"let g:lsp_log_file = expand('~/vim-lsp.log')
+"Plug 'prabirshrestha/asyncomplete.vim'
 
 " for asyncomplete.vim log
 "let g:asyncomplete_log_file = expand('~/asyncomplete.log')
 
     "To enable fuzzy smart completion:
-    let g:asyncomplete_smart_completion = 1
-    let g:asyncomplete_remove_duplicates = 1
+    "let g:asyncomplete_smart_completion = 1
+    "let g:asyncomplete_remove_duplicates = 1
 
     " 自动触发
-    let g:asyncomplete_auto_popup = 1
+    "let g:asyncomplete_auto_popup = 1
+
     " 使用 TAB 触发
     "function! s:check_back_space() abort
         "let col = col('.') - 1
@@ -78,15 +90,17 @@ Plug 'prabirshrestha/asyncomplete.vim'
     "inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 "Plug 'prabirshrestha/asyncomplete-buffer.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-    let g:lsp_signs_enabled = 1         " enable signs
-    let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
-    nnoremap <silent> <leader>gd :LspDefinition<cr>
 
-Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
-Plug 'prabirshrestha/asyncomplete-file.vim'
+" lsp
+"Plug 'prabirshrestha/asyncomplete-lsp.vim'
+"Plug 'prabirshrestha/async.vim'
+"Plug 'prabirshrestha/vim-lsp'
+    "let g:lsp_signs_enabled = 1         " enable signs
+    "let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
+    "nnoremap <silent> <leader>gd :LspDefinition<cr>
+
+"Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
+"Plug 'prabirshrestha/asyncomplete-file.vim'
 
 Plug 'SirVer/ultisnips'
     let g:UltiSnipsExpandTrigger="<c-j>"
@@ -122,26 +136,6 @@ Plug 'kannokanno/previm'
     let g:previm_custom_css_path='~/.vim/plugged/wr_vim/previm.css'
     let g:previm_open_cmd='open'
 "}}}
-" Golang{{{2
-"}}}
-" typescript {{{2
-Plug 'leafgarland/typescript-vim'
-"}}}
-" 前端 {{{2
-Plug 'isRuslan/vim-es6'
-Plug 'mxw/vim-jsx'
-    let g:jsx_ext_required = 0
-Plug 'mattn/emmet-vim'
-    let g:user_emmet_install_global = 0
-    autocmd FileType html,css,javascript EmmetInstall
-"}}}
-" Docker{{{2
-"Plug 'ekalinin/Dockerfile.vim'
-"}}}
-" Manpage{{{2
-runtime! ftplugin/man.vim
-    let g:ft_man_open_mode = 'tab'
-"}}}
 " Color Theme{{{2
 "Plug 'lmintmate/blue-mood-vim'
 "Plug 'NLKNguyen/papercolor-theme'
@@ -155,12 +149,13 @@ call plug#end()
 
 filetype plugin indent on
 syntax enable
-
-call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
-            \ 'name': 'ultisnips',
-            \ 'whitelist': ['*'],
-            \ 'completor': function('asyncomplete#sources#ultisnips#completor'),
-            \ }))
+"}}}
+" asyncomplete#register_source{{{1
+"call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
+            "\ 'name': 'ultisnips',
+            "\ 'whitelist': ['*'],
+            "\ 'completor': function('asyncomplete#sources#ultisnips#completor'),
+            "\ }))
 
 "call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
             "\ 'name': 'buffer',
@@ -169,55 +164,67 @@ call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_opti
             "\ 'completor': function('asyncomplete#sources#buffer#completor'),
             "\ }))
 
-call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-            \ 'name': 'file',
-            \ 'whitelist': ['*'],
-            \ 'completor': function('asyncomplete#sources#file#completor')
-            \ }))
+"call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
+            "\ 'name': 'file',
+            "\ 'whitelist': ['*'],
+            "\ 'completor': function('asyncomplete#sources#file#completor')
+            "\ }))
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                              language server                               "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 根据目录获取 root_uri
 " 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_directory(lsp#utils#get_buffer_path(), '.gitignore'))},
 " 根据文件获取 root_uri
 " 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
-
-if executable('pyls')
-    " pip install python-language-server
-    au User lsp_setup call lsp#register_server({
-                \ 'name': 'pyls',
-                \ 'cmd': {server_info->['pyls']},
-                \ 'whitelist': ['python'],
-                \ })
-endif
-
-if executable('go-langserver')
-    au User lsp_setup call lsp#register_server({
-                \ 'name': 'go-langserver',
-                \ 'cmd': {server_info->['go-langserver', '-gocodecompletion']},
-                \ 'whitelist': ['go'],
-                \ })
-endif
-
-if executable('typescript-language-server')
-    au User lsp_setup call lsp#register_server({
-                \ 'name': 'typescript-language-server',
-                \ 'cmd': { server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-                \ 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), '.vim-lsp'))},
-                \ 'whitelist': ['typescript', 'javascript', 'jsx']
-                \ })
-endif
-
-if executable('clangd')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'clangd',
-        \ 'cmd': {server_info->['clangd']},
-        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-        \ })
-endif
+"
+"if executable('pyls')
+"    " pip install python-language-server
+"    au User lsp_setup call lsp#register_server({
+"                \ 'name': 'pyls',
+"                \ 'cmd': {server_info->['pyls']},
+"                \ 'whitelist': ['python'],
+"                \ })
+"endif
+"
+"if executable('go-langserver')
+"    au User lsp_setup call lsp#register_server({
+"                \ 'name': 'go-langserver',
+"                \ 'cmd': {server_info->['go-langserver', '-gocodecompletion', '-diagnostics', '-lint-tool', 'golint']},
+"                \ 'whitelist': ['go']
+"                \ })
+"endif
+"
+"if executable('typescript-language-server')
+"    au User lsp_setup call lsp#register_server({
+"                \ 'name': 'typescript-language-server',
+"                \ 'cmd': { server_info->['typescript-language-server', '--stdio']},
+"                \ 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), '.vim-lsp'))},
+"                \ 'whitelist': ['typescript', 'typescript.tsx']
+"                \ })
+"endif
+"
+"if executable('clangd')
+"    au User lsp_setup call lsp#register_server({
+"        \ 'name': 'clangd',
+"        \ 'cmd': {server_info->['clangd']},
+"        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+"        \ })
+"endif
+"
+"if executable('rls')
+"    au User lsp_setup call lsp#register_server({
+"        \ 'name': 'rls',
+"        \ 'cmd': {server_info->['rustup', 'run', 'stable', 'rls']},
+"        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'Cargo.toml'))},
+"        \ 'whitelist': ['rust'],
+"        \ })
+"endif
 
 "}}}
 " Operation {{{1
 
-"set foldlevel=99
+set foldlevel=99
 set clipboard+=unnamed
 set autoread
 set fileencodings=utf-8,gbk,ucs-bom,cp936,gb18030,big5,latin1
@@ -231,7 +238,7 @@ set wildmode=full
 set mouse=a
 set tags=./.tags;,.tags
 set iskeyword=-,@,48-57,_,192-255
-
+"set macmeta
 " make 前自动保存
 set autowrite
 
@@ -241,8 +248,7 @@ nnoremap n nzz
 nnoremap N Nzz
 nnoremap <2-LeftMouse> za
 
-set macmeta
-inoremap jj <ESC>
+"inoremap jj <ESC>
 
 noremap! <c-a> <Home>
 noremap! <c-e> <End>
@@ -275,36 +281,51 @@ set belloff=all
 
 set directory=/tmp
 set hidden
+
+" Better display for messages
+set cmdheight=2
+" Smaller updatetime for CursorHold & CursorHoldI
+set updatetime=300
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+" always show signcolumns
+set signcolumn=yes
+
 set splitbelow
 set previewheight=8
-"colorscheme smyck
-colorscheme onehalfdark
+colorscheme desert
+
 "set nu
 
 if has('gui_running')
-    colorscheme onehalflight
+    " 透明
+    set transparency=10
+    " 模糊
+    "set blurradius=10
     set linespace=1
     set guioptions='egk'
     set guifont=menlo:h12
+    colorscheme onehalfdark
+else
+    "set term=builtin_ansi
 endif
-
 " not display ~ for blank line
 "highlight EndOfBuffer ctermfg=black guifg=bg
 "}}}
 " FileType {{{1
-autocmd FileType java setlocal et fdm=indent ai ts=4 sw=4 tw=120
-autocmd FileType go setlocal fdm=indent ai ts=4 sw=4 
-autocmd FileType nginx setlocal fdm=indent ai ts=4 sw=4 
-autocmd FileType javascript,json,yaml,xml,html,css setlocal fdm=indent ai ts=2 sw=2 
+"autocmd FileType c,cpp setlocal ai ts=4 sw=4 fdm=syntax
+"autocmd FileType go setlocal ai ts=4 sw=4
+autocmd FileType java setlocal et ai ts=4 sw=4 tw=120
+"autocmd FileType javascript,json,typescript setlocal ai ts=2 sw=2 fdm=indent
+"autocmd FileType lua setlocal ai ts=4 sw=4 et
+"autocmd FileType python setlocal fdm=indent ai ts=4 sw=4 et
 autocmd FileType markdown setlocal ts=4 sw=4 et
-autocmd FileType python setlocal fdm=indent ai ts=4 sw=4 et
-autocmd FileType yaml setlocal fdm=indent ai ts=2 sw=2 et
-autocmd FileType lua setlocal fdm=indent ai ts=4 sw=4 et
-autocmd FileType sh setlocal fdm=indent ai ts=4 sw=4 et
-autocmd FileType vim setlocal ts=4 sw=4 et fdm=marker 
-autocmd FileType man setlocal fdm=indent
+autocmd FileType nginx setlocal ai ts=4 sw=4
+autocmd FileType sh setlocal ai ts=4 sw=4 et
 autocmd FileType snippets setlocal ts=4 sw=4
-autocmd FileType c,cpp setlocal fdm=indent ai ts=4 sw=4 
+autocmd FileType vim setlocal ts=4 sw=4 et fdm=marker
+autocmd FileType xml,html,css setlocal fdm=indent ai ts=2 sw=2
+autocmd FileType yaml setlocal fdm=indent ai ts=2 sw=2 et
 
 " default filetype
 autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
