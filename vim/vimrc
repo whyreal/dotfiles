@@ -2,7 +2,7 @@
 call plug#begin('~/.vim/plugged')
 
 " basic plugins{{{2
-let mapleader=","
+let mapleader=" "
 Plug 'tpope/vim-sensible'
 Plug 'whyreal/wr_vim'
 Plug 'whyreal/vim-template'
@@ -13,10 +13,7 @@ let g:barbaric_default = 4
 let g:barbaric_scope = 'buffer'
 "}}}
 " fuzzy finder{{{2
-Plug 'junegunn/fzf', { 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-    nnoremap <leader>ff :Files<cr>
-    nnoremap <leader>fb :Buffers<cr>
+Plug 'Shougo/denite.nvim'
 "}}}
 " 导航{{{2
 Plug 'christoomey/vim-tmux-navigator'
@@ -35,72 +32,28 @@ Plug 'vim-voom/VOoM'
 Plug 'majutsushi/tagbar'
     nnoremap <leader>vt :TagbarToggle<cr>
 "}}}
-" 语法检查{{{2
-"Plug 'w0rp/ale'
-"    let g:ale_sign_column_always = 1
-"    let g:ale_enabled = 0
-"    let g:ale_set_balloons = 1
-"    "let g:ale_fix_on_save = 0
-" 
-"
-"    " c, parse compile_commands.json
-"    "let g:ale_c_parse_compile_commands = 1
-"
-"    "let g:ale_completion_enabled = 1
-"    "let g:ale_python_auto_pipenv = 1
-"    "set completeopt=menu,menuone,preview,noselect,noinsert
-"    set completeopt=menu,menuone,preview
-"    let g:ale_fixers = {
-"                \ '*': ['remove_trailing_lines', 'trim_whitespace'],
-"                \ }
-"    nnoremap <leader>sn :ALENext<cr>
-"    nnoremap <leader>sp :ALEPrevious<cr>
-"    nnoremap <leader>sd :ALEDetail<cr>
-"    nnoremap <leader>sf :ALEFix<cr>
-"}}}
 " 自动补全{{{2
 
 " https://github.com/neoclide/coc.nvim
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
     " Use <c-space> for trigger completion.
     inoremap <silent><expr> <c-space> coc#refresh()
+    nnoremap <silent> <leader>da  :<C-u>Denite coc-diagnostic<cr>
+    nnoremap <silent> <leader>dc  :<C-u>Denite coc-command<cr>
+    nnoremap <silent> <leader>de  :<C-u>Denite coc-extension<cr>
+    nnoremap <silent> <leader>dl  :<C-u>Denite coc-link<cr>
+    nnoremap <silent> <leader>do  :<C-u>Denite coc-symbols<cr>
+    nnoremap <silent> <leader>ds  :<C-u>Denite coc-service<cr>
+    nnoremap <silent> <leader>dt  :<C-u>Denite coc-workspace<cr>
 
-"Plug 'prabirshrestha/asyncomplete.vim'
+    nnoremap <silent> gd <Plug>(coc-definition)
+    nnoremap <silent> gy <Plug>(coc-type-definition)
+    nnoremap <silent> gi <Plug>(coc-implementation)
+    nnoremap <silent> gr <Plug>(coc-references)
 
-" for asyncomplete.vim log
-"let g:asyncomplete_log_file = expand('~/asyncomplete.log')
-
-    "To enable fuzzy smart completion:
-    "let g:asyncomplete_smart_completion = 1
-    "let g:asyncomplete_remove_duplicates = 1
-
-    " 自动触发
-    "let g:asyncomplete_auto_popup = 1
-
-    " 使用 TAB 触发
-    "function! s:check_back_space() abort
-        "let col = col('.') - 1
-        "return !col || getline('.')[col - 1]  =~ '\s'
-    "endfunction
-
-    "inoremap <silent><expr> <TAB>
-      "\ pumvisible() ? "\<C-n>" :
-      "\ <SID>check_back_space() ? "\<TAB>" :
-      "\ asyncomplete#force_refresh()
-    "inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-"Plug 'prabirshrestha/asyncomplete-buffer.vim'
-
-" lsp
-"Plug 'prabirshrestha/asyncomplete-lsp.vim'
-"Plug 'prabirshrestha/async.vim'
-"Plug 'prabirshrestha/vim-lsp'
-    "let g:lsp_signs_enabled = 1         " enable signs
-    "let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
-    "nnoremap <silent> <leader>gd :LspDefinition<cr>
-
-"Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
-"Plug 'prabirshrestha/asyncomplete-file.vim'
+    " Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
+    " Coc only does snippet and additional edit on confirm.
+    inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 Plug 'SirVer/ultisnips'
     let g:UltiSnipsExpandTrigger="<c-j>"
@@ -109,9 +62,7 @@ Plug 'SirVer/ultisnips'
     let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 
 Plug 'honza/vim-snippets'
-
 Plug 'tpope/vim-surround'
-
 Plug 'jiangmiao/auto-pairs'
     let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"'}
 "}}}
@@ -120,11 +71,16 @@ Plug 'scrooloose/nerdcommenter'
 "}}}
 " 对齐{{{2
 Plug 'junegunn/vim-easy-align'
-    " Start interactive EasyAlign in visual mode (e.g. vipga)
-    xmap ga <Plug>(EasyAlign)
-    " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-    nmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 "}}}
+
+" 前端 {{{2
+Plug 'leafgarland/typescript-vim'
+" }}}
+
 " Markdown{{{2
 Plug 'plasticboy/vim-markdown'
     let g:vim_markdown_toc_autofit = 1
@@ -150,80 +106,8 @@ call plug#end()
 filetype plugin indent on
 syntax enable
 "}}}
-" asyncomplete#register_source{{{1
-"call asyncomplete#register_source(asyncomplete#sources#ultisnips#get_source_options({
-            "\ 'name': 'ultisnips',
-            "\ 'whitelist': ['*'],
-            "\ 'completor': function('asyncomplete#sources#ultisnips#completor'),
-            "\ }))
 
-"call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
-            "\ 'name': 'buffer',
-            "\ 'whitelist': ['*'],
-            "\ 'blacklist': ['go', 'markdown'],
-            "\ 'completor': function('asyncomplete#sources#buffer#completor'),
-            "\ }))
-
-"call asyncomplete#register_source(asyncomplete#sources#file#get_source_options({
-            "\ 'name': 'file',
-            "\ 'whitelist': ['*'],
-            "\ 'completor': function('asyncomplete#sources#file#completor')
-            "\ }))
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                              language server                               "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 根据目录获取 root_uri
-" 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_directory(lsp#utils#get_buffer_path(), '.gitignore'))},
-" 根据文件获取 root_uri
-" 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
-"
-"if executable('pyls')
-"    " pip install python-language-server
-"    au User lsp_setup call lsp#register_server({
-"                \ 'name': 'pyls',
-"                \ 'cmd': {server_info->['pyls']},
-"                \ 'whitelist': ['python'],
-"                \ })
-"endif
-"
-"if executable('go-langserver')
-"    au User lsp_setup call lsp#register_server({
-"                \ 'name': 'go-langserver',
-"                \ 'cmd': {server_info->['go-langserver', '-gocodecompletion', '-diagnostics', '-lint-tool', 'golint']},
-"                \ 'whitelist': ['go']
-"                \ })
-"endif
-"
-"if executable('typescript-language-server')
-"    au User lsp_setup call lsp#register_server({
-"                \ 'name': 'typescript-language-server',
-"                \ 'cmd': { server_info->['typescript-language-server', '--stdio']},
-"                \ 'root_uri': { server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), '.vim-lsp'))},
-"                \ 'whitelist': ['typescript', 'typescript.tsx']
-"                \ })
-"endif
-"
-"if executable('clangd')
-"    au User lsp_setup call lsp#register_server({
-"        \ 'name': 'clangd',
-"        \ 'cmd': {server_info->['clangd']},
-"        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-"        \ })
-"endif
-"
-"if executable('rls')
-"    au User lsp_setup call lsp#register_server({
-"        \ 'name': 'rls',
-"        \ 'cmd': {server_info->['rustup', 'run', 'stable', 'rls']},
-"        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'Cargo.toml'))},
-"        \ 'whitelist': ['rust'],
-"        \ })
-"endif
-
-"}}}
 " Operation {{{1
-
 set foldlevel=99
 set clipboard+=unnamed
 set autoread
@@ -236,7 +120,7 @@ set hlsearch
 set incsearch
 set wildmode=full
 set mouse=a
-set tags=./.tags;,.tags
+"set tags=./.tags;,.tags
 set iskeyword=-,@,48-57,_,192-255
 "set macmeta
 " make 前自动保存
@@ -316,7 +200,6 @@ endif
 "autocmd FileType c,cpp setlocal ai ts=4 sw=4 fdm=syntax
 "autocmd FileType go setlocal ai ts=4 sw=4
 autocmd FileType java setlocal et ai ts=4 sw=4 tw=120
-"autocmd FileType javascript,json,typescript setlocal ai ts=2 sw=2 fdm=indent
 "autocmd FileType lua setlocal ai ts=4 sw=4 et
 "autocmd FileType python setlocal fdm=indent ai ts=4 sw=4 et
 autocmd FileType markdown setlocal ts=4 sw=4 et
@@ -326,6 +209,8 @@ autocmd FileType snippets setlocal ts=4 sw=4
 autocmd FileType vim setlocal ts=4 sw=4 et fdm=marker
 autocmd FileType xml,html,css setlocal fdm=indent ai ts=2 sw=2
 autocmd FileType yaml setlocal fdm=indent ai ts=2 sw=2 et
+autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
+autocmd FileType javascript,json,typescript setlocal ai ts=2 sw=2 fdm=indent
 
 " default filetype
 autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
