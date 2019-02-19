@@ -1,19 +1,29 @@
 " Package Manager {{{1
+
+" use python3
+if has('python3')
+endif
+
 call plug#begin('~/.vim/plugged')
 
 " basic plugins{{{2
 let mapleader=" "
 Plug 'tpope/vim-sensible'
 Plug 'whyreal/wr_vim'
+" 模版
 Plug 'whyreal/vim-template'
 "}}}
 " 输入法切换{{{2
 Plug 'rlue/vim-barbaric'
-let g:barbaric_default = 4
-let g:barbaric_scope = 'buffer'
+    let g:barbaric_default = 2
+    let g:barbaric_scope = 'buffer'
 "}}}
 " fuzzy finder{{{2
-Plug 'Shougo/denite.nvim'
+"Plug 'Shougo/denite.nvim'
+"    nnoremap <leader>ff :Denite file/rec<cr>
+"    nnoremap <leader>fb :Denite buffer<cr>
+"    nnoremap <leader>ft :Denite filetype<cr>
+
 "}}}
 " 导航{{{2
 Plug 'christoomey/vim-tmux-navigator'
@@ -31,29 +41,32 @@ Plug 'vim-voom/VOoM'
 
 Plug 'majutsushi/tagbar'
     nnoremap <leader>vt :TagbarToggle<cr>
+
 "}}}
 " 自动补全{{{2
 
-" https://github.com/neoclide/coc.nvim
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
-    " Use <c-space> for trigger completion.
-    inoremap <silent><expr> <c-space> coc#refresh()
-    nnoremap <silent> <leader>da  :<C-u>Denite coc-diagnostic<cr>
-    nnoremap <silent> <leader>dc  :<C-u>Denite coc-command<cr>
-    nnoremap <silent> <leader>de  :<C-u>Denite coc-extension<cr>
-    nnoremap <silent> <leader>dl  :<C-u>Denite coc-link<cr>
-    nnoremap <silent> <leader>do  :<C-u>Denite coc-symbols<cr>
-    nnoremap <silent> <leader>ds  :<C-u>Denite coc-service<cr>
-    nnoremap <silent> <leader>dt  :<C-u>Denite coc-workspace<cr>
+" URL: https://github.com/neoclide/coc.nvim
 
-    nnoremap <silent> gd <Plug>(coc-definition)
-    nnoremap <silent> gy <Plug>(coc-type-definition)
-    nnoremap <silent> gi <Plug>(coc-implementation)
-    nnoremap <silent> gr <Plug>(coc-references)
-
-    " Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
-    " Coc only does snippet and additional edit on confirm.
-    inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+"Plug 'neoclide/coc.nvim' ", {'tag': '*', 'do': { -> coc#util#install()}}
+"Plug 'neoclide/coc-denite'
+"    " Use <c-space> for trigger completion.
+"    inoremap <silent><expr> <c-space> coc#refresh()
+"    nnoremap <silent> <leader>da  :<C-u>Denite coc-diagnostic<cr>
+"    nnoremap <silent> <leader>dc  :<C-u>Denite coc-command<cr>
+"    nnoremap <silent> <leader>de  :<C-u>Denite coc-extension<cr>
+"    nnoremap <silent> <leader>dl  :<C-u>Denite coc-link<cr>
+"    nnoremap <silent> <leader>do  :<C-u>Denite coc-symbols<cr>
+"    nnoremap <silent> <leader>ds  :<C-u>Denite coc-service<cr>
+"    nnoremap <silent> <leader>dt  :<C-u>Denite coc-workspace<cr>
+"
+"    nnoremap <silent> gd <Plug>(coc-definition)
+"    nnoremap <silent> gy <Plug>(coc-type-definition)
+"    nnoremap <silent> gi <Plug>(coc-implementation)
+"    nnoremap <silent> gr <Plug>(coc-references)
+"
+"    " Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
+"    " Coc only does snippet and additional edit on confirm.
+"    inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 Plug 'SirVer/ultisnips'
     let g:UltiSnipsExpandTrigger="<c-j>"
@@ -63,24 +76,19 @@ Plug 'SirVer/ultisnips'
 
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-surround'
-Plug 'jiangmiao/auto-pairs'
-    let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"'}
+"Plug 'jiangmiao/auto-pairs'
+    "let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"'}
 "}}}
 " 注释{{{2
 Plug 'scrooloose/nerdcommenter'
 "}}}
 " 对齐{{{2
 Plug 'junegunn/vim-easy-align'
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
+    " Start interactive EasyAlign in visual mode (e.g. vipga)
+    xmap ga <Plug>(EasyAlign)
+    " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+    nmap ga <Plug>(EasyAlign)
 "}}}
-
-" 前端 {{{2
-Plug 'leafgarland/typescript-vim'
-" }}}
-
 " Markdown{{{2
 Plug 'plasticboy/vim-markdown'
     let g:vim_markdown_toc_autofit = 1
@@ -134,13 +142,13 @@ nnoremap <2-LeftMouse> za
 
 "inoremap jj <ESC>
 
-noremap! <c-a> <Home>
-noremap! <c-e> <End>
-noremap! <c-f> <Right>
-noremap! <c-b> <Left>
-noremap! <c-j> <Down>
-noremap! <c-k> <Up>
-noremap! <c-d> <Del>
+"noremap! <c-a> <Home>
+"noremap! <c-e> <End>
+"noremap! <c-f> <Right>
+"noremap! <c-b> <Left>
+"noremap! <c-j> <Down>
+"noremap! <c-k> <Up>
+"noremap! <c-d> <Del>
 
 " previous buffer
 nnoremap gp :bp<cr>
@@ -156,6 +164,9 @@ nnoremap gb gT
 nnoremap <silent> <leader>cd :lcd %:h<CR>
 
 nnoremap 0 :call wr#ToggleHomeZero()<CR>
+
+" terminal 
+tnoremap <esc> <c-w>N
 "}}}
 " Ui{{{1
 set statusline=\ %F%m%r%h%w\ %=%(%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y%)\ %([%l,%v][%p%%]\ %)
@@ -167,17 +178,17 @@ set directory=/tmp
 set hidden
 
 " Better display for messages
-set cmdheight=2
+"set cmdheight=2
 " Smaller updatetime for CursorHold & CursorHoldI
 set updatetime=300
 " don't give |ins-completion-menu| messages.
 set shortmess+=c
 " always show signcolumns
-set signcolumn=yes
+"set signcolumn=yes
 
 set splitbelow
 set previewheight=8
-colorscheme desert
+"colorscheme desert
 
 "set nu
 
@@ -185,7 +196,7 @@ if has('gui_running')
     " 透明
     set transparency=10
     " 模糊
-    "set blurradius=10
+    set blurradius=10
     set linespace=1
     set guioptions='egk'
     set guifont=menlo:h12
@@ -195,13 +206,15 @@ else
 endif
 " not display ~ for blank line
 "highlight EndOfBuffer ctermfg=black guifg=bg
+nnoremap <silent> <leader>vs :terminal<CR>
+
 "}}}
 " FileType {{{1
-"autocmd FileType c,cpp setlocal ai ts=4 sw=4 fdm=syntax
-"autocmd FileType go setlocal ai ts=4 sw=4
-autocmd FileType java setlocal et ai ts=4 sw=4 tw=120
+autocmd FileType c,cpp setlocal ai ts=4 sw=4 fdm=syntax
+autocmd FileType go setlocal ai ts=4 sw=4
+autocmd FileType java setlocal et ai ts=4 sw=4 tw=120 fdm=indent
 "autocmd FileType lua setlocal ai ts=4 sw=4 et
-"autocmd FileType python setlocal fdm=indent ai ts=4 sw=4 et
+autocmd FileType python setlocal fdm=indent ai ts=4 sw=4 et
 autocmd FileType markdown setlocal ts=4 sw=4 et
 autocmd FileType nginx setlocal ai ts=4 sw=4
 autocmd FileType sh setlocal ai ts=4 sw=4 et

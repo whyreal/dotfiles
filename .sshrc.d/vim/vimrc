@@ -14,6 +14,7 @@ filetype plugin indent on
 syntax enable
 
 colorscheme desert
+set bg=dark
 set cursorline
 set foldlevel=99
 set clipboard+=unnamed
@@ -26,23 +27,15 @@ set ignorecase
 set hlsearch
 set incsearch
 set wildmode=full
-set nu
+"set nu
 
 noremap! <c-a> <Home>
 noremap! <c-e> <End>
-noremap! <c-f> <Right>
-noremap! <c-b> <Left>
-noremap! <c-j> <Down>
-noremap! <c-k> <Up>
-noremap! <c-d> <Del>
 
 vnoremap < <gv
 vnoremap > >gv
 nnoremap n nzz
 nnoremap N Nzz
-
-" change to current directory
-nnoremap <silent> <leader>cd :lcd %:h<CR>
 
 " Ui{{{1
 set statusline=\ %F%m%r%h%w\ %=%(%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y%)\ %([%l,%v][%p%%]\ %)

@@ -115,14 +115,20 @@ oracle.env.gb2312(){ #{{{2
 
 alias tomcat.catalina.less="less logs/catalina.out"
 alias tomcat.catalina.tail='tail -f logs/catalina.out'
-tomcat.change_port(){  # {{{2 在tomcat 路径中获取端口号，修改tomcat server.xml 中的端口
+tomcat.change_port(){  # {{{2 根据路径中端口号，修改tomcat server.xml
     if [[ $# -lt 1 ]]; then
         echo "give me the config file" >& 2
         return 1
     fi
-    local config=`readlink -f $1`
-    local conn_port=`echo $config | sed -E 's/.*_([0-9]+)\/.*/\1/'`
 
+    local config=`readlink -f $1`
+    if [[ ! -f config ]]; then
+        echo "this is not a regular file" >& 2
+        return 2
+    fi
+
+    # /usr/local/tomcat7_8080/conf/server.xml ==> 8080
+    local conn_port=`echo $config | sed -E 's/.*_([0-9]+)\/.*/\1/'`
     local server_port=0
     let "server_port=$conn_port+100"
     sed -i -e 's/Server port="[^"]*"/Server port="'$server_port'"/' \

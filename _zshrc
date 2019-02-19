@@ -57,6 +57,7 @@ alias note='vim -c "Note"'
 alias ssh.add_key.zzzw='ssh-add ~/.ssh/zzzw_inet'
 alias ssh.tunnel.wjs.socks='ssh -NfD 10000 wjs.129.1.0.112'
 alias ssh.tunnel.wjs.win='ssh -NfL 3389:129.1.0.2:3389 zkzy.192.168.80.99'
+alias code="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
 # }}}
 # ENV VARIABLES {{{1
 # fix git problem for https
@@ -135,5 +136,6 @@ export PATH=/Users/Real/Library/Python/3.7/bin/:$PATH
 #                                 fzf                                 #
 #######################################################################
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 
 # vim: fdm=marker sw=4 ts=4 et
