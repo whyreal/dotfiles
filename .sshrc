@@ -68,8 +68,11 @@ file.find.list.abs(){  # {{{2 查找文件中包含的文件名，绝对路径
 }
 #}}}
 
+java.nohup(){
+    nohup java -server -Xms128m -Xmx1024m -jar $1 &
+}
 process.find(){  # {{{2 以进程名查找进程
-    ps -ef | grep "$1" | grep -v grep
+    ps -ef | grep -i "$1" | grep -v grep
 }
 
 process.find.port(){  # {{{2 查找某端口对应的进程

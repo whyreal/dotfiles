@@ -19,10 +19,10 @@ Plug 'rlue/vim-barbaric'
     let g:barbaric_scope = 'buffer'
 "}}}
 " fuzzy finder{{{2
-"Plug 'Shougo/denite.nvim'
-"    nnoremap <leader>ff :Denite file/rec<cr>
-"    nnoremap <leader>fb :Denite buffer<cr>
-"    nnoremap <leader>ft :Denite filetype<cr>
+Plug 'Shougo/denite.nvim'
+    nnoremap <leader>ff :Denite file/rec<cr>
+    nnoremap <leader>fb :Denite buffer<cr>
+    nnoremap <leader>ft :Denite filetype<cr>
 
 "}}}
 " 导航{{{2
@@ -47,23 +47,23 @@ Plug 'majutsushi/tagbar'
 
 " URL: https://github.com/neoclide/coc.nvim
 
-"Plug 'neoclide/coc.nvim' ", {'tag': '*', 'do': { -> coc#util#install()}}
-"Plug 'neoclide/coc-denite'
-"    " Use <c-space> for trigger completion.
-"    inoremap <silent><expr> <c-space> coc#refresh()
-"    nnoremap <silent> <leader>da  :<C-u>Denite coc-diagnostic<cr>
-"    nnoremap <silent> <leader>dc  :<C-u>Denite coc-command<cr>
-"    nnoremap <silent> <leader>de  :<C-u>Denite coc-extension<cr>
-"    nnoremap <silent> <leader>dl  :<C-u>Denite coc-link<cr>
-"    nnoremap <silent> <leader>do  :<C-u>Denite coc-symbols<cr>
-"    nnoremap <silent> <leader>ds  :<C-u>Denite coc-service<cr>
-"    nnoremap <silent> <leader>dt  :<C-u>Denite coc-workspace<cr>
-"
-"    nnoremap <silent> gd <Plug>(coc-definition)
-"    nnoremap <silent> gy <Plug>(coc-type-definition)
-"    nnoremap <silent> gi <Plug>(coc-implementation)
-"    nnoremap <silent> gr <Plug>(coc-references)
-"
+Plug 'neoclide/coc.nvim' , {'tag': '*', 'do': { -> coc#util#install()}}
+Plug 'neoclide/coc-denite'
+    " Use <c-space> for trigger completion.
+    inoremap <silent><expr> <c-space> coc#refresh()
+    nnoremap <silent> <leader>da  :<C-u>Denite coc-diagnostic<cr>
+    nnoremap <silent> <leader>dc  :<C-u>Denite coc-command<cr>
+    nnoremap <silent> <leader>de  :<C-u>Denite coc-extension<cr>
+    nnoremap <silent> <leader>dl  :<C-u>Denite coc-link<cr>
+    nnoremap <silent> <leader>do  :<C-u>Denite coc-symbols<cr>
+    nnoremap <silent> <leader>ds  :<C-u>Denite coc-service<cr>
+    nnoremap <silent> <leader>dt  :<C-u>Denite coc-workspace<cr>
+
+    nnoremap <silent> gd <Plug>(coc-definition)
+    nnoremap <silent> gy <Plug>(coc-type-definition)
+    nnoremap <silent> gi <Plug>(coc-implementation)
+    nnoremap <silent> gr <Plug>(coc-references)
+
 "    " Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
 "    " Coc only does snippet and additional edit on confirm.
 "    inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
@@ -76,8 +76,6 @@ Plug 'SirVer/ultisnips'
 
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-surround'
-"Plug 'jiangmiao/auto-pairs'
-    "let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"'}
 "}}}
 " 注释{{{2
 Plug 'scrooloose/nerdcommenter'
@@ -113,6 +111,12 @@ call plug#end()
 
 filetype plugin indent on
 syntax enable
+
+" 优化 Denite 颜色"
+call denite#custom#option('_', {
+      \ 'highlight_mode_normal': 'Search',
+      \ 'highlight_mode_insert': 'Search'
+      \ })
 "}}}
 
 " Operation {{{1
@@ -188,7 +192,7 @@ set shortmess+=c
 
 set splitbelow
 set previewheight=8
-"colorscheme desert
+colorscheme desert
 
 "set nu
 
