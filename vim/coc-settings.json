@@ -1,0 +1,30 @@
+{
+	"json.enable":true,
+	"json.format.enable":true,
+	"java.import.gradle.enabled": false,
+	"java.jdt.ls.vmargs": "-noverify -Xmx1G -XX:+UseG1GC -XX:+UseStringDeduplication -javaagent:\"/Users/Real/.vscode/extensions/gabrielbb.vscode-lombok-0.9.7/server/lombok.jar\" -Xbootclasspath/a:\"/Users/Real/.vscode/extensions/gabrielbb.vscode-lombok-0.9.7/server/lombok.jar\"",
+	"java.home": "/Library/Java/JavaVirtualMachines/adoptopenjdk-8-openj9.jdk/Contents/Home/",
+	"java.errors.incompleteClasspath.severity": "ignore",
+	"java.completion.favoriteStaticMembers": [
+		"org.junit.Assert.*",
+		"org.junit.Assume.*",
+		"org.junit.jupiter.api.Assertions.*",
+		"org.junit.jupiter.api.Assumptions.*",
+		"org.junit.jupiter.api.DynamicContainer.*",
+		"org.junit.jupiter.api.DynamicTest.*",
+		"org.mockito.Mockito.*",
+		"org.mockito.ArgumentMatchers.*",
+		"org.mockito.Answers.*",
+		"org.springframework.test.web.servlet.result.MockMvcResultMatchers.*",
+		"org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*",
+		"org.springframework.test.web.servlet.setup.MockMvcBuilders.*"
+	],
+	"diagnostic.enable": true,
+  "languageserver": {
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["go"]
+    }
+  }
+}

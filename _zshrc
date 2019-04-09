@@ -102,6 +102,7 @@ export PATH=/Applications/MacVim.app/Contents/bin/:$PATH
 export PATH=/usr/local/opt/mysql-client/bin:$PATH
 
 # golang
+export GO111MODULE=auto  # enable go module
 export PATH=/Users/Real/go/bin:$PATH
 export GOPATH=/Users/Real/go
 
@@ -137,5 +138,9 @@ export PATH=/Users/Real/Library/Python/3.7/bin/:$PATH
 #######################################################################
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-
+# java
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home
+export PATH=$JAVA_HOME/bin:$PATH 
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar 
+export GRAALVM_HOME=/Library/Java/JavaVirtualMachines/graalvm-ce-1.0.0-rc14/Contents/Home
 # vim: fdm=marker sw=4 ts=4 et

@@ -3,6 +3,8 @@
 
 vim/bundle/
 vim/.netrw*
+vim/autoload/plug.vim
+vim/plugged
 
 sublime_user_conf/Package\ Control*
 sublime_user_conf/*crt
