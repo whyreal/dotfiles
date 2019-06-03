@@ -18,25 +18,6 @@ Plug 'ybian/smartim'
     "let g:barbaric_default = 2
     "let g:barbaric_scope = 'buffer'
 "}}}
-" fuzzy finder{{{2
-Plug 'roxma/nvim-yarp'
-Plug 'roxma/vim-hug-neovim-rpc'
-Plug 'Shougo/denite.nvim'
-    nnoremap <leader>ff :Denite file/rec<cr>
-    nnoremap <leader>fb :Denite buffer<cr>
-    nnoremap <leader>ft :Denite filetype<cr>
-" Define mappings
-autocmd FileType denite call s:denite_my_settings()
-function! s:denite_my_settings() abort
-  nnoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
-  nnoremap <silent><buffer><expr> d denite#do_map('do_action', 'delete')
-  nnoremap <silent><buffer><expr> p denite#do_map('do_action', 'preview')
-  nnoremap <silent><buffer><expr> q denite#do_map('quit')
-  nnoremap <silent><buffer><expr> i denite#do_map('open_filter_buffer')
-  nnoremap <silent><buffer><expr> <Space> denite#do_map('toggle_select').'j'
-endfunction
-
-"}}}
 " 导航{{{2
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'scrooloose/nerdtree'
@@ -58,7 +39,6 @@ Plug 'majutsushi/tagbar'
 " 自动补全{{{2
 
 Plug 'neoclide/coc.nvim' , {'tag': '*', 'do': { -> coc#util#install()}}
-Plug 'neoclide/coc-denite'
     " if hidden is not set, TextEdit might fail.
     set hidden
 
@@ -268,12 +248,6 @@ call plug#end()
 filetype plugin indent on
 syntax enable
 
-" 优化 Denite 颜色"
-call denite#custom#option('_', {
-      \ 'highlight_mode_normal': 'Search',
-      \ 'highlight_mode_insert': 'Search'
-      \ })
-"}}}
 " Operation {{{1
 set foldlevel=99
 set clipboard+=unnamed
