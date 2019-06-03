@@ -20,7 +20,7 @@ DISABLE_AUTO_UPDATE="true"
 # DISABLE_LS_COLORS="true"
 
 # Uncomment following line if you want to disable autosetting terminal title.
-# DISABLE_AUTO_TITLE="true"
+DISABLE_AUTO_TITLE="true"
 
 # Uncomment following line if you want to disable command autocorrection
 DISABLE_CORRECTION="true"
@@ -44,22 +44,20 @@ source $ZSH/oh-my-zsh.sh
 fpath=(/usr/local/share/zsh-completions $fpath)
 
 # }}}
-# ALIAS {{{1
+# 别名 {{{1
 alias grep='grep --color'
-alias ls='ls -G'
+alias ls='exa'
+alias cat='bat'
+alias less='bat'
+alias more='bat'
 alias pg='ps aux | grep'
 alias s='sshrc'
+alias ta='tmux -u attach'
 alias ....='cd ../../..'
 alias ...='cd ../..'
 alias ..='cd ..'
-alias plantuml='java -jar /Applications/plantuml.jar'
-alias note='vim -c "Note"'
-alias ssh.add_key.zzzw='ssh-add ~/.ssh/zzzw_inet'
-alias ssh.tunnel.wjs.socks='ssh -NfD 10000 wjs.129.1.0.112'
-alias ssh.tunnel.wjs.win='ssh -NfL 3389:129.1.0.2:3389 zkzy.192.168.80.99'
-alias code="/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code"
 # }}}
-# ENV VARIABLES {{{1
+# 环境变量 {{{1
 # fix git problem for https
 export GIT_SSL_NO_VERIFY=true
 # history
@@ -69,10 +67,10 @@ export HISTFILESIZE=50000
 export WORDCHARS='-*?_[]~=&;!#$%^(){}'
 # editor
 export EDITOR='vim'
-export LC_ALL="en_US.UTF-8"
 # use vim as man pager
 export MANPAGER="vim -c 'MANPAGER' -c 'set fdm=indent ts=7 sw=7' -"
 
+export LC_ALL="en_US.UTF-8"
 #export LC_ALL="zh_CN.GB2312"
 if [[ $LC_CTYPE = "zh_CN.eucCN" ]]; then
     export NLS_LANG=AMERICAN_AMERICA.ZHS16GBK
@@ -82,16 +80,7 @@ fi
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 #export LSCOLORS='gxfxcxdxbxegedabagacad'
-export PATH="/usr/local/sbin:/usr/local/bin:$PATH"
-
-# Oracle
-export ORACLE_HOME=/Applications/instantclient_12_2/
-export TNS_ADMIN=${ORACLE_HOME}/network/admin
-export PATH=${ORACLE_HOME}:/usr/local/ActivePerl-5.20/bin:${PATH}
-export DYLD_LIBRARY_PATH=${ORACLE_HOME}:${DYLD_LIBRARY_PATH}
-
-# Maven Wrap
-#export PATH=~/.mvnw/bin:$PATH
+export PATH="/usr/local/sbin:$PATH"
 
 export PATH=/Users/Real/Documents/Note/scripts/:$PATH
 
@@ -109,38 +98,102 @@ export GOPATH=/Users/Real/go
 # python
 export PATH=/Users/Real/Library/Python/3.7/bin/:$PATH
 
-###################
-# python virtualenv
-###################
-
-#export PATH=/Users/Real/.local/bin:$PATH
-#export WORKON_HOME=$HOME/.virtualenvs
-#export VIRTUALENVWRAPPER_PYTHON=/Users/Real/.pyenv/shims/python
-#source /usr/local/bin/virtualenvwrapper.sh
-
-################
-# pyenv & pipenv
-################
-
-#export LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib -L/usr/local/opt/readline/lib"
-#export CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/readline/include -I/usr/local/opt/sqlite/include"
-#export PKG_CONFIG_PATH="/usr/local/opt/zlib/lib/pkgconfig /usr/local/opt/sqlite/lib/pkgconfig"
-
-#eval "$(pyenv init -)"
-#if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
-#export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-
-
-#}}}
-
-#######################################################################
-#                                 fzf                                 #
-#######################################################################
+# fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # java
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home
+#export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk8u212-b03/Contents/Home
 export PATH=$JAVA_HOME/bin:$PATH 
 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar 
 export GRAALVM_HOME=/Library/Java/JavaVirtualMachines/graalvm-ce-1.0.0-rc14/Contents/Home
-# vim: fdm=marker sw=4 ts=4 et
+
+# nodejs
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+# sqlplus
+export PATH=$PATH:/Applications/instantclient_18_1
+
+# NNN {{{2
+export NNN_TMPFILE="/tmp/nnn"
+
+n() {
+    nnn "$@"
+
+    if [ -f $NNN_TMPFILE ]; then
+        . $NNN_TMPFILE
+        rm $NNN_TMPFILE
+    fi
+}
+# }}}
+
+#}}}
+# 自定义函数 {{{1
+vpn.route.add.zkzy() {
+    sudo route -n add 192.168.80/24 -interface ppp0
+}
+
+vpn.route.del.zkzy() {
+    sudo route -n delete 192.168.80/24 -interface ppp0
+}
+
+safari.agent.ipad() {
+    defaults write com.apple.Safari CustomUserAgent "'Mozilla/5.0 (iPad; CPU OS 5_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9B176 Safari/7534.48.3'"
+}
+
+safari.agent.default() {
+    defaults delete com.apple.Safari CustomUserAgent
+}
+
+password.gen() {
+    openssl rand -base64 $1
+}
+
+org2doc() { 
+    pandoc --reference-docx=/Users/Real/Documents/pandoc_docx_template.docx -f org -t docx --toc $1 -o $2
+}
+
+md2doc() { #{{{2
+    input=$1
+    extension=${input##*.}
+    output=${input%md}docx
+
+    if [[ ! -e $input ]];then
+        echo "input file not exsit"
+        exit 0;
+    fi
+
+    if [[ $extension != "md" ]];then
+        echo "input file should be markdown"
+        exit 0;
+    fi
+
+    #pandoc --toc -F mermaid-filter -f gfm -t docx --reference-doc=/Users/Real/Documents/pandoc_docx_template.docx $input -o $output
+    pandoc --toc -s -t docx --reference-doc=/Users/Real/Documents/pandoc/pandoc_docx_template.docx $input -o $output
+}
+#}}}
+env.update() { #{{{2
+    /Users/Real/.tmux/plugins/tpm/bin/update_plugins all
+    zsh /Users/Real/.oh-my-zsh/tools/upgrade.sh
+    brew upgrade
+    brew cleanup
+    vim -c 'PlugUpdate | qall'
+}
+#}}}
+# }}}
+# 开发 {{{1
+
+alias plantuml='java -jar /Applications/plantuml.jar'
+
+open_project(){
+    cd $1 && vim +NERDTree
+}
+
+alias pj.lycs.fe="open_project ~/code/whyreal/weixin_lycs/buddha_fe_browser/"
+alias pj.lycs.be="open_project ~/code/whyreal/weixin_lycs/buddha_springboot_jpa"
+alias pj.lycs.original="open_project ~/code/whyreal/weixin_lycs/buddha/"
+alias note='open_project ~/Documents/vim-workspace/docs'
+alias dotfiles='open_project ~/Documents/vim-workspace/dotfiles'
+# }}}
+
+# vim: fdm=marker sw=4 ts=4 et ft=zsh

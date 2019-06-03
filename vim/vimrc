@@ -7,11 +7,10 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " basic plugins{{{2
-let mapleader=" "
+let mapleader=","
 Plug 'tpope/vim-sensible'
-Plug 'whyreal/wr_vim'
-" 模版
-Plug 'whyreal/vim-template'
+Plug '~/code/whyreal/wr_vim'
+Plug '~/code/whyreal/vim-template'
 "}}}
 " 输入法切换{{{2
 Plug 'ybian/smartim'
@@ -26,6 +25,16 @@ Plug 'Shougo/denite.nvim'
     nnoremap <leader>ff :Denite file/rec<cr>
     nnoremap <leader>fb :Denite buffer<cr>
     nnoremap <leader>ft :Denite filetype<cr>
+" Define mappings
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+  nnoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> d denite#do_map('do_action', 'delete')
+  nnoremap <silent><buffer><expr> p denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> q denite#do_map('quit')
+  nnoremap <silent><buffer><expr> i denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> <Space> denite#do_map('toggle_select').'j'
+endfunction
 
 "}}}
 " 导航{{{2
@@ -54,7 +63,7 @@ Plug 'neoclide/coc-denite'
     set hidden
 
     " Better display for messages
-    set cmdheight=2
+    "set cmdheight=2
 
     " Smaller updatetime for CursorHold & CursorHoldI
     set updatetime=300
@@ -63,7 +72,7 @@ Plug 'neoclide/coc-denite'
     set shortmess+=c
 
     " always show signcolumns
-    set signcolumn=yes
+    "set signcolumn=yes
 
     " Use tab for trigger completion with characters ahead and navigate.
     " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -108,6 +117,7 @@ Plug 'neoclide/coc-denite'
 
     " Highlight symbol under cursor on CursorHold
     autocmd CursorHold * silent call CocActionAsync('highlight')
+    
 
     " Remap for rename current word
     nmap <leader>rn <Plug>(coc-rename)
@@ -139,7 +149,6 @@ Plug 'neoclide/coc-denite'
     " Use `:Fold` for fold current buffer
     command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
-
     " Add diagnostic info for https://github.com/itchyny/lightline.vim
     let g:lightline = {
           \ 'colorscheme': 'wombat',
@@ -152,29 +161,31 @@ Plug 'neoclide/coc-denite'
           \ },
           \ }
 
-
-
     " Using CocList
     " Show all diagnostics
-    nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+    nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
     " Manage extensions
-    nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+    nnoremap <silent> <leader>e  :<C-u>CocList extensions<cr>
     " Show commands
-    nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+    nnoremap <silent> <leader>c  :<C-u>CocList commands<cr>
     " Find symbol of current document
-    nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+    nnoremap <silent> <leader>o  :<C-u>CocList outline<cr>
     " Search workspace symbols
-    nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+    nnoremap <silent> <leader>s  :<C-u>CocList -I symbols<cr>
+
+    " Search
+    "nnoremap <leader>s  <Plug>(coc-workspaceSymbols)
+
     " Do default action for next item.
-    nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+    nnoremap <silent> <leader>j  :<C-u>CocNext<CR>
     " Do default action for previous item.
-    nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+    nnoremap <silent> <leader>k  :<C-u>CocPrev<CR>
     " Resume latest coc list
-    nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+    nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
 
 Plug 'SirVer/ultisnips'
     let g:UltiSnipsExpandTrigger="<c-j>"
-    let g:UltiSnipsSnippetsDir="~/.vim/plugged/wr_vim/UltiSnips/"
+    let g:UltiSnipsSnippetsDir="~/code/whyreal/wr_vim/UltiSnips"
     let g:UltiSnipsEnableSnipMate=1
     let g:UltiSnipsSnippetDirectories=["UltiSnips"]
 
@@ -191,6 +202,16 @@ Plug 'junegunn/vim-easy-align'
     " Start interactive EasyAlign for a motion/text object (e.g. gaip)
     nmap ga <Plug>(EasyAlign)
 "}}}
+" 前端 {{{2
+Plug 'leafgarland/typescript-vim'
+"Plug 'chemzqm/wxapp.vim'
+Plug 'vim-scripts/Emmet.vim'
+let g:user_emmet_settings = {
+  \  'javascript.jsx' : {
+    \      'extends' : 'jsx',
+    \  },
+  \}
+"}}}
 " Markdown{{{2
 Plug 'plasticboy/vim-markdown'
     let g:vim_markdown_toc_autofit = 1
@@ -198,9 +219,21 @@ Plug 'plasticboy/vim-markdown'
     let g:html_wrong_comments=1
     "let g:vim_markdown_new_list_item_indent = 0
 
-Plug 'kannokanno/previm'
-    let g:previm_custom_css_path='~/.vim/plugged/wr_vim/previm.css'
-    let g:previm_open_cmd='open'
+"Plug 'kannokanno/previm'
+"    let g:previm_custom_css_path='~/code/whyreal/wr_vim/previm.css'
+"    let g:previm_open_cmd='open'
+
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
+let g:mkdp_auto_close = 0
+let g:mkdp_refresh_slow = 1
+let g:mkdp_preview_options = {
+    \   'uml': {
+    \     'openMarker': '```puml',
+    \     'closeMarker': '```',
+    \   },
+    \   'disable_sync_scroll': 1,
+    \ }
+
 "}}}
 " UML{{{2
 Plug 'scrooloose/vim-slumlord'
@@ -208,18 +241,26 @@ Plug 'aklt/plantuml-syntax'
     let g:plantuml_executable_script='~/.vim/plantuml/plantuml.sh'
 "}}}
 " Misc {{{2
+"Plug 'Glench/Vim-Jinja2-Syntax'
+"Plug 'justinmk/vim-sneak'
+    "map f <Plug>Sneak_f
+    "map F <Plug>Sneak_F
+    "map t <Plug>Sneak_t
+    "map T <Plug>Sneak_T
 Plug 'easymotion/vim-easymotion'
-    let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz'
+    let g:EasyMotion_keys = 'ertyuidfghjkcvbnm,'
     let g:EasyMotion_smartcase = 1
+    map m <Plug>(easymotion-prefix)
 " }}}
 " Color Theme{{{2
-Plug 'dragfire/Improved-Syntax-Highlighting-Vim'
+"Plug 'dragfire/Improved-Syntax-Highlighting-Vim'
 "Plug 'lmintmate/blue-mood-vim'
 "Plug 'NLKNguyen/papercolor-theme'
 "Plug 'dracula/vim'
 Plug 'sonph/onehalf', {'rtp': 'vim'}
 "Plug 'hukl/Smyck-Color-Scheme'
 "Plug 'tomasr/molokai'
+
 "}}}
 
 call plug#end()
@@ -233,11 +274,9 @@ call denite#custom#option('_', {
       \ 'highlight_mode_insert': 'Search'
       \ })
 "}}}
-
 " Operation {{{1
 set foldlevel=99
 set clipboard+=unnamed
-set autoread
 set fileencodings=utf-8,gbk,ucs-bom,cp936,gb18030,big5,latin1
 set modeline
 set modelines=3
@@ -247,27 +286,30 @@ set hlsearch
 set incsearch
 set wildmode=full
 set mouse=a
-"set tags=./.tags;,.tags
+set ttymouse=xterm2
 set iskeyword=-,@,48-57,_,192-255
 "set macmeta
 " make 前自动保存
 set autowrite
+set autoread
 
 vnoremap < <gv
 vnoremap > >gv
 nnoremap n nzz
 nnoremap N Nzz
-nnoremap <2-LeftMouse> za
+"nnoremap <2-LeftMouse> za
 
-"inoremap jj <ESC>
+inoremap jj <ESC>
 
-"noremap! <c-a> <Home>
-"noremap! <c-e> <End>
-"noremap! <c-f> <Right>
-"noremap! <c-b> <Left>
-"noremap! <c-j> <Down>
-"noremap! <c-k> <Up>
+noremap! <c-a> <Home>
+noremap! <c-e> <End>
+noremap! <c-f> <Right>
+noremap! <c-b> <Left>
+noremap! <c-n> <Down>
+noremap! <c-p> <Up>
 "noremap! <c-d> <Del>
+inoremap <c-k> <c-o>D
+ 
 
 " previous buffer
 nnoremap gp :bp<cr>
@@ -278,7 +320,6 @@ nnoremap go <c-^>
 " previous tab, the key of next tab is default: gt
 nnoremap gb gT
 
-
 " change to current directory
 nnoremap <silent> <leader>cd :lcd %:h<CR>
 
@@ -286,9 +327,25 @@ nnoremap 0 :call wr#ToggleHomeZero()<CR>
 
 " terminal 
 tnoremap <esc> <c-w>N
+
 "}}}
 " Ui{{{1
-set statusline=\ %F%m%r%h%w\ %=%(%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y%)\ %([%l,%v][%p%%]\ %)
+
+function! StatusDiagnostic() abort
+  let info = get(b:, 'coc_diagnostic_info', {})
+  if empty(info) | return '' | endif
+  let msgs = []
+  if get(info, 'error', 0)
+    call add(msgs, 'E' . info['error'])
+  endif
+  if get(info, 'warning', 0)
+    call add(msgs, 'W' . info['warning'])
+  endif
+  return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
+endfunction
+
+set statusline=\ %t%m%r%h%w%{StatusDiagnostic()}\ %=%(%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y%)
+"set statusline=\ %t%m%r%h%w%{StatusDiagnostic()}\ %=%(%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y%)\ %([%l,%v][%p%%]\ %)
 "set synmaxcol=200
 let loaded_matchparen = 1
 set belloff=all
@@ -296,55 +353,54 @@ set belloff=all
 set directory=/tmp
 set hidden
 
-" Better display for messages
-"set cmdheight=2
-" Smaller updatetime for CursorHold & CursorHoldI
-set updatetime=300
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
-" always show signcolumns
-"set signcolumn=yes
-set cursorline
+"set cursorline
 
 set splitbelow
 set previewheight=8
-colorscheme onehalfdark
-
-"set nu
+colorscheme smyck
 
 if has('gui_running')
     " 透明
-    set transparency=0
+    set transparency=20
     " 模糊
-    set blurradius=0
+    set blurradius=10
     set linespace=1
     set guioptions='egk'
-    set guifont=menlo:h12
-    "colorscheme onehalfdark
+    set guifont=menlo:h13
 else
     "set term=builtin_ansi
 endif
-" not display ~ for blank line
-"highlight EndOfBuffer ctermfg=black guifg=bg
+
 nnoremap <silent> <leader>vs :terminal<CR>
 
 "}}}
 " FileType {{{1
-autocmd FileType c,cpp setlocal ai ts=4 sw=4 fdm=syntax
-autocmd FileType go setlocal ai ts=4 sw=4
+"autocmd FileType c,cpp setlocal ai ts=4 sw=4 fdm=syntax
+autocmd FileType go setlocal ai ts=4 sw=4 fdm=indent
 autocmd FileType java setlocal et ai ts=4 sw=4 tw=120 fdm=indent
 "autocmd FileType lua setlocal ai ts=4 sw=4 et
 autocmd FileType python setlocal fdm=indent ai ts=4 sw=4 et
-autocmd FileType markdown setlocal ts=4 sw=4 fdm=indent et
+autocmd FileType markdown setlocal ts=4 sw=4 fdm=indent
 autocmd FileType nginx setlocal ai ts=4 sw=4
 autocmd FileType sh setlocal ai ts=4 sw=4 et
 autocmd FileType snippets setlocal ts=4 sw=4
 autocmd FileType vim setlocal ts=4 sw=4 et fdm=marker
 autocmd FileType xml,html,css setlocal fdm=indent ai ts=2 sw=2
 autocmd FileType yaml setlocal fdm=indent ai ts=2 sw=2 et
-autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
-autocmd FileType javascript,json,typescript setlocal ai ts=2 sw=2 fdm=indent
+autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
+autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+autocmd FileType json setlocal ai ts=2 sw=2 fdm=indent
+autocmd FileType javascript,typescript.tsx setlocal ai ts=4 sw=4 fdm=indent
 
 " default filetype
 autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
+
 " }}}
+
+" Cabbreviate {{{1
+" run command in register *
+nnoremap <silent> <leader>rr :@*<cr>
+
+cabbrev h tab h
+"}}}
+hi default CocHighlightText  guibg=darkyellow guifg=red ctermbg=223 ctermfg=red

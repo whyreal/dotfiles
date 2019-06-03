@@ -13,7 +13,6 @@ let &runtimepath = printf('%s, %s/vim-sensible/', &runtimepath, s:portable)
 filetype plugin indent on
 syntax enable
 
-colorscheme desert
 set bg=dark
 set cursorline
 set foldlevel=99
@@ -63,7 +62,7 @@ command! FormatJSON %!python -m json.tool
 "}}}
 " Autocmd {{{1
 "
-autocmd FileType nginx setlocal fdm=indent ai ts=4 sw=4 tw=80
-autocmd FileType sh setlocal fdm=indent ai ts=4 sw=4 tw=80
-autocmd FileType json,yaml,xml,html,css setlocal fdm=indent ai ts=2 sw=2 tw=80
+autocmd FileType nginx setlocal fdm=indent ai ts=4 sw=4
+autocmd FileType sh setlocal fdm=indent ai ts=4 sw=4
+autocmd FileType json,yaml,xml,html,css setlocal fdm=indent ai ts=2 sw=2
 " }}}

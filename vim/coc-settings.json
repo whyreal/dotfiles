@@ -1,9 +1,10 @@
 {
+	"coc.preferences.formatOnType": true,
 	"json.enable":true,
 	"json.format.enable":true,
 	"java.import.gradle.enabled": false,
-	"java.jdt.ls.vmargs": "-noverify -Xmx1G -XX:+UseG1GC -XX:+UseStringDeduplication -javaagent:\"/Users/Real/.vscode/extensions/gabrielbb.vscode-lombok-0.9.7/server/lombok.jar\" -Xbootclasspath/a:\"/Users/Real/.vscode/extensions/gabrielbb.vscode-lombok-0.9.7/server/lombok.jar\"",
-	"java.home": "/Library/Java/JavaVirtualMachines/adoptopenjdk-8-openj9.jdk/Contents/Home/",
+	"java.jdt.ls.vmargs": "-noverify -Xmx1G -XX:+UseG1GC -XX:+UseStringDeduplication -javaagent:\"/Users/Real/.vscode/extensions/gabrielbb.vscode-lombok-0.9.8/server/lombok.jar\" -Xbootclasspath/a:\"/Users/Real/.vscode/extensions/gabrielbb.vscode-lombok-0.9.8/server/lombok.jar\"",
+  "java.home": "/Library/Java/JavaVirtualMachines/jdk8u212-b03/Contents/Home/",
 	"java.errors.incompleteClasspath.severity": "ignore",
 	"java.completion.favoriteStaticMembers": [
 		"org.junit.Assert.*",
