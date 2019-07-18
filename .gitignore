@@ -8,3 +8,4 @@ vim/plugged
 
 sublime_user_conf/Package\ Control*
 sublime_user_conf/*crt
+vim/sessions/
