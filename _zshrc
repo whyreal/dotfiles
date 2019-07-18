@@ -56,6 +56,7 @@ alias ta='tmux -u attach'
 alias ....='cd ../../..'
 alias ...='cd ../..'
 alias ..='cd ..'
+alias zip='zip -x "*.DS_Store" -x "__MACOSX"'
 # }}}
 # 环境变量 {{{1
 # fix git problem for https
@@ -91,9 +92,12 @@ export PATH=/Applications/MacVim.app/Contents/bin/:$PATH
 export PATH=/usr/local/opt/mysql-client/bin:$PATH
 
 # golang
-export GO111MODULE=auto  # enable go module
 export PATH=/Users/Real/go/bin:$PATH
 export GOPATH=/Users/Real/go
+# Enable the go modules feature
+export GO111MODULE=on
+# Set the GOPROXY environment variable
+export GOPROXY=https://goproxy.io
 
 # python
 export PATH=/Users/Real/Library/Python/3.7/bin/:$PATH
@@ -153,6 +157,16 @@ org2doc() {
     pandoc --reference-docx=/Users/Real/Documents/pandoc_docx_template.docx -f org -t docx --toc $1 -o $2
 }
 
+proxy.ss.active(){
+    export http_proxy="socks5://127.0.0.1:1080"
+    export https_proxy="socks5://127.0.0.1:1080"
+}
+
+proxy.ss.deactive(){
+    export http_proxy=""
+    export https_proxy=""
+}
+
 md2doc() { #{{{2
     input=$1
     extension=${input##*.}
@@ -177,7 +191,7 @@ env.update() { #{{{2
     zsh /Users/Real/.oh-my-zsh/tools/upgrade.sh
     brew upgrade
     brew cleanup
-    vim -c 'PlugUpdate | qall'
+    vim -c 'PlugUpdate | CocUpdate | qall'
 }
 #}}}
 # }}}
@@ -186,7 +200,7 @@ env.update() { #{{{2
 alias plantuml='java -jar /Applications/plantuml.jar'
 
 open_project(){
-    cd $1 && vim +NERDTree
+    cd $1 && mvim +NERDTree
 }
 
 alias pj.lycs.fe="open_project ~/code/whyreal/weixin_lycs/buddha_fe_browser/"

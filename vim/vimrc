@@ -34,11 +34,12 @@ Plug 'vim-voom/VOoM'
 
 Plug 'majutsushi/tagbar'
     nnoremap <leader>vt :TagbarToggle<cr>
+Plug 'lvht/tagbar-markdown'
 
 "}}}
 " 自动补全{{{2
 
-Plug 'neoclide/coc.nvim' , {'tag': '*', 'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim' , {'branch': 'release'}
     " if hidden is not set, TextEdit might fail.
     set hidden
 
@@ -143,18 +144,21 @@ Plug 'neoclide/coc.nvim' , {'tag': '*', 'do': { -> coc#util#install()}}
 
     " Using CocList
     " Show all diagnostics
-    nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
+    nnoremap <silent> <leader>la  :<C-u>CocList diagnostics<cr>
     " Manage extensions
-    nnoremap <silent> <leader>e  :<C-u>CocList extensions<cr>
+    nnoremap <silent> <leader>le  :<C-u>CocList extensions<cr>
     " Show commands
-    nnoremap <silent> <leader>c  :<C-u>CocList commands<cr>
+    nnoremap <silent> <leader>lc  :<C-u>CocList commands<cr>
     " Find symbol of current document
-    nnoremap <silent> <leader>o  :<C-u>CocList outline<cr>
+    nnoremap <silent> <leader>lo  :<C-u>CocList outline<cr>
     " Search workspace symbols
-    nnoremap <silent> <leader>s  :<C-u>CocList -I symbols<cr>
+    nnoremap <silent> <leader>ls  :<C-u>CocList -I symbols<cr>
+    nnoremap <silent> <leader>lb  :<C-u>CocList buffers<cr>
+    nnoremap <silent> <leader>lf  :<C-u>CocList files<cr>
+    nnoremap <silent> <leader>ly  :<C-u>CocList -A --normal yank<cr>
 
     " Search
-    "nnoremap <leader>s  <Plug>(coc-workspaceSymbols)
+    nnoremap <leader>s  <Plug>(coc-workspaceSymbols)
 
     " Do default action for next item.
     nnoremap <silent> <leader>j  :<C-u>CocNext<CR>
@@ -199,20 +203,9 @@ Plug 'plasticboy/vim-markdown'
     let g:html_wrong_comments=1
     "let g:vim_markdown_new_list_item_indent = 0
 
-"Plug 'kannokanno/previm'
-"    let g:previm_custom_css_path='~/code/whyreal/wr_vim/previm.css'
-"    let g:previm_open_cmd='open'
-
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
-let g:mkdp_auto_close = 0
-let g:mkdp_refresh_slow = 1
-let g:mkdp_preview_options = {
-    \   'uml': {
-    \     'openMarker': '```puml',
-    \     'closeMarker': '```',
-    \   },
-    \   'disable_sync_scroll': 1,
-    \ }
+Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+    let g:instant_markdown_autostart = 0
+    let g:instant_markdown_slow = 1
 
 "}}}
 " UML{{{2
@@ -230,17 +223,14 @@ Plug 'aklt/plantuml-syntax'
 Plug 'easymotion/vim-easymotion'
     let g:EasyMotion_keys = 'ertyuidfghjkcvbnm,'
     let g:EasyMotion_smartcase = 1
-    map m <Plug>(easymotion-prefix)
+    nmap f <Plug>(easymotion-prefix)
+
 " }}}
 " Color Theme{{{2
 "Plug 'dragfire/Improved-Syntax-Highlighting-Vim'
 "Plug 'lmintmate/blue-mood-vim'
 "Plug 'NLKNguyen/papercolor-theme'
 "Plug 'dracula/vim'
-Plug 'sonph/onehalf', {'rtp': 'vim'}
-"Plug 'hukl/Smyck-Color-Scheme'
-"Plug 'tomasr/molokai'
-
 "}}}
 
 call plug#end()
@@ -269,11 +259,11 @@ set autoread
 
 vnoremap < <gv
 vnoremap > >gv
-nnoremap n nzz
-nnoremap N Nzz
+"nnoremap n nzz
+"nnoremap N Nzz
 "nnoremap <2-LeftMouse> za
 
-inoremap jj <ESC>
+"inoremap jj <ESC>
 
 noremap! <c-a> <Home>
 noremap! <c-e> <End>
@@ -319,6 +309,8 @@ function! StatusDiagnostic() abort
 endfunction
 
 set statusline=\ %t%m%r%h%w%{StatusDiagnostic()}\ %=%(%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y%)
+" coc-git
+set statusline^=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}
 "set statusline=\ %t%m%r%h%w%{StatusDiagnostic()}\ %=%(%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y%)\ %([%l,%v][%p%%]\ %)
 "set synmaxcol=200
 let loaded_matchparen = 1
@@ -327,32 +319,33 @@ set belloff=all
 set directory=/tmp
 set hidden
 
-"set cursorline
-
 set splitbelow
 set previewheight=8
-colorscheme smyck
+set bg=dark
+set colorcolumn=+1
+set cursorline
+colorscheme molokai
 
 if has('gui_running')
     " 透明
-    set transparency=20
+    set transparency=30
     " 模糊
-    set blurradius=10
+    set blurradius=20
     set linespace=1
     set guioptions='egk'
-    set guifont=menlo:h13
+    set guifont=DejaVuSansMonoPowerline:h13
 else
     "set term=builtin_ansi
 endif
 
 nnoremap <silent> <leader>vs :terminal<CR>
-
+hi default CocHighlightText  guibg=darkyellow guifg=red ctermbg=223 ctermfg=red
 "}}}
 " FileType {{{1
 "autocmd FileType c,cpp setlocal ai ts=4 sw=4 fdm=syntax
 autocmd FileType go setlocal ai ts=4 sw=4 fdm=indent
 autocmd FileType java setlocal et ai ts=4 sw=4 tw=120 fdm=indent
-"autocmd FileType lua setlocal ai ts=4 sw=4 et
+autocmd FileType lua setlocal ai ts=4 sw=4 et fdm=indent tw=80
 autocmd FileType python setlocal fdm=indent ai ts=4 sw=4 et
 autocmd FileType markdown setlocal ts=4 sw=4 fdm=indent
 autocmd FileType nginx setlocal ai ts=4 sw=4
@@ -370,11 +363,9 @@ autocmd FileType javascript,typescript.tsx setlocal ai ts=4 sw=4 fdm=indent
 autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
 
 " }}}
-
 " Cabbreviate {{{1
 " run command in register *
 nnoremap <silent> <leader>rr :@*<cr>
 
 cabbrev h tab h
 "}}}
-hi default CocHighlightText  guibg=darkyellow guifg=red ctermbg=223 ctermfg=red

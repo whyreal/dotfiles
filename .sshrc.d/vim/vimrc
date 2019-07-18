@@ -11,7 +11,7 @@ let &runtimepath = printf('%s, %s/nginx.vim/', &runtimepath, s:portable)
 let &runtimepath = printf('%s, %s/vim-sensible/', &runtimepath, s:portable)
 
 filetype plugin indent on
-syntax enable
+syntax off
 
 set bg=dark
 set cursorline

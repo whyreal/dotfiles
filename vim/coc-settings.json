@@ -1,9 +1,11 @@
 {
+	"go.commandPath": "/Users/Real/go/bin/gopls",
+	"suggest.maxCompleteItemCount": 10,
 	"coc.preferences.formatOnType": true,
 	"json.enable":true,
 	"json.format.enable":true,
 	"java.import.gradle.enabled": false,
-	"java.jdt.ls.vmargs": "-noverify -Xmx1G -XX:+UseG1GC -XX:+UseStringDeduplication -javaagent:\"/Users/Real/.vscode/extensions/gabrielbb.vscode-lombok-0.9.8/server/lombok.jar\" -Xbootclasspath/a:\"/Users/Real/.vscode/extensions/gabrielbb.vscode-lombok-0.9.8/server/lombok.jar\"",
+	"java.jdt.ls.vmargs": "-noverify -Xmx1G -XX:+UseG1GC -XX:+UseStringDeduplication -javaagent:\"/Users/Real/code/whyreal/lombok.jar\" -Xbootclasspath/a:\"/Users/Real/code/whyreal/lombok.jar\"",
   "java.home": "/Library/Java/JavaVirtualMachines/jdk8u212-b03/Contents/Home/",
 	"java.errors.incompleteClasspath.severity": "ignore",
 	"java.completion.favoriteStaticMembers": [
@@ -21,11 +23,16 @@
 		"org.springframework.test.web.servlet.setup.MockMvcBuilders.*"
 	],
 	"diagnostic.enable": true,
-  "languageserver": {
-    "golang": {
-      "command": "gopls",
-      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
-      "filetypes": ["go"]
-    }
-  }
+	"list.source.files.command": "find",
+	"list.source.files.args": ["-L", ".",
+		"-type", "f",
+		"!", "-ipath", "*/.*/*",
+		"!", "-ipath", "*/target/*",
+		"!", "-iname", "*class",
+		"!", "-name", ".*"
+	],
+	"list.normalMappings": {
+		"d": "action:delete"
+	},
+	"git.enableGutters": true
 }
