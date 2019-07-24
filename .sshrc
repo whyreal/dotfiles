@@ -179,6 +179,14 @@ tunnel.zzzw.px.web.create(){ #{{{2
 	ssh -NfD 192.168.80.100:10001 -p 2822 localhost
 }
 #}}}
+tunnel.sock5.create(){ #{{{2
+    tunnel_port=$1
+    ((sock5_port=$tunnel_port + 1))
+    echo "Please input password of tunnel"
+    ssh -NfD *:$sock5_port localhost -p $tunnel_port
+    echo "sock5 port is: $sock5_port"
+}
+#}}}
 #}}}
 
 # vim: ft=sh fdm=marker

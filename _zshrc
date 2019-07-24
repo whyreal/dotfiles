@@ -67,7 +67,9 @@ export HISTFILESIZE=50000
 # WORDCHARS
 export WORDCHARS='-*?_[]~=&;!#$%^(){}'
 # editor
-export EDITOR='vim'
+export EDITOR='mvim'
+# pager
+export PAGER='bat'
 # use vim as man pager
 export MANPAGER="vim -c 'MANPAGER' -c 'set fdm=indent ts=7 sw=7' -"
 
@@ -118,15 +120,18 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # sqlplus
 export PATH=$PATH:/Applications/instantclient_18_1
 
-# NNN {{{2
-export NNN_TMPFILE="/tmp/nnn"
-
-n() {
-    nnn "$@"
-
-    if [ -f $NNN_TMPFILE ]; then
-        . $NNN_TMPFILE
-        rm $NNN_TMPFILE
+# lf {{{2
+lf () {
+    tmp="$(mktemp)"
+    ~/go/bin/lf --last-dir-path="$tmp" "$@"
+    if [ -f "$tmp" ]; then
+        dir="$(cat "$tmp")"
+        rm -f "$tmp"
+        if [ -d "$dir" ]; then
+            if [ "$dir" != "$(pwd)" ]; then
+                cd "$dir"
+            fi
+        fi
     fi
 }
 # }}}

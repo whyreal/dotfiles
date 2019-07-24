@@ -1,5 +1,5 @@
 {
-	"go.commandPath": "/Users/Real/go/bin/gopls",
+	"suggest.floatEnable": true,
 	"suggest.maxCompleteItemCount": 10,
 	"coc.preferences.formatOnType": true,
 	"json.enable":true,
@@ -34,5 +34,12 @@
 	"list.normalMappings": {
 		"d": "action:delete"
 	},
+  "languageserver": {
+    "golang": {
+      "command": "gopls",
+      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["go"]
+    }
+  },
 	"git.enableGutters": true
 }

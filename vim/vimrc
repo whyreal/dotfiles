@@ -223,7 +223,7 @@ Plug 'aklt/plantuml-syntax'
 Plug 'easymotion/vim-easymotion'
     let g:EasyMotion_keys = 'ertyuidfghjkcvbnm,'
     let g:EasyMotion_smartcase = 1
-    nmap f <Plug>(easymotion-prefix)
+    map f <Plug>(easymotion-prefix)
 
 " }}}
 " Color Theme{{{2
@@ -347,7 +347,7 @@ autocmd FileType go setlocal ai ts=4 sw=4 fdm=indent
 autocmd FileType java setlocal et ai ts=4 sw=4 tw=120 fdm=indent
 autocmd FileType lua setlocal ai ts=4 sw=4 et fdm=indent tw=80
 autocmd FileType python setlocal fdm=indent ai ts=4 sw=4 et
-autocmd FileType markdown setlocal ts=4 sw=4 fdm=indent
+autocmd FileType markdown setlocal ts=4 sw=4 fdm=indent et
 autocmd FileType nginx setlocal ai ts=4 sw=4
 autocmd FileType sh setlocal ai ts=4 sw=4 et
 autocmd FileType snippets setlocal ts=4 sw=4
