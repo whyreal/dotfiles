@@ -328,12 +328,12 @@ colorscheme molokai
 
 if has('gui_running')
     " 透明
-    set transparency=30
+    "set transparency=30
     " 模糊
-    set blurradius=20
+    "set blurradius=20
     set linespace=1
     set guioptions='egk'
-    set guifont=DejaVuSansMonoPowerline:h13
+    set guifont=DejaVuSansMonoPowerline:h12
 else
     "set term=builtin_ansi
 endif
@@ -357,7 +357,7 @@ autocmd FileType yaml setlocal fdm=indent ai ts=2 sw=2 et
 autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
 autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
 autocmd FileType json setlocal ai ts=2 sw=2 fdm=indent
-autocmd FileType javascript,typescript.tsx setlocal ai ts=4 sw=4 fdm=indent
+autocmd FileType javascript,typescript.tsx setlocal ai ts=2 sw=2 fdm=indent
 
 " default filetype
 autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif

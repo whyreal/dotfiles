@@ -57,6 +57,8 @@ alias ....='cd ../../..'
 alias ...='cd ../..'
 alias ..='cd ..'
 alias zip='zip -x "*.DS_Store" -x "__MACOSX"'
+alias et='exec tmux'
+alias lg='lazygit'
 # }}}
 # 环境变量 {{{1
 # fix git problem for https
@@ -67,7 +69,7 @@ export HISTFILESIZE=50000
 # WORDCHARS
 export WORDCHARS='-*?_[]~=&;!#$%^(){}'
 # editor
-export EDITOR='mvim'
+export EDITOR='vim'
 # pager
 export PAGER='bat'
 # use vim as man pager
@@ -172,25 +174,6 @@ proxy.ss.deactive(){
     export https_proxy=""
 }
 
-md2doc() { #{{{2
-    input=$1
-    extension=${input##*.}
-    output=${input%md}docx
-
-    if [[ ! -e $input ]];then
-        echo "input file not exsit"
-        exit 0;
-    fi
-
-    if [[ $extension != "md" ]];then
-        echo "input file should be markdown"
-        exit 0;
-    fi
-
-    #pandoc --toc -F mermaid-filter -f gfm -t docx --reference-doc=/Users/Real/Documents/pandoc_docx_template.docx $input -o $output
-    pandoc --toc -s -t docx --reference-doc=/Users/Real/Documents/pandoc/pandoc_docx_template.docx $input -o $output
-}
-#}}}
 env.update() { #{{{2
     /Users/Real/.tmux/plugins/tpm/bin/update_plugins all
     zsh /Users/Real/.oh-my-zsh/tools/upgrade.sh
