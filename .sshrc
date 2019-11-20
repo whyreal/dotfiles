@@ -1,4 +1,5 @@
 #init {{{1 
+export PATH=$PATH:$SSHHOME
 if [ -r /etc/profile ];then
     source /etc/profile;
 fi
@@ -12,36 +13,37 @@ fi
 #}}}
 # env {{{1
 SERVER_IP=$(echo $SSH_CONNECTION | awk '{print $3}')
-export PS1="\n\e[38;5;201m$SERVER_IP \h\e[m \e[38;5;46m\u\e[m\n[\w]\\$ "
-#export PS1="\n\e[38;5;201m$SERVER_IP\e[m \e[38;5;46m\u \e[38;5;21m\D{%m/%d/%Y} \t \e[m\n[\w]\\$ "
-#export PATH=$PATH:$SSHHOME
+# PS1=root@ip_address(hostname)
+export PS1="\n\e[38;5;46m\u\e[m@\e[38;5;201m$SERVER_IP(\h)\e[m\n[\w]\\$ "
 export EDITOR='vim'
 # inputrc
 bind 'set completion-ignore-case on'
-
-#}}}
-# vim {{{1
-export VIMINIT="let \$MYVIMRC='$SSHHOME/.sshrc.d/vim/vimrc' | source \$MYVIMRC "
+# disable XON/XOFF, enable <c-s> to search bash history
+stty -ixon
 export LC_ALL="en_US.utf8"
 #}}}
 # command {{{1
 alias ....='cd ../../..'
 alias ...='cd ../..'
 alias ..='cd ..'
-
+c(){
+    cd $1
+    ls
+}
+alias d='dirs -v'
+alias pd='pushd'
+alias dirs='dirs -v'
+#alias vim='vim -u $SSHHOME/.sshrc.d/vim/vimrc'
 alias curl='curl -v'
-
 alias grep='grep --color'
-
 alias ll="ls -lh"
 alias mkdir='mkdir -pv'
-
-alias port.find.listen='netstat -antuplo | grep'
-alias port.find='netstat -antuplo | grep'
+alias port.findby.listen='netstat -antuplo | grep'
+alias port.findby.port='netstat -antuplo | grep'
 alias port.list='netstat -antuplo'
-
-alias file.path.abs='readlink -f'
-file.find(){  # {{{2 用文件名查找文件
+alias file.get.abs_path='readlink -f'
+alias jobs="jobs -l"
+file.findby.name(){  # {{{2 用文件名查找文件
     if [[ "" == $2 ]]; then
         wd="."
     else
@@ -50,7 +52,7 @@ file.find(){  # {{{2 用文件名查找文件
     find $wd -iname "*$1*" -type f
 }
 #}}}
-file.find.abs(){  # {{{2 用文件名查找文件,绝对路径
+file.findby.name.abs(){  # {{{2 用文件名查找文件,绝对路径
     if [[ "" == $2 ]]; then
         wd="."
     else
@@ -59,7 +61,7 @@ file.find.abs(){  # {{{2 用文件名查找文件,绝对路径
     find $wd -iname "*$1*" -type f -exec readlink -f {} \;
 }
 #}}}
-file.find.list.abs(){  # {{{2 查找文件中包含的文件名，绝对路径
+file.findby.namelistfile.abs(){  # {{{2 查找文件中包含的文件名，绝对路径
     cat $1 | while read filename;do
         echo "$filename"
         find . -iname "*$filename*" -type f -exec readlink -f {} \;
@@ -67,17 +69,17 @@ file.find.list.abs(){  # {{{2 查找文件中包含的文件名，绝对路径
     done
 }
 #}}}
-
-java.nohup(){
+java.nohup(){ #{{{
     nohup java -server -Xms128m -Xmx1024m -jar $1 &
 }
-process.find(){  # {{{2 以进程名查找进程
+#}}}
+process.findby.name(){  # {{{2 以进程名查找进程
     ps -ef | grep -i "$1" | grep -v grep
 }
 
-process.find.port(){  # {{{2 查找某端口对应的进程
+process.findby.port(){  # {{{2 查找某端口对应的进程
     local port=$1
-    local pid=`lsof -i "tcp:$port" | awk '/LISTEN/{print $2}'`
+    local pid=`netstat -ntpl | awk -F'[ \t:/]+' '/'"$port"'/{print $9}'`
     if [ -z "$pid" ];then
         echo -e "$(tput setaf 9)404 NOT FOUND$(tput sgr0)" >&2
     else
@@ -86,7 +88,6 @@ process.find.port(){  # {{{2 查找某端口对应的进程
     fi
 }
 #}}}
-
 pj.alias.init(){  # {{{2 在/usr/local/tomcat*，目录下查找war包，并初始化相关 alias
     for war in $(find /usr/local/tomcat*/webapps/  -maxdepth 1 -iname '*.war');do
         war_file=$(basename $war)
@@ -97,7 +98,6 @@ pj.alias.init(){  # {{{2 在/usr/local/tomcat*，目录下查找war包，并初�
     done
 }
 #}}}
-
 yum.localrepo.setup(){  #{{{2 初始化本地yum
     local path=$1
     if [[ ! -z "$path" ]]; then
@@ -111,11 +111,6 @@ eof
     fi
 }
 #}}}
-oracle.env.gb2312(){ #{{{2
-	echo export NLS_LANG=AMERICAN_AMERICA.ZHS16GBK
-}
-#}}}
-
 alias tomcat.catalina.less="less logs/catalina.out"
 alias tomcat.catalina.tail='tail -f logs/catalina.out'
 tomcat.change_port(){  # {{{2 根据路径中端口号，修改tomcat server.xml
@@ -139,34 +134,13 @@ tomcat.change_port(){  # {{{2 根据路径中端口号，修改tomcat server.xml
         $config
 }
 #}}}
-
-color.print(){    #{{{2
-    for C in {40..47}; do
-        echo -en "\e[${C}m$C "
-    done
-
-    # high intensity colors
-    for C in {100..107}; do
-        echo -en "\e[${C}m$C "
-    done
-
-    # 256 colors https://en.wikipedia.org/wiki/ANSI_escape_code#24-bit
-    for C in {16..255}; do
-        echo -en "\e[48;5;${C}m$C "
-    done
-
-    echo -e "\e(B\e[m"
+tomcat.cleaning.log(){ #{{{ 3天
+    directory=$1
+    cd $directory
+    find logs -mtime +3 -delete
+    : > logs/catalina.out
 }
 #}}}
-color.print.tput(){ #{{{2
-    for C in {0..255}; do
-        tput setab $C
-        echo -n "$C "
-    done
-    tput sgr0
-}
-#}}}
-
 tunnel.zzzw.inet.db.create(){ #{{{2
     ssh -o "ServerAliveInterval 180" -NfL 192.168.80.100:1521:172.30.41.42:1521 -p 9722 localhost
 }
@@ -186,7 +160,12 @@ tunnel.sock5.create(){ #{{{2
     ssh -NfD *:$sock5_port localhost -p $tunnel_port
     echo "sock5 port is: $sock5_port"
 }
-#}}}
-#}}}
+user.change(){ #{{{2
+    sudo -E -u $1 bash --rcfile $SSHHOME/.sshrc
+}
+#使用 sudo 切换用户不会自动 cd ~
+cd ~ 
+#2}}}
+#1}}}
 
 # vim: ft=sh fdm=marker

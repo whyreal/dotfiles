@@ -13,6 +13,7 @@ obj.version = "1.0"
 obj.author = "ashfinal <ashfinal@gmail.com>"
 obj.homepage = "https://github.com/Hammerspoon/Spoons"
 obj.license = "MIT - https://opensource.org/licenses/MIT"
+obj.timer = nil
 
 local function curl_callback(exitCode, stdOut, stdErr)
     if exitCode == 0 then
@@ -27,12 +28,13 @@ end
 
 local function bingRequest()
     local user_agent_str = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/603.2.4 (KHTML, like Gecko) Version/10.1.1 Safari/603.2.4"
-    local json_req_url = "http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1"
+    local json_req_url = "http://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1"
     hs.http.asyncGet(json_req_url, {["User-Agent"]=user_agent_str}, function(stat,body,header)
         if stat == 200 then
             if pcall(function() hs.json.decode(body) end) then
                 local decode_data = hs.json.decode(body)
                 local pic_url = decode_data.images[1].url
+                print(pic_url)
                 local pic_name = hs.http.urlParts(pic_url).lastPathComponent
                 if obj.last_pic ~= pic_name then
                     obj.full_url = "https://www.bing.com" .. pic_url

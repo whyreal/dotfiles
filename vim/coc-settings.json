@@ -1,6 +1,5 @@
 {
 	"suggest.floatEnable": true,
-	"suggest.maxCompleteItemCount": 10,
 	"coc.preferences.formatOnType": true,
 	"json.enable":true,
 	"json.format.enable":true,
@@ -41,5 +40,5 @@
       "filetypes": ["go"]
     }
   },
-	"git.enableGutters": true
+	"coc.source.word.filetypes": ["markdown"],
 }

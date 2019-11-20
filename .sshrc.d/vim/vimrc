@@ -2,7 +2,7 @@ set nocompatible
 filetype off
 
 " set default 'runtimepath' (without ~/.vim folders)
-let &runtimepath = printf('%s/vimfiles,%s,%s/vimfiles/after', $VIM, $VIMRUNTIME, $VIM)
+"let &runtimepath = printf('%s/vimfiles,%s,%s/vimfiles/after', $VIM, $VIMRUNTIME, $VIM)
 " what is the name of the directory containing this file?
 let s:portable = expand('<sfile>:p:h')
 " add the directory to 'runtimepath'
@@ -11,7 +11,9 @@ let &runtimepath = printf('%s, %s/nginx.vim/', &runtimepath, s:portable)
 let &runtimepath = printf('%s, %s/vim-sensible/', &runtimepath, s:portable)
 
 filetype plugin indent on
-syntax off
+syntax on
+
+let mapleader=","
 
 set bg=dark
 set cursorline
@@ -24,44 +26,36 @@ set modelines=3
 set smartcase
 set ignorecase
 set hlsearch
-set incsearch
 set wildmode=full
-"set nu
+set nu relativenumber
 
 noremap! <c-a> <Home>
 noremap! <c-e> <End>
+noremap! 
 
 vnoremap < <gv
 vnoremap > >gv
-nnoremap n nzz
-nnoremap N Nzz
+vnoremap <c-e> :w !bash<cr>
+nnoremap <leader>ve :Explore<cr>
+nnoremap <leader>vr :Rexplore<cr>
+nnoremap <leader>vs :shell<cr>
 
-" Ui{{{1
 set statusline=\ %F%m%r%h%w\ %=%(%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y%)\ %([%l,%v][%p%%]\ %)
-set laststatus=2
 set synmaxcol=200
 let loaded_matchparen = 1
 set noerrorbells
 set novisualbell
 set t_vb=
-
 set directory=/tmp
 set hidden
 set splitbelow
 set previewheight=8
 
-" not display ~ for blank line
-highlight EndOfBuffer ctermfg=black guifg=bg
-"}}}
 " Command {{{1
-
-" update pac file
 command! Dos2unix e ++ff=unix | %s///g
 command! FormatJSON %!python -m json.tool
-
 "}}}
 " Autocmd {{{1
-"
 autocmd FileType nginx setlocal fdm=indent ai ts=4 sw=4
 autocmd FileType sh setlocal fdm=indent ai ts=4 sw=4
 autocmd FileType json,yaml,xml,html,css setlocal fdm=indent ai ts=2 sw=2

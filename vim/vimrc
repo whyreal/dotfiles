@@ -12,18 +12,12 @@ Plug 'tpope/vim-sensible'
 Plug '~/code/whyreal/wr_vim'
 Plug '~/code/whyreal/vim-template'
 "}}}
-" 输入法切换{{{2
-Plug 'ybian/smartim'
-"Plug 'rlue/vim-barbaric'
-    "let g:barbaric_default = 2
-    "let g:barbaric_scope = 'buffer'
-"}}}
 " 导航{{{2
+Plug 'wellle/tmux-complete.vim'
+    let g:tmuxcomplete#trigger = 'omnifunc'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'scrooloose/nerdtree'
-    nnoremap <leader>ve :NERDTreeToggle<CR>
-    let NERDTreeShowBookmarks = 0
-    let NERDTreeBookmarksSort = 0
+nnoremap <leader>ve :Texplore<CR>
+nnoremap <leader>vr :Rexplore<CR>
 
 Plug 'vim-voom/VOoM'
     let g:voom_tree_placement = 'right'
@@ -37,7 +31,7 @@ Plug 'majutsushi/tagbar'
 Plug 'lvht/tagbar-markdown'
 
 "}}}
-" 自动补全{{{2
+" coc{{{2
 
 Plug 'neoclide/coc.nvim' , {'branch': 'release'}
     " if hidden is not set, TextEdit might fail.
@@ -152,14 +146,13 @@ Plug 'neoclide/coc.nvim' , {'branch': 'release'}
     " Find symbol of current document
     nnoremap <silent> <leader>lo  :<C-u>CocList outline<cr>
     " Search workspace symbols
-    nnoremap <silent> <leader>ls  :<C-u>CocList -I symbols<cr>
-    nnoremap <silent> <leader>lb  :<C-u>CocList buffers<cr>
-    nnoremap <silent> <leader>lf  :<C-u>CocList files<cr>
-    nnoremap <silent> <leader>ly  :<C-u>CocList -A --normal yank<cr>
-
+    nnoremap <silent> <leader>ls  :<C-u>CocList -R --ignore-case -N -I symbols<cr>
+    nnoremap <silent> <leader>lb  :<C-u>CocList -R --ignore-case -N buffers<cr>
+    nnoremap <silent> <leader>lf  :<C-u>CocList -R --ignore-case -N files<cr>
+    nnoremap <silent> <leader>lr  :<C-u>CocList -R --ignore-case -N mru<cr>
+    nnoremap <silent> <leader>lm  :<C-u>CocList -R --ignore-case -N marks<cr>
     " Search
     nnoremap <leader>s  <Plug>(coc-workspaceSymbols)
-
     " Do default action for next item.
     nnoremap <silent> <leader>j  :<C-u>CocNext<CR>
     " Do default action for previous item.
@@ -186,34 +179,26 @@ Plug 'junegunn/vim-easy-align'
     " Start interactive EasyAlign for a motion/text object (e.g. gaip)
     nmap ga <Plug>(EasyAlign)
 "}}}
-" 前端 {{{2
-Plug 'leafgarland/typescript-vim'
-"Plug 'chemzqm/wxapp.vim'
-Plug 'vim-scripts/Emmet.vim'
-let g:user_emmet_settings = {
-  \  'javascript.jsx' : {
-    \      'extends' : 'jsx',
-    \  },
-  \}
-"}}}
 " Markdown{{{2
 Plug 'plasticboy/vim-markdown'
     let g:vim_markdown_toc_autofit = 1
     "let g:vim_markdown_folding_style_pythonic = 1
+    "let g:vim_markdown_override_foldtext = 0
     let g:html_wrong_comments=1
     "let g:vim_markdown_new_list_item_indent = 0
 
-Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
-    let g:instant_markdown_autostart = 0
-    let g:instant_markdown_slow = 1
+Plug 'previm/previm'
+    let g:previm_open_cmd="open"
+	let g:previm_show_header = 0
 
 "}}}
 " UML{{{2
-Plug 'scrooloose/vim-slumlord'
-Plug 'aklt/plantuml-syntax'
-    let g:plantuml_executable_script='~/.vim/plantuml/plantuml.sh'
+"Plug 'scrooloose/vim-slumlord'
+"Plug 'aklt/plantuml-syntax'
+"    let g:plantuml_executable_script='~/.vim/plantuml/plantuml.sh'
 "}}}
 " Misc {{{2
+Plug 'chr4/nginx.vim'
 "Plug 'Glench/Vim-Jinja2-Syntax'
 "Plug 'justinmk/vim-sneak'
     "map f <Plug>Sneak_f
@@ -239,6 +224,7 @@ filetype plugin indent on
 syntax enable
 
 " Operation {{{1
+"set number relativenumber
 set foldlevel=99
 set clipboard+=unnamed
 set fileencodings=utf-8,gbk,ucs-bom,cp936,gb18030,big5,latin1
@@ -249,7 +235,7 @@ set ignorecase
 set hlsearch
 set incsearch
 set wildmode=full
-set mouse=a
+set mouse=""
 set ttymouse=xterm2
 set iskeyword=-,@,48-57,_,192-255
 "set macmeta
@@ -257,13 +243,22 @@ set iskeyword=-,@,48-57,_,192-255
 set autowrite
 set autoread
 
+" 命令窗口
+set cmdwinheight=20
+nnoremap q; q:
+
 vnoremap < <gv
 vnoremap > >gv
+
+" 执行选中的 shell 命令
+vnoremap <c-r> :w !zsh<cr>
+
 "nnoremap n nzz
 "nnoremap N Nzz
 "nnoremap <2-LeftMouse> za
 
 "inoremap jj <ESC>
+inoremap <c-o> <ESC>
 
 noremap! <c-a> <Home>
 noremap! <c-e> <End>
@@ -293,7 +288,7 @@ nnoremap 0 :call wr#ToggleHomeZero()<CR>
 tnoremap <esc> <c-w>N
 
 "}}}
-" Ui{{{1
+" UI{{{1
 
 function! StatusDiagnostic() abort
   let info = get(b:, 'coc_diagnostic_info', {})
@@ -323,7 +318,6 @@ set splitbelow
 set previewheight=8
 set bg=dark
 set colorcolumn=+1
-set cursorline
 colorscheme molokai
 
 if has('gui_running')
@@ -332,6 +326,7 @@ if has('gui_running')
     " 模糊
     "set blurradius=20
     set linespace=1
+    set cursorline
     set guioptions='egk'
     set guifont=DejaVuSansMonoPowerline:h12
 else
@@ -339,6 +334,8 @@ else
 endif
 
 nnoremap <silent> <leader>vs :terminal<CR>
+nnoremap <silent> <leader>vm :marks<CR>
+
 hi default CocHighlightText  guibg=darkyellow guifg=red ctermbg=223 ctermfg=red
 "}}}
 " FileType {{{1
@@ -349,7 +346,7 @@ autocmd FileType lua setlocal ai ts=4 sw=4 et fdm=indent tw=80
 autocmd FileType python setlocal fdm=indent ai ts=4 sw=4 et
 autocmd FileType markdown setlocal ts=4 sw=4 fdm=indent et
 autocmd FileType nginx setlocal ai ts=4 sw=4
-autocmd FileType sh setlocal ai ts=4 sw=4 et
+autocmd FileType sh setlocal ai ts=4 sw=4 et fdm=indent
 autocmd FileType snippets setlocal ts=4 sw=4
 autocmd FileType vim setlocal ts=4 sw=4 et fdm=marker
 autocmd FileType xml,html,css setlocal fdm=indent ai ts=2 sw=2

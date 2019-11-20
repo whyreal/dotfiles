@@ -16,14 +16,16 @@
 
     ],
     "desc" : "Use Bing daily picture as your wallpaper, automatically.",
-    "type" : "Module",
     "Deprecated" : [
 
     ],
+    "type" : "Module",
     "Constructor" : [
 
     ],
-    "doc" : "Use Bing daily picture as your wallpaper, automatically.\n\nDownload: [https:\/\/github.com\/Hammerspoon\/Spoons\/raw\/master\/Spoons\/BingDaily.spoon.zip](https:\/\/github.com\/Hammerspoon\/Spoons\/raw\/master\/Spoons\/BingDaily.spoon.zip)",
+    "Field" : [
+
+    ],
     "items" : [
 
     ],
@@ -33,9 +35,7 @@
     "Method" : [
 
     ],
-    "Field" : [
-
-    ],
+    "doc" : "Use Bing daily picture as your wallpaper, automatically.\n\nDownload: [https:\/\/github.com\/Hammerspoon\/Spoons\/raw\/master\/Spoons\/BingDaily.spoon.zip](https:\/\/github.com\/Hammerspoon\/Spoons\/raw\/master\/Spoons\/BingDaily.spoon.zip)",
     "name" : "BingDaily"
   }
 ]
