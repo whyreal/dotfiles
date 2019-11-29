@@ -1,38 +1,12 @@
+lua dofile(os.getenv("HOME") .. "/.vim/lua/utils.lua")
 " Package Manager {{{1
-
-" use python3
-if has('python3')
-endif
-
 call plug#begin('~/.vim/plugged')
 
 " basic plugins{{{2
 let mapleader=","
 Plug 'tpope/vim-sensible'
-Plug '~/code/whyreal/wr_vim'
-Plug '~/code/whyreal/vim-template'
 "}}}
-" 导航{{{2
-Plug 'wellle/tmux-complete.vim'
-    let g:tmuxcomplete#trigger = 'omnifunc'
-Plug 'christoomey/vim-tmux-navigator'
-nnoremap <leader>ve :Texplore<CR>
-nnoremap <leader>vr :Rexplore<CR>
-
-Plug 'vim-voom/VOoM'
-    let g:voom_tree_placement = 'right'
-    let g:voom_ft_modes = {'markdown': 'pandoc'}
-    let g:voom_always_allow_move_left = 1
-    au BufRead * call wr#DetectVoomType()
-    nnoremap <silent> <leader>vv :VoomToggle<CR>
-
-Plug 'majutsushi/tagbar'
-    nnoremap <leader>vt :TagbarToggle<cr>
-Plug 'lvht/tagbar-markdown'
-
-"}}}
-" coc{{{2
-
+" COC{{{2
 Plug 'neoclide/coc.nvim' , {'branch': 'release'}
     " if hidden is not set, TextEdit might fail.
     set hidden
@@ -124,18 +98,6 @@ Plug 'neoclide/coc.nvim' , {'branch': 'release'}
     " Use `:Fold` for fold current buffer
     command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
-    " Add diagnostic info for https://github.com/itchyny/lightline.vim
-    let g:lightline = {
-          \ 'colorscheme': 'wombat',
-          \ 'active': {
-          \   'left': [ [ 'mode', 'paste' ],
-          \             [ 'cocstatus', 'readonly', 'filename', 'modified' ] ]
-          \ },
-          \ 'component_function': {
-          \   'cocstatus': 'coc#status'
-          \ },
-          \ }
-
     " Using CocList
     " Show all diagnostics
     nnoremap <silent> <leader>la  :<C-u>CocList diagnostics<cr>
@@ -148,7 +110,7 @@ Plug 'neoclide/coc.nvim' , {'branch': 'release'}
     " Search workspace symbols
     nnoremap <silent> <leader>ls  :<C-u>CocList -R --ignore-case -N -I symbols<cr>
     nnoremap <silent> <leader>lb  :<C-u>CocList -R --ignore-case -N buffers<cr>
-    nnoremap <silent> <leader>lf  :<C-u>CocList -R --ignore-case -N files<cr>
+    nnoremap <silent> <leader>lf  :<C-u>CocList -R --ignore-case files<cr>
     nnoremap <silent> <leader>lr  :<C-u>CocList -R --ignore-case -N mru<cr>
     nnoremap <silent> <leader>lm  :<C-u>CocList -R --ignore-case -N marks<cr>
     " Search
@@ -160,12 +122,55 @@ Plug 'neoclide/coc.nvim' , {'branch': 'release'}
     " Resume latest coc list
     nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
 
-Plug 'SirVer/ultisnips'
-    let g:UltiSnipsExpandTrigger="<c-j>"
-    let g:UltiSnipsSnippetsDir="~/code/whyreal/wr_vim/UltiSnips"
-    let g:UltiSnipsEnableSnipMate=1
-    let g:UltiSnipsSnippetDirectories=["UltiSnips"]
+    function! StatusDiagnostic() abort
+      let info = get(b:, 'coc_diagnostic_info', {})
+      if empty(info) | return '' | endif
+      let msgs = []
+      if get(info, 'error', 0)
+        call add(msgs, 'E' . info['error'])
+      endif
+      if get(info, 'warning', 0)
+        call add(msgs, 'W' . info['warning'])
+      endif
+      return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
+    endfunction
 
+    set statusline=\ %t%m%r%h%w%{StatusDiagnostic()}\ %=%(%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y%)
+    " coc-git
+    set statusline^=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}
+    "set statusline=\ %t%m%r%h%w%{StatusDiagnostic()}\ %=%(%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y%)\ %([%l,%v][%p%%]\ %)
+
+    hi default CocHighlightText  guibg=darkyellow guifg=red ctermbg=223 ctermfg=red
+
+    function OpenWithSystemApp(coc_list_context)
+        lua coc_list_open_file_with(vim.eval("a:coc_list_context"), "open")
+    endfunction
+
+    function OpenWithFinder(coc_list_context)
+        lua coc_list_open_file_with(vim.eval("a:coc_list_context"), "open -R")
+    endfunction
+"}}}
+" 导航{{{2
+let g:netrw_list_hide='\(^\|\s\s\)\zs\.\S\+'
+let g:netrw_winsize=30
+"let g:netrw_liststyle=3 "tree
+
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'vim-voom/VOoM'
+    let g:voom_tree_placement = 'right'
+    let g:voom_ft_modes = {'markdown': 'pandoc'}
+    let g:voom_always_allow_move_left = 1
+    au FileType * lua detect_voom_type()
+    nnoremap <silent> <leader>vv :VoomToggle<CR>
+
+Plug 'majutsushi/tagbar'
+    nnoremap <leader>vt :TagbarToggle<cr>
+Plug 'lvht/tagbar-markdown'
+
+"}}}
+" 补全{{{2
+Plug 'wellle/tmux-complete.vim'
+    let g:tmuxcomplete#trigger = 'omnifunc'
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-surround'
 "}}}
@@ -199,12 +204,6 @@ Plug 'previm/previm'
 "}}}
 " Misc {{{2
 Plug 'chr4/nginx.vim'
-"Plug 'Glench/Vim-Jinja2-Syntax'
-"Plug 'justinmk/vim-sneak'
-    "map f <Plug>Sneak_f
-    "map F <Plug>Sneak_F
-    "map t <Plug>Sneak_t
-    "map T <Plug>Sneak_T
 Plug 'easymotion/vim-easymotion'
     let g:EasyMotion_keys = 'ertyuidfghjkcvbnm,'
     let g:EasyMotion_smartcase = 1
@@ -212,63 +211,74 @@ Plug 'easymotion/vim-easymotion'
 
 " }}}
 " Color Theme{{{2
-"Plug 'dragfire/Improved-Syntax-Highlighting-Vim'
-"Plug 'lmintmate/blue-mood-vim'
-"Plug 'NLKNguyen/papercolor-theme'
-"Plug 'dracula/vim'
+Plug 'NLKNguyen/papercolor-theme'
 "}}}
 
 call plug#end()
 
 filetype plugin indent on
 syntax enable
+" }}}
+" Command {{{1
+command! -nargs=1 Edit lua edit_remote_file(<f-args>)
+command! -range TemplateRender <line1>,<line2>lua template_render()
+command! -range TemplateSet <line1>,<line2>lua template_set()
+command! Docs lua cd_workspace("~/Documents/vim-workspace/docs")
+command! Dos2unix e ++ff=unix | %s///g
+command! DotFiles lua cd_workspace("~/code/whyreal/dotfiles/")
+command! ExcuteUnnamedRegister lua vim.command(vim.eval("@\""))
+command! Favorites lua cd_workspace("~/Documents/vim-workspace/常用文档")
+command! Md2doc !md2doc %
+command! Md2pdf !md2pdf %
+command! ServerUpdateInfo lua update_server_info()
+command! Ssconfig tabe ~/.ShadowsocksX/user-rule.txt
+command! Sshconfig tabe ~/Documents/Note/scripts/ssh.config.json
+command! VimrcEdit tabe ~/.vim/vimrc
+command! VimrcReload so ~/.vim/vimrc
+command! Worklog edit ~/Documents/Note/work.shortcut.md
+" }}}
+" Autocmd {{{1
+"autocmd FileType c,cpp setlocal ai ts=4 sw=4 fdm=syntax
+autocmd FileType go setlocal ai ts=4 sw=4 fdm=indent
+autocmd FileType java setlocal et ai ts=4 sw=4 tw=120 fdm=indent
+autocmd FileType lua setlocal ai ts=4 sw=4 et fdm=indent tw=80
+autocmd FileType python setlocal fdm=indent ai ts=4 sw=4 et
+autocmd FileType markdown setlocal ts=4 sw=4 fdm=indent et
+autocmd FileType nginx setlocal ai ts=4 sw=4
+autocmd FileType sh setlocal ai ts=4 sw=4 et fdm=indent
+autocmd FileType snippets setlocal ts=4 sw=4
+autocmd FileType vim setlocal ts=4 sw=4 et fdm=marker
+autocmd FileType jsp,xml,html,css setlocal fdm=indent ai ts=2 sw=2
+autocmd FileType yaml setlocal fdm=indent ai ts=2 sw=2 et
+autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
+autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
+autocmd FileType json setlocal ai ts=2 sw=2 fdm=indent
+autocmd FileType javascript,typescript.tsx setlocal ai ts=2 sw=2 fdm=indent
+" default filetype
+autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
 
-" Operation {{{1
-"set number relativenumber
-set foldlevel=99
-set clipboard+=unnamed
-set fileencodings=utf-8,gbk,ucs-bom,cp936,gb18030,big5,latin1
-set modeline
-set modelines=3
-set smartcase
-set ignorecase
-set hlsearch
-set incsearch
-set wildmode=full
-set mouse=""
-set ttymouse=xterm2
-set iskeyword=-,@,48-57,_,192-255
-"set macmeta
-" make 前自动保存
-set autowrite
-set autoread
-
-" 命令窗口
-set cmdwinheight=20
+au BufWritePost ~/.ShadowsocksX/user-rule.txt
+            \ !genpac --format=pac
+            \ --pac-proxy="SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080; DIRECT;"
+            \ --user-rule-from=~/.ShadowsocksX/user-rule.txt
+            \ > ~/.ShadowsocksX/gfwlist.js
+au BufWritePost ~/Documents/Note/scripts/ssh.config.json
+            \ !cd ~/Documents/Note/scripts/
+            \ && ./template.rander.lua ssh.config.lrt ssh.config.json
+            \ > ~/.ssh/config
+" }}}
+" Map {{{1
 nnoremap q; q:
-
 vnoremap < <gv
 vnoremap > >gv
-
-" 执行选中的 shell 命令
-vnoremap <c-r> :w !zsh<cr>
-
-"nnoremap n nzz
-"nnoremap N Nzz
-"nnoremap <2-LeftMouse> za
-
-"inoremap jj <ESC>
 inoremap <c-o> <ESC>
-
 noremap! <c-a> <Home>
 noremap! <c-e> <End>
 noremap! <c-f> <Right>
 noremap! <c-b> <Left>
 noremap! <c-n> <Down>
 noremap! <c-p> <Up>
-"noremap! <c-d> <Del>
 inoremap <c-k> <c-o>D
- 
 
 " previous buffer
 nnoremap gp :bp<cr>
@@ -282,31 +292,38 @@ nnoremap gb gT
 " change to current directory
 nnoremap <silent> <leader>cd :lcd %:h<CR>
 
-nnoremap 0 :call wr#ToggleHomeZero()<CR>
+nnoremap 0 :lua toggle_home_zero()<CR>
 
 " terminal 
 tnoremap <esc> <c-w>N
 
-"}}}
-" UI{{{1
+" save
+nnoremap <leader>w :w<cr>
 
-function! StatusDiagnostic() abort
-  let info = get(b:, 'coc_diagnostic_info', {})
-  if empty(info) | return '' | endif
-  let msgs = []
-  if get(info, 'error', 0)
-    call add(msgs, 'E' . info['error'])
-  endif
-  if get(info, 'warning', 0)
-    call add(msgs, 'W' . info['warning'])
-  endif
-  return join(msgs, ' '). ' ' . get(g:, 'coc_status', '')
-endfunction
+nnoremap <silent> <leader>vs :terminal<CR>
+nnoremap <silent> <leader>vm :marks<CR>
+nnoremap <leader>ve :Explore<CR>
+nnoremap <leader>vr :Rexplore<CR>
 
-set statusline=\ %t%m%r%h%w%{StatusDiagnostic()}\ %=%(%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y%)
-" coc-git
-set statusline^=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}
-"set statusline=\ %t%m%r%h%w%{StatusDiagnostic()}\ %=%(%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y%)\ %([%l,%v][%p%%]\ %)
+" }}}
+" Options && Variables {{{1
+"set number relativenumber
+set foldlevel=99
+set clipboard+=unnamed
+set fileencodings=utf-8,gbk,ucs-bom,cp936,gb18030,big5,latin1
+set modeline modelines=3
+set smartcase ignorecase
+set hlsearch
+set mouse=""
+"set ttymouse=xterm2
+set iskeyword=-,@,48-57,_,192-255
+"set macmeta
+" make 前自动保存
+set autowrite
+
+" 命令窗口
+set cmdwinheight=20
+
 "set synmaxcol=200
 let loaded_matchparen = 1
 set belloff=all
@@ -316,9 +333,8 @@ set hidden
 
 set splitbelow
 set previewheight=8
-set bg=dark
 set colorcolumn=+1
-colorscheme molokai
+set bg=dark
 
 if has('gui_running')
     " 透明
@@ -328,41 +344,13 @@ if has('gui_running')
     set linespace=1
     set cursorline
     set guioptions='egk'
-    set guifont=DejaVuSansMonoPowerline:h12
+    set guifont=Menlo-Bold:h12
 else
     "set term=builtin_ansi
 endif
 
-nnoremap <silent> <leader>vs :terminal<CR>
-nnoremap <silent> <leader>vm :marks<CR>
-
-hi default CocHighlightText  guibg=darkyellow guifg=red ctermbg=223 ctermfg=red
+colorscheme PaperColor
 "}}}
-" FileType {{{1
-"autocmd FileType c,cpp setlocal ai ts=4 sw=4 fdm=syntax
-autocmd FileType go setlocal ai ts=4 sw=4 fdm=indent
-autocmd FileType java setlocal et ai ts=4 sw=4 tw=120 fdm=indent
-autocmd FileType lua setlocal ai ts=4 sw=4 et fdm=indent tw=80
-autocmd FileType python setlocal fdm=indent ai ts=4 sw=4 et
-autocmd FileType markdown setlocal ts=4 sw=4 fdm=indent et
-autocmd FileType nginx setlocal ai ts=4 sw=4
-autocmd FileType sh setlocal ai ts=4 sw=4 et fdm=indent
-autocmd FileType snippets setlocal ts=4 sw=4
-autocmd FileType vim setlocal ts=4 sw=4 et fdm=marker
-autocmd FileType xml,html,css setlocal fdm=indent ai ts=2 sw=2
-autocmd FileType yaml setlocal fdm=indent ai ts=2 sw=2 et
-autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
-autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
-autocmd FileType json setlocal ai ts=2 sw=2 fdm=indent
-autocmd FileType javascript,typescript.tsx setlocal ai ts=2 sw=2 fdm=indent
-
-" default filetype
-autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
-
-" }}}
 " Cabbreviate {{{1
-" run command in register *
-nnoremap <silent> <leader>rr :@*<cr>
-
 cabbrev h tab h
 "}}}

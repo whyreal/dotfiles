@@ -31,7 +31,9 @@
 		"!", "-name", ".*"
 	],
 	"list.normalMappings": {
-		"d": "action:delete"
+		"d": "action:delete",
+		"x": "call:OpenWithSystemApp",
+		"r": "call:OpenWithFinder"
 	},
   "languageserver": {
     "golang": {
@@ -41,4 +43,5 @@
     }
   },
 	"coc.source.word.filetypes": ["markdown"],
+	"lua.commandPath":"/usr/local/bin/lua-lsp"
 }

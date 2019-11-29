@@ -24,14 +24,10 @@ export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 #export LSCOLORS='gxfxcxdxbxegedabagacad'
 
-
-
 # golang
 export GOPATH=/Users/Real/go
-# Enable the go modules feature
-export GO111MODULE=on
-# Set the GOPROXY environment variable
-export GOPROXY=https://goproxy.io
+export GO111MODULE=on # Enable the go modules feature
+export GOPROXY=https://goproxy.cn #Set the GOPROXY environment variable
 
 # java
 #export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_201.jdk/Contents/Home
@@ -39,7 +35,6 @@ export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk8u212-b03/Contents/Home
 export PATH=$JAVA_HOME/bin:$PATH 
 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar 
 export GRAALVM_HOME=/Library/Java/JavaVirtualMachines/graalvm-ce-1.0.0-rc14/Contents/Home
-
 
 # 自定义函数&alias {{{1
 alias grep='grep --color'
@@ -56,7 +51,6 @@ alias pd='pushd'
 alias d='dirs -v'
 alias zip='zip -x "*.DS_Store" -x "__MACOSX"'
 alias lg='lazygit'
-
 alias s='sshrc'
 
 o(){
@@ -64,7 +58,7 @@ o(){
     mime_type="${$(file --mime-type $file | awk '{print $2}')%/*}"
 
     if [[ $mime_type = 'text' ]]; then
-        code $file
+        open -a macvim $file
     else
         open $file
     fi
@@ -77,10 +71,11 @@ c(){ # {{{2
 # }}}
 
 vs(){ # {{{2
-    mvim -n -c "let t:remote_host=\"$1\"" \
-        -c "let &titlestring=t:remote_host" \
-        -c "call Edit(\"/root/\")" \
-        -c "new" -c "call Server_update_info()"
+    mvim -n \
+        -c "let g:remote_host=\"$1\"" \
+        -c "let &titlestring=g:remote_host" \
+        -c "Edit /root/" \
+        -c "new" -c "ServerUpdateInfo"
     sshrc $1
 }
 # }}}

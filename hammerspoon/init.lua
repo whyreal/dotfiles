@@ -18,7 +18,7 @@ if not hspoon_list then
         --"HSearch",
         --"SpeedMenu",
         "WinWin",
-        "FnMate",
+        -- "FnMate",
         "ControlEscape",
         "VimMode",
     }
