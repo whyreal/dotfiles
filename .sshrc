@@ -1,4 +1,4 @@
-#init {{{1 
+# INIT {{{1 
 export PATH=$PATH:$SSHHOME
 if [ -r /etc/profile ];then
     source /etc/profile;
@@ -11,7 +11,7 @@ elif [ -r ~/.profile ];then
     source ~/.profile
 fi
 #}}}
-# env {{{1
+# ENV {{{1
 SERVER_IP=$(echo $SSH_CONNECTION | awk '{print $3}')
 # PS1=root@ip_address(hostname)
 export PS1="\n\e[38;5;46m\u\e[m@\e[38;5;201m$SERVER_IP(\h)\e[m\n[\w]\\$ "
@@ -22,27 +22,32 @@ bind 'set completion-ignore-case on'
 stty -ixon
 export LC_ALL="en_US.utf8"
 #}}}
-# command {{{1
+# Alias {{{1
+#alias vim='vim -u $SSHHOME/.sshrc.d/vim/vimrc'
 alias ....='cd ../../..'
 alias ...='cd ../..'
 alias ..='cd ..'
-c(){
-    cd $1
-    ls
-}
-alias d='dirs -v'
-alias pd='pushd'
-alias dirs='dirs -v'
-#alias vim='vim -u $SSHHOME/.sshrc.d/vim/vimrc'
 alias curl='curl -v'
+alias d='dirs -v'
+alias dirs='dirs -v'
+alias file.get.abs_path='readlink -f'
 alias grep='grep --color'
+alias jobs="jobs -l"
 alias ll="ls -lh"
 alias mkdir='mkdir -pv'
+alias pd='pushd'
 alias port.findby.listen='netstat -antuplo | grep'
 alias port.findby.port='netstat -antuplo | grep'
 alias port.list='netstat -antuplo'
-alias file.get.abs_path='readlink -f'
-alias jobs="jobs -l"
+alias tomcat.catalina.less="less logs/catalina.out"
+alias tomcat.catalina.tail='tail -f logs/catalina.out'
+# }}}
+# Functions {{{1
+c(){ #{{{2
+    cd $1
+    ls
+}
+#}}}
 file.findby.name(){  # {{{2 用文件名查找文件
     if [[ "" == $2 ]]; then
         wd="."
@@ -111,8 +116,6 @@ eof
     fi
 }
 #}}}
-alias tomcat.catalina.less="less logs/catalina.out"
-alias tomcat.catalina.tail='tail -f logs/catalina.out'
 tomcat.change_port(){  # {{{2 根据路径中端口号，修改tomcat server.xml
     if [[ $# -lt 1 ]]; then
         echo "give me the config file" >& 2
@@ -132,13 +135,6 @@ tomcat.change_port(){  # {{{2 根据路径中端口号，修改tomcat server.xml
     sed -i -e 's/Server port="[^"]*"/Server port="'$server_port'"/' \
         -e 's/Connector port="[^"]*" protocol="HTTP/Connector port="'$conn_port'" protocol="HTTP/' \
         $config
-}
-#}}}
-tomcat.cleaning.log(){ #{{{ 3天
-    directory=$1
-    cd $directory
-    find logs -mtime +3 -delete
-    : > logs/catalina.out
 }
 #}}}
 tunnel.zzzw.inet.db.create(){ #{{{2
@@ -161,11 +157,10 @@ tunnel.sock5.create(){ #{{{2
     echo "sock5 port is: $sock5_port"
 }
 user.change(){ #{{{2
+    cd `getent passwd real | cut -d: -f6`
     sudo -E -u $1 bash --rcfile $SSHHOME/.sshrc
 }
-#使用 sudo 切换用户不会自动 cd ~
-cd ~ 
 #2}}}
 #1}}}
 
-# vim: ft=bash fdm=marker
+# vim: ft=bash fdm=marker sw=4 ts=4 et

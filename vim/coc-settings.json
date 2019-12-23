@@ -43,5 +43,6 @@
     }
   },
 	"coc.source.word.filetypes": ["markdown"],
-	"lua.commandPath":"/usr/local/bin/lua-lsp"
+	"lua.commandPath":"/usr/local/bin/lua-lsp",
+	"snippets.ultisnips.usePythonx": false
 }

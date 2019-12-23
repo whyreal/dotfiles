@@ -1,0 +1,77 @@
+snippet startuml "startuml" b
+@startuml
+$0
+@enduml
+endsnippet
+
+snippet interface "uml.interface" b
+interface ${1:name} ${2:{
+	$0
+}}
+endsnippet
+
+snippet class "uml.class" b
+class ${1:name} ${2:{
+	$0
+}}
+endsnippet
+
+snippet extension "uml.extension 实现" b
+${1:interface} <|.. ${2:implemention} : ${3:comments}
+endsnippet
+
+snippet composition "uml.composition 组合" b
+${1:whole} *-- ${2:component} : ${3:comments}
+endsnippet
+
+snippet aggregation "uml.aggregation 聚合" b
+${1:whole} o-- ${2:component} : ${3:comments}
+endsnippet
+
+snippet inherit "uml.inherit 继承" b
+${1:father} <|-- ${2:son} : ${3:comments} 
+endsnippet
+
+snippet dependent "uml.dependent" b
+${1:be dependent} <.. ${2:dependent} : ${3:comments}
+endsnippet
+
+snippet note.onlink "note on link" b
+note on link
+$0
+endnote
+endsnippet
+
+snippet note "Description" b
+note ${1:left|right|top|bottom} ${2:of ${3:Object}}: ${4:comments}
+endsnippet
+
+snippet field.protected "" b
+#${1:name}:${2:type}
+endsnippet
+snippet field.package_private "" b
+~${1:name}:${2:type}
+endsnippet
+snippet field.public "" b
++${1:name}:${2:type}
+endsnippet
+snippet field.private "" b
+-${1:name}:${2:type}
+endsnippet
+snippet field.spliter "field.spliter" b
+.. ${1:spliter} ..
+endsnippet
+
+
+snippet method.protected "" b
+#${1:return type} ${2:func}()
+endsnippet
+snippet method.package_private "" b
+~${1:return type} ${2:func}()
+endsnippet
+snippet method.public "" b
++${1:return type} ${2:func}()
+endsnippet
+snippet method.private "" b
+-${1:return type} ${2:func}()
+endsnippet

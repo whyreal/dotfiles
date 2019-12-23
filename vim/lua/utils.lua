@@ -1,3 +1,5 @@
+require("lib")
+
 local template = require "resty.template"
 template.print = function(s) return s end
 
@@ -24,7 +26,7 @@ end
 
 function edit_remote_file(file)
     vim.command("set buftype=nofile")
-    remote_host = exists("g:remote_host")
+    remote_host = exists("w:remote_host")
     if remote_host then
         vim.command("e scp://" .. remote_host .. "/" .. file)
     end
@@ -44,7 +46,7 @@ function update_server_info()
     vim.command("set fdm=marker buftype=nofile")
     local script = "~/.vim/scripts/server_info.sh"
 
-    local remote_host = exists("g:remote_host")
+    local remote_host = exists("w:remote_host")
     if remote_host then
         local cmd = "cat " .. script .." | ssh -T " .. remote_host
         vim.window().line = 1
@@ -80,11 +82,14 @@ end
 
 function template_render()
     vim.buffer():insert("", vim.lastline)
-    local data = table.slice(vim.buffer(), vim.firstline, vim.lastline)
-    for _, data_line in ipairs(data) do
-        local output = template.render(view, {l = string.split(data_line)})
-        for i, l in ipairs(string.split(output, "\n")) do
-            vim.buffer():insert(l, vim.lastline + i)
+    local data_lines = table.slice(vim.buffer(), vim.firstline, vim.lastline)
+    for _, data in ipairs(data_lines) do
+
+        local output = template.render(view, {l = string.split(data)})
+
+        for i, output_line in ipairs(string.split(output, "\n")) do
+            -- 前面插入了一个空行, 这里正好从 lastline 的下一行开始插入
+            vim.buffer():insert(output_line, vim.lastline + i)
         end
     end
 end

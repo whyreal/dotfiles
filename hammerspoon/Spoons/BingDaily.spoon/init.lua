@@ -18,9 +18,10 @@ obj.timer = nil
 local function curl_callback(exitCode, stdOut, stdErr)
     if exitCode == 0 then
         obj.task = nil
-        obj.last_pic = hs.http.urlParts(obj.full_url).lastPathComponent
-        local localpath = os.getenv("HOME") .. "/.Trash/" .. hs.http.urlParts(obj.full_url).lastPathComponent
-        hs.screen.mainScreen():desktopImageURL("file://" .. localpath)
+        obj.last_pic = obj.pic_name
+        for i,screen in ipairs(hs.screen.allScreens()) do
+            screen:desktopImageURL("file://" .. obj.localpath)
+        end
     else
         print(stdOut, stdErr)
     end
@@ -34,16 +35,15 @@ local function bingRequest()
             if pcall(function() hs.json.decode(body) end) then
                 local decode_data = hs.json.decode(body)
                 local pic_url = decode_data.images[1].url
-                print(pic_url)
-                local pic_name = hs.http.urlParts(pic_url).lastPathComponent
-                if obj.last_pic ~= pic_name then
-                    obj.full_url = "https://www.bing.com" .. pic_url
+                obj.pic_name = hs.http.urlParts(pic_url).queryItems[1]["id"]
+                if obj.last_pic ~= obj.pic_name then
+                    obj.full_url = "https://cn.bing.com" .. pic_url
                     if obj.task then
                         obj.task:terminate()
                         obj.task = nil
                     end
-                    local localpath = os.getenv("HOME") .. "/.Trash/" .. hs.http.urlParts(obj.full_url).lastPathComponent
-                    obj.task = hs.task.new("/usr/bin/curl", curl_callback, {"-A", user_agent_str, obj.full_url, "-o", localpath})
+                    obj.localpath = os.getenv("HOME") .. "/.Trash/" .. obj.pic_name
+                    obj.task = hs.task.new("/usr/bin/curl", curl_callback, {"-A", user_agent_str, obj.full_url, "-o", obj.localpath})
                     obj.task:start()
                 end
             end

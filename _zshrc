@@ -1,5 +1,5 @@
 # 环境变量 {{{1
-# fix git problem for https
+# 允许使用自签证书
 export GIT_SSL_NO_VERIFY=true
 # history
 export HISTSIZE=5000
@@ -19,12 +19,8 @@ if [[ $LC_CTYPE = "zh_CN.eucCN" ]]; then
     export NLS_LANG=AMERICAN_AMERICA.ZHS16GBK
 fi
 
-# color
-export CLICOLOR=1
-export LSCOLORS=GxFxCxDxBxegedabagaced
-#export LSCOLORS='gxfxcxdxbxegedabagacad'
-
 # golang
+export PATH=$PATH:$HOME/go/bin/
 export GOPATH=/Users/Real/go
 export GO111MODULE=on # Enable the go modules feature
 export GOPROXY=https://goproxy.cn #Set the GOPROXY environment variable
@@ -36,12 +32,20 @@ export PATH=$JAVA_HOME/bin:$PATH
 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar 
 export GRAALVM_HOME=/Library/Java/JavaVirtualMachines/graalvm-ce-1.0.0-rc14/Contents/Home
 
-# 自定义函数&alias {{{1
+export PATH=$PATH:/Users/Real/Documents/Note/scripts/
+export PATH=$PATH:/usr/local/sbin
+export PATH=$PATH:/usr/local/opt/mysql-client/bin
+export PATH=$PATH:$HOME/.yarn/bin
+export PATH=$PATH:$HOME/.config/yarn/global/node_modules/.bin
+export PATH=$PATH:/Applications/instantclient_18_1
+# }}}
+# Alias {{{1
+alias pwgen='pwgen -r0oOiIlL'
 alias grep='grep --color'
 #alias ls='exa'
-alias cat='bat'
-alias less='bat'
-alias more='bat'
+alias cat='bat -p'
+alias less='bat -p'
+alias more='bat -p'
 alias ta='tmux -u attach'
 alias et='exec tmux'
 alias ....='cd ../../..'
@@ -49,11 +53,16 @@ alias ...='cd ../..'
 alias ..='cd ..'
 alias pd='pushd'
 alias d='dirs -v'
-alias zip='zip -x "*.DS_Store" -x "__MACOSX"'
 alias lg='lazygit'
 alias s='sshrc'
+# }}}
+# Functions {{{1
+o(){ # {{{2
+    if [[ $# -eq 0 ]]; then
+        open -a macvim
+        return
+    fi
 
-o(){
     file=$1
     mime_type="${$(file --mime-type $file | awk '{print $2}')%/*}"
 
@@ -63,17 +72,16 @@ o(){
         open $file
     fi
 }
-
+# }}}
 c(){ # {{{2
     cd $1
     ls
 }
 # }}}
-
 vs(){ # {{{2
     mvim -n \
-        -c "let g:remote_host=\"$1\"" \
-        -c "let &titlestring=g:remote_host" \
+        -c "let w:remote_host=\"$1\"" \
+        -c "let &titlestring=w:remote_host" \
         -c "Edit /root/" \
         -c "new" -c "ServerUpdateInfo"
     sshrc $1
@@ -93,8 +101,6 @@ lf(){ #{{{2
     fi
 }
 # }}}
-
-#}}}
 vpn.route.add.zkzy() { # {{{2
     sudo route -n add 192.168.80/24 -interface ppp0
 }
@@ -111,10 +117,6 @@ safari.agent.default() { # {{{2
     defaults delete com.apple.Safari CustomUserAgent
 }
 # }}}
-password.gen() { # {{{2
-    openssl rand -base64 $1
-}
-# }}}
 proxy.ss.active(){ # {{{2
     export http_proxy="socks5://127.0.0.1:1080"
     export https_proxy="socks5://127.0.0.1:1080"
@@ -127,16 +129,20 @@ proxy.ss.deactive(){ # {{{2
 # }}}
 update.all() { # {{{2
 
+    echo "-------- update zpreztoo--------"
     cd $ZPREZTODIR
     git pull
     git submodule update --init --recursive
     cd -
 
+    echo "-------- update tmux--------"
     /Users/Real/.tmux/plugins/tpm/bin/update_plugins all
 
+    echo "-------- update homebrew--------"
     brew upgrade
     brew cleanup
 
+    echo "-------- update Coc--------"
     vim -c 'PlugUpdate | CocUpdateSync | qall'
 }
 # }}}
@@ -171,11 +177,19 @@ color.print.tput(){ #{{{2
 }
 alias telnet='nc -vz -w 1'
 #}}}
+ssh.excute_local_script() { # {{{2
+    h=$1
+    s=$2
+    cat $2 | ssh -T $1
+}
+# }}}
 # }}}
 
 source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-
-# fzf
+## fzf 按键与 zprezto 冲突, 放在最后执行
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+compdef vs='sshrc'
+compdef ssh.excute_local_script='sshrc'
 
 # vim: fdm=marker sw=4 ts=4 et ft=zsh

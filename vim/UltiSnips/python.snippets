@@ -1,0 +1,58 @@
+global !p
+import re
+
+def get_path_params(uri :str) -> list:
+    """fetch path params in '{}' from uri
+
+    :uri :str
+    :returns: List[str]
+
+    """
+    return re.findall(r'{([^{}]*)}', uri)
+endglobal
+
+snippet flask.Blueprint.new "flask.Blueprint" b
+from flask import Blueprint
+
+bp = Blueprint("`!p
+snip.rv = snip.basename
+`", __name__, url_prefix="/`!p
+snip.rv = snip.basename
+`")
+endsnippet
+
+snippet flask.Blueprint.route "flask.bp.route" b
+@bp.route("/${1:path}", methods=[${2:"GET"}])
+def get_`!p snip.rv = snip.basename`():
+	${3:pass}
+endsnippet
+
+snippet flask.Blueprint.register "Description" b
+from . import ${1:module}
+app.register_blueprint($1.bp)
+endsnippet
+
+snippet responder.route.func "responder.route.func" b
+@api.route("${2:path}")
+async def ${1:name}(req: Request, resp: Response`!p
+params = ', '.join(get_path_params(t[2]))
+if params:
+    snip.rv = ', *, ' + params
+else:
+    snip.rv = ''
+`):
+	${3:pass}
+endsnippet
+
+snippet responder.route.class "responder.route.class" b
+@api.route("${2:path}")
+class ${1:name}:
+	def on_request(self, req: Request, resp: Response`!p
+params = ', '.join(get_path_params(t[2]))
+if params:
+    snip.rv = ', *, ' + params
+else:
+    snip.rv = ''
+`):
+		${3:pass}
+endsnippet

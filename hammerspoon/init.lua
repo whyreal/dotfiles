@@ -20,7 +20,7 @@ if not hspoon_list then
         "WinWin",
         -- "FnMate",
         "ControlEscape",
-        "VimMode",
+        --"VimMode",
     }
 end
 
@@ -47,9 +47,9 @@ end
 -- Basic key binding to ctrl+;
 -- You can choose any key binding you want here, see:
 --   https://www.hammerspoon.org/docs/hs.hotkey.html#bind
-hs.hotkey.bind({'ctrl'}, ';', function()
-  spoon.VimMode:enter()
-end)
+--hs.hotkey.bind({'ctrl'}, ';', function()
+  --spoon.VimMode:enter()
+--end)
 --vim:disableForApp('MacVim')
 --vim:disableForApp('Terminal')
 

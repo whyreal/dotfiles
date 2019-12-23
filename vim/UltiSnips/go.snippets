@@ -1,0 +1,68 @@
+snippet bee.controller "bee.controller" b
+type ${1:controller name} struct {
+	beego.Controller
+}
+endsnippet
+
+snippet bee.controller.prepare "bee.controller.prepare" b
+func (this *${1:controller name}) Prepare() {
+	$0	
+}
+endsnippet
+
+snippet bee.controller.get "bee.controller.get" b
+func (this *${1:controller name}) Get() {
+	$0
+}
+endsnippet
+
+snippet bee.controller.post "bee.controller.post" b
+func (this *${1:controller name}) Post() {
+	$0	
+}
+endsnippet
+
+snippet bee.controller.delete "bee.controller.delete" b
+func (this *${1:controller name}) Delete() {
+	$0	
+}
+endsnippet
+
+snippet bee.controller.put "bee.controller.put" b
+func (this *${1:controller name}) Put() {
+	$0	
+}
+endsnippet
+
+
+snippet gin.controller "gin.controller" b
+// $1 ...
+func ${1:name}(c *gin.Context) {
+	$0
+}
+endsnippet
+
+snippet gin.controller.CURD "" b
+func Create${1:name}(c *gin.Context) {
+	$0
+}
+
+func Update$1(c *gin.Context) {
+
+}
+
+func Read$1(c *gin.Context) {
+}
+
+
+func Delete$1(c *gin.Context) {
+
+}
+
+endsnippet
+
+snippet http.lamdba ""
+func(w http.ResponseWriter, r *http.Request) {
+	$1
+}
+endsnippet

@@ -1,4 +1,6 @@
-lua dofile(os.getenv("HOME") .. "/.vim/lua/utils.lua")
+" 修改 macvim shell, 解决无法加载 shell 环境变量的问题
+"defaults write org.vim.MacVim MMLoginShellCommand /bin/zsh
+
 " Package Manager {{{1
 call plug#begin('~/.vim/plugged')
 
@@ -66,7 +68,6 @@ Plug 'neoclide/coc.nvim' , {'branch': 'release'}
 
     " Highlight symbol under cursor on CursorHold
     autocmd CursorHold * silent call CocActionAsync('highlight')
-    
 
     " Remap for rename current word
     nmap <leader>rn <Plug>(coc-rename)
@@ -142,13 +143,22 @@ Plug 'neoclide/coc.nvim' , {'branch': 'release'}
 
     hi default CocHighlightText  guibg=darkyellow guifg=red ctermbg=223 ctermfg=red
 
-    function OpenWithSystemApp(coc_list_context)
-        lua coc_list_open_file_with(vim.eval("a:coc_list_context"), "open")
-    endfunction
+" coc-snippet {{{3
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
 
-    function OpenWithFinder(coc_list_context)
-        lua coc_list_open_file_with(vim.eval("a:coc_list_context"), "open -R")
-    endfunction
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+"}}}
 "}}}
 " 导航{{{2
 let g:netrw_list_hide='\(^\|\s\s\)\zs\.\S\+'
@@ -160,12 +170,10 @@ Plug 'vim-voom/VOoM'
     let g:voom_tree_placement = 'right'
     let g:voom_ft_modes = {'markdown': 'pandoc'}
     let g:voom_always_allow_move_left = 1
-    au FileType * lua detect_voom_type()
     nnoremap <silent> <leader>vv :VoomToggle<CR>
 
 Plug 'majutsushi/tagbar'
     nnoremap <leader>vt :TagbarToggle<cr>
-Plug 'lvht/tagbar-markdown'
 
 "}}}
 " 补全{{{2
@@ -203,6 +211,7 @@ Plug 'previm/previm'
 "    let g:plantuml_executable_script='~/.vim/plantuml/plantuml.sh'
 "}}}
 " Misc {{{2
+Plug 'ekalinin/Dockerfile.vim'
 Plug 'chr4/nginx.vim'
 Plug 'easymotion/vim-easymotion'
     let g:EasyMotion_keys = 'ertyuidfghjkcvbnm,'
@@ -220,40 +229,28 @@ filetype plugin indent on
 syntax enable
 " }}}
 " Command {{{1
-command! -nargs=1 Edit lua edit_remote_file(<f-args>)
-command! -range TemplateRender <line1>,<line2>lua template_render()
-command! -range TemplateSet <line1>,<line2>lua template_set()
-command! Docs lua cd_workspace("~/Documents/vim-workspace/docs")
-command! Dos2unix e ++ff=unix | %s///g
-command! DotFiles lua cd_workspace("~/code/whyreal/dotfiles/")
-command! ExcuteUnnamedRegister lua vim.command(vim.eval("@\""))
-command! Favorites lua cd_workspace("~/Documents/vim-workspace/常用文档")
+command! Dos2unix e ++=unix | %s/\r//g
 command! Md2doc !md2doc %
 command! Md2pdf !md2pdf %
-command! ServerUpdateInfo lua update_server_info()
 command! Ssconfig tabe ~/.ShadowsocksX/user-rule.txt
 command! Sshconfig tabe ~/Documents/Note/scripts/ssh.config.json
 command! VimrcEdit tabe ~/.vim/vimrc
 command! VimrcReload so ~/.vim/vimrc
-command! Worklog edit ~/Documents/Note/work.shortcut.md
+command! Worklog tabedit ~/Documents/Note/work.shortcut.md
 " }}}
 " Autocmd {{{1
 "autocmd FileType c,cpp setlocal ai ts=4 sw=4 fdm=syntax
 autocmd FileType go setlocal ai ts=4 sw=4 fdm=indent
-autocmd FileType java setlocal et ai ts=4 sw=4 tw=120 fdm=indent
-autocmd FileType lua setlocal ai ts=4 sw=4 et fdm=indent tw=80
-autocmd FileType python setlocal fdm=indent ai ts=4 sw=4 et
+autocmd FileType java,groovy setlocal et ai ts=4 sw=4 tw=120 fdm=indent
+autocmd FileType python,yaml,lua,sh,vim setlocal fdm=indent ai ts=4 sw=4 et
 autocmd FileType markdown setlocal ts=4 sw=4 fdm=indent et
 autocmd FileType nginx setlocal ai ts=4 sw=4
-autocmd FileType sh setlocal ai ts=4 sw=4 et fdm=indent
 autocmd FileType snippets setlocal ts=4 sw=4
-autocmd FileType vim setlocal ts=4 sw=4 et fdm=marker
 autocmd FileType jsp,xml,html,css setlocal fdm=indent ai ts=2 sw=2
-autocmd FileType yaml setlocal fdm=indent ai ts=2 sw=2 et
+autocmd FileType javascript,typescript.tsx,json setlocal ai ts=2 sw=2 fdm=indent
 autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
 autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
-autocmd FileType json setlocal ai ts=2 sw=2 fdm=indent
-autocmd FileType javascript,typescript.tsx setlocal ai ts=2 sw=2 fdm=indent
+autocmd BufNewFile,BufRead *.docker set filetype=Dockerfile
 " default filetype
 autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
 
@@ -269,8 +266,6 @@ au BufWritePost ~/Documents/Note/scripts/ssh.config.json
 " }}}
 " Map {{{1
 nnoremap q; q:
-vnoremap < <gv
-vnoremap > >gv
 inoremap <c-o> <ESC>
 noremap! <c-a> <Home>
 noremap! <c-e> <End>
@@ -290,9 +285,7 @@ nnoremap go <c-^>
 nnoremap gb gT
 
 " change to current directory
-nnoremap <silent> <leader>cd :lcd %:h<CR>
-
-nnoremap 0 :lua toggle_home_zero()<CR>
+nnoremap <leader>cd :lcd %:h<CR>
 
 " terminal 
 tnoremap <esc> <c-w>N
@@ -314,9 +307,8 @@ set fileencodings=utf-8,gbk,ucs-bom,cp936,gb18030,big5,latin1
 set modeline modelines=3
 set smartcase ignorecase
 set hlsearch
-set mouse=""
-"set ttymouse=xterm2
-set iskeyword=-,@,48-57,_,192-255
+set mouse+=a
+set ttymouse=xterm2
 "set macmeta
 " make 前自动保存
 set autowrite
@@ -337,16 +329,15 @@ set colorcolumn=+1
 set bg=dark
 
 if has('gui_running')
+    set bg=light
     " 透明
     "set transparency=30
     " 模糊
     "set blurradius=20
     set linespace=1
     set cursorline
-    set guioptions='egk'
     set guifont=Menlo-Bold:h12
-else
-    "set term=builtin_ansi
+    set guioptions="egk"
 endif
 
 colorscheme PaperColor
@@ -354,3 +345,29 @@ colorscheme PaperColor
 " Cabbreviate {{{1
 cabbrev h tab h
 "}}}
+" LUA {{{1
+if has('lua')
+    lua package.path = package.path .. ";" .. os.getenv("HOME") .. "/.vim/lua/?.lua"
+    lua require("utils")
+    function OpenWithSystemApp(coc_list_context)
+        lua coc_list_open_file_with(vim.eval("a:coc_list_context"), "open")
+    endfunction
+
+    function OpenWithFinder(coc_list_context)
+        lua coc_list_open_file_with(vim.eval("a:coc_list_context"), "open -R")
+    endfunction
+    au FileType * lua detect_voom_type()
+    command! -nargs=1 Edit lua edit_remote_file(<f-args>)
+    command! -range TemplateRender <line1>,<line2>lua template_render()
+    command! -range TemplateSet <line1>,<line2>lua template_set()
+    command! Docs lua cd_workspace("~/Documents/vim-workspace/docs")
+    command! DotFiles lua cd_workspace("~/code/whyreal/dotfiles/")
+    command! ExcuteUnnamedRegister lua vim.command(vim.eval("@\""))
+    command! Favorites lua cd_workspace("~/Documents/vim-workspace/常用文档")
+    command! ServerUpdateInfo lua update_server_info()
+    nnoremap 0 :lua toggle_home_zero()<CR>
+endif
+
+"}}}
+
+" vim: fdm=marker
