@@ -166,14 +166,15 @@ let g:netrw_winsize=30
 "let g:netrw_liststyle=3 "tree
 
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'vim-voom/VOoM'
-    let g:voom_tree_placement = 'right'
-    let g:voom_ft_modes = {'markdown': 'pandoc'}
-    let g:voom_always_allow_move_left = 1
-    nnoremap <silent> <leader>vv :VoomToggle<CR>
+"Plug 'vim-voom/VOoM'
+    "let g:voom_tree_placement = 'right'
+    "let g:voom_ft_modes = {'markdown': 'pandoc'}
+    "let g:voom_always_allow_move_left = 1
+    "nnoremap <silent> <leader>vv :VoomToggle<CR>
 
 Plug 'majutsushi/tagbar'
     nnoremap <leader>vt :TagbarToggle<cr>
+Plug 'lvht/tagbar-markdown'
 
 "}}}
 " 补全{{{2
@@ -217,7 +218,6 @@ Plug 'easymotion/vim-easymotion'
     let g:EasyMotion_keys = 'ertyuidfghjkcvbnm,'
     let g:EasyMotion_smartcase = 1
     map f <Plug>(easymotion-prefix)
-
 " }}}
 " Color Theme{{{2
 Plug 'NLKNguyen/papercolor-theme'
@@ -243,7 +243,7 @@ command! Worklog tabedit ~/Documents/Note/work.shortcut.md
 autocmd FileType go setlocal ai ts=4 sw=4 fdm=indent
 autocmd FileType java,groovy setlocal et ai ts=4 sw=4 tw=120 fdm=indent
 autocmd FileType python,yaml,lua,sh,vim setlocal fdm=indent ai ts=4 sw=4 et
-autocmd FileType markdown setlocal ts=4 sw=4 fdm=indent et
+autocmd FileType markdown setlocal ts=4 sw=4 fdm=indent et | let g:tagbar_sort = 0 | TagbarOpen
 autocmd FileType nginx setlocal ai ts=4 sw=4
 autocmd FileType snippets setlocal ts=4 sw=4
 autocmd FileType jsp,xml,html,css setlocal fdm=indent ai ts=2 sw=2
@@ -356,7 +356,7 @@ if has('lua')
     function OpenWithFinder(coc_list_context)
         lua coc_list_open_file_with(vim.eval("a:coc_list_context"), "open -R")
     endfunction
-    au FileType * lua detect_voom_type()
+    "au FileType * lua detect_voom_type()
     command! -nargs=1 Edit lua edit_remote_file(<f-args>)
     command! -range TemplateRender <line1>,<line2>lua template_render()
     command! -range TemplateSet <line1>,<line2>lua template_set()
