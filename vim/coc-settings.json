@@ -42,7 +42,14 @@
       "filetypes": ["go"]
     }
   },
-	"coc.source.word.filetypes": ["markdown"],
 	"lua.commandPath":"/usr/local/bin/lua-lsp",
-	"snippets.ultisnips.usePythonx": false
+	"snippets.ultisnips.usePythonx": false,
+	"zi.enable": false,
+	"zi.patterns": {
+		"markdown": []
+	},
+	"coc.browser.enable": true,
+	"coc.browser.maxLength": 50,
+	"project.enable": true,
+	"project.dbpath": "~/.coc-project"
 }

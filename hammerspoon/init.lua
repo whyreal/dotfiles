@@ -19,7 +19,7 @@ if not hspoon_list then
         --"SpeedMenu",
         "WinWin",
         -- "FnMate",
-        "ControlEscape",
+        --"ControlEscape",
         --"VimMode",
     }
 end
@@ -49,9 +49,9 @@ end
 --   https://www.hammerspoon.org/docs/hs.hotkey.html#bind
 --hs.hotkey.bind({'ctrl'}, ';', function()
   --spoon.VimMode:enter()
---end)
 --vim:disableForApp('MacVim')
 --vim:disableForApp('Terminal')
+--end)
 
 ------------------------
 --   点击 ctrl 映射为 ESC, 长按不受影响  --

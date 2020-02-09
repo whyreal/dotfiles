@@ -1,6 +1,6 @@
 (require 'package)
 (add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/"))
+	     '("melpa-stable" . "https://stable.melpa.org/packages/"))
 (package-initialize)
 
 ;; Disable default mode
@@ -16,30 +16,73 @@
 (prefer-coding-system 'utf-8) 
 (set-language-environment "UTF-8")
 
+(setq markdown-command "/usr/local/bin/pandoc")
+
+(add-hook 'after-init-hook 'global-company-mode)
+
+(use-package lsp-mode
+  :ensure t
+  :commands lsp
+  :hook ((lua-mode) . lsp)
+  :config
+  )
+
+(use-package company-lsp
+  :ensure t
+  :after lsp-mode
+  :config
+  (setq company-lsp-enable-recompletion t)
+  (setq lsp-auto-configure nil)         ;该功能会自动执行(push company-lsp company-backends)
+  )
+
+(use-package lsp-lua-emmy
+  :demand
+  :ensure nil
+  :load-path "~/code/lsp-lua-emmy"
+  :hook (lua-mode . lsp)
+  :config
+  (setq lsp-lua-emmy-jar-path (expand-file-name "EmmyLua-LS-all.jar" user-emacs-directory))
+  )
+
+(defun set-company-backends-for-lua()
+  "Set lua company backend."
+  (setq-local company-backends '(
+                                 (
+                                  company-lsp
+                                  company-lua
+                                  company-keywords
+                                  company-gtags
+                                  company-yasnippet
+                                  )
+                                 company-capf
+                                 company-dabbrev-code
+                                 company-files
+                                 )))
+
+(use-package lua-mode
+  :ensure t
+  :mode "\\.lua$"
+  :interpreter "lua"
+  :hook (lua-mode . set-company-backends-for-lua)
+  :config
+  (setq lua-indent-level 4)
+  (setq lua-indent-string-contents t)
+  (setq lua-prefix-key nil)
+  )
+
+(setq company-minimum-prefix-length 2)
+(setq company-idle-delay 0.2)
+
 ;; temp file
 (setq make-backup-files nil)
 
-;; Python
-(add-hook 'python-mode-hook 'jedi:setup)
-(setq jedi:complete-on-dot t)
-
-(require 'yasnippet)
-(yas-global-mode 1)
-
-;;(require 'evil)
-;;(evil-mode 1)
-
 ;; $PATH
 ;;(add-to-list 'my-packages 'exec-path-from-shell)
-(when (memq window-system '(mac ns))
-  (setenv "SHELL" "/bin/zsh")
-  (exec-path-from-shell-initialize)
-  (exec-path-from-shell-copy-envs
-   '("PATH" "LC_ALL")))
-
-
-
-
+;; (when (memq window-system '(mac ns))
+;;   (setenv "SHELL" "/bin/zsh")
+;;   (exec-path-from-shell-initialize)
+;;   (exec-path-from-shell-copy-envs
+;;    '("PATH" "LC_ALL")))
 
 ;;  ;; If you edit it by hand, you could mess it up, so be careful.
 ;;  ;; Your init file should contain only one such instance.
@@ -67,9 +110,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(company-idle-delay 0.2)
  '(package-selected-packages
    (quote
-    (exec-path-from-shell yasnippet autopair markdown-mode neotree jinja2-mode jedi evil))))
+    (yasnippet-classic-snippets yasnippet-snippets lua-mode company-lsp lsp-mode markdown-mode yasnippet neotree jinja2-mode jedi))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

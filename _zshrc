@@ -1,6 +1,4 @@
 # 环境变量 {{{1
-# 允许使用自签证书
-export GIT_SSL_NO_VERIFY=true
 # history
 export HISTSIZE=5000
 export HISTFILESIZE=50000
@@ -9,7 +7,7 @@ export WORDCHARS='-*?_[]~=&;!#$%^(){}'
 # editor
 export EDITOR='vim'
 # pager
-export PAGER='bat'
+#export PAGER='bat'
 # use vim as man pager
 export MANPAGER="vim -c 'MANPAGER' -c 'set fdm=indent ts=7 sw=7' -"
 
@@ -43,9 +41,9 @@ export PATH=$PATH:/Applications/instantclient_18_1
 alias pwgen='pwgen -r0oOiIlL'
 alias grep='grep --color'
 #alias ls='exa'
-alias cat='bat -p'
-alias less='bat -p'
-alias more='bat -p'
+#alias cat='bat -p'
+#alias less='bat -p'
+#alias more='bat -p'
 alias ta='tmux -u attach'
 alias et='exec tmux'
 alias ....='cd ../../..'
@@ -57,6 +55,12 @@ alias lg='lazygit'
 alias s='sshrc'
 # }}}
 # Functions {{{1
+
+favorite.docs(){
+    abs_path=`greadlink -f $1`
+    cd ~/Documents/vim-workspace/docs/ && ln -s $abs_path ./$2
+}
+
 o(){ # {{{2
     if [[ $# -eq 0 ]]; then
         open -a macvim
@@ -118,8 +122,8 @@ safari.agent.default() { # {{{2
 }
 # }}}
 proxy.ss.active(){ # {{{2
-    export http_proxy="socks5://127.0.0.1:1080"
-    export https_proxy="socks5://127.0.0.1:1080"
+    export http_proxy="http://127.0.0.1:1080"
+    export https_proxy="http://127.0.0.1:1080"
 }
 # }}}
 proxy.ss.deactive(){ # {{{2

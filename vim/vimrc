@@ -4,8 +4,8 @@
 " Package Manager {{{1
 call plug#begin('~/.vim/plugged')
 
-" basic plugins{{{2
 let mapleader=","
+" basic plugins{{{2
 Plug 'tpope/vim-sensible'
 "}}}
 " COC{{{2
@@ -143,6 +143,11 @@ Plug 'neoclide/coc.nvim' , {'branch': 'release'}
 
     hi default CocHighlightText  guibg=darkyellow guifg=red ctermbg=223 ctermfg=red
 
+    " Create markmap from the whole file
+    nmap <Leader>vm <Plug>(coc-markmap-create)
+    " Create markmap from the selected lines
+    vmap <Leader>vm <Plug>(coc-markmap-create-v)
+
 " coc-snippet {{{3
 " Use <C-l> for trigger snippet expand.
 imap <C-l> <Plug>(coc-snippets-expand)
@@ -166,11 +171,11 @@ let g:netrw_winsize=30
 "let g:netrw_liststyle=3 "tree
 
 Plug 'christoomey/vim-tmux-navigator'
-"Plug 'vim-voom/VOoM'
-    "let g:voom_tree_placement = 'right'
-    "let g:voom_ft_modes = {'markdown': 'pandoc'}
-    "let g:voom_always_allow_move_left = 1
-    "nnoremap <silent> <leader>vv :VoomToggle<CR>
+Plug 'vim-voom/VOoM'
+    let g:voom_tree_placement = 'right'
+    let g:voom_ft_modes = {'markdown': 'pandoc'}
+    let g:voom_always_allow_move_left = 1
+    nnoremap <silent> <leader>vv :VoomToggle<CR>
 
 Plug 'majutsushi/tagbar'
     nnoremap <leader>vt :TagbarToggle<cr>
@@ -214,10 +219,16 @@ Plug 'previm/previm'
 " Misc {{{2
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'chr4/nginx.vim'
+
 Plug 'easymotion/vim-easymotion'
     let g:EasyMotion_keys = 'ertyuidfghjkcvbnm,'
     let g:EasyMotion_smartcase = 1
     map f <Plug>(easymotion-prefix)
+
+Plug 'jpalardy/vim-slime'
+    let g:slime_target = "tmux"
+    let g:slime_paste_file = "$HOME/.slime_paste"
+    let g:slime_default_config = {"socket_name": "default", "target_pane": "{right-of}"}
 " }}}
 " Color Theme{{{2
 Plug 'NLKNguyen/papercolor-theme'
@@ -229,21 +240,21 @@ filetype plugin indent on
 syntax enable
 " }}}
 " Command {{{1
-command! Dos2unix e ++=unix | %s/\r//g
-command! Md2doc !md2doc %
-command! Md2pdf !md2pdf %
+command! Dos2unix e ++ff=unix | %s/\r//g
+"command! Md2doc !md2doc %
+"command! Md2pdf !md2pdf %
 command! Ssconfig tabe ~/.ShadowsocksX/user-rule.txt
 command! Sshconfig tabe ~/Documents/Note/scripts/ssh.config.json
 command! VimrcEdit tabe ~/.vim/vimrc
 command! VimrcReload so ~/.vim/vimrc
-command! Worklog tabedit ~/Documents/Note/work.shortcut.md
+"command! Worklog tabedit ~/Documents/Note/work.shortcut.md
 " }}}
 " Autocmd {{{1
 "autocmd FileType c,cpp setlocal ai ts=4 sw=4 fdm=syntax
 autocmd FileType go setlocal ai ts=4 sw=4 fdm=indent
 autocmd FileType java,groovy setlocal et ai ts=4 sw=4 tw=120 fdm=indent
 autocmd FileType python,yaml,lua,sh,vim setlocal fdm=indent ai ts=4 sw=4 et
-autocmd FileType markdown setlocal ts=4 sw=4 fdm=indent et | let g:tagbar_sort = 0 | TagbarOpen
+autocmd FileType markdown setlocal ts=4 sw=4 fdm=indent et 
 autocmd FileType nginx setlocal ai ts=4 sw=4
 autocmd FileType snippets setlocal ts=4 sw=4
 autocmd FileType jsp,xml,html,css setlocal fdm=indent ai ts=2 sw=2
@@ -258,6 +269,7 @@ au BufWritePost ~/.ShadowsocksX/user-rule.txt
             \ !genpac --format=pac
             \ --pac-proxy="SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080; DIRECT;"
             \ --user-rule-from=~/.ShadowsocksX/user-rule.txt
+            \ --gfwlist-proxy="SOCKS5 127.0.0.1:1080;"
             \ > ~/.ShadowsocksX/gfwlist.js
 au BufWritePost ~/Documents/Note/scripts/ssh.config.json
             \ !cd ~/Documents/Note/scripts/
@@ -274,6 +286,9 @@ noremap! <c-b> <Left>
 noremap! <c-n> <Down>
 noremap! <c-p> <Up>
 inoremap <c-k> <c-o>D
+
+nnoremap j gj
+nnoremap k gk
 
 " previous buffer
 nnoremap gp :bp<cr>
@@ -294,13 +309,12 @@ tnoremap <esc> <c-w>N
 nnoremap <leader>w :w<cr>
 
 nnoremap <silent> <leader>vs :terminal<CR>
-nnoremap <silent> <leader>vm :marks<CR>
 nnoremap <leader>ve :Explore<CR>
-nnoremap <leader>vr :Rexplore<CR>
 
 " }}}
 " Options && Variables {{{1
 "set number relativenumber
+set noro
 set foldlevel=99
 set clipboard+=unnamed
 set fileencodings=utf-8,gbk,ucs-bom,cp936,gb18030,big5,latin1
@@ -344,6 +358,7 @@ colorscheme PaperColor
 "}}}
 " Cabbreviate {{{1
 cabbrev h tab h
+cabbrev e tabe
 "}}}
 " LUA {{{1
 if has('lua')
@@ -360,12 +375,12 @@ if has('lua')
     command! -nargs=1 Edit lua edit_remote_file(<f-args>)
     command! -range TemplateRender <line1>,<line2>lua template_render()
     command! -range TemplateSet <line1>,<line2>lua template_set()
-    command! Docs lua cd_workspace("~/Documents/vim-workspace/docs")
-    command! DotFiles lua cd_workspace("~/code/whyreal/dotfiles/")
     command! ExcuteUnnamedRegister lua vim.command(vim.eval("@\""))
-    command! Favorites lua cd_workspace("~/Documents/vim-workspace/常用文档")
     command! ServerUpdateInfo lua update_server_info()
     nnoremap 0 :lua toggle_home_zero()<CR>
+    command! Docs lua cd_workspace("~/Documents/vim-workspace/docs")
+    command! DotFiles lua cd_workspace("~/code/whyreal/dotfiles/")
+    command! -nargs=1 -complete=file Favorite lua docs_add_favorite(<f-args>)
 endif
 
 "}}}

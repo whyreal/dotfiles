@@ -3,6 +3,10 @@ require("lib")
 local template = require "resty.template"
 template.print = function(s) return s end
 
+function docs_add_favorite(target)
+    os.execute("cd ~/Documents/vim-workspace/docs/ && ln -s " .. target .. " ./")
+end
+
 function coc_list_open_file_with(coc_list_context, cmd)
     local list_name = coc_list_context["name"]
     local label_name = coc_list_context["targets"][0]["label"]
@@ -39,7 +43,7 @@ function insert_cmd_output(cmd)
     for line in output:lines() do
         b:insert(line)
     end
-    b[1] = nil
+    btarget[1] = nil
 end
 
 function update_server_info()
