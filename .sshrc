@@ -41,6 +41,12 @@ alias port.findby.port='netstat -antuplo | grep'
 alias port.list='netstat -antuplo'
 alias tomcat.catalina.less="less logs/catalina.out"
 alias tomcat.catalina.tail='tail -f logs/catalina.out'
+alias psp=process.findby.port
+alias psg=process.findby.name
+alias s="screen"
+alias sr="screen -r"
+alias sl="screen -l"
+
 # }}}
 # Functions {{{1
 c(){ #{{{2
@@ -86,7 +92,7 @@ process.findby.port(){  # {{{2 查找某端口对应的进程
     local port=$1
     local pid=`netstat -ntpl | awk -F'[ \t:/]+' '/'"$port"'/{print $9}'`
     if [ -z "$pid" ];then
-        echo -e "$(tput setaf 9)404 NOT FOUND$(tput sgr0)" >&2
+        echo -e "$(tput setaf 9)NOT FOUND$(tput sgr0)" >&2
     else
         echo -e "$(tput setaf 10)Port: $port, PID: $pid$(tput sgr0)"
         ps aux | grep $pid | grep -v grep

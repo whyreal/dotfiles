@@ -25,11 +25,80 @@ keywords:
 description: |
 	${5}
 
----
+...
 endsnippet
 
 snippet blank_line "blank line" b
 <!-- -->
 $0
 endsnippet
-	
+
+snippet zkzy_doc_head "zkzy_doc_head" b
+
+\
+\
+\
+
+|            |               |            |
+|----------- | ------------  | ------     |
+|文件版本：  | V1.0          | 文件编号： |
+|发布日期：  | `date +%Y`年`date +%m`月`date +%d`日 | 编    制： |
+|审    核：  |               | 批    准： |
+
+\
+\
+\
+
+　　　　修订记录：
+
+| 修订版本号    | 修订人         | 修订日期      | 修订描述 |
+| ------------- | -------------- | ----          | ----     |
+| 1.0           | 张瑞           | `date +%Y`年`date +%m`月`date +%d`日 | 创建     |
+
+\newpage
+
+\toc
+
+\newpage
+
+$0
+endsnippet
+
+snippet weekly_report "周报" b
+## `date -vMond "+%m-%d"` -- `date -v+Sund "+%m-%d"`
+
+### 周一（`date -vMond "+%m-%d"`）
+
+### 周二（`date -vTued "+%m-%d"`）
+
+### 周三（`date -vWedd "+%m-%d"`）
+
+### 周四（`date -vThud "+%m-%d"`）
+
+### 周五（`date -vFrid "+%m-%d"`）
+
+### 周六（`date -vSatd "+%m-%d"`）
+
+### 周日（`date -v+Sund "+%m-%d"`）
+
+endsnippet
+
+
+snippet next_weekly_plan "周报" b
+## `date -v+1w -vMond "+%m-%d"` -- `date -v+1w -v+Sund "+%m-%d"`
+
+### 周一（`date -v+1w -vMond "+%m-%d"`）
+
+### 周二（`date -v+1w -vTued "+%m-%d"`）
+
+### 周三（`date -v+1w -vWedd "+%m-%d"`）
+
+### 周四（`date -v+1w -vThud "+%m-%d"`）
+
+### 周五（`date -v+1w -vFrid "+%m-%d"`）
+
+### 周六（`date -v+1w -vSatd "+%m-%d"`）
+
+### 周日（`date -v+1w -v+Sund "+%m-%d"`）
+
+endsnippet

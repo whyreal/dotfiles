@@ -8,8 +8,11 @@ hs.loadSpoon("ModalMgr")
 -- Define default Spoons which will be loaded later
 if not hspoon_list then
     hspoon_list = {
-        --"AClock",
         "BingDaily",
+		"ClipboardTool",
+        "WinWin",
+		"ModalMgr"
+        --"AClock",
         --"CircleClock",
         --"ClipShow",
         --"CountDown",
@@ -17,9 +20,7 @@ if not hspoon_list then
         --"HSaria2",
         --"HSearch",
         --"SpeedMenu",
-        "WinWin",
         -- "FnMate",
-        --"ControlEscape",
         --"VimMode",
     }
 end
@@ -41,24 +42,11 @@ if string.len(hswhints_keys[2]) > 0 then
     end)
 end
 
-------------------------
---  系统级 vim 按键绑定  --
-------------------------
--- Basic key binding to ctrl+;
--- You can choose any key binding you want here, see:
---   https://www.hammerspoon.org/docs/hs.hotkey.html#bind
---hs.hotkey.bind({'ctrl'}, ';', function()
-  --spoon.VimMode:enter()
---vim:disableForApp('MacVim')
---vim:disableForApp('Terminal')
---end)
-
-------------------------
---   点击 ctrl 映射为 ESC, 长按不受影响  --
-------------------------
--- Load Hammerspoon bits from https://github.com/jasonrudolph/ControlEscape.spoon
-if spoon.ControlEscape then
-    spoon.ControlEscape:start()
+if spoon.ClipboardTool then
+	spoon.ClipboardTool:bindHotkeys({
+		show_clipboard = { { "cmd", "alt" }, "c" }
+	})
+	spoon.ClipboardTool:start()
 end
 
 ----------------------------------------------------------------------------------------------------

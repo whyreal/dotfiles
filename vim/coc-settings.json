@@ -44,12 +44,28 @@
   },
 	"lua.commandPath":"/usr/local/bin/lua-lsp",
 	"snippets.ultisnips.usePythonx": false,
+	"coc.browser.enable": false,
+	"coc.browser.maxLength": 50,
+	"imselect.enableStatusItem":false,
+	"imselect.enableFloating": false,
+	"coc.browser.capacity": 5,
 	"zi.enable": false,
 	"zi.patterns": {
-		"markdown": []
-	},
-	"coc.browser.enable": true,
-	"coc.browser.maxLength": 50,
-	"project.enable": true,
-	"project.dbpath": "~/.coc-project"
+		"javascript": [
+			"^\\s*\\/\\/",
+			"^\\s*\\/\\*",
+			"^\\s*\\*"
+		],
+		"typescript": [
+			"^\\s*\\/\\/",
+			"^\\s*\\/\\*",
+			"^\\s*\\*"
+		],
+		"markdown": [],
+		"vim": [
+			"^\\s*\\\""
+		],
+		"gitcommit": []
+	}
+	
 }

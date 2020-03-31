@@ -7,6 +7,8 @@ call plug#begin('~/.vim/plugged')
 let mapleader=","
 " basic plugins{{{2
 Plug 'tpope/vim-sensible'
+Plug 'rlue/vim-barbaric'
+"Plug 'CodeFalling/fcitx-vim-osx'
 "}}}
 " COC{{{2
 Plug 'neoclide/coc.nvim' , {'branch': 'release'}
@@ -109,11 +111,13 @@ Plug 'neoclide/coc.nvim' , {'branch': 'release'}
     " Find symbol of current document
     nnoremap <silent> <leader>lo  :<C-u>CocList outline<cr>
     " Search workspace symbols
-    nnoremap <silent> <leader>ls  :<C-u>CocList -R --ignore-case -N -I symbols<cr>
-    nnoremap <silent> <leader>lb  :<C-u>CocList -R --ignore-case -N buffers<cr>
-    nnoremap <silent> <leader>lf  :<C-u>CocList -R --ignore-case files<cr>
-    nnoremap <silent> <leader>lr  :<C-u>CocList -R --ignore-case -N mru<cr>
-    nnoremap <silent> <leader>lm  :<C-u>CocList -R --ignore-case -N marks<cr>
+    nnoremap <silent> <leader>ls  :<C-u>CocList --ignore-case -N -I symbols<cr>
+    nnoremap <silent> <leader>lb  :<C-u>CocList --ignore-case -N buffers<cr>
+    nnoremap <silent> <leader>b  :<C-u>CocList --ignore-case -N buffers<cr>
+    nnoremap <silent> <leader>lf  :<C-u>CocList --ignore-case files<cr>
+    nnoremap <silent> <leader>f  :<C-u>CocList --ignore-case files<cr>
+    nnoremap <silent> <leader>lr  :<C-u>CocList --ignore-case -N mru<cr>
+    nnoremap <silent> <leader>lm  :<C-u>CocList --ignore-case -N marks<cr>
     " Search
     nnoremap <leader>s  <Plug>(coc-workspaceSymbols)
     " Do default action for next item.
@@ -176,10 +180,9 @@ Plug 'vim-voom/VOoM'
     let g:voom_ft_modes = {'markdown': 'pandoc'}
     let g:voom_always_allow_move_left = 1
     nnoremap <silent> <leader>vv :VoomToggle<CR>
-
 Plug 'majutsushi/tagbar'
     nnoremap <leader>vt :TagbarToggle<cr>
-Plug 'lvht/tagbar-markdown'
+    nnoremap <leader>t :TagbarToggle<cr>
 
 "}}}
 " 补全{{{2
@@ -199,16 +202,21 @@ Plug 'junegunn/vim-easy-align'
     nmap ga <Plug>(EasyAlign)
 "}}}
 " Markdown{{{2
+Plug 'lvht/tagbar-markdown'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
     let g:vim_markdown_toc_autofit = 1
     "let g:vim_markdown_folding_style_pythonic = 1
     "let g:vim_markdown_override_foldtext = 0
     let g:html_wrong_comments=1
     "let g:vim_markdown_new_list_item_indent = 0
+	" Highlight YAML front matter as used by Jekyll or Hugo.
+	let g:vim_markdown_frontmatter = 1
 
-Plug 'previm/previm'
-    let g:previm_open_cmd="open"
-	let g:previm_show_header = 0
+"Plug 'previm/previm'
+"    let g:previm_open_cmd="open"
+"	let g:previm_show_header = 0
 
 "}}}
 " UML{{{2
@@ -220,10 +228,10 @@ Plug 'previm/previm'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'chr4/nginx.vim'
 
-Plug 'easymotion/vim-easymotion'
-    let g:EasyMotion_keys = 'ertyuidfghjkcvbnm,'
-    let g:EasyMotion_smartcase = 1
-    map f <Plug>(easymotion-prefix)
+"Plug 'easymotion/vim-easymotion'
+    "let g:EasyMotion_keys = 'ertyuidfghjkcvbnm,'
+    "let g:EasyMotion_smartcase = 1
+    "map f <Plug>(easymotion-prefix)
 
 Plug 'jpalardy/vim-slime'
     let g:slime_target = "tmux"
@@ -252,9 +260,11 @@ command! VimrcReload so ~/.vim/vimrc
 " Autocmd {{{1
 "autocmd FileType c,cpp setlocal ai ts=4 sw=4 fdm=syntax
 autocmd FileType go setlocal ai ts=4 sw=4 fdm=indent
-autocmd FileType java,groovy setlocal et ai ts=4 sw=4 tw=120 fdm=indent
-autocmd FileType python,yaml,lua,sh,vim setlocal fdm=indent ai ts=4 sw=4 et
-autocmd FileType markdown setlocal ts=4 sw=4 fdm=indent et 
+autocmd FileType java,groovy setlocal ai ts=4 sw=4 tw=120 fdm=indent
+autocmd FileType python,yaml,lua,sh,vim setlocal fdm=indent ai ts=4 sw=4
+autocmd FileType markdown setlocal et ts=4 sw=4
+" fix list 中 ”<" 高亮错误
+autocmd FileType markdown syn cluster htmlTop contains=@Spell,htmlEndTag,htmlSpecialChar,htmlPreProc,htmlComment,htmlLink,javaScript,@htmlPreproc
 autocmd FileType nginx setlocal ai ts=4 sw=4
 autocmd FileType snippets setlocal ts=4 sw=4
 autocmd FileType jsp,xml,html,css setlocal fdm=indent ai ts=2 sw=2
@@ -275,10 +285,13 @@ au BufWritePost ~/Documents/Note/scripts/ssh.config.json
             \ !cd ~/Documents/Note/scripts/
             \ && ./template.rander.lua ssh.config.lrt ssh.config.json
             \ > ~/.ssh/config
+            \ && ./template.rander.lua ssh.config.hosts.lrt ssh.config.json
+            \ > ~/.ssh/config_hosts
+
 " }}}
 " Map {{{1
 nnoremap q; q:
-inoremap <c-o> <ESC>
+inoremap jj <ESC>
 noremap! <c-a> <Home>
 noremap! <c-e> <End>
 noremap! <c-f> <Right>
@@ -341,24 +354,25 @@ set splitbelow
 set previewheight=8
 set colorcolumn=+1
 set bg=dark
+"set tgc
 
 if has('gui_running')
-    set bg=light
+	set bg=light
     " 透明
     "set transparency=30
     " 模糊
     "set blurradius=20
-    set linespace=1
+    "set linespace=1
     set cursorline
     set guifont=Menlo-Bold:h12
-    set guioptions="egk"
+	"set guifontwide=MicrosoftYaHei-Bold
+	set guioptions=egtk
 endif
 
 colorscheme PaperColor
 "}}}
 " Cabbreviate {{{1
 cabbrev h tab h
-cabbrev e tabe
 "}}}
 " LUA {{{1
 if has('lua')
