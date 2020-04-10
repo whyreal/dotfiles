@@ -1,5 +1,6 @@
 {
 	"suggest.floatEnable": true,
+	"suggest.maxCompleteItemCount": 20,
 	"coc.preferences.formatOnType": true,
 	"json.enable":true,
 	"json.format.enable":true,
@@ -44,11 +45,6 @@
   },
 	"lua.commandPath":"/usr/local/bin/lua-lsp",
 	"snippets.ultisnips.usePythonx": false,
-	"coc.browser.enable": false,
-	"coc.browser.maxLength": 50,
-	"imselect.enableStatusItem":false,
-	"imselect.enableFloating": false,
-	"coc.browser.capacity": 5,
 	"zi.enable": false,
 	"zi.patterns": {
 		"javascript": [

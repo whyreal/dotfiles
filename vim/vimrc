@@ -5,11 +5,9 @@
 call plug#begin('~/.vim/plugged')
 
 let mapleader=","
-" basic plugins{{{2
-Plug 'tpope/vim-sensible'
-Plug 'rlue/vim-barbaric'
-"Plug 'CodeFalling/fcitx-vim-osx'
-"}}}
+
+Plug 'tpope/vim-eunuch'
+
 " COC{{{2
 Plug 'neoclide/coc.nvim' , {'branch': 'release'}
     " if hidden is not set, TextEdit might fail.
@@ -177,7 +175,7 @@ let g:netrw_winsize=30
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-voom/VOoM'
     let g:voom_tree_placement = 'right'
-    let g:voom_ft_modes = {'markdown': 'pandoc'}
+    let g:voom_ft_modes = {'markdown': 'pandoc', 'vim': 'fmr'}
     let g:voom_always_allow_move_left = 1
     nnoremap <silent> <leader>vv :VoomToggle<CR>
 Plug 'majutsushi/tagbar'
@@ -213,33 +211,18 @@ Plug 'plasticboy/vim-markdown'
     "let g:vim_markdown_new_list_item_indent = 0
 	" Highlight YAML front matter as used by Jekyll or Hugo.
 	let g:vim_markdown_frontmatter = 1
-
-"Plug 'previm/previm'
-"    let g:previm_open_cmd="open"
-"	let g:previm_show_header = 0
-
-"}}}
-" UML{{{2
-"Plug 'scrooloose/vim-slumlord'
-"Plug 'aklt/plantuml-syntax'
-"    let g:plantuml_executable_script='~/.vim/plantuml/plantuml.sh'
 "}}}
 " Misc {{{2
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'chr4/nginx.vim'
-
-"Plug 'easymotion/vim-easymotion'
-    "let g:EasyMotion_keys = 'ertyuidfghjkcvbnm,'
-    "let g:EasyMotion_smartcase = 1
-    "map f <Plug>(easymotion-prefix)
-
-Plug 'jpalardy/vim-slime'
-    let g:slime_target = "tmux"
-    let g:slime_paste_file = "$HOME/.slime_paste"
-    let g:slime_default_config = {"socket_name": "default", "target_pane": "{right-of}"}
+"Plug 'jpalardy/vim-slime'
+    "let g:slime_target = "tmux"
+    "let g:slime_paste_file = "$HOME/.slime_paste"
+    "let g:slime_default_config = {"socket_name": "default", "target_pane": "{right-of}"}
 " }}}
 " Color Theme{{{2
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'challenger-deep-theme/vim'
 "}}}
 
 call plug#end()
@@ -249,26 +232,23 @@ syntax enable
 " }}}
 " Command {{{1
 command! Dos2unix e ++ff=unix | %s/\r//g
-"command! Md2doc !md2doc %
-"command! Md2pdf !md2pdf %
 command! Ssconfig tabe ~/.ShadowsocksX/user-rule.txt
 command! Sshconfig tabe ~/Documents/Note/scripts/ssh.config.json
-command! VimrcEdit tabe ~/.vim/vimrc
-command! VimrcReload so ~/.vim/vimrc
-"command! Worklog tabedit ~/Documents/Note/work.shortcut.md
+command! VimrcEdit tabe ~/.config/nvim/init.vim
+command! VimrcReload so ~/.config/nvim/init.vim
 " }}}
 " Autocmd {{{1
-"autocmd FileType c,cpp setlocal ai ts=4 sw=4 fdm=syntax
-autocmd FileType go setlocal ai ts=4 sw=4 fdm=indent
-autocmd FileType java,groovy setlocal ai ts=4 sw=4 tw=120 fdm=indent
-autocmd FileType python,yaml,lua,sh,vim setlocal fdm=indent ai ts=4 sw=4
+"autocmd FileType c,cpp setlocal ts=4 sw=4 fdm=syntax
+autocmd FileType go setlocal ts=4 sw=4 fdm=indent
+autocmd FileType java,groovy setlocal ts=4 sw=4 tw=120 fdm=indent
+autocmd FileType python,yaml,lua,sh,vim setlocal fdm=indent ts=4 sw=4
 autocmd FileType markdown setlocal et ts=4 sw=4
 " fix list 中 ”<" 高亮错误
 autocmd FileType markdown syn cluster htmlTop contains=@Spell,htmlEndTag,htmlSpecialChar,htmlPreProc,htmlComment,htmlLink,javaScript,@htmlPreproc
-autocmd FileType nginx setlocal ai ts=4 sw=4
+autocmd FileType nginx setlocal ts=4 sw=4
 autocmd FileType snippets setlocal ts=4 sw=4
-autocmd FileType jsp,xml,html,css setlocal fdm=indent ai ts=2 sw=2
-autocmd FileType javascript,typescript.tsx,json setlocal ai ts=2 sw=2 fdm=indent
+autocmd FileType jsp,xml,html,css setlocal fdm=indent ts=2 sw=2
+autocmd FileType javascript,typescript.tsx,json setlocal ts=2 sw=2 fdm=indent
 autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
 autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
 autocmd BufNewFile,BufRead *.docker set filetype=Dockerfile
@@ -291,7 +271,6 @@ au BufWritePost ~/Documents/Note/scripts/ssh.config.json
 " }}}
 " Map {{{1
 nnoremap q; q:
-inoremap jj <ESC>
 noremap! <c-a> <Home>
 noremap! <c-e> <End>
 noremap! <c-f> <Right>
@@ -329,13 +308,10 @@ nnoremap <leader>ve :Explore<CR>
 "set number relativenumber
 set noro
 set foldlevel=99
-set clipboard+=unnamed
 set fileencodings=utf-8,gbk,ucs-bom,cp936,gb18030,big5,latin1
 set modeline modelines=3
 set smartcase ignorecase
-set hlsearch
 set mouse+=a
-set ttymouse=xterm2
 "set macmeta
 " make 前自动保存
 set autowrite
@@ -345,9 +321,7 @@ set cmdwinheight=20
 
 "set synmaxcol=200
 let loaded_matchparen = 1
-set belloff=all
 
-set directory=/tmp
 set hidden
 
 set splitbelow
@@ -358,45 +332,57 @@ set bg=dark
 
 if has('gui_running')
 	set bg=light
-    " 透明
-    "set transparency=30
-    " 模糊
-    "set blurradius=20
-    "set linespace=1
     set cursorline
-    set guifont=Menlo-Bold:h12
-	"set guifontwide=MicrosoftYaHei-Bold
-	set guioptions=egtk
+	if !has('nvim')
+		set guifont=Menlo-Bold:h14
+		" 透明
+		"set transparency=30
+		" 模糊
+		"set blurradius=20
+		"set linespace=1
+		"set guifontwide=MicrosoftYaHei-Bold
+		set guioptions=egtk
+	endif
 endif
 
 colorscheme PaperColor
+
 "}}}
+
 " Cabbreviate {{{1
 cabbrev h tab h
 "}}}
-" LUA {{{1
-if has('lua')
-    lua package.path = package.path .. ";" .. os.getenv("HOME") .. "/.vim/lua/?.lua"
-    lua require("utils")
-    function OpenWithSystemApp(coc_list_context)
-        lua coc_list_open_file_with(vim.eval("a:coc_list_context"), "open")
-    endfunction
 
-    function OpenWithFinder(coc_list_context)
-        lua coc_list_open_file_with(vim.eval("a:coc_list_context"), "open -R")
-    endfunction
-    "au FileType * lua detect_voom_type()
-    command! -nargs=1 Edit lua edit_remote_file(<f-args>)
-    command! -range TemplateRender <line1>,<line2>lua template_render()
-    command! -range TemplateSet <line1>,<line2>lua template_set()
-    command! ExcuteUnnamedRegister lua vim.command(vim.eval("@\""))
-    command! ServerUpdateInfo lua update_server_info()
-    nnoremap 0 :lua toggle_home_zero()<CR>
-    command! Docs lua cd_workspace("~/Documents/vim-workspace/docs")
-    command! DotFiles lua cd_workspace("~/code/whyreal/dotfiles/")
-    command! -nargs=1 -complete=file Favorite lua docs_add_favorite(<f-args>)
+set clipboard+=unnamedplus
+
+if has('nvim')
+    lua package.path = package.path .. ";" ..  "/usr/local/share/lua/5.3/?.lua;/usr/local/share/lua/5.3/?/init.lua;/usr/local/lib/lua/5.3/?.lua;/usr/local/lib/lua/5.3/?/init.lua;./?.lua;./?/init.lua"
+    lua require("utils")
+else
+	set ttymouse=xterm2
+	if has('lua')
+		lua package.path = package.path .. ";" .. os.getenv("HOME") .. "/.vim/lua/?.lua"
+		lua require("utils")
+	endif
 endif
 
-"}}}
+command! Docs lua cd_workspace("~/Documents/vim-workspace/docs")
+command! DotFiles lua cd_workspace("~/code/whyreal/dotfiles/")
+nnoremap 0 :lua toggle_home_zero()<CR>
+function! OpenWithSystemApp(coc_list_context)
+	call luaeval('coc_list_open_file_with(unpack(_A))', [a:coc_list_context, "open"])
+endfunction
+
+function! OpenWithFinder(coc_list_context)
+	call luaeval('coc_list_open_file_with(unpack(_A))', [a:coc_list_context, "open -R"])
+endfunction
+
+command! -range TemplateRender call luaeval('template_render(unpack(_A))', [<line1>, <line2>])
+command! -range TemplateSet call luaeval('template_set(unpack(_A))', [<line1>, <line2>])
+noremap o :lua add_blank_line_after()<cr>
+noremap O :lua add_blank_line_before()<cr>
+
+"command! -nargs=1 Edit lua edit_remote_file(<f-args>)
+"command! ServerUpdateInfo lua update_server_info()
 
 " vim: fdm=marker

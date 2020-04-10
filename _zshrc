@@ -10,7 +10,7 @@ antigen bundle fzf
 # }}}
 # Tmux {{{2
 # Automatically start tmux
-ZSH_TMUX_AUTOSTART=false
+ZSH_TMUX_AUTOSTART=true
 # Set -u option to support unicode
 ZSH_TMUX_UNICODE=true
 antigen bundle tmux

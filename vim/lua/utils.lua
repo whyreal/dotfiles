@@ -1,25 +1,56 @@
 require("lib")
 
 local template = require "resty.template"
-template.print = function(s) return s end
 
-function docs_add_favorite(target)
-    os.execute("cd ~/Documents/vim-workspace/docs/ && ln -s " .. target .. " ./")
+function toggle_home_zero()
+    local char_postion, _ = vim.api.nvim_get_current_line():find("[^%s]") - 1
+    local position = vim.api.nvim_win_get_cursor(0)
+    if position[2] == char_postion then
+        vim.api.nvim_win_set_cursor(0, {position[1], 0})
+    else
+        vim.api.nvim_win_set_cursor(0, {position[1], char_postion})
+    end
+end
+
+function template_set(firstline, lastline)
+    view = vim.api.nvim_buf_get_lines(0, firstline - 1, lastline, false)
+    view = table.concat(view, "\n")
+end
+
+function template_render(firstline, lastline)
+	local data_lines = vim.api.nvim_buf_get_lines(0, firstline - 1, lastline, false)
+	for _, data in ipairs(data_lines) do
+		local output = template.process(view, {d = string.split(data)})
+		vim.api.nvim_buf_set_lines(0, lastline, lastline, false, string.split(output, "\n"))
+	end
 end
 
 function coc_list_open_file_with(coc_list_context, cmd)
     local list_name = coc_list_context["name"]
-    local label_name = coc_list_context["targets"][0]["label"]
+    local label_name = coc_list_context["targets"][1]["label"]
+	label_name = string.gsub(label_name, " ", "\\ ")
     if list_name == "files" then
         os.execute(cmd .. " " .. label_name)
     end
 end
 
 function cd_workspace(path)
-    vim.command("cd " .. path)
-    vim.command("Explore" .. path)
+	vim.api.nvim_command("cd " .. path)
+    vim.api.nvim_command("Explore " .. path)
 end
 
+function add_blank_line_before()
+	local current_line = vim.api.nvim_win_get_cursor(0)[1]
+	vim.api.nvim_buf_set_lines(0, current_line - 1, current_line - 1,0, {""})
+end
+
+function add_blank_line_after()
+	local current_line = vim.api.nvim_win_get_cursor(0)[1]
+	vim.api.nvim_buf_set_lines(0, current_line, current_line,0, {""})
+end
+
+--------------------------------------
+--------------------------------------
 function exists(v)
     if vim.eval("exists(" .. v .. ")") then
         return vim.eval(v)
@@ -60,40 +91,3 @@ function update_server_info()
     end
 end
 
-function toggle_home_zero()
-    local char_postion, _ = vim.buffer()[vim.window().line]:find("[^%s]")
-    if vim.window().col == char_postion then
-        vim.window().col = 1
-    else
-        vim.window().col = char_postion
-    end
-end
-
-function detect_voom_type()
-    local fdm = vim.eval("&fdm")
-    local ft = vim.eval("&ft")
-    local voom_ft_modes = vim.eval("g:voom_ft_modes")
-
-    if fdm == "marker" then
-        voom_ft_modes[ft] = "fmr"
-    end
-end
-
-function template_set()
-    view = table.slice(vim.buffer(), vim.firstline, vim.lastline)
-    view = table.concat(view, "\n")
-end
-
-function template_render()
-    vim.buffer():insert("", vim.lastline)
-    local data_lines = table.slice(vim.buffer(), vim.firstline, vim.lastline)
-    for _, data in ipairs(data_lines) do
-
-        local output = template.render(view, {l = string.split(data)})
-
-        for i, output_line in ipairs(string.split(output, "\n")) do
-            -- 前面插入了一个空行, 这里正好从 lastline 的下一行开始插入
-            vim.buffer():insert(output_line, vim.lastline + i)
-        end
-    end
-end
