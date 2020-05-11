@@ -1,0 +1,59 @@
+{
+	"title": "home line shift",
+	"rules":[
+		{
+			"description": "Change d to shift when used as modifier, d when used alone",
+			"manipulators": [
+				{
+					"from": {
+						"key_code": "d",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "left_shift",
+							"lazy": true
+						}
+					],
+					"to_if_alone": [
+						{
+							"key_code": "d"
+						}
+					],
+					"type": "basic"
+				}
+			]
+		},
+		{
+			"description": "Change k to shift when used as modifier, k when used alone",
+			"manipulators": [
+				{
+					"from": {
+						"key_code": "k",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "right_shift",
+							"lazy": true
+						}
+					],
+					"to_if_alone": [
+						{
+							"key_code": "k"
+						}
+					],
+					"type": "basic"
+				}
+			]
+		}
+	]
+}

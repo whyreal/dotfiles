@@ -168,6 +168,7 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 "}}}
 "}}}
 " 导航{{{2
+
 let g:netrw_list_hide='\(^\|\s\s\)\zs\.\S\+'
 let g:netrw_winsize=30
 "let g:netrw_liststyle=3 "tree
@@ -181,11 +182,12 @@ Plug 'vim-voom/VOoM'
 Plug 'majutsushi/tagbar'
     nnoremap <leader>vt :TagbarToggle<cr>
     nnoremap <leader>t :TagbarToggle<cr>
-
+Plug 'easymotion/vim-easymotion'
+	map f <Plug>(easymotion-prefix)
 "}}}
 " 补全{{{2
-Plug 'wellle/tmux-complete.vim'
-    let g:tmuxcomplete#trigger = 'omnifunc'
+"Plug 'wellle/tmux-complete.vim'
+"    let g:tmuxcomplete#trigger = 'omnifunc'
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-surround'
 "}}}
@@ -203,14 +205,15 @@ Plug 'junegunn/vim-easy-align'
 Plug 'lvht/tagbar-markdown'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 Plug 'godlygeek/tabular'
+
 Plug 'plasticboy/vim-markdown'
-    let g:vim_markdown_toc_autofit = 1
-    "let g:vim_markdown_folding_style_pythonic = 1
+    "let g:vim_markdown_toc_autofit = 1
+	"let g:vim_markdown_folding_style_pythonic = 1
     "let g:vim_markdown_override_foldtext = 0
     let g:html_wrong_comments=1
     "let g:vim_markdown_new_list_item_indent = 0
 	" Highlight YAML front matter as used by Jekyll or Hugo.
-	let g:vim_markdown_frontmatter = 1
+	"let g:vim_markdown_frontmatter = 1
 "}}}
 " Misc {{{2
 Plug 'ekalinin/Dockerfile.vim'
@@ -239,16 +242,18 @@ command! VimrcReload so ~/.config/nvim/init.vim
 " }}}
 " Autocmd {{{1
 "autocmd FileType c,cpp setlocal ts=4 sw=4 fdm=syntax
-autocmd FileType go setlocal ts=4 sw=4 fdm=indent
-autocmd FileType java,groovy setlocal ts=4 sw=4 tw=120 fdm=indent
-autocmd FileType python,yaml,lua,sh,vim setlocal fdm=indent ts=4 sw=4
+autocmd FileType go setlocal ts=4 sw=4 fdm=syntax
+autocmd FileType java,groovy setlocal ts=4 sw=4 tw=120
+autocmd FileType python,yaml,lua,sh,vim setlocal ts=4 sw=4
 autocmd FileType markdown setlocal et ts=4 sw=4
 " fix list 中 ”<" 高亮错误
 autocmd FileType markdown syn cluster htmlTop contains=@Spell,htmlEndTag,htmlSpecialChar,htmlPreProc,htmlComment,htmlLink,javaScript,@htmlPreproc
+" 嵌套 fold
+"autocmd FileType markdown set foldexpr=NestedMarkdownFolds()
 autocmd FileType nginx setlocal ts=4 sw=4
 autocmd FileType snippets setlocal ts=4 sw=4
-autocmd FileType jsp,xml,html,css setlocal fdm=indent ts=2 sw=2
-autocmd FileType javascript,typescript.tsx,json setlocal ts=2 sw=2 fdm=indent
+autocmd FileType jsp,xml,html,css setlocal ts=2 sw=2
+autocmd FileType javascript,typescript.tsx,json setlocal ts=2 sw=2
 autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
 autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
 autocmd BufNewFile,BufRead *.docker set filetype=Dockerfile
@@ -270,54 +275,59 @@ au BufWritePost ~/Documents/Note/scripts/ssh.config.json
 
 " }}}
 " Map {{{1
-nnoremap q; q:
+"nnoremap q; q:
 noremap! <c-a> <Home>
 noremap! <c-e> <End>
-noremap! <c-f> <Right>
+inoremap <c-f> <Right>
 noremap! <c-b> <Left>
 noremap! <c-n> <Down>
 noremap! <c-p> <Up>
-inoremap <c-k> <c-o>D
 
-nnoremap j gj
-nnoremap k gk
+
+"inoremap <c-k> <c-o>D
+
+"nnoremap j gj
+"nnoremap k gk
 
 " previous buffer
-nnoremap gp :bp<cr>
+"nnoremap gp :bp<cr>
 " next buffer
-nnoremap gn :bn<cr>
+"nnoremap gn :bn<cr>
 " last buffer
-nnoremap go <c-^>
+"nnoremap go <c-^>
 " previous tab, the key of next tab is default: gt
-nnoremap gb gT
+"nnoremap gb gT
 
 " change to current directory
-nnoremap <leader>cd :lcd %:h<CR>
+"nnoremap <leader>cd :lcd %:h<CR>
 
 " terminal 
-tnoremap <esc> <c-w>N
+"tnoremap <esc> <c-w>N
+"nnoremap <silent> <leader>vs :terminal<CR>
 
 " save
 nnoremap <leader>w :w<cr>
+inoremap jj <esc>
 
-nnoremap <silent> <leader>vs :terminal<CR>
 nnoremap <leader>ve :Explore<CR>
 
 " }}}
 " Options && Variables {{{1
-"set number relativenumber
-set noro
-set foldlevel=99
+set clipboard+=unnamedplus
+
+set cursorline
+set number relativenumber
+"set foldlevel=99
 set fileencodings=utf-8,gbk,ucs-bom,cp936,gb18030,big5,latin1
 set modeline modelines=3
 set smartcase ignorecase
-set mouse+=a
+"set mouse+=a
 "set macmeta
 " make 前自动保存
-set autowrite
+"set autowrite
 
 " 命令窗口
-set cmdwinheight=20
+"set cmdwinheight=20
 
 "set synmaxcol=200
 let loaded_matchparen = 1
@@ -331,10 +341,11 @@ set bg=dark
 "set tgc
 
 if has('gui_running')
-	set bg=light
+	set bg=dark
     set cursorline
 	if !has('nvim')
-		set guifont=Menlo-Bold:h14
+		set guifont=Menlo:h12
+		"set guifont=Menlo-Bold:h14
 		" 透明
 		"set transparency=30
 		" 模糊
@@ -348,13 +359,10 @@ endif
 colorscheme PaperColor
 
 "}}}
-
 " Cabbreviate {{{1
 cabbrev h tab h
 "}}}
-
-set clipboard+=unnamedplus
-
+" Lua {{{1
 if has('nvim')
     lua package.path = package.path .. ";" ..  "/usr/local/share/lua/5.3/?.lua;/usr/local/share/lua/5.3/?/init.lua;/usr/local/lib/lua/5.3/?.lua;/usr/local/lib/lua/5.3/?/init.lua;./?.lua;./?/init.lua"
     lua require("utils")
@@ -379,10 +387,10 @@ endfunction
 
 command! -range TemplateRender call luaeval('template_render(unpack(_A))', [<line1>, <line2>])
 command! -range TemplateSet call luaeval('template_set(unpack(_A))', [<line1>, <line2>])
-noremap o :lua add_blank_line_after()<cr>
-noremap O :lua add_blank_line_before()<cr>
+"noremap o :lua add_blank_line_after()<cr>
+"noremap O :lua add_blank_line_before()<cr>
 
 "command! -nargs=1 Edit lua edit_remote_file(<f-args>)
 "command! ServerUpdateInfo lua update_server_info()
-
+"}}}
 " vim: fdm=marker

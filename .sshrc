@@ -43,9 +43,19 @@ alias tomcat.catalina.less="less logs/catalina.out"
 alias tomcat.catalina.tail='tail -f logs/catalina.out'
 alias psp=process.findby.port
 alias psg=process.findby.name
-alias s="screen"
-alias sr="screen -R"
-alias sl="screen -l"
+alias vim='HOME=$SSHHOME/.sshrc.d/ vim'
+
+# screen
+function sc(){
+    screen -c $SSHHOME/.sshrc.d/screenrc $* bash --rcfile $SSHHOME/.sshrc
+}
+alias sr="screen -r"
+alias sl="screen -ls"
+
+# clipboard
+alias cb="xclip -selection clipboard"
+alias cbo="xclip -selection clipboard -o"
+alias cbi="xclip -selection clipboard < /tmp/screen-exchange"
 
 # }}}
 # Functions {{{1
@@ -143,7 +153,7 @@ tomcat.change_port(){  # {{{2 根据路径中端口号，修改tomcat server.xml
         $config
 }
 #}}}
-tunnel.sy.medicore(){
+tunnel.sy.medicore(){ #{{{2
     # redis
     ssh -NfL  *:14535:111.111.111.145:32035 -p 14522 localhost
 
@@ -151,14 +161,16 @@ tunnel.sy.medicore(){
     ssh -NfL  *:14587:111.111.111.145:7687 -p 14522 localhost
     ssh -NfL  *:14574:111.111.111.145:7474 -p 14522 localhost
 }
-
-tunnel.sy.triage(){
+#}}}
+tunnel.sy.triage(){ #{{{2
     # service_api
     ssh -NfL  *:14682:111.111.111.146:8082 -p 14522 localhost
     # manage-web
     ssh -NfL  *:14680:111.111.111.146:8080 -p 14522 localhost
+    # 医生端查看监控的后台系统
+    ssh -NfL  *:14684:111.111.111.146:8084 -p 14522 localhost
 }
-
+#}}}
 tunnel.zzzw.inet.db.create(){ #{{{2
     ssh -o "ServerAliveInterval 180" -NfL 192.168.80.100:1521:172.30.41.42:1521 -p 9722 localhost
 }

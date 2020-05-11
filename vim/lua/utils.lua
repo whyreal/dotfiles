@@ -35,7 +35,7 @@ function coc_list_open_file_with(coc_list_context, cmd)
 end
 
 function cd_workspace(path)
-	vim.api.nvim_command("cd " .. path)
+	vim.api.nvim_command("lcd " .. path)
     vim.api.nvim_command("Explore " .. path)
 end
 

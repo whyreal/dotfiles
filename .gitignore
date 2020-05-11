@@ -3,9 +3,11 @@
 
 vim/bundle/
 vim/.netrw*
-vim/autoload/plug.vim
+vim/autoload/plug.vim*
 vim/plugged
+vim/sessions/
 
 sublime_user_conf/Package\ Control*
 sublime_user_conf/*crt
-vim/sessions/
+
+karabiner/automatic_backups/

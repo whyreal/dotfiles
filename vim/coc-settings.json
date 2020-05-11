@@ -1,13 +1,16 @@
 {
+	"python.jediEnabled": false,
+	"coc.source.omni.enable": false,
+	"browser.enable": false,
 	"suggest.floatEnable": true,
 	"suggest.maxCompleteItemCount": 20,
 	"coc.preferences.formatOnType": true,
 	"json.enable":true,
 	"json.format.enable":true,
+	"java.completion.overwrite": true,
 	"java.import.gradle.enabled": false,
 	"java.jdt.ls.vmargs": "-noverify -Xmx1G -XX:+UseG1GC -XX:+UseStringDeduplication -javaagent:\"/Users/Real/code/whyreal/lombok.jar\" -Xbootclasspath/a:\"/Users/Real/code/whyreal/lombok.jar\"",
-  "java.home": "/Library/Java/JavaVirtualMachines/jdk8u212-b03/Contents/Home/",
-	"java.errors.incompleteClasspath.severity": "ignore",
+  "java.home": "/Library/Java/JavaVirtualMachines/adoptopenjdk-8-openj9.jdk/Contents/Home/",
 	"java.completion.favoriteStaticMembers": [
 		"org.junit.Assert.*",
 		"org.junit.Assume.*",
@@ -63,5 +66,4 @@
 		],
 		"gitcommit": []
 	}
-	
 }
