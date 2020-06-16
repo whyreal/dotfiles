@@ -3,7 +3,7 @@
 	"rules":[
 
 		{
-			"description": "make left ctrl as Fn",
+			"description": "make left_ctrl as Fn",
 			"manipulators": [
 				{
 					"from": {
@@ -30,9 +30,41 @@
 							}
 						}
 					],
+					"type": "basic"
+				}
+			]
+		},
+		{
+			"description": "make tab as Fn",
+			"manipulators": [
+				{
+					"from": {
+						"key_code": "tab",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+					},
+					"to": [
+						{
+							"set_variable": {
+								"name": "fn_mode",
+								"value": 1
+							}
+						}
+					],
+					"to_after_key_up": [
+						{
+							"set_variable": {
+								"name": "fn_mode",
+								"value": 0
+							}
+						}
+					],
 					"to_if_alone": [
 						{
-							"key_code": "left_ctrl"
+							"key_code": "tab"
 						}
 					],
 					"type": "basic"

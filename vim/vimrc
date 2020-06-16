@@ -6,6 +6,22 @@ call plug#begin('~/.vim/plugged')
 
 let mapleader=","
 
+"Vim sugar for the UNIX shell commands that need it the most. Features include:
+"
+"    :Delete: Delete a buffer and the file on disk simultaneously.
+"    :Unlink: Like :Delete, but keeps the now empty buffer.
+"    :Move: Rename a buffer and the file on disk simultaneously.
+"    :Rename: Like :Move, but relative to the current file's containing directory.
+"    :Chmod: Change the permissions of the current file.
+"    :Mkdir: Create a directory, defaulting to the parent of the current file.
+"    :Cfind: Run find and load the results into the quickfix list.
+"    :Clocate: Run locate and load the results into the quickfix list.
+"    :Lfind/:Llocate: Like above, but use the location list.
+"    :Wall: Write every open window. Handy for kicking off tools like guard.
+"    :SudoWrite: Write a privileged file with sudo.
+"    :SudoEdit: Edit a privileged file with sudo.
+"    File type detection for sudo -e is based on original file name.
+"    New files created with a shebang line are automatically made executable.
 Plug 'tpope/vim-eunuch'
 
 " COC{{{2
@@ -183,7 +199,7 @@ Plug 'majutsushi/tagbar'
     nnoremap <leader>vt :TagbarToggle<cr>
     nnoremap <leader>t :TagbarToggle<cr>
 Plug 'easymotion/vim-easymotion'
-	map f <Plug>(easymotion-prefix)
+	"map <leader><leader> <Plug>(easymotion-prefix)
 "}}}
 " 补全{{{2
 "Plug 'wellle/tmux-complete.vim'
@@ -244,7 +260,7 @@ command! VimrcReload so ~/.config/nvim/init.vim
 "autocmd FileType c,cpp setlocal ts=4 sw=4 fdm=syntax
 autocmd FileType go setlocal ts=4 sw=4 fdm=syntax
 autocmd FileType java,groovy setlocal ts=4 sw=4 tw=120
-autocmd FileType python,yaml,lua,sh,vim setlocal ts=4 sw=4
+autocmd FileType python,yaml,lua,sh,vim setlocal ts=4 sw=4 fdm=indent
 autocmd FileType markdown setlocal et ts=4 sw=4
 " fix list 中 ”<" 高亮错误
 autocmd FileType markdown syn cluster htmlTop contains=@Spell,htmlEndTag,htmlSpecialChar,htmlPreProc,htmlComment,htmlLink,javaScript,@htmlPreproc
@@ -283,7 +299,6 @@ noremap! <c-b> <Left>
 noremap! <c-n> <Down>
 noremap! <c-p> <Up>
 
-
 "inoremap <c-k> <c-o>D
 
 "nnoremap j gj
@@ -307,6 +322,7 @@ noremap! <c-p> <Up>
 
 " save
 nnoremap <leader>w :w<cr>
+nnoremap <leader>qq :q<cr>
 inoremap jj <esc>
 
 nnoremap <leader>ve :Explore<CR>
@@ -321,7 +337,7 @@ set number relativenumber
 set fileencodings=utf-8,gbk,ucs-bom,cp936,gb18030,big5,latin1
 set modeline modelines=3
 set smartcase ignorecase
-"set mouse+=a
+set mouse+=a
 "set macmeta
 " make 前自动保存
 "set autowrite
@@ -344,7 +360,7 @@ if has('gui_running')
 	set bg=dark
     set cursorline
 	if !has('nvim')
-		set guifont=Menlo:h12
+		set guifont=Menlo:h14
 		"set guifont=Menlo-Bold:h14
 		" 透明
 		"set transparency=30

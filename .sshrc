@@ -12,6 +12,7 @@ elif [ -r ~/.profile ];then
 fi
 #}}}
 # ENV {{{1
+set -o vi
 SERVER_IP=$(echo $SSH_CONNECTION | awk '{print $3}')
 # PS1=root@ip_address(hostname)
 export PS1="\n\e[38;5;46m\u\e[m@\e[38;5;201m$SERVER_IP(\h)\e[m\n[\w]\\$ "
@@ -43,7 +44,7 @@ alias tomcat.catalina.less="less logs/catalina.out"
 alias tomcat.catalina.tail='tail -f logs/catalina.out'
 alias psp=process.findby.port
 alias psg=process.findby.name
-alias vim='HOME=$SSHHOME/.sshrc.d/ vim'
+alias vim='HOME=$SSHHOME/.sshrc.d/ vim -i NONE'
 
 # screen
 function sc(){
@@ -169,6 +170,8 @@ tunnel.sy.triage(){ #{{{2
     ssh -NfL  *:14680:111.111.111.146:8080 -p 14522 localhost
     # 医生端查看监控的后台系统
     ssh -NfL  *:14684:111.111.111.146:8084 -p 14522 localhost
+    # Mysql
+    ssh -NfL  *:14606:111.111.111.146:3306 -p 14522 localhost
 }
 #}}}
 tunnel.zzzw.inet.db.create(){ #{{{2

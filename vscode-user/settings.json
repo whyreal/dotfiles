@@ -1,0 +1,102 @@
+{
+  "java.import.maven.enabled": true,
+  "java.configuration.checkProjectSettingsExclusions": false,
+  "java.jdt.ls.vmargs": "-noverify -Xmx1G -XX:+UseG1GC -XX:+UseStringDeduplication",
+  "java.errors.incompleteClasspath.severity": "ignore",
+  "java.home": "/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home/",
+  "java.completion.favoriteStaticMembers": [
+    "org.junit.Assert.*",
+    "org.junit.Assume.*",
+    "org.junit.jupiter.api.Assertions.*",
+    "org.junit.jupiter.api.Assumptions.*",
+    "org.junit.jupiter.api.DynamicContainer.*",
+    "org.junit.jupiter.api.DynamicTest.*",
+    "org.mockito.Mockito.*",
+    "org.mockito.ArgumentMatchers.*",
+    "org.mockito.Answers.*",
+    "org.springframework.test.web.servlet.result.MockMvcResultMatchers.*",
+    "org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*",
+    "org.springframework.test.web.servlet.setup.MockMvcBuilders.*"
+  ],
+  "java.completion.guessMethodArguments": true,
+  "go.formatTool": "goimports",
+  "maven.executable.path": "/usr/local/bin/mvn",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
+  "debug.toolBarLocation": "docked",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/target": true,
+    "**/build": true
+  },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true
+  },
+  "files.associations": {
+    "*.uml": "plaintext",
+    "*.cjson": "jsonc",
+    "*.wxss": "css",
+    "*.wxs": "javascript"
+  },
+  "git.autofetch": true,
+  "scm.alwaysShowProviders": true,
+  "editor.snippetSuggestions": "top",
+  "editor.tabCompletion": "on",
+  "editor.suggestSelection": "first",
+  "editor.minimap.enabled": false,
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": true,
+    "strings": true
+  },
+  "extensions.ignoreRecommendations": true,
+  "window.zoomLevel": 0,
+  "window.nativeTabs": true,
+  "workbench.editor.highlightModifiedTabs": true,
+  "workbench.startupEditor": "newUntitledFile",
+  "workbench.sideBar.location": "left",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "explorer.confirmDragAndDrop": false,
+  "git.enableSmartCommit": true,
+  "breadcrumbs.enabled": false,
+  "workbench.activityBar.visible": true,
+  "terminal.integrated.shell.osx": "/bin/zsh",
+  "svn.path": "/usr/local/bin/svn",
+  "vscode-neovim.neovimInitPath": "/Users/Real/code/whyreal/dotfiles/vim/vsc-init.vim",
+  "vscode-neovim.neovimPath": "/usr/local/bin/nvim",
+  "editor.lineNumbers": "relative",
+  "vim.autoSwitchInputMethod.enable": true,
+  "vim.autoSwitchInputMethod.defaultIM": "com.apple.keylayout.US",
+  "vim.autoSwitchInputMethod.obtainIMCmd": "/usr/local/bin/im-select",
+  "vim.autoSwitchInputMethod.switchIMCmd": "/usr/local/bin/im-select {im}",
+  "vim.useSystemClipboard": true,
+  "editor.showFoldingControls": "always",
+  "vim.foldfix": true,
+  "vim.easymotion": true,
+  "vim.easymotionMarkerFontSize": "14",
+  "vim.leader": ",",
+  "editor.wordWrap": "on",
+  "workbench.colorTheme": "Absent Light (rainglow)",
+  "vim.hlsearch": true,
+  "[markdown]": {
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": true,
+      "strings": true
+    }
+  },
+  "vscodeGoogleTranslate.proxyHost": "127.0.0.1",
+  "vscodeGoogleTranslate.proxyPort": "1087",
+  "workbench.iconTheme": "material-icon-theme",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "workbench.statusBar.visible": true,
+  "editor.renderControlCharacters": true,
+  "vscode-neovim.mouseSelectionStartVisualMode": true
+}
