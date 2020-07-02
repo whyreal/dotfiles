@@ -11,7 +11,7 @@ ZSH_TMUX_UNICODE=true
 source /usr/local/Cellar/antigen/2.2.3/share/antigen/antigen.zsh
 antigen use oh-my-zsh
 
-antigen bundle vi-mode
+#antigen bundle vi-mode
 antigen bundle fzf
 antigen bundle tmux
 antigen bundle skywind3000/z.lua

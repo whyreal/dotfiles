@@ -12,7 +12,7 @@ elif [ -r ~/.profile ];then
 fi
 #}}}
 # ENV {{{1
-set -o vi
+#set -o vi
 SERVER_IP=$(echo $SSH_CONNECTION | awk '{print $3}')
 # PS1=root@ip_address(hostname)
 export PS1="\n\e[38;5;46m\u\e[m@\e[38;5;201m$SERVER_IP(\h)\e[m\n[\w]\\$ "

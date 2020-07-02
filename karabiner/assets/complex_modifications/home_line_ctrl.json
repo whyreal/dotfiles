@@ -2,11 +2,11 @@
 	"title": "home line ctrl",
 	"rules":[
 		{
-			"description": "Change j to Control when used as modifier, j when used alone",
+			"description": "Change i to Control when used as modifier, i when used alone",
 			"manipulators": [
 				{
 					"from": {
-						"key_code": "j",
+						"key_code": "i",
 						"modifiers": {
 							"optional": [
 								"any"
@@ -21,7 +21,7 @@
 					],
 					"to_if_alone": [
 						{
-							"key_code": "j"
+							"key_code": "i"
 						}
 					],
 					"type": "basic"
@@ -29,11 +29,11 @@
 			]
 		},
 		{
-			"description": "Change f to Control when used as modifier, f when used alone",
+			"description": "Change e to Control when used as modifier, e when used alone",
 			"manipulators": [
 				{
 					"from": {
-						"key_code": "f",
+						"key_code": "e",
 						"modifiers": {
 							"optional": [
 								"any"
@@ -48,7 +48,7 @@
 					],
 					"to_if_alone": [
 						{
-							"key_code": "f"
+							"key_code": "e"
 						}
 					],
 					"type": "basic"

@@ -1,0 +1,37 @@
+{
+	"title": "Backspace",
+	"rules":[
+		{
+			"description": "Change backspace to Control when used as modifier, backspace when used alone",
+			"manipulators": [
+				{
+					"from": {
+						"key_code": "delete_or_backspace",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "right_control",
+							"lazy": true
+						}
+					],
+					"to_if_alone": [
+						{
+							"key_code": "delete_or_backspace"
+						}
+					],
+					"to_if_held_down": [
+						{
+							"key_code": "delete_or_backspace"
+						}
+					],
+					"type": "basic"
+				}
+			]
+		}
+	]
+}

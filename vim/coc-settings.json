@@ -39,13 +39,6 @@
 		"x": "call:OpenWithSystemApp",
 		"r": "call:OpenWithFinder"
 	},
-  "languageserver": {
-    "golang": {
-      "command": "gopls",
-      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
-      "filetypes": ["go"]
-    }
-  },
 	"lua.commandPath":"/usr/local/bin/lua-lsp",
 	"snippets.ultisnips.usePythonx": false,
 	"zi.enable": false,

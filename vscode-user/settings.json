@@ -3,7 +3,7 @@
   "java.configuration.checkProjectSettingsExclusions": false,
   "java.jdt.ls.vmargs": "-noverify -Xmx1G -XX:+UseG1GC -XX:+UseStringDeduplication",
   "java.errors.incompleteClasspath.severity": "ignore",
-  "java.home": "/Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home/",
+  "java.home": "/Library/Java/JavaVirtualMachines/jdk1.8.0_251.jdk/Contents/Home",
   "java.completion.favoriteStaticMembers": [
     "org.junit.Assert.*",
     "org.junit.Assume.*",
@@ -20,7 +20,7 @@
   ],
   "java.completion.guessMethodArguments": true,
   "go.formatTool": "goimports",
-  "maven.executable.path": "/usr/local/bin/mvn",
+  "maven.executable.path": "/usr/local/apache-maven-3.6.3/bin//mvn",
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
   },
@@ -57,7 +57,7 @@
     "strings": true
   },
   "extensions.ignoreRecommendations": true,
-  "window.zoomLevel": 0,
+  "window.zoomLevel": 2,
   "window.nativeTabs": true,
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.startupEditor": "newUntitledFile",
@@ -65,7 +65,7 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "explorer.confirmDragAndDrop": false,
   "git.enableSmartCommit": true,
-  "breadcrumbs.enabled": false,
+  "breadcrumbs.enabled": true,
   "workbench.activityBar.visible": true,
   "terminal.integrated.shell.osx": "/bin/zsh",
   "svn.path": "/usr/local/bin/svn",
@@ -98,5 +98,47 @@
   "diffEditor.ignoreTrimWhitespace": false,
   "workbench.statusBar.visible": true,
   "editor.renderControlCharacters": true,
-  "vscode-neovim.mouseSelectionStartVisualMode": true
+  "vscode-neovim.mouseSelectionStartVisualMode": true,
+  "maven.terminal.useJavaHome": true,
+  "java.semanticHighlighting.enabled": true,
+  "java.requirements.JDK11Warning": false,
+  "sqltools.connections": [
+    {
+      "askForPassword": false,
+      "database": "linkis",
+      "driver": "MySQL",
+      "group": "local",
+      "mysqlOptions": {
+        "authProtocol": "default"
+      },
+      "name": "linkis@186",
+      "password": "linkis",
+      "port": 3306,
+      "previewLimit": 50,
+      "server": "192.168.80.186",
+      "username": "linkis"
+    }
+  ],
+  "oracleDeveloperTools.networkConfiguration.configFilesLocation": "/Users/Real/Oracle/network/admin",
+  "oracleDeveloperTools.networkConfiguration.walletFileLocation": "/Users/Real/Oracle/network/admin",
+  "markdownlint.config": {
+    "MD025": false,
+    "MD045": false,
+    "MD010": false
+  },
+  "autoAlign.enabled": {
+    "csv": true,
+    "bsv": true,
+    "md": true
+  },
+  "editor.suggest.statusBar.visible": true,
+  "editor.acceptSuggestionOnEnter": "smart",
+  "todo-tree.tree.showScanModeButton": false,
+  "todo-tree.filtering.ignoreGitSubmodules": true,
+  "todo-tree.filtering.includeGlobs": [
+    "**/*.md"
+  ],
+  "todo-tree.filtering.excludeGlobs": [
+    "**/README.md"
+  ]
 }
