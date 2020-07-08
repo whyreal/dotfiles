@@ -166,22 +166,22 @@ Plug 'neoclide/coc.nvim' , {'branch': 'release'}
     " Create markmap from the selected lines
     vmap <Leader>vm <Plug>(coc-markmap-create-v)
 
-" coc-snippet {{{3
-" Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
+  " coc-snippet {{{3
+  " Use <C-l> for trigger snippet expand.
+  imap <C-l> <Plug>(coc-snippets-expand)
 
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
+  " Use <C-j> for select text for visual placeholder of snippet.
+  vmap <C-j> <Plug>(coc-snippets-select)
 
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-j>'
+  " Use <C-j> for jump to next placeholder, it's default of coc.nvim
+  let g:coc_snippet_next = '<c-j>'
 
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
+  " Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+  let g:coc_snippet_prev = '<c-k>'
 
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
-"}}}
+  " Use <C-j> for both expand and jump (make expand higher priority.)
+  imap <C-j> <Plug>(coc-snippets-expand-jump)
+  "}}}
 "}}}
 " 导航{{{2
 
@@ -356,22 +356,6 @@ set colorcolumn=+1
 set bg=light
 "set tgc
 
-if has('gui_running')
-	set bg=dark
-    set cursorline
-	if !has('nvim')
-		set guifont=Menlo:h14
-		"set guifont=Menlo-Bold:h14
-		" 透明
-		"set transparency=30
-		" 模糊
-		"set blurradius=20
-		"set linespace=1
-		"set guifontwide=MicrosoftYaHei-Bold
-		set guioptions=egtk
-	endif
-endif
-
 colorscheme PaperColor
 
 "}}}
@@ -385,8 +369,8 @@ if has('nvim')
 else
 	set ttymouse=xterm2
 	if has('lua')
-		lua package.path = package.path .. ";" .. os.getenv("HOME") .. "/.vim/lua/?.lua"
-		lua require("utils")
+	  lua package.path = package.path .. ";" .. os.getenv("HOME") .. "/.vim/lua/?.lua"
+	  lua require("utils")
 	endif
 endif
 
@@ -409,4 +393,5 @@ command! -range TemplateSet call luaeval('template_set(unpack(_A))', [<line1>, <
 "command! -nargs=1 Edit lua edit_remote_file(<f-args>)
 "command! ServerUpdateInfo lua update_server_info()
 "}}}
+
 " vim: fdm=marker

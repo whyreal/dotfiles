@@ -57,7 +57,7 @@
     "strings": true
   },
   "extensions.ignoreRecommendations": true,
-  "window.zoomLevel": 2,
+  "window.zoomLevel": 0,
   "window.nativeTabs": true,
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.startupEditor": "newUntitledFile",
@@ -140,5 +140,27 @@
   ],
   "todo-tree.filtering.excludeGlobs": [
     "**/README.md"
-  ]
+  ],
+  "editor.maxTokenizationLineLength": 2000,
+  "todohighlight.include": [
+    "**/*.md"
+  ],
+  "todohighlight.exclude": [
+    "**/.vscode/**",
+    "**/joplin/**",
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/.vscode/**",
+    "**/.github/**",
+    "**/_output/**",
+    "**/*.min.*",
+    "**/*.map",
+    "**/.next/**"
+  ],
+  "todo-tree.filtering.useBuiltInExcludes": "file and search excludes",
+  "todo-tree.general.statusBar": "total",
+  "git.ignoreLegacyWarning": true,
+  "terminal.integrated.macOptionIsMeta": true
 }

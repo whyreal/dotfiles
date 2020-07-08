@@ -37,21 +37,19 @@ alias jobs="jobs -l"
 alias ll="ls -lh"
 alias mkdir='mkdir -pv'
 alias pd='pushd'
-alias port.findby.listen='netstat -antuplo | grep'
-alias port.findby.port='netstat -antuplo | grep'
-alias port.list='netstat -antuplo'
+#alias port.findby.listen='netstat -antuplo | grep'
+#alias port.findby.port='netstat -antuplo | grep'
+#alias port.list='netstat -antuplo'
 alias tomcat.catalina.less="less logs/catalina.out"
 alias tomcat.catalina.tail='tail -f logs/catalina.out'
-alias psp=process.findby.port
-alias psg=process.findby.name
 alias vim='HOME=$SSHHOME/.sshrc.d/ vim -i NONE'
 
 # screen
-function sc(){
-    screen -c $SSHHOME/.sshrc.d/screenrc $* bash --rcfile $SSHHOME/.sshrc
-}
-alias sr="screen -r"
-alias sl="screen -ls"
+#function sc(){
+#    screen -c $SSHHOME/.sshrc.d/screenrc $* bash --rcfile $SSHHOME/.sshrc
+#}
+#alias sr="screen -r"
+#alias sl="screen -ls"
 
 # clipboard
 alias cb="xclip -selection clipboard"
