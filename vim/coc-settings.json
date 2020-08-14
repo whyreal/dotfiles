@@ -1,6 +1,6 @@
 {
+	"project.rootPatterns": [".vim/workspace"],
 	"python.jediEnabled": false,
-	"coc.source.omni.enable": false,
 	"browser.enable": false,
 	"suggest.floatEnable": true,
 	"suggest.maxCompleteItemCount": 20,
@@ -26,14 +26,8 @@
 		"org.springframework.test.web.servlet.setup.MockMvcBuilders.*"
 	],
 	"diagnostic.enable": true,
-	"list.source.files.command": "find",
-	"list.source.files.args": ["-L", ".",
-		"-type", "f",
-		"!", "-ipath", "*/.*/*",
-		"!", "-ipath", "*/target/*",
-		"!", "-iname", "*class",
-		"!", "-name", ".*"
-	],
+	"list.source.files.command": "fd",
+	"list.source.files.args": ["-i", "-H", "-L", "--type", "f"],
 	"list.normalMappings": {
 		"d": "action:delete",
 		"x": "call:OpenWithSystemApp",
@@ -41,7 +35,7 @@
 	},
 	"lua.commandPath":"/usr/local/bin/lua-lsp",
 	"snippets.ultisnips.usePythonx": false,
-	"zi.enable": false,
+	"zi.enable": true,
 	"zi.patterns": {
 		"javascript": [
 			"^\\s*\\/\\/",
@@ -58,5 +52,10 @@
 			"^\\s*\\\""
 		],
 		"gitcommit": []
-	}
+	},
+	"translator.toLang": "zh",
+	"translator.engines": [
+		"youdao",
+		"haici"
+	]
 }

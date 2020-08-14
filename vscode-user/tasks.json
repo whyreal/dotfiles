@@ -1,0 +1,18 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "更新 shell 环境",
+            "type": "shell",
+            "command": "update.all"
+        },
+        {
+            "label": "更新 ssh config",
+            "type": "shell",
+            "command": "cd ~/Documents/Note/scripts/ && ./template.rander.lua ssh.config.lrt ssh.config.json > ~/.ssh/config && ./template.rander.lua ssh.config.hosts.lrt ssh.config.json > ~/.ssh/config_hosts"
+        }
+
+    ]
+}

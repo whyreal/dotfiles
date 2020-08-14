@@ -1,15 +1,15 @@
 # INIT {{{1 
 #export PATH=$PATH:$SSHHOME
-if [ -r /etc/profile ];then
-    source /etc/profile;
-fi
-if [ -r ~/.bash_profile ];then
-    source ~/.bash_profile
-elif [ -r ~/.bash_login ];then
-    source ~/.bash_login
-elif [ -r ~/.profile ];then
-    source ~/.profile
-fi
+# if [ -r /etc/profile ];then
+#     source /etc/profile;
+# fi
+# if [ -r ~/.bash_profile ];then
+#     source ~/.bash_profile
+# elif [ -r ~/.bash_login ];then
+#     source ~/.bash_login
+# elif [ -r ~/.profile ];then
+#     source ~/.profile
+# fi
 #}}}
 # ENV {{{1
 #set -o vi
@@ -45,11 +45,11 @@ alias tomcat.catalina.tail='tail -f logs/catalina.out'
 alias vim='HOME=$SSHHOME/.sshrc.d/ vim -i NONE'
 
 # screen
-#function sc(){
-#    screen -c $SSHHOME/.sshrc.d/screenrc $* bash --rcfile $SSHHOME/.sshrc
-#}
-#alias sr="screen -r"
-#alias sl="screen -ls"
+function sc(){
+   screen -c $SSHHOME/.sshrc.d/screenrc $* bash --rcfile $SSHHOME/.sshrc
+}
+alias sr="screen -r"
+alias sl="screen -ls"
 
 # clipboard
 alias cb="xclip -selection clipboard"

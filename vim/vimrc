@@ -6,24 +6,27 @@ call plug#begin('~/.vim/plugged')
 
 let mapleader=","
 
-"Vim sugar for the UNIX shell commands that need it the most. Features include:
-"
-"    :Delete: Delete a buffer and the file on disk simultaneously.
-"    :Unlink: Like :Delete, but keeps the now empty buffer.
-"    :Move: Rename a buffer and the file on disk simultaneously.
-"    :Rename: Like :Move, but relative to the current file's containing directory.
-"    :Chmod: Change the permissions of the current file.
-"    :Mkdir: Create a directory, defaulting to the parent of the current file.
-"    :Cfind: Run find and load the results into the quickfix list.
-"    :Clocate: Run locate and load the results into the quickfix list.
-"    :Lfind/:Llocate: Like above, but use the location list.
-"    :Wall: Write every open window. Handy for kicking off tools like guard.
-"    :SudoWrite: Write a privileged file with sudo.
-"    :SudoEdit: Edit a privileged file with sudo.
-"    File type detection for sudo -e is based on original file name.
-"    New files created with a shebang line are automatically made executable.
-Plug 'tpope/vim-eunuch'
+" Translator {{{2
+Plug 'voldikss/vim-translator'
 
+	""" Configuration example
+	" Echo translation in the cmdline
+	"nmap <silent> <Leader>t <Plug>Translate
+	"vmap <silent> <Leader>t <Plug>TranslateV
+	" Display translation in a window
+	"nmap <silent> <Leader>w <Plug>TranslateW
+	"vmap <silent> <Leader>w <Plug>TranslateWV
+	" Replace the text with translation
+	nmap <silent> <Leader>tr <Plug>TranslateR
+	vmap <silent> <Leader>tr <Plug>TranslateRV
+	" Translate the text in clipboard
+	"nmap <silent> <Leader>x <Plug>TranslateX
+"}}}
+" Terminal {{{2
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'habamax/vim-sendtoterm'
+
+"}}}
 " COC{{{2
 Plug 'neoclide/coc.nvim' , {'branch': 'release'}
     " if hidden is not set, TextEdit might fail.
@@ -89,8 +92,8 @@ Plug 'neoclide/coc.nvim' , {'branch': 'release'}
     nmap <leader>rn <Plug>(coc-rename)
 
     " Remap for format selected region
-    vmap <leader>f  <Plug>(coc-format-selected)
-    nmap <leader>f  <Plug>(coc-format-selected)
+    "vmap <leader>f  <Plug>(coc-format-selected)
+    "nmap <leader>f  <Plug>(coc-format-selected)
 
     augroup mygroup
       autocmd!
@@ -120,15 +123,14 @@ Plug 'neoclide/coc.nvim' , {'branch': 'release'}
     nnoremap <silent> <leader>la  :<C-u>CocList diagnostics<cr>
     " Manage extensions
     nnoremap <silent> <leader>le  :<C-u>CocList extensions<cr>
+    nnoremap <silent> <leader>lp  :<C-u>CocList project<cr>
     " Show commands
     nnoremap <silent> <leader>lc  :<C-u>CocList commands<cr>
     " Find symbol of current document
     nnoremap <silent> <leader>lo  :<C-u>CocList outline<cr>
     " Search workspace symbols
     nnoremap <silent> <leader>ls  :<C-u>CocList --ignore-case -N -I symbols<cr>
-    nnoremap <silent> <leader>lb  :<C-u>CocList --ignore-case -N buffers<cr>
-    nnoremap <silent> <leader>b  :<C-u>CocList --ignore-case -N buffers<cr>
-    nnoremap <silent> <leader>lf  :<C-u>CocList --ignore-case files<cr>
+    "nnoremap <silent> <leader>lb  :<C-u>CocList --ignore-case -N buffers<cr>
     nnoremap <silent> <leader>f  :<C-u>CocList --ignore-case files<cr>
     nnoremap <silent> <leader>lr  :<C-u>CocList --ignore-case -N mru<cr>
     nnoremap <silent> <leader>lm  :<C-u>CocList --ignore-case -N marks<cr>
@@ -181,7 +183,7 @@ Plug 'neoclide/coc.nvim' , {'branch': 'release'}
 
   " Use <C-j> for both expand and jump (make expand higher priority.)
   imap <C-j> <Plug>(coc-snippets-expand-jump)
-  "}}}
+"}}}
 "}}}
 " 导航{{{2
 
@@ -189,15 +191,13 @@ let g:netrw_list_hide='\(^\|\s\s\)\zs\.\S\+'
 let g:netrw_winsize=30
 "let g:netrw_liststyle=3 "tree
 
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-voom/VOoM'
     let g:voom_tree_placement = 'right'
     let g:voom_ft_modes = {'markdown': 'pandoc', 'vim': 'fmr'}
     let g:voom_always_allow_move_left = 1
     nnoremap <silent> <leader>vv :VoomToggle<CR>
 Plug 'majutsushi/tagbar'
-    nnoremap <leader>vt :TagbarToggle<cr>
-    nnoremap <leader>t :TagbarToggle<cr>
+	 nnoremap <leader>vt :TagbarToggle<cr>
 Plug 'easymotion/vim-easymotion'
 	"map <leader><leader> <Plug>(easymotion-prefix)
 "}}}
@@ -220,24 +220,25 @@ Plug 'junegunn/vim-easy-align'
 " Markdown{{{2
 Plug 'lvht/tagbar-markdown'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
-Plug 'godlygeek/tabular'
 
+Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
+	" Fix: Folding and Unfolding when typing in insert mode
+	" https://github.com/plasticboy/vim-markdown/issues/414
+	let g:vim_markdown_folding_style_pythonic = 1
+
     "let g:vim_markdown_toc_autofit = 1
-	"let g:vim_markdown_folding_style_pythonic = 1
     "let g:vim_markdown_override_foldtext = 0
-    let g:html_wrong_comments=1
+    "let g:html_wrong_comments=1
     "let g:vim_markdown_new_list_item_indent = 0
 	" Highlight YAML front matter as used by Jekyll or Hugo.
 	"let g:vim_markdown_frontmatter = 1
 "}}}
-" Misc {{{2
-Plug 'ekalinin/Dockerfile.vim'
+" Syntax {{{2
+" Plug 'ekalinin/Dockerfile.vim'
 Plug 'chr4/nginx.vim'
-"Plug 'jpalardy/vim-slime'
-    "let g:slime_target = "tmux"
-    "let g:slime_paste_file = "$HOME/.slime_paste"
-    "let g:slime_default_config = {"socket_name": "default", "target_pane": "{right-of}"}
+Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'neoclide/jsonc.vim'
 " }}}
 " Color Theme{{{2
 Plug 'NLKNguyen/papercolor-theme'
@@ -252,8 +253,22 @@ syntax enable
 " Command {{{1
 command! Dos2unix e ++ff=unix | %s/\r//g
 command! Ssconfig tabe ~/.ShadowsocksX/user-rule.txt
+au BufWritePost ~/.ShadowsocksX/user-rule.txt
+            \ !genpac --format=pac
+            \ --pac-proxy="SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080; DIRECT;"
+            \ --user-rule-from=~/.ShadowsocksX/user-rule.txt
+            \ --gfwlist-proxy="SOCKS5 127.0.0.1:1080;"
+            \ > ~/.ShadowsocksX/gfwlist.js
 command! Sshconfig tabe ~/Documents/Note/scripts/ssh.config.json
-command! VimrcEdit tabe ~/.config/nvim/init.vim
+
+au BufWritePost ~/Documents/Note/scripts/ssh.config.json
+            \ !cd ~/Documents/Note/scripts/
+            \ && ./template.rander.lua ssh.config.lrt ssh.config.json
+            \ > ~/.ssh/config
+            \ && ./template.rander.lua ssh.config.hosts.lrt ssh.config.json
+            \ > ~/.ssh/config_hosts
+
+"command! VimrcEdit tabe ~/.config/nvim/init.vim
 command! VimrcReload so ~/.config/nvim/init.vim
 " }}}
 " Autocmd {{{1
@@ -261,33 +276,21 @@ command! VimrcReload so ~/.config/nvim/init.vim
 autocmd FileType go setlocal ts=4 sw=4 fdm=syntax
 autocmd FileType java,groovy setlocal ts=4 sw=4 tw=120
 autocmd FileType python,yaml,lua,sh,vim setlocal ts=4 sw=4 fdm=indent
-autocmd FileType markdown setlocal et ts=4 sw=4
+autocmd FileType markdown setlocal ts=4 sw=4 et
 " fix list 中 ”<" 高亮错误
-autocmd FileType markdown syn cluster htmlTop contains=@Spell,htmlEndTag,htmlSpecialChar,htmlPreProc,htmlComment,htmlLink,javaScript,@htmlPreproc
+"autocmd FileType markdown syn cluster htmlTop contains=@Spell,htmlEndTag,htmlSpecialChar,htmlPreProc,htmlComment,htmlLink,javaScript,@htmlPreproc
 " 嵌套 fold
 "autocmd FileType markdown set foldexpr=NestedMarkdownFolds()
 autocmd FileType nginx setlocal ts=4 sw=4
 autocmd FileType snippets setlocal ts=4 sw=4
 autocmd FileType jsp,xml,html,css setlocal ts=2 sw=2
 autocmd FileType javascript,typescript.tsx,json setlocal ts=2 sw=2
+autocmd BufNewFile,BufRead *.json setlocal filetype=jsonc ts=2 sw=2
 autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
 autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx
 autocmd BufNewFile,BufRead *.docker set filetype=Dockerfile
 " default filetype
 autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
-
-au BufWritePost ~/.ShadowsocksX/user-rule.txt
-            \ !genpac --format=pac
-            \ --pac-proxy="SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080; DIRECT;"
-            \ --user-rule-from=~/.ShadowsocksX/user-rule.txt
-            \ --gfwlist-proxy="SOCKS5 127.0.0.1:1080;"
-            \ > ~/.ShadowsocksX/gfwlist.js
-au BufWritePost ~/Documents/Note/scripts/ssh.config.json
-            \ !cd ~/Documents/Note/scripts/
-            \ && ./template.rander.lua ssh.config.lrt ssh.config.json
-            \ > ~/.ssh/config
-            \ && ./template.rander.lua ssh.config.hosts.lrt ssh.config.json
-            \ > ~/.ssh/config_hosts
 
 " }}}
 " Map {{{1
@@ -298,6 +301,8 @@ inoremap <c-f> <Right>
 noremap! <c-b> <Left>
 noremap! <c-n> <Down>
 noremap! <c-p> <Up>
+
+" nnoremap 0 :call ToggleHomeZero()<CR>
 
 "inoremap <c-k> <c-o>D
 
@@ -316,20 +321,34 @@ noremap! <c-p> <Up>
 " change to current directory
 "nnoremap <leader>cd :lcd %:h<CR>
 
-" terminal 
+" terminal
 "tnoremap <esc> <c-w>N
 "nnoremap <silent> <leader>vs :terminal<CR>
 
-" save
+" buffer
+nnoremap <leader>bd :bd<cr>
 nnoremap <leader>w :w<cr>
-nnoremap <leader>qq :q<cr>
-inoremap jj <esc>
+nnoremap <silent> <leader>bb  :<C-u>CocList --ignore-case -N buffers<cr>
+"nnoremap <silent> <leader>lf  :<C-u>CocList --ignore-case files<cr>
+
+" save
+"inoremap jj <esc>
 
 nnoremap <leader>ve :Explore<CR>
+nnoremap <leader>vr :Rexplore<CR>
+
+nmap <a-=> <Plug>(coc-terminal-toggle)
+tmap <a-=> <c-\><c-n><Plug>(coc-terminal-toggle)
+"tmap <a-=> <c-\><c-n>:TermvimBottomToggle<cr>
+tmap <c-j> <c-\><c-n><c-j>
+tmap <c-h> <c-\><c-n><c-h>
+tmap <c-l> <c-\><c-n><c-l>
+tmap <c-k> <c-\><c-n><c-k>
+tmap <c-o> <c-\><c-n>
 
 " }}}
 " Options && Variables {{{1
-set clipboard+=unnamedplus
+set clipboard+=unnamed
 
 set cursorline
 set number relativenumber
@@ -353,40 +372,69 @@ set hidden
 set splitbelow
 set previewheight=8
 set colorcolumn=+1
-set bg=light
+set bg=dark
 "set tgc
 
 colorscheme PaperColor
-
 "}}}
 " Cabbreviate {{{1
 cabbrev h tab h
 "}}}
-" Lua {{{1
-if has('nvim')
-    lua package.path = package.path .. ";" ..  "/usr/local/share/lua/5.3/?.lua;/usr/local/share/lua/5.3/?/init.lua;/usr/local/lib/lua/5.3/?.lua;/usr/local/lib/lua/5.3/?/init.lua;./?.lua;./?/init.lua"
-    lua require("utils")
-else
-	set ttymouse=xterm2
-	if has('lua')
-	  lua package.path = package.path .. ";" .. os.getenv("HOME") .. "/.vim/lua/?.lua"
-	  lua require("utils")
-	endif
-endif
+" Functions {{{1
+function ExploreDir(path)
+  execute "lcd " . a:path
+  execute "Explore " . a:path
+endfunction
 
-command! Docs lua cd_workspace("~/Documents/vim-workspace/docs")
-command! DotFiles lua cd_workspace("~/code/whyreal/dotfiles/")
-nnoremap 0 :lua toggle_home_zero()<CR>
+function CocListOpenWith(coc_list_context, cmd)
+  let list_name = a:coc_list_context["name"]
+  let label_name = a:coc_list_context["targets"][0]["label"]
+  call substitute(label_name, " ", "\\ ", "g")
+  if list_name == "files"
+	  call system(a:cmd . " " . label_name)
+  endif
+endfunction
+
 function! OpenWithSystemApp(coc_list_context)
-	call luaeval('coc_list_open_file_with(unpack(_A))', [a:coc_list_context, "open"])
+	" call luaeval('coc_list_open_file_with(unpack(_A))', [a:coc_list_context, "open"])
+  call CocListOpenWith(a:coc_list_context, "open")
 endfunction
 
 function! OpenWithFinder(coc_list_context)
-	call luaeval('coc_list_open_file_with(unpack(_A))', [a:coc_list_context, "open -R"])
+	" call luaeval('coc_list_open_file_with(unpack(_A))', [a:coc_list_context, "open -R"])
+  call CocListOpenWith(a:coc_list_context, "open -R")
 endfunction
 
-command! -range TemplateRender call luaeval('template_render(unpack(_A))', [<line1>, <line2>])
-command! -range TemplateSet call luaeval('template_set(unpack(_A))', [<line1>, <line2>])
+"command! Docs call ExploreDir("~/Documents/vim-workspace/docs")
+"command! DotFiles call ExploreDir("~/code/whyreal/dotfiles/")
+
+function ToggleHomeZero()
+    let char_postion = match(getline("."), "\S") + 1
+    let curcol = col(".")
+    if curcol == char_postion
+      call cursor(0, 1)
+    else
+      call cursor(0, char_postion)
+    endif
+endfunction
+"}}}
+" Lua {{{1
+" if has('nvim')
+"     lua package.path = package.path .. ";" ..  "/usr/local/share/lua/5.3/?.lua;/usr/local/share/lua/5.3/?/init.lua;/usr/local/lib/lua/5.3/?.lua;/usr/local/lib/lua/5.3/?/init.lua;./?.lua;./?/init.lua"
+"     lua require("utils")
+" else
+" 	set ttymouse=xterm2
+" 	if has('lua')
+" 	  lua package.path = package.path .. ";" .. os.getenv("HOME") .. "/.vim/lua/?.lua"
+" 	  lua require("utils")
+" 	endif
+" endif
+
+" nnoremap 0 :lua toggle_home_zero()<CR>
+
+" command! -range TemplateRender call luaeval('template_render(unpack(_A))', [<line1>, <line2>])
+" command! -range TemplateSet call luaeval('template_set(unpack(_A))', [<line1>, <line2>])
+
 "noremap o :lua add_blank_line_after()<cr>
 "noremap O :lua add_blank_line_before()<cr>
 

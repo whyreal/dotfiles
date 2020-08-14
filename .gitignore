@@ -12,6 +12,7 @@ sublime_user_conf/*crt
 
 karabiner/automatic_backups/
 
-# vscode 
+# vscode
 vscode-user/globalStorage
 vscode-user/workspaceStorage
+vscode-user/sync/*
