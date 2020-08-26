@@ -218,6 +218,11 @@ Plug 'junegunn/vim-easy-align'
     nmap ga <Plug>(EasyAlign)
 "}}}
 " Markdown{{{2
+Plug 'dhruvasagar/vim-table-mode'
+	" <leader>tm  enable/disable table mode
+	" <leader>tr realign table"
+	let g:table_mode_corner_corner='|'
+	"let g:table_mode_header_fillchar='='
 Plug 'lvht/tagbar-markdown'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 
@@ -268,6 +273,8 @@ au BufWritePost ~/Documents/Note/scripts/ssh.config.json
             \ && ./template.rander.lua ssh.config.hosts.lrt ssh.config.json
             \ > ~/.ssh/config_hosts
 
+command! DeleteSpace %s/\([^#-_ a-zA-z]\)  *\([^#-_ a-zA-z]\)/\1\2/g
+
 "command! VimrcEdit tabe ~/.config/nvim/init.vim
 command! VimrcReload so ~/.config/nvim/init.vim
 " }}}
@@ -301,6 +308,9 @@ inoremap <c-f> <Right>
 noremap! <c-b> <Left>
 noremap! <c-n> <Down>
 noremap! <c-p> <Up>
+
+set thesaurus=~/a.txt
+set complete+=t
 
 " nnoremap 0 :call ToggleHomeZero()<CR>
 

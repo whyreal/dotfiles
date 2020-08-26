@@ -1,4 +1,7 @@
 {
+	"imselect.defaultInput": "com.apple.keylayout.US",
+	"imselect.enableFloating": true,
+	"imselect.enableStatusItem": true,
 	"project.rootPatterns": [".vim/workspace"],
 	"python.jediEnabled": false,
 	"browser.enable": false,
