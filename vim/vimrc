@@ -7,6 +7,11 @@ call plug#begin('~/.vim/plugged')
 let mapleader=","
 
 " Translator {{{2
+" https://github.com/voldikss/vim-translator
+"let g:translator_default_engines = ['baicizhan', 'bing', 'google', 'haici', 'youdao']
+let g:translator_default_engines = ['bing', 'google']
+"let g:translator_window_type='preview'
+let g:translator_history_enable=v:true
 Plug 'voldikss/vim-translator'
 
 	""" Configuration example
@@ -14,8 +19,8 @@ Plug 'voldikss/vim-translator'
 	"nmap <silent> <Leader>t <Plug>Translate
 	"vmap <silent> <Leader>t <Plug>TranslateV
 	" Display translation in a window
-	"nmap <silent> <Leader>w <Plug>TranslateW
-	"vmap <silent> <Leader>w <Plug>TranslateWV
+	nmap <silent> <Leader>tw <Plug>TranslateW
+	vmap <silent> <Leader>tw <Plug>TranslateWV
 	" Replace the text with translation
 	nmap <silent> <Leader>tr <Plug>TranslateR
 	vmap <silent> <Leader>tr <Plug>TranslateRV
@@ -24,6 +29,7 @@ Plug 'voldikss/vim-translator'
 "}}}
 " Terminal {{{2
 Plug 'christoomey/vim-tmux-navigator'
+" https://github.com/habamax/vim-sendtoterm
 Plug 'habamax/vim-sendtoterm'
 
 "}}}
@@ -73,6 +79,7 @@ Plug 'neoclide/coc.nvim' , {'branch': 'release'}
     nmap <silent> gy <Plug>(coc-type-definition)
     nmap <silent> gi <Plug>(coc-implementation)
     nmap <silent> gr <Plug>(coc-references)
+
 
     " Use K for show documentation in preview window
     nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -134,6 +141,8 @@ Plug 'neoclide/coc.nvim' , {'branch': 'release'}
     nnoremap <silent> <leader>f  :<C-u>CocList --ignore-case files<cr>
     nnoremap <silent> <leader>lr  :<C-u>CocList --ignore-case -N mru<cr>
     nnoremap <silent> <leader>lm  :<C-u>CocList --ignore-case -N marks<cr>
+	" grep
+    nnoremap <leader>lg  :<C-u>CocList --ignore-case -N grep 
     " Search
     nnoremap <leader>s  <Plug>(coc-workspaceSymbols)
     " Do default action for next item.
@@ -161,8 +170,6 @@ Plug 'neoclide/coc.nvim' , {'branch': 'release'}
     set statusline^=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}
     "set statusline=\ %t%m%r%h%w%{StatusDiagnostic()}\ %=%(%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y%)\ %([%l,%v][%p%%]\ %)
 
-    hi default CocHighlightText  guibg=darkyellow guifg=red ctermbg=223 ctermfg=red
-
     " Create markmap from the whole file
     nmap <Leader>vm <Plug>(coc-markmap-create)
     " Create markmap from the selected lines
@@ -183,6 +190,8 @@ Plug 'neoclide/coc.nvim' , {'branch': 'release'}
 
   " Use <C-j> for both expand and jump (make expand higher priority.)
   imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+
 "}}}
 "}}}
 " 导航{{{2
@@ -191,6 +200,9 @@ let g:netrw_list_hide='\(^\|\s\s\)\zs\.\S\+'
 let g:netrw_winsize=30
 "let g:netrw_liststyle=3 "tree
 
+" 0 keep the current directory the same as the browsing directory.
+"let g:netrw_keepdir=0
+
 Plug 'vim-voom/VOoM'
     let g:voom_tree_placement = 'right'
     let g:voom_ft_modes = {'markdown': 'pandoc', 'vim': 'fmr'}
@@ -198,6 +210,8 @@ Plug 'vim-voom/VOoM'
     nnoremap <silent> <leader>vv :VoomToggle<CR>
 Plug 'majutsushi/tagbar'
 	 nnoremap <leader>vt :TagbarToggle<cr>
+
+"https://github.com/easymotion/vim-easymotion
 Plug 'easymotion/vim-easymotion'
 	"map <leader><leader> <Plug>(easymotion-prefix)
 "}}}
@@ -218,11 +232,11 @@ Plug 'junegunn/vim-easy-align'
     nmap ga <Plug>(EasyAlign)
 "}}}
 " Markdown{{{2
-Plug 'dhruvasagar/vim-table-mode'
-	" <leader>tm  enable/disable table mode
-	" <leader>tr realign table"
-	let g:table_mode_corner_corner='|'
-	"let g:table_mode_header_fillchar='='
+"Plug 'dhruvasagar/vim-table-mode'
+"	" <leader>tm  enable/disable table mode
+"	" <leader>tr realign table"
+"	let g:table_mode_corner_corner='|'
+"	"let g:table_mode_header_fillchar='='
 Plug 'lvht/tagbar-markdown'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 
@@ -249,11 +263,34 @@ Plug 'neoclide/jsonc.vim'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'challenger-deep-theme/vim'
 "}}}
+" [smartim](https://github.com/ybian/smartim)
+" use [macism](https://github.com/laishulu/macism/) as Input Source Manager
+Plug 'ybian/smartim'
+Plug 'tpope/vim-fugitive'
 
 call plug#end()
 
 filetype plugin indent on
 syntax enable
+
+" Highlight {{{2
+"hi default CocHighlightText  guibg=darkyellow guifg=red ctermbg=223 ctermfg=red
+
+" color cursor position object
+hi link CocHighlightText Visual
+" coclist selected color
+hi link CursorLine Visual
+
+hi link EasyMotionTarget Visual
+hi link EasyMotionShade  Comment
+hi link EasyMotionTarget2First Visual
+hi link EasyMotionTarget2Second Visual
+"hi link EasyMotionTarget2First MatchParen
+"hi link EasyMotionTarget2Second MatchParen
+hi link EasyMotionMoveHL Visual
+hi link EasyMotionIncSearch Visual
+hi link IncSearch Search
+"}}}
 " }}}
 " Command {{{1
 command! Dos2unix e ++ff=unix | %s/\r//g
@@ -281,9 +318,9 @@ command! VimrcReload so ~/.config/nvim/init.vim
 " Autocmd {{{1
 "autocmd FileType c,cpp setlocal ts=4 sw=4 fdm=syntax
 autocmd FileType go setlocal ts=4 sw=4 fdm=syntax
-autocmd FileType java,groovy setlocal ts=4 sw=4 tw=120
 autocmd FileType python,yaml,lua,sh,vim setlocal ts=4 sw=4 fdm=indent
 autocmd FileType markdown setlocal ts=4 sw=4 et
+autocmd FileType java setlocal fdm=syntax ts=4 sw=4 et
 " fix list 中 ”<" 高亮错误
 "autocmd FileType markdown syn cluster htmlTop contains=@Spell,htmlEndTag,htmlSpecialChar,htmlPreProc,htmlComment,htmlLink,javaScript,@htmlPreproc
 " 嵌套 fold
@@ -309,6 +346,8 @@ noremap! <c-b> <Left>
 noremap! <c-n> <Down>
 noremap! <c-p> <Up>
 
+inoremap <c-k> <c-o>D
+
 set thesaurus=~/a.txt
 set complete+=t
 
@@ -316,8 +355,8 @@ set complete+=t
 
 "inoremap <c-k> <c-o>D
 
-"nnoremap j gj
-"nnoremap k gk
+nnoremap j gj
+nnoremap k gk
 
 " previous buffer
 "nnoremap gp :bp<cr>
@@ -336,43 +375,53 @@ set complete+=t
 "nnoremap <silent> <leader>vs :terminal<CR>
 
 " buffer
-nnoremap <leader>bd :bd<cr>
 nnoremap <leader>w :w<cr>
 nnoremap <silent> <leader>bb  :<C-u>CocList --ignore-case -N buffers<cr>
 "nnoremap <silent> <leader>lf  :<C-u>CocList --ignore-case files<cr>
+nnoremap <leader>bd :bd<cr>
+nnoremap <leader>bn :bnext<cr>
+nnoremap <leader>bp :bprevious<cr>
 
 " save
 "inoremap jj <esc>
 
+"https://github.com/weirongxu/coc-explorer
+"nnoremap <leader>ve :CocCommand explorer<CR>
 nnoremap <leader>ve :Explore<CR>
-nnoremap <leader>vr :Rexplore<CR>
+"nnoremap <leader>vr :Rexplore<CR>
 
 nmap <a-=> <Plug>(coc-terminal-toggle)
 tmap <a-=> <c-\><c-n><Plug>(coc-terminal-toggle)
 "tmap <a-=> <c-\><c-n>:TermvimBottomToggle<cr>
 tmap <c-j> <c-\><c-n><c-j>
-tmap <c-h> <c-\><c-n><c-h>
-tmap <c-l> <c-\><c-n><c-l>
+"tmap <c-h> <c-\><c-n><c-h>
+"tmap <c-l> <c-\><c-n><c-l>
 tmap <c-k> <c-\><c-n><c-k>
 tmap <c-o> <c-\><c-n>
 
 " }}}
 " Options && Variables {{{1
-set clipboard+=unnamed
+lua << EOF
+vim.wo.number = true
+vim.wo.relativenumber = true
+vim.o.cursorline = true
+vim.o.clipboard = "unnamed"
+vim.o.foldlevel = 99
+vim.o.fileencodings="utf-8,gbk,ucs-bom,cp936,gb18030,big5,latin1"
+vim.o.modeline = true
+vim.o.modelines=3
+vim.o.smartcase = true
+vim.o.ignorecase = true
+vim.o.mouse="a"
+EOF
 
-set cursorline
-set number relativenumber
-"set foldlevel=99
-set fileencodings=utf-8,gbk,ucs-bom,cp936,gb18030,big5,latin1
-set modeline modelines=3
-set smartcase ignorecase
-set mouse+=a
 "set macmeta
 " make 前自动保存
 "set autowrite
 
 " 命令窗口
 "set cmdwinheight=20
+set cmdheight=2
 
 "set synmaxcol=200
 let loaded_matchparen = 1
@@ -382,10 +431,21 @@ set hidden
 set splitbelow
 set previewheight=8
 set colorcolumn=+1
-set bg=dark
+set bg=light
 "set tgc
 
-colorscheme PaperColor
+"colorscheme PaperColor
+"colorscheme challenger_deep
+"colorscheme molokai
+colorscheme onehalflight
+
+"if has("gui_vimr")
+"	" Here goes some VimR specific settings like
+"	colorscheme challenger_deep
+"else
+"	colorscheme PaperColor
+"endif
+
 "}}}
 " Cabbreviate {{{1
 cabbrev h tab h
