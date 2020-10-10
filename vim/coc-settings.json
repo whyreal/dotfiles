@@ -1,19 +1,21 @@
 {
-	"imselect.defaultInput": "com.apple.keylayout.US",
-	"imselect.enableFloating": true,
-	"imselect.enableStatusItem": true,
-	"project.rootPatterns": [".vim/workspace"],
+	"list.source.files.command": "fd",
+	"list.source.files.args": ["-i", "-H", "-L", "--type", "f"],
+	"list.source.grep.command": "rg",
+	"list.source.grep.args": ["-L", "-i"],
+	"coc.preferences.colorSupport": true,
+	"project.enable": true,
+	"project.rootPatterns": [".vim/workspace", ".git"],
 	"python.jediEnabled": false,
-	"browser.enable": false,
 	"suggest.floatEnable": true,
 	"suggest.maxCompleteItemCount": 20,
 	"coc.preferences.formatOnType": true,
 	"json.enable":true,
 	"json.format.enable":true,
+	"java.maven.downloadSources": true,
 	"java.completion.overwrite": true,
 	"java.import.gradle.enabled": false,
-	"java.jdt.ls.vmargs": "-noverify -Xmx1G -XX:+UseG1GC -XX:+UseStringDeduplication -javaagent:\"/Users/Real/code/whyreal/lombok.jar\" -Xbootclasspath/a:\"/Users/Real/code/whyreal/lombok.jar\"",
-  "java.home": "/Library/Java/JavaVirtualMachines/adoptopenjdk-8-openj9.jdk/Contents/Home/",
+  "java.home": "/Library/Java/JavaVirtualMachines/jdk-11.0.8.jdk/Contents/Home",
 	"java.completion.favoriteStaticMembers": [
 		"org.junit.Assert.*",
 		"org.junit.Assume.*",
@@ -29,8 +31,6 @@
 		"org.springframework.test.web.servlet.setup.MockMvcBuilders.*"
 	],
 	"diagnostic.enable": true,
-	"list.source.files.command": "fd",
-	"list.source.files.args": ["-i", "-H", "-L", "--type", "f"],
 	"list.normalMappings": {
 		"d": "action:delete",
 		"x": "call:OpenWithSystemApp",
@@ -55,10 +55,6 @@
 			"^\\s*\\\""
 		],
 		"gitcommit": []
-	},
-	"translator.toLang": "zh",
-	"translator.engines": [
-		"youdao",
-		"haici"
-	]
+  },
+  "clangd.path": "/Users/Real/.config/coc/extensions/coc-clangd-data/install/10.0.0/clangd_10.0.0/bin/clangd",
 }
