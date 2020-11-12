@@ -1,6 +1,6 @@
 {
 	"list.source.files.command": "fd",
-	"list.source.files.args": ["-i", "-H", "-L", "--type", "f"],
+	"list.source.files.args": ["-i", "-L", "--type", "f"],
 	"list.source.grep.command": "rg",
 	"list.source.grep.args": ["-L", "-i"],
 	"coc.preferences.colorSupport": true,

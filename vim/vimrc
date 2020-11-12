@@ -1,6 +1,10 @@
 " 修改 macvim shell, 解决无法加载 shell 环境变量的问题
 "defaults write org.vim.MacVim MMLoginShellCommand /bin/zsh
 
+let g:loaded_python_provider = 0
+let g:loaded_ruby_provider = 0
+let g:loaded_perl_provider = 0
+
 " Package Manager {{{1
 lua vim.fn["plug#begin"]('~/.vim/plugged')
 
@@ -21,6 +25,8 @@ Plug 'voldikss/vim-translator'
 	" Display translation in a window
 	nmap <silent> <Leader>tw <Plug>TranslateW
 	vmap <silent> <Leader>tw <Plug>TranslateWV
+	nmap <silent> <Space>w <Plug>TranslateW
+	vmap <silent> <Space>w <Plug>TranslateWV
 	" Replace the text with translation
 	nmap <silent> <Leader>tr <Plug>TranslateR
 	vmap <silent> <Leader>tr <Plug>TranslateRV
@@ -34,6 +40,9 @@ Plug 'habamax/vim-sendtoterm'
 
 "}}}
 " COC{{{2
+
+"let g:coc_start_at_startup = 1
+
 Plug 'neoclide/coc.nvim' , {'branch': 'release'}
     " if hidden is not set, TextEdit might fail.
     set hidden
@@ -138,9 +147,9 @@ Plug 'neoclide/coc.nvim' , {'branch': 'release'}
     " Search workspace symbols
     nnoremap <silent> <leader>ls  :<C-u>CocList --ignore-case -N -I symbols<cr>
     "nnoremap <silent> <leader>lb  :<C-u>CocList --ignore-case -N buffers<cr>
-    nnoremap <silent> <leader>f  :<C-u>CocList --ignore-case files<cr>
+    "nnoremap <silent> <leader>f  :<C-u>CocList --ignore-case files<cr>
     nnoremap <silent> <leader>lr  :<C-u>CocList --ignore-case -N mru<cr>
-    nnoremap <silent> <leader>lm  :<C-u>CocList --ignore-case -N marks<cr>
+    "nnoremap <silent> <leader>lm  :<C-u>CocList --ignore-case -N marks<cr>
 	" grep
     nnoremap <leader>lg  :<C-u>CocList --ignore-case -N grep
     " Search
@@ -170,10 +179,10 @@ Plug 'neoclide/coc.nvim' , {'branch': 'release'}
     set statusline^=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}
     "set statusline=\ %t%m%r%h%w%{StatusDiagnostic()}\ %=%(%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y%)\ %([%l,%v][%p%%]\ %)
 
-    " Create markmap from the whole file
-    nmap <Leader>vm <Plug>(coc-markmap-create)
-    " Create markmap from the selected lines
-    vmap <Leader>vm <Plug>(coc-markmap-create-v)
+	" Create markmap from the whole file
+	nmap <Leader>vm <Plug>(coc-markmap-create)
+	" Create markmap from the selected lines
+	vmap <Leader>vm <Plug>(coc-markmap-create-v)
 
   " coc-snippet {{{3
   " Use <C-l> for trigger snippet expand.
@@ -215,14 +224,14 @@ Plug 'majutsushi/tagbar'
 	 nnoremap <leader>vt :TagbarToggle<cr>
 
 "https://github.com/easymotion/vim-easymotion
-Plug 'easymotion/vim-easymotion'
+"Plug 'easymotion/vim-easymotion'
 	"map <leader><leader> <Plug>(easymotion-prefix)
 "}}}
 " 补全{{{2
 "Plug 'wellle/tmux-complete.vim'
 "    let g:tmuxcomplete#trigger = 'omnifunc'
 Plug 'honza/vim-snippets'
-Plug 'tpope/vim-surround'
+"Plug 'tpope/vim-surround'
 "Plug 'neovim/nvim-lspconfig'
 "}}}
 " 注释{{{2
@@ -244,7 +253,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'lvht/tagbar-markdown'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 
-Plug 'godlygeek/tabular'
+"Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 	" Fix: Folding and Unfolding when typing in insert mode
 	" https://github.com/plasticboy/vim-markdown/issues/414
@@ -278,11 +287,33 @@ Plug 'altercation/vim-colors-solarized'
 
 Plug 'challenger-deep-theme/vim'
 "}}}
+" FZF{{{2
+"https://github.com/junegunn/fzf.vim
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+	nnoremap <silent> <leader>lm  :Marks<cr>
+	nnoremap <silent> <leader>f   :Files<cr>
+	nnoremap <silent> <leader>lb  :Buffers<cr>
+	nnoremap <silent> <leader>lw  :Windows<cr>
+	nnoremap <silent> <leader>lc  :Commands<cr>
+
+    command! -bang -nargs=? -complete=dir Files
+        \ call fzf#vim#files(<q-args>, {'options': [
+		\ '--preview', 'cat {}',
+		\ '--preview-window', 'right:50%:hidden',
+		\ '--bind=X:execute(open {})+abort,ctrl-_:toggle-preview',
+		\ '--info=inline']}, <bang>0)
+"}}}
 " [smartim](https://github.com/ybian/smartim)
 " use [macism](https://github.com/laishulu/macism/) as Input Source Manager
 Plug 'ybian/smartim'
 
+" git
 Plug 'tpope/vim-fugitive'
+
+" https://github.com/psliwka/vim-smoothie 平滑滚动
+Plug 'psliwka/vim-smoothie'
 
 lua vim.fn["plug#end"]()
 
@@ -381,9 +412,6 @@ noremap! <c-p> <Up>
 
 inoremap <c-k> <c-o>D
 
-set thesaurus=~/a.txt
-set complete+=t
-
 " nnoremap 0 :call ToggleHomeZero()<CR>
 
 "inoremap <c-k> <c-o>D
@@ -409,7 +437,7 @@ nnoremap k gk
 
 " buffer
 nnoremap <leader>w :w<cr>
-nnoremap <silent> <leader>bb  :<C-u>CocList --ignore-case -N buffers<cr>
+"nnoremap <silent> <leader>bb  :<C-u>CocList --ignore-case -N buffers<cr>
 "nnoremap <silent> <leader>lf  :<C-u>CocList --ignore-case files<cr>
 nnoremap <leader>bd :bd<cr>
 nnoremap <leader>bn :bnext<cr>
@@ -423,20 +451,22 @@ nnoremap <leader>bp :bprevious<cr>
 nnoremap <leader>ve :Explore<CR>
 "nnoremap <leader>vr :Rexplore<CR>
 
-nmap <a-=> <Plug>(coc-terminal-toggle)
-tmap <a-=> <c-\><c-n><Plug>(coc-terminal-toggle)
+nmap <a-=> :split term://$SHELL <CR>
+"nmap <a-=> <Plug>(coc-terminal-toggle)
+"tmap <a-=> <c-\><c-n><Plug>(coc-terminal-toggle)
 "tmap <a-=> <c-\><c-n>:TermvimBottomToggle<cr>
-tmap <c-j> <c-\><c-n><c-j>
+"tmap <c-j> <c-\><c-n><c-j>
 "tmap <c-h> <c-\><c-n><c-h>
 "tmap <c-l> <c-\><c-n><c-l>
-tmap <c-k> <c-\><c-n><c-k>
+"tmap <c-k> <c-\><c-n><c-k>
 tmap <c-o> <c-\><c-n>
 
 " }}}
 " Options && Variables {{{1
 lua << EOF
-vim.wo.number = true
-vim.wo.relativenumber = true
+-- vim.wo.foldcolumn = "1"
+-- vim.wo.number = true
+-- vim.wo.relativenumber = true
 vim.o.cursorline = true
 vim.o.clipboard = "unnamed"
 vim.o.foldlevel = 99
@@ -467,11 +497,12 @@ set colorcolumn=+1
 set bg=light
 "set tgc
 
-"colorscheme PaperColor
+colorscheme PaperColor
 "colorscheme challenger_deep
 "colorscheme molokai
+"colorscheme solarized
 "colorscheme onehalflight
-colorscheme solarized
+"colorscheme onehalfdark
 
 
 "if has("gui_vimr")
@@ -483,32 +514,33 @@ colorscheme solarized
 
 "}}}
 " Cabbreviate {{{1
-cabbrev h tab h
+"cabbrev h tab h
 "}}}
 " Functions {{{1
-function ExploreDir(path)
-  execute "lcd " . a:path
-  execute "Explore " . a:path
-endfunction
 
-function CocListOpenWith(coc_list_context, cmd)
-  let list_name = a:coc_list_context["name"]
-  let label_name = a:coc_list_context["targets"][0]["label"]
-  call substitute(label_name, " ", "\\ ", "g")
-  if list_name == "files"
-	  call system(a:cmd . " " . label_name)
-  endif
-endfunction
+"function CocListOpenWith(coc_list_context, cmd)
+  "let list_name = a:coc_list_context["name"]
+  "let label_name = a:coc_list_context["targets"][0]["label"]
+  "call substitute(label_name, " ", "\\ ", "g")
+  "if list_name == "files"
+	  "call system(a:cmd . " " . label_name)
+  "endif
+"endfunction
 
-function! OpenWithSystemApp(coc_list_context)
-	" call luaeval('coc_list_open_file_with(unpack(_A))', [a:coc_list_context, "open"])
-  call CocListOpenWith(a:coc_list_context, "open")
-endfunction
+"function! OpenWithSystemApp(coc_list_context)
+	"" call luaeval('coc_list_open_file_with(unpack(_A))', [a:coc_list_context, "open"])
+  "call CocListOpenWith(a:coc_list_context, "open")
+"endfunction
 
-function! OpenWithFinder(coc_list_context)
-	" call luaeval('coc_list_open_file_with(unpack(_A))', [a:coc_list_context, "open -R"])
-  call CocListOpenWith(a:coc_list_context, "open -R")
-endfunction
+"function! OpenWithFinder(coc_list_context)
+	"" call luaeval('coc_list_open_file_with(unpack(_A))', [a:coc_list_context, "open -R"])
+  "call CocListOpenWith(a:coc_list_context, "open -R")
+"endfunction
+
+"function ExploreDir(path)
+  "execute "lcd " . a:path
+  "execute "Explore " . a:path
+"endfunction
 
 "command! Docs call ExploreDir("~/Documents/vim-workspace/docs")
 "command! DotFiles call ExploreDir("~/code/whyreal/dotfiles/")

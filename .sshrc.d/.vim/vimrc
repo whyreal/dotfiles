@@ -78,8 +78,8 @@ if &t_Co == 8 && $TERM !~# '^Eterm'
 endif
 
 " ------------------------- custom ------------
-set bg=dark
-colorscheme desert
+set bg=light
+" colorscheme desert
 set statusline=\ %t%m%r%h%w\ %=%(%{&ff}\|%{(&fenc==\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\")}%k\|%Y%)
 set cursorline
 set number relativenumber
