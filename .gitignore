@@ -16,3 +16,6 @@ karabiner/automatic_backups/
 vscode-user/globalStorage
 vscode-user/workspaceStorage
 vscode-user/sync/*
+
+vim.vim
+vim/plugin/packer_compiled.vim
