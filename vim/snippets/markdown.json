@@ -1,0 +1,57 @@
+{
+	"Insert link with clipboard": {
+		"prefix": "link",
+		"body": [
+			"[${1:title}](${CLIPBOARD:link})"
+		]
+	},
+	"Insert img with clipboard": {
+		"prefix": "img",
+		"body": [
+			"![${1:title}](${CLIPBOARD:link})"
+		]
+	},
+	"Insert pandoc header": {
+		"prefix": "pandoc_header",
+		"body": [
+			"---",
+			"title: ${1:title}",
+			"toc-title: 目录",
+			"toc: 1",
+			"keywords:",
+			"- ${2:key word}",
+			"..."
+		]
+	},
+	"zkzy doc header": {
+		"prefix": "zkzy_doc_header",
+		"body": [
+			"\\",
+			"\\",
+			"\\",
+			"",
+			"|            |               |            |",
+			"|----------- | ------------  | ------     |",
+			"|文件版本：  | V1.0          | 文件编号： |",
+			"|发布日期：  | $CURRENT_YEAR年$CURRENT_MONTH月$CURRENT_DATE日 | 编    制： |",
+			"|审    核：  |               | 批    准： |",
+			"",
+			"\\",
+			"\\",
+			"\\",
+			"",
+			"　　　　修订记录：",
+			"",
+			"| 修订版本号    | 修订人         | 修订日期      | 修订描述 |",
+			"| ------------- | -------------- | ----          | ----     |",
+			"| 1.0           | 张瑞           | $CURRENT_YEAR年$CURRENT_MONTH月$CURRENT_DATE日 | 创建     |",
+			"",
+			"\\newpage",
+			"",
+			"\\toc",
+			"",
+			"\\newpage",
+			""
+		]
+	}
+}
