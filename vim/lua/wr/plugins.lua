@@ -1,39 +1,11 @@
--- Only required if you have packer in your `opt` pack
-vim.cmd [[packadd packer.nvim]]
--- Only if your version of Neovim doesn't have https://github.com/neovim/neovim/pull/12632 merged
--- vim._update_package_paths()
-
-wr = {}
-
-wr.map_opts = {noremap = false, silent = false, expr = false}
-
-wr.map = function(mode, lhs, rhs, opts)
-    opts = vim.tbl_extend('force', wr.map_opts, opts or {})
-    vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
-end
-
-wr.autocmd = function(cmd) vim.api.nvim_command("autocmd " .. cmd) end
-
-wr.check_back_space = function ()
-    local col = vim.fn.col('.') - 1
-    if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
-        return true
-    else
-        return false
-    end
-end
-
 return require('packer').startup(function()
 
-    -- Packer can manage itself as an optional plugin
     use {
         'wbthomason/packer.nvim',
-        -- opt = true,
         config = function()
             wr.autocmd("BufWritePost plugins.lua PackerCompile")
         end
     }
-
     use {
         'nvim-lua/completion-nvim',
         lock = true,
@@ -45,11 +17,10 @@ return require('packer').startup(function()
             vim.g.completion_matching_ignore_case = 1
             vim.g.completion_enable_snippet = 'vim-vsnip'
             vim.g.completion_confirm_key = ""
-            vim.g.completion_chain_complete_list =
-                {
-                    {complete_items = {'lsp', 'snippet', 'buffers', 'path'}},
-                    {mode = '<c-p>'}, {mode = '<c-n>'}
-                }
+			vim.g.completion_chain_complete_list = {
+				{complete_items = {'lsp', 'snippet', 'buffers', 'path'}},
+				{mode = '<c-p>'}, {mode = '<c-n>'}
+			}
 
         end
     }
@@ -58,9 +29,8 @@ return require('packer').startup(function()
         requires = {{'hrsh7th/vim-vsnip-integ'}},
         config = function()
             vim.g.vsnip_snippet_dir = vim.env.HOME .. "/.config/nvim/snippets"
-            wr.map('i', '<CR>', [[pumvisible() ? complete_info()["selected"] != "-1" ? "\<Plug>(completion_confirm_completion)" : "\<c-e>\<CR>" : (delimitMate#WithinEmptyPair() ? "\<Plug>delimitMateCR" : "\<CR>")]], {expr = true})
-
-            wr.map('i', '<TAB>', [[pumvisible() ? "\<C-n>" : vsnip#available(1) ? "\<Plug>(vsnip-expand-or-jump)" : v:lua.wr.check_back_space() ? "\<TAB>" : completion#trigger_completion()]], {expr = true})
+            wr.map('i', '<CR>', "v:lua.wr.imap_cr()", {expr = true})
+            wr.map('i', '<TAB>', [[v:lua.wr.imap_tab() ? "" : "\<Plug>(vsnip-expand-or-jump)"]], {expr = true})
             wr.map('s', '<TAB>', [[vsnip#jumpable(1) ? "\<Plug>(vsnip-jump-next)" : "\<Tab>"]], {expr = true})
 
             wr.map('i', '<S-TAB>', [[pumvisible() ? "\<C-p>" : "\<C-h>"]], {expr = true})
@@ -210,4 +180,37 @@ return require('packer').startup(function()
         end
     }
 
+	use { 'kyazdani42/nvim-web-devicons'}
+	use { 'romgrk/barbar.nvim', 
+		disable = true,
+		config = function()
+			wr.map('n', '<A-1>', ':BufferGoto 1<CR>', {silent = true})
+			wr.map('n', '<A-2>', ':BufferGoto 2<CR>', {silent = true})
+			wr.map('n', '<A-3>', ':BufferGoto 3<CR>', {silent = true})
+			wr.map('n', '<A-4>', ':BufferGoto 4<CR>', {silent = true})
+			wr.map('n', '<A-5>', ':BufferGoto 5<CR>', {silent = true})
+			wr.map('n', '<A-6>', ':BufferGoto 6<CR>', {silent = true})
+			wr.map('n', '<A-7>', ':BufferGoto 7<CR>', {silent = true})
+			wr.map('n', '<A-8>', ':BufferGoto 8<CR>', {silent = true})
+			wr.map('n', '<A-9>', ':BufferLast<CR>', {silent = true})
+		end}
+--" Magic buffer-picking mode
+--nnoremap <silent> <C-s> :BufferPick<CR>
+--" Sort automatically by...
+--nnoremap <silent> <Space>bd :BufferOrderByDirectory<CR>
+--nnoremap <silent> <Space>bl :BufferOrderByLanguage<CR>
+--" Move to previous/next
+--nnoremap <silent>    <A-,> :BufferPrevious<CR>
+--nnoremap <silent>    <A-.> :BufferNext<CR>
+--" Re-order to previous/next
+--nnoremap <silent>    <A-<> :BufferMovePrevious<CR>
+--nnoremap <silent>    <A->> :BufferMoveNext<CR>
+--" Goto buffer in position...
+--" Close buffer
+--nnoremap <silent>    <A-c> :BufferClose<CR>
+--" Wipeout buffer
+--"                          :BufferWipeout<CR>
+--" Other:
+--" :BarbarEnable - enables barbar (enabled by default)
+--" :BarbarDisable - very bad command, should never be used
 end)

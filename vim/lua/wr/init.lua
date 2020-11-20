@@ -1,19 +1,128 @@
-require('wr.utils')
+require("wr.lib")
+
+local vim = vim
+---------------------
+-- Global WR
+---------------------
+wr = {}
+
+wr.map_opts = {noremap = false, silent = false, expr = false}
+wr.autocmd = function(cmd) vim.api.nvim_command("autocmd " .. cmd) end
+
+wr.map = function(mode, lhs, rhs, opts)
+    opts = vim.tbl_extend('force', wr.map_opts, opts or {})
+    vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
+end
+
+wr.check_back_space = function ()
+    local col = vim.fn.col('.') - 1
+    if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+        return true
+    else
+        return false
+    end
+end
+
+wr.imap_cr = function ()
+    if vim.fn.pumvisible() ~= 0 then
+        if vim.fn["complete_info"]()["selected"] ~= -1 then
+            vim.fn["completion#wrap_completion"]()
+        else
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<c-e><CR>", true, false, true), 'n', true)
+        end
+    else
+            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<CR>", true, false, true), 'n', true)
+    end
+    return ""
+end
+
+wr.imap_tab = function ()
+    if vim.fn.pumvisible() ~= 0 then
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<c-n>", true, false, true), 'n', true)
+    elseif vim.fn["vsnip#available"](1) ~= 0 then
+        -- "<Plug>(vsnip-expand-or-jump)"
+        return false
+    elseif wr.check_back_space() then
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true), 'n', true)
+    else
+        vim.fn["completion#trigger_completion"]()
+    end
+    return true
+end
+
+wr.new_command = function(s)
+	vim.api.nvim_command('command! ' .. s)
+end
+
+wr.toggle_home_zero = function()
+    local char_postion, _ = vim.api.nvim_get_current_line():find("[^%s]")
+	if char_postion == nil then return end
+	char_postion = char_postion	- 1
+    local position = vim.api.nvim_win_get_cursor(0)
+    if position[2] == char_postion then
+        vim.api.nvim_win_set_cursor(0, {position[1], 0})
+    else
+        vim.api.nvim_win_set_cursor(0, {position[1], char_postion})
+    end
+end
+
+function wr.cd_workspace(path)
+	vim.api.nvim_command("lcd " .. path)
+    vim.api.nvim_command("Explore " .. path)
+end
+
+function wr.add_blank_line_before()
+	local current_line = vim.api.nvim_win_get_cursor(0)[1]
+	vim.api.nvim_buf_set_lines(0, current_line - 1, current_line - 1,0, {""})
+end
+
+function wr.add_blank_line_after()
+	local current_line = vim.api.nvim_win_get_cursor(0)[1]
+	vim.api.nvim_buf_set_lines(0, current_line, current_line,0, {""})
+end
+
+
+function wr.edit_remote_file(file)
+    vim.command("set buftype=nofile")
+    local remote_host = exists("w:remote_host")
+    if remote_host then
+        vim.command("e scp://" .. remote_host .. "/" .. file)
+    end
+end
+
+local function insert_cmd_output(cmd)
+    local b = vim.buffer()
+
+    local output = io.popen(cmd)
+    for line in output:lines() do
+        b:insert(line)
+    end
+    btarget[1] = nil
+end
+
+function wr.update_server_info()
+    vim.command("set fdm=marker buftype=nofile")
+    local script = "~/.vim/scripts/server_info.sh"
+
+    local remote_host = exists("w:remote_host")
+    if remote_host then
+        local cmd = "cat " .. script .." | ssh -T " .. remote_host
+        vim.window().line = 1
+        vim.command("normal dG")
+        insert_cmd_output(cmd)
+        vim.window().line = 1
+    end
+end
+----------------
+-- option
+----------------
+vim.g.mapleader = ","
 
 vim.g.loaded_node_provider    = 0
 vim.g.loaded_python_provider  = 0
 --vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider    = 0
 vim.g.loaded_perl_provider    = 0
-
---if vim.fn.has('nvim') == 1 then
-    ---- do something...
---end
-
-----------------
--- option
-----------------
-vim.g.mapleader = ","
 
 vim.o.cursorline    = true
 vim.o.clipboard     = "unnamed"
@@ -38,66 +147,91 @@ vim.o.shortmess = "filnxtToOFc"
 vim.o.cedit = "<C-R>"  -- open command line window
 
 ----------------
+-- Plugins
+----------------
+require("wr.plugins")
+
+----------------
 -- map
 ----------------
-vim.api.nvim_set_keymap('!', '<c-a>',      '<Home>',                      { noremap = true, silent = false })
-vim.api.nvim_set_keymap('!', '<c-e>',      '<End>',                       { noremap = true, silent = false })
-vim.api.nvim_set_keymap('!', '<c-f>',      '<Right>',                     { noremap = true, silent = false })
-vim.api.nvim_set_keymap('!', '<c-b>',      '<Left>',                      { noremap = true, silent = false })
-vim.api.nvim_set_keymap('i', '<c-k>',      '<c-o>D',                      { noremap = true, silent = false })
--- map <c-n> <c-p> 后，补全菜单不会 insert 体验很差
+-- map <c-n> <c-p> 后，补全菜单不会自动 insert 体验很差
 --vim.api.nvim_set_keymap('i', '<c-n>',      '<Down>',                      { noremap = false, silent = false })
 --vim.api.nvim_set_keymap('i', '<c-p>',      '<Up>',                        { noremap = false, silent = false })
+wr.map('!', '<c-a>',      '<Home>' )
+wr.map('!', '<c-e>',      '<End>' )
+wr.map('!', '<c-f>',      '<Right>' )
+wr.map('!', '<c-b>',      '<Left>' )
+wr.map('i', '<c-k>',      '<c-o>D' )
 
-vim.api.nvim_set_keymap('n', 'j',          'gj',                          { noremap = true, silent = false })
-vim.api.nvim_set_keymap('n', 'k',          'gk',                          { noremap = true, silent = false })
+wr.map('n', 'j',          'gj' )
+wr.map('n', 'k',          'gk' )
 
-vim.api.nvim_set_keymap('n', '<leader>bp', ':bprevious<CR>',              { noremap = true, silent = false })
-vim.api.nvim_set_keymap('n', '<leader>bn', ':bnext<CR>',                  { noremap = true, silent = false })
-vim.api.nvim_set_keymap('n', '<leader>bd', ':bd<CR>',                     { noremap = true, silent = false })
+wr.map('n', '<leader>bp', ':bprevious<CR>' )
+wr.map('n', '<leader>bn', ':bnext<CR>' )
+wr.map('n', '<leader>bd', ':bd<CR>' )
 
-vim.api.nvim_set_keymap('n', '<leader>w',  ':w<CR>',                      { noremap = true, silent = false })
-vim.api.nvim_set_keymap('n', '<leader>ve', ':Explore<CR>',                { noremap = true, silent = false })
-vim.api.nvim_set_keymap('t', '<c-o>',      '<c-\\><c-n>',                 { noremap = true, silent = false })
-vim.api.nvim_set_keymap('n', '<a-=>',      ':split term://$SHELL<CR>',    { noremap = true, silent = false })
+wr.map('n', '<leader>w',  ':w<CR>' )
+wr.map('n', '<leader>ve', ':Explore<CR>' )
+wr.map('t', '<c-o>',      '<c-\\><c-n>' )
+wr.map('n', '<a-=>',      ':split term://$SHELL<CR>' )
 
-vim.api.nvim_set_keymap('n', '0',          ":lua require'wr.utils'.toggle_home_zero()<CR>", { noremap = true, silent = true })
+wr.map('n', '0',          ":lua wr.toggle_home_zero()<CR>" )
 --vim.api.nvim_set_keymap('n', 'o',          ':lua add_blank_line_after()<CR>', { noremap = true, silent = true })
 --vim.api.nvim_set_keymap('n', 'O',          ':lua add_blank_line_before()<CR>', { noremap = true, silent = true })
 
 ----------------
 -- autocmd
 ----------------
-vim.api.nvim_command('autocmd FileType go setlocal ts=4 sw=4')
-vim.api.nvim_command('autocmd FileType python,yaml,lua,sh,vim setlocal ts=4 sw=4')
-vim.api.nvim_command('autocmd FileType markdown setlocal ts=4 sw=4 et')
-vim.api.nvim_command('autocmd FileType markdown let g:tagbar_sort = 0')
-vim.api.nvim_command('autocmd FileType java,c,cpp setlocal ts=4 sw=4 et')
-vim.api.nvim_command('autocmd FileType nginx setlocal ts=4 sw=4')
-vim.api.nvim_command('autocmd FileType snippets setlocal ts=4 sw=4')
-vim.api.nvim_command('autocmd FileType jsp,xml,html,css setlocal ts=2 sw=2')
-vim.api.nvim_command('autocmd FileType javascript,typescript.tsx,json setlocal ts=2 sw=2')
-vim.api.nvim_command('autocmd FileType help nmap <buffer> <c-]> <c-]>')
+wr.autocmd('FileType go setlocal ts=4 sw=4')
+wr.autocmd('FileType python,yaml,lua,sh,vim setlocal ts=4 sw=4')
+wr.autocmd('FileType markdown setlocal ts=4 sw=4 et')
+wr.autocmd('FileType markdown let g:tagbar_sort = 0')
+wr.autocmd('FileType java,c,cpp setlocal ts=4 sw=4 et')
+wr.autocmd('FileType nginx setlocal ts=4 sw=4')
+wr.autocmd('FileType snippets setlocal ts=4 sw=4')
+wr.autocmd('FileType jsp,xml,html,css setlocal ts=2 sw=2')
+wr.autocmd('FileType javascript,typescript.tsx,json setlocal ts=2 sw=2')
+wr.autocmd('FileType help nmap <buffer> <c-]> <c-]>')
 
-vim.api.nvim_command('autocmd BufNewFile,BufRead *.json setlocal filetype=jsonc ts=2 sw=2')
-vim.api.nvim_command('autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx')
-vim.api.nvim_command('autocmd BufNewFile,BufRead *.jsx set filetype=javascript.jsx')
-vim.api.nvim_command('autocmd BufNewFile,BufRead *.docker set filetype=Dockerfile')
+wr.autocmd('BufNewFile,BufRead *.json setlocal filetype=jsonc ts=2 sw=2')
+wr.autocmd('BufNewFile,BufRead *.tsx set filetype=typescript.tsx')
+wr.autocmd('BufNewFile,BufRead *.jsx set filetype=javascript.jsx')
+wr.autocmd('BufNewFile,BufRead *.docker set filetype=Dockerfile')
 
-vim.api.nvim_command('autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif')
+wr.autocmd('BufEnter * if &filetype == "" | setlocal ft=text | endif')
 
 ---------------------
 -- Command
 ---------------------
 vim.api.nvim_command('filetype plugin indent on')
 vim.api.nvim_command('colorscheme PaperColor')
-vim.api.nvim_command('command! VimrcEdit tabe ~/.config/nvim/init.vim')
-vim.api.nvim_command('command! Dos2unix e ++ff=unix | %s/\r//g')
+wr.new_command('VimrcEdit tabe ~/.config/nvim/init.vim')
+wr.new_command('Dos2unix e ++ff=unix | %s/\r//g')
 vim.api.nvim_command('syntax on')
 
 -- Sshconfig
-vim.api.nvim_command('command! Sshconfig tabe ~/Documents/Note/scripts/ssh.config.json')
-vim.api.nvim_command('au BufWritePost ~/Documents/Note/scripts/ssh.config.json !update_ssh_config.sh')
+wr.new_command('Sshconfig tabe ~/Documents/Note/scripts/ssh.config.json')
+wr.autocmd('BufWritePost ~/Documents/Note/scripts/ssh.config.json !update_ssh_config.sh')
 -- shadowsocks config
-vim.api.nvim_command('command! Ssconfig tabe ~/.ShadowsocksX/user-rule.txt')
-vim.api.nvim_command('au BufWritePost ~/.ShadowsocksX/user-rule.txt !update_ss_config.sh')
+wr.new_command('Ssconfig tabe ~/.ShadowsocksX/user-rule.txt')
+wr.autocmd('BufWritePost ~/.ShadowsocksX/user-rule.txt !update_ss_config.sh')
+
+function wr.template_set(firstline, lastline)
+    wr.view = vim.api.nvim_buf_get_lines(0, firstline - 1, lastline, false)
+    wr.view = table.concat(wr.view, "\n")
+end
+
+function wr.template_render(firstline, lastline)
+    local template = require "resty.template"
+	local data_lines = vim.api.nvim_buf_get_lines(0, firstline - 1, lastline, false)
+    for _, data in ipairs(data_lines) do
+        local output = template.process(wr.view, {d = string.split(data)})
+		vim.api.nvim_buf_set_lines(0, lastline, lastline, false, string.split(output, "\n"))
+	end
+end
+
+wr.new_command("-range TemplateRender call luaeval('wr.template_render(unpack(_A))', [<line1>, <line2>])")
+wr.new_command("-range TemplateSet call luaeval('wr.template_set(unpack(_A))', [<line1>, <line2>])")
+
+-- command! -nargs=1 Edit lua edit_remote_file(<f-args>)
+-- command! ServerUpdateInfo lua update_server_info()
