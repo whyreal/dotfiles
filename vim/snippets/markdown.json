@@ -53,5 +53,55 @@
 			"\\newpage",
 			""
 		]
+	},
+	"下周计划":{
+		"prefix": "next_weekly_plan",
+		"body": [
+			"## ${VIM:trim(system('date -v+1w -vMond \"+%m-%d\"'))} -- ${VIM:trim(system('date -v+1w -v+Sund \"+%m-%d\"'))}",
+			"",
+			"### 周一（${VIM:trim(system('date -v+1w -vMond  \"+%m-%d\"'))}）",
+			"",
+			"### 周二（${VIM:trim(system('date -v+1w -vTued  \"+%m-%d\"'))}）",
+			"",
+			"### 周三（${VIM:trim(system('date -v+1w -vWedd  \"+%m-%d\"'))}）",
+			"",
+			"### 周四（${VIM:trim(system('date -v+1w -vThud  \"+%m-%d\"'))}）",
+			"",
+			"### 周五（${VIM:trim(system('date -v+1w -vFrid  \"+%m-%d\"'))}）",
+			"",
+			"### 周六（${VIM:trim(system('date -v+1w -vSatd  \"+%m-%d\"'))}）",
+			"",
+			"### 周日（${VIM:trim(system('date -v+1w -v+Sund \"+%m-%d\"'))}）"
+		]
+	},
+
+	"周报":{
+		"prefix": "weekly_report",
+		"body": [
+			"## ${VIM:trim(system('date -vMond \"+%m-%d\"'))} -- ${VIM:trim(system('date -v+Sund \"+%m-%d\"'))}",
+			"",
+			"### 周一（${VIM:trim(system('date -vMond  \"+%m-%d\"'))}）",
+			"",
+			"### 周二（${VIM:trim(system('date -vTued  \"+%m-%d\"'))}）",
+			"",
+			"### 周三（${VIM:trim(system('date -vWedd  \"+%m-%d\"'))}）",
+			"",
+			"### 周四（${VIM:trim(system('date -vThud  \"+%m-%d\"'))}）",
+			"",
+			"### 周五（${VIM:trim(system('date -vFrid  \"+%m-%d\"'))}）",
+			"",
+			"### 周六（${VIM:trim(system('date -vSatd  \"+%m-%d\"'))}）",
+			"",
+			"### 周日（${VIM:trim(system('date -v+Sund \"+%m-%d\"'))}）",
+			""
+		]
+	},
+	"code block": {
+		"prefix":"code",
+		"body":[
+			"```${1:language}",
+			"$0",
+			"```"
+		]
 	}
 }
