@@ -64,5 +64,20 @@
         "body": "function ${1:func}(${2:})\n\t${0:-- body}\nend",
         "description": "function",
         "scope": "source.lua"
-    }
+    },
+		"new_object":{
+				"prefix": "new_object",
+				"body": [
+					"${1:Object_name} = { }",
+					"function ${1}:new(${2:args})",
+					"\tlocal o = {$0}",
+					"",
+					"\tsetmetatable(o, self)",
+					"\tself.__index = self",
+					"\treturn o",
+					"end"
+				],
+        "description": "new_object",
+        "scope": "source.lua"
+		}
 }

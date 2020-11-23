@@ -28,6 +28,3 @@ compdef _sshwr ssh
 compdef _sshwr sftp
 
 # vim: fdm=marker sw=4 ts=4 et ft=zsh
-
-
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

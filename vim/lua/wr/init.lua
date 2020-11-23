@@ -2,12 +2,12 @@ require("wr.lib")
 
 local vim = vim
 ---------------------
--- Global WR
+-- Global WR Object
 ---------------------
 wr = {}
 
 wr.map_opts = {noremap = false, silent = false, expr = false}
-wr.autocmd = function(cmd) vim.api.nvim_command("autocmd " .. cmd) end
+wr.autocmd = function(cmd) vim.cmd("autocmd " .. cmd) end
 
 wr.map = function(mode, lhs, rhs, opts)
     opts = vim.tbl_extend('force', wr.map_opts, opts or {})
@@ -51,7 +51,7 @@ wr.imap_tab = function ()
 end
 
 wr.new_command = function(s)
-	vim.api.nvim_command('command! ' .. s)
+	vim.cmd('command! ' .. s)
 end
 
 wr.toggle_home_zero = function()
@@ -67,8 +67,8 @@ wr.toggle_home_zero = function()
 end
 
 function wr.cd_workspace(path)
-	vim.api.nvim_command("lcd " .. path)
-    vim.api.nvim_command("Explore " .. path)
+	vim.cmd("lcd " .. path)
+    vim.cmd("Explore " .. path)
 end
 
 function wr.add_blank_line_before()
@@ -113,6 +113,21 @@ function wr.update_server_info()
         vim.window().line = 1
     end
 end
+
+function wr.template_set(firstline, lastline)
+    wr.view = vim.api.nvim_buf_get_lines(0, firstline - 1, lastline, false)
+    wr.view = table.concat(wr.view, "\n")
+end
+
+function wr.template_render(firstline, lastline)
+    local template = require "resty.template"
+	local data_lines = vim.api.nvim_buf_get_lines(0, firstline - 1, lastline, false)
+    for _, data in ipairs(data_lines) do
+        local output = template.process(wr.view, {d = string.split(data)})
+		vim.api.nvim_buf_set_lines(0, lastline, lastline, false, string.split(output, "\n"))
+	end
+end
+
 ----------------
 -- option
 ----------------
@@ -136,15 +151,15 @@ vim.o.mouse         = "a"
 vim.o.cmdheight     = 2
 vim.o.autowrite     = true
 vim.o.background    = 'dark'
---vim.o.background    = 'light'
+--vim.o.background  = 'light'
 vim.o.colorcolumn   = '+1'
 vim.o.previewheight = 8
 vim.o.splitbelow    = true
 vim.o.hidden        = true
-vim.o.updatetime = 300
-vim.o.completeopt="menuone,noinsert,noselect"
-vim.o.shortmess = "filnxtToOFc"
-vim.o.cedit = "<C-R>"  -- open command line window
+vim.o.updatetime    = 300
+vim.o.completeopt   = "menuone,noinsert,noselect"
+vim.o.shortmess     = "filnxtToOFc"
+vim.o.cedit         = "<C-R>"  -- open command line window
 
 ----------------
 -- Plugins
@@ -168,6 +183,7 @@ wr.map('n', 'k',          'gk' )
 
 wr.map('n', '<leader>bp', ':bprevious<CR>' )
 wr.map('n', '<leader>bn', ':bnext<CR>' )
+wr.map('n', '<leader>bo', '<c-^>' )
 wr.map('n', '<leader>bd', ':bd<CR>' )
 
 wr.map('n', '<leader>w',  ':w<CR>' )
@@ -203,11 +219,11 @@ wr.autocmd('BufEnter * if &filetype == "" | setlocal ft=text | endif')
 ---------------------
 -- Command
 ---------------------
-vim.api.nvim_command('filetype plugin indent on')
-vim.api.nvim_command('colorscheme PaperColor')
+vim.cmd('filetype plugin indent on')
+vim.cmd('colorscheme PaperColor')
 wr.new_command('VimrcEdit tabe ~/.config/nvim/init.vim')
 wr.new_command('Dos2unix e ++ff=unix | %s/\r//g')
-vim.api.nvim_command('syntax on')
+vim.cmd('syntax on')
 
 -- Sshconfig
 wr.new_command('Sshconfig tabe ~/Documents/Note/scripts/ssh.config.json')
@@ -215,20 +231,6 @@ wr.autocmd('BufWritePost ~/Documents/Note/scripts/ssh.config.json !update_ssh_co
 -- shadowsocks config
 wr.new_command('Ssconfig tabe ~/.ShadowsocksX/user-rule.txt')
 wr.autocmd('BufWritePost ~/.ShadowsocksX/user-rule.txt !update_ss_config.sh')
-
-function wr.template_set(firstline, lastline)
-    wr.view = vim.api.nvim_buf_get_lines(0, firstline - 1, lastline, false)
-    wr.view = table.concat(wr.view, "\n")
-end
-
-function wr.template_render(firstline, lastline)
-    local template = require "resty.template"
-	local data_lines = vim.api.nvim_buf_get_lines(0, firstline - 1, lastline, false)
-    for _, data in ipairs(data_lines) do
-        local output = template.process(wr.view, {d = string.split(data)})
-		vim.api.nvim_buf_set_lines(0, lastline, lastline, false, string.split(output, "\n"))
-	end
-end
 
 wr.new_command("-range TemplateRender call luaeval('wr.template_render(unpack(_A))', [<line1>, <line2>])")
 wr.new_command("-range TemplateSet call luaeval('wr.template_set(unpack(_A))', [<line1>, <line2>])")
