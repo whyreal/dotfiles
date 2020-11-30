@@ -1,20 +1,17 @@
-
 return require('packer').startup(function()
 
-	use {
-		'wbthomason/packer.nvim',
+	use { 'wbthomason/packer.nvim',
 		config = function()
 			wr.autocmd("BufWritePost plugins.lua PackerCompile")
 		end
 	}
-	use {
-		'nvim-lua/completion-nvim',
+	use { 'nvim-lua/completion-nvim',
 		lock = true,
 		config = function()
 			wr.autocmd("BufEnter * lua require'completion'.on_attach()")
 
 			vim.g.completion_sorting = "none"
-			vim.g.completion_trigger_keyword_length = 3
+			vim.g.completion_trigger_keyword_length = 2
 			vim.g.completion_trigger_on_delete = 1
 			vim.g.completion_enable_auto_hover = 0
 			vim.g.completion_auto_change_source = 1
@@ -39,8 +36,7 @@ return require('packer').startup(function()
 
 		end
 	}
-	use {
-		'neovim/nvim-lspconfig',
+	use { 'neovim/nvim-lspconfig',
 		--disable = true,
 		config = function ()
 
@@ -72,8 +68,7 @@ return require('packer').startup(function()
 			require'lspconfig'.jdtls.setup{}
 		end
 	}
-	use {
-		'hrsh7th/vim-vsnip',
+	use { 'hrsh7th/vim-vsnip',
 		requires = {{'hrsh7th/vim-vsnip-integ'}},
 		config = function()
 			vim.g.vsnip_snippet_dir = vim.env.HOME .. "/.config/nvim/snippets"
@@ -85,15 +80,18 @@ return require('packer').startup(function()
 			wr.map('s', '<S-TAB>', [[vsnip#jumpable(1) ? "\<Plug>(vsnip-jump-prev)" : "\<S-Tab>"]], {expr = true})
 		end
 	}
-	use {'junegunn/fzf', run = ':call fzf#install()'}
-	use {
-		'junegunn/fzf.vim',
+	--use {'junegunn/fzf', run = ':call fzf#install()'}
+	use { 'junegunn/fzf.vim',
 		config = function()
-			wr.map('n', '<leader>lm', ':Marks<CR>')
-			wr.map('n', '<leader>f', ':Files<CR>')
-			wr.map('n', '<leader>lb', ':Buffers<CR>')
-			wr.map('n', '<leader>lw', 'Windows<CR>')
-			wr.map('n', '<leader>lc', 'Commands<CR>')
+			wr.map('n', '<leader>fm', ':Marks<CR>')
+			wr.map('n', '<leader>ff', ':Files<CR>')
+			wr.map('n', '<leader>fb', ':Buffers<CR>')
+			wr.map('n', '<leader>fw', ':Windows<CR>')
+			wr.map('n', '<leader>fc', ':Commands<CR>')
+			wr.map('n', '<leader>f/', ':History/<CR>')
+			wr.map('n', '<leader>f;', ':History:<CR>')
+			wr.map('n', '<leader>fr', ':History<CR>')
+			wr.map('n', '<leader>fl', ':BLines<CR>')
 		end
 	}
 
@@ -101,8 +99,7 @@ return require('packer').startup(function()
 	use {'Raimondi/delimitMate'}
 
 	-- Color Theme
-	use {
-		'nvim-treesitter/nvim-treesitter',
+	use { 'nvim-treesitter/nvim-treesitter',
 		config = function()
 			require'nvim-treesitter.configs'.setup {
 				ensure_installed = "maintained",
@@ -114,8 +111,7 @@ return require('packer').startup(function()
 	}
 	use {'NLKNguyen/papercolor-theme', lock = true}
 	use {'challenger-deep-theme/vim', lock = true}
-	use {
-		'altercation/vim-colors-solarized',
+	use { 'altercation/vim-colors-solarized',
 		lock = true,
 		config = function()
 			vim.g.solarized_termcolors = 256
@@ -126,8 +122,7 @@ return require('packer').startup(function()
 
 	-- 输入法切换
 	-- [smartim](https://github.com/ybian/smartim)
-	use {
-		'ybian/smartim',
+	use { 'ybian/smartim',
 		lock = true,
 		-- use [macism](https://github.com/laishulu/macism/) as Input Source Manager
 		run = 'cp /usr/local/bin/macism plugin/im-select'
@@ -136,8 +131,7 @@ return require('packer').startup(function()
 	------------------
 	-- Translator
 	------------------
-	use {
-		'voldikss/vim-translator',
+	use { 'voldikss/vim-translator',
 		lock = true,
 		config = function()
 			vim.g.translator_default_engines = {'bing', 'google'}
@@ -178,14 +172,19 @@ return require('packer').startup(function()
 	-- let g:netrw_keepdir=0
 	vim.g.netrw_bookmarklist = "[$PWD]"
 
-	use {
-		'vim-voom/VOoM',
+	use { 'vim-voom/VOoM',
 		lock = true,
 		config = function()
 			vim.g.voom_tree_placement = 'right'
 			vim.g.voom_ft_modes = {markdown = 'pandoc', vim = 'fmr'}
 			vim.g.voom_always_allow_move_left = 1
 			wr.map('n', '<leader>vv', ':VoomToggle<CR>')
+		end
+	}
+
+	use { 'preservim/tagbar',
+		config = function ()
+			wr.map('n', '<leader>vt', ':TagbarToggle<CR>')
 		end
 	}
 
@@ -197,13 +196,11 @@ return require('packer').startup(function()
 	-----------------
 	-- Markdown
 	-----------------
-	use {
-		'iamcco/markdown-preview.nvim',
+	use { 'iamcco/markdown-preview.nvim',
 		run = 'cd app & yarn install',
 		lock = true
 	}
-	use {
-		'plasticboy/vim-markdown',
+	use { 'plasticboy/vim-markdown',
 		lock = true,
 		config = function()
 			-- Fix: Folding and Unfolding when typing in insert mode
@@ -217,8 +214,7 @@ return require('packer').startup(function()
 	}
 
 	-- 对齐
-	use {
-		'junegunn/vim-easy-align',
+	use { 'junegunn/vim-easy-align',
 		lock = true,
 		config = function()
 			-- Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -227,8 +223,205 @@ return require('packer').startup(function()
 			wr.map('n', 'ga', '<Plug>(EasyAlign)')
 		end
 	}
+	use {'kyazdani42/nvim-web-devicons'}
+	use { 'glepnir/galaxyline.nvim',
+		branch = 'main',
+		disable = true,
+		config = function()
+			local gl = require('galaxyline')
+			local gls = gl.section
+			gl.short_line_list = {'LuaTree','vista','dbui'}
 
-	use { 'kyazdani42/nvim-web-devicons'}
+			local colors = {
+				bg = '#282c34',
+				line_bg = '#353644',
+				fg = '#8FBCBB',
+				fg_green = '#65a380',
+
+				yellow = '#fabd2f',
+				cyan = '#008080',
+				darkblue = '#081633',
+				green = '#afd700',
+				orange = '#FF8800',
+				purple = '#5d4d7a',
+				magenta = '#c678dd',
+				blue = '#51afef';
+				red = '#ec5f67'
+			}
+
+			local buffer_not_empty = function()
+				if vim.fn.empty(vim.fn.expand('%:t')) ~= 1 then
+					return true
+				end
+				return false
+			end
+
+			gls.left[1] = {
+				FirstElement = {
+					provider = function() return '▊ ' end,
+					highlight = {colors.blue,colors.line_bg}
+				},
+			}
+			gls.left[2] = {
+				ViMode = {
+					provider = function()
+						-- auto change color according the vim mode
+						local mode_color = {n = colors.magenta, i = colors.green,v=colors.blue,[''] = colors.blue,V=colors.blue,
+						c = colors.red,no = colors.magenta,s = colors.orange,S=colors.orange,
+						[''] = colors.orange,ic = colors.yellow,R = colors.purple,Rv = colors.purple,
+						cv = colors.red,ce=colors.red, r = colors.cyan,rm = colors.cyan, ['r?'] = colors.cyan,
+						['!']  = colors.red,t = colors.red}
+						vim.api.nvim_command('hi GalaxyViMode guifg='..mode_color[vim.fn.mode()])
+						return '  '
+					end,
+					highlight = {colors.red,colors.line_bg,'bold'},
+				},
+			}
+			gls.left[3] ={
+				FileIcon = {
+					provider = 'FileIcon',
+					condition = buffer_not_empty,
+					highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color,colors.line_bg},
+				},
+			}
+			gls.left[4] = {
+				FileName = {
+					provider = {'FileName','FileSize'},
+					condition = buffer_not_empty,
+					highlight = {colors.fg,colors.line_bg,'bold'}
+				}
+			}
+
+			--[[
+			   [gls.left[5] = {
+			   [    GitIcon = {
+			   [        provider = function() return '  ' end,
+			   [        condition = require('galaxyline.provider_vcs').check_git_workspace,
+			   [        highlight = {colors.orange,colors.line_bg},
+			   [    }
+			   [}
+			   [gls.left[6] = {
+			   [    GitBranch = {
+			   [        provider = 'GitBranch',
+			   [        condition = require('galaxyline.provider_vcs').check_git_workspace,
+			   [        highlight = {'#8FBCBB',colors.line_bg,'bold'},
+			   [    }
+			   [}
+			   ]]
+
+			--local checkwidth = function()
+				--local squeeze_width  = vim.fn.winwidth(0) / 2
+				--if squeeze_width > 40 then
+					--return true
+				--end
+				--return false
+			--end
+
+			--gls.left[7] = {
+				--DiffAdd = {
+					--provider = 'DiffAdd',
+					--condition = checkwidth,
+					--icon = ' ',
+					--highlight = {colors.green,colors.line_bg},
+				--}
+			--}
+			--gls.left[8] = {
+				--DiffModified = {
+					--provider = 'DiffModified',
+					--condition = checkwidth,
+					--icon = ' ',
+					--highlight = {colors.orange,colors.line_bg},
+				--}
+			--}
+			--gls.left[9] = {
+				--DiffRemove = {
+					--provider = 'DiffRemove',
+					--condition = checkwidth,
+					--icon = ' ',
+					--highlight = {colors.red,colors.line_bg},
+				--}
+			--}
+			--[[
+			   [gls.left[10] = {
+			   [    LeftEnd = {
+			   [        provider = function() return '' end,
+			   [        separator = '',
+			   [        separator_highlight = {colors.bg,colors.line_bg},
+			   [        highlight = {colors.line_bg,colors.line_bg}
+			   [    }
+			   [}
+			   ]]
+			gls.left[11] = {
+				DiagnosticError = {
+					provider = 'DiagnosticError',
+					icon = '  ',
+					highlight = {colors.red,colors.bg}
+				}
+			}
+			gls.left[12] = {
+				Space = {
+					provider = function () return ' ' end
+				}
+			}
+			gls.left[13] = {
+				DiagnosticWarn = {
+					provider = 'DiagnosticWarn',
+					icon = '  ',
+					highlight = {colors.blue,colors.bg},
+				}
+			}
+			gls.right[1]= {
+				FileFormat = {
+					provider = 'FileFormat',
+					--separator = ' ',
+					separator_highlight = {colors.bg,colors.line_bg},
+					highlight = {colors.fg,colors.line_bg,'bold'},
+				}
+			}
+			gls.right[2] = {
+				LineInfo = {
+					provider = 'LineColumn',
+					separator = ' | ',
+					separator_highlight = {colors.blue,colors.line_bg},
+					highlight = {colors.fg,colors.line_bg},
+				},
+			}
+			gls.right[3] = {
+				PerCent = {
+					provider = 'LinePercent',
+					separator = ' ',
+					separator_highlight = {colors.line_bg,colors.line_bg},
+					highlight = {colors.cyan,colors.darkblue,'bold'},
+				}
+			}
+			gls.right[4] = {
+				ScrollBar = {
+					provider = 'ScrollBar',
+					highlight = {colors.blue,colors.purple},
+				}
+			}
+
+			gls.short_line_left[1] = {
+				BufferType = {
+					provider = 'FileTypeName',
+					separator = '',
+					separator_highlight = {colors.purple,colors.bg},
+					highlight = {colors.fg,colors.purple}
+				}
+			}
+
+
+			gls.short_line_right[1] = {
+				BufferIcon = {
+					provider= 'BufferIcon',
+					separator = '',
+					separator_highlight = {colors.purple,colors.bg},
+					highlight = {colors.fg,colors.purple}
+				}
+			}
+		end,
+		-- some optional icons
+	}
 	use { 'romgrk/barbar.nvim',
 	disable = true,
 	config = function()
@@ -261,4 +454,7 @@ return require('packer').startup(function()
 		--" :BarbarEnable - enables barbar (enabled by default)
 		--" :BarbarDisable - very bad command, should never be used
 	end}
+
+	use {'dag/vim-fish'}
+
 end)

@@ -3,11 +3,11 @@
 	"rules":[
 
 		{
-			"description": "make left_ctrl as Fn",
+			"description": "make right_option as Fn",
 			"manipulators": [
 				{
 					"from": {
-						"key_code": "left_ctrl",
+						"key_code": "right_option",
 						"modifiers": {
 							"optional": [
 								"any"

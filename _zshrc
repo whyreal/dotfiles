@@ -1,30 +1,18 @@
-if [[ $TERM_PROGRAM = "Apple_Terminal" ]]; then
-    ZSH_TMUX_AUTOSTART=false
-fi
+# update zsh_plugins.sh
+#antibody bundle < ~/.zsh_plugins.txt > ~/.zsh_plugins.sh
 
-if [[ $TERM_PROGRAM = "vscode" ]]; then
-    ZSH_TMUX_AUTOSTART=false
-fi
 
-ZSH_TMUX_UNICODE=true
+export _ZL_CMD="j"
+source ~/.zsh_plugins.sh
 
-source /usr/local/Cellar/antigen/2.2.3/share/antigen/antigen.zsh
-antigen use oh-my-zsh
-
-#antigen bundle vi-mode
-antigen bundle fzf
-antigen bundle tmux
-antigen bundle skywind3000/z.lua
-antigen bundle whyreal/zsh_functions 
-antigen theme candy
-antigen apply
-
-# antigen hacked `compdef`, we should reinit it.
 autoload -Uz compinit && compinit
-compdef vs='sshrc'
-compdef ssh.excute_local_script='sshrc'
-compdef _sshwr scp
-compdef _sshwr ssh
-compdef _sshwr sftp
 
+# compdef vs='sshrc'
+# compdef ssh.excute_local_script='sshrc'
+# compdef _sshwr scp
+# compdef _sshwr ssh
+# compdef _sshwr sftp
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # vim: fdm=marker sw=4 ts=4 et ft=zsh
+

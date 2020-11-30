@@ -24,11 +24,6 @@
 							"key_code": "return_or_enter"
 						}
 					],
-					"to_if_held_down": [
-						{
-							"key_code": "return_or_enter"
-						}
-					],
 					"type": "basic"
 				}
 			]

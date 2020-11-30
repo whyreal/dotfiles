@@ -1,3 +1,7 @@
+hs.hotkey.bind({"cmd", "alt", "ctrl"}, "W", function()
+  hs.notify.new({title="Hammerspoon", informativeText="Hello World"}):send()
+end)
+
 hs.hotkey.alertDuration = 0
 hs.hints.showTitleThresh = 0
 hs.window.animationDuration = 0
@@ -9,7 +13,7 @@ hs.loadSpoon("ModalMgr")
 if not hspoon_list then
     hspoon_list = {
         "BingDaily",
-		"ClipboardTool",
+		--"ClipboardTool",
         "WinWin",
 		"ModalMgr"
         --"AClock",
@@ -20,7 +24,7 @@ if not hspoon_list then
         --"HSaria2",
         --"HSearch",
         --"SpeedMenu",
-        -- "FnMate",
+        --"FnMate",
         --"VimMode",
     }
 end
@@ -34,12 +38,14 @@ end
 -- Then we create/register all kinds of modal keybindings environments.
 ----------------------------------------------------------------------------------------------------
 -- Register windowHints (Register a keybinding which is NOT modal environment with modal supervisor)
-hswhints_keys = hswhints_keys or {"alt", "tab"}
-if string.len(hswhints_keys[2]) > 0 then
-    spoon.ModalMgr.supervisor:bind(hswhints_keys[1], hswhints_keys[2], 'Show Window Hints', function()
-        spoon.ModalMgr:deactivateAll()
-        hs.hints.windowHints()
-    end)
+if spoon.ModalMgr then
+	hswhints_keys = hswhints_keys or {"alt", "tab"}
+	if string.len(hswhints_keys[2]) > 0 then
+		spoon.ModalMgr.supervisor:bind(hswhints_keys[1], hswhints_keys[2], 'Show Window Hints', function()
+			spoon.ModalMgr:deactivateAll()
+			hs.hints.windowHints()
+		end)
+	end
 end
 
 if spoon.ClipboardTool then

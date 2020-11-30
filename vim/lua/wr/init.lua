@@ -6,7 +6,7 @@ local vim = vim
 ---------------------
 wr = {}
 
-wr.map_opts = {noremap = false, silent = false, expr = false}
+wr.map_opts = {noremap = false, silent = true, expr = false}
 wr.autocmd = function(cmd) vim.cmd("autocmd " .. cmd) end
 
 wr.map = function(mode, lhs, rhs, opts)
@@ -139,7 +139,9 @@ vim.g.loaded_python_provider  = 0
 vim.g.loaded_ruby_provider    = 0
 vim.g.loaded_perl_provider    = 0
 
-vim.o.cursorline    = true
+vim.o.laststatus    = 2
+vim.o.termguicolors = false
+vim.o.cursorline    = false
 vim.o.clipboard     = "unnamed"
 vim.o.foldlevel     = 99
 vim.o.fileencodings = "utf-8,gbk,ucs-bom,cp936,gb18030,big5,latin1"
@@ -160,7 +162,7 @@ vim.o.updatetime    = 300
 vim.o.completeopt   = "menuone,noinsert,noselect"
 vim.o.shortmess     = "filnxtToOFc"
 vim.o.cedit         = "<C-R>"  -- open command line window
-
+vim.o.statusline="%t %h%w%m%r %=%(%l,%c%V %= %P%)"
 ----------------
 -- Plugins
 ----------------
@@ -172,10 +174,10 @@ require("wr.plugins")
 -- map <c-n> <c-p> 后，补全菜单不会自动 insert 体验很差
 --vim.api.nvim_set_keymap('i', '<c-n>',      '<Down>',                      { noremap = false, silent = false })
 --vim.api.nvim_set_keymap('i', '<c-p>',      '<Up>',                        { noremap = false, silent = false })
-wr.map('!', '<c-a>',      '<Home>' )
-wr.map('!', '<c-e>',      '<End>' )
-wr.map('!', '<c-f>',      '<Right>' )
-wr.map('!', '<c-b>',      '<Left>' )
+wr.map('i', '<c-a>',      '<Home>' )
+wr.map('i', '<c-e>',      '<End>' )
+wr.map('i', '<c-f>',      '<Right>' )
+wr.map('i', '<c-b>',      '<Left>' )
 wr.map('i', '<c-k>',      '<c-o>D' )
 
 wr.map('n', 'j',          'gj' )
@@ -195,6 +197,11 @@ wr.map('n', '0',          ":lua wr.toggle_home_zero()<CR>" )
 --vim.api.nvim_set_keymap('n', 'o',          ':lua add_blank_line_after()<CR>', { noremap = true, silent = true })
 --vim.api.nvim_set_keymap('n', 'O',          ':lua add_blank_line_before()<CR>', { noremap = true, silent = true })
 
+wr.map('n', '<a-1>',  '1gt' )
+wr.map('n', '<a-2>',  '2gt' )
+wr.map('n', '<a-3>',  '3gt' )
+wr.map('n', '<a-4>',  '4gt' )
+wr.map('n', '<a-5>',  '5gt' )
 ----------------
 -- autocmd
 ----------------
@@ -220,7 +227,7 @@ wr.autocmd('BufEnter * if &filetype == "" | setlocal ft=text | endif')
 -- Command
 ---------------------
 vim.cmd('filetype plugin indent on')
-vim.cmd('colorscheme PaperColor')
+vim.cmd('colorscheme smyck')
 wr.new_command('VimrcEdit tabe ~/.config/nvim/init.vim')
 wr.new_command('Dos2unix e ++ff=unix | %s/\r//g')
 vim.cmd('syntax on')
@@ -234,6 +241,10 @@ wr.autocmd('BufWritePost ~/.ShadowsocksX/user-rule.txt !update_ss_config.sh')
 
 wr.new_command("-range TemplateRender call luaeval('wr.template_render(unpack(_A))', [<line1>, <line2>])")
 wr.new_command("-range TemplateSet call luaeval('wr.template_set(unpack(_A))', [<line1>, <line2>])")
+
+wr.new_command("Reveals !open -R %:S")
+wr.new_command("Code !open -a \"Visual Studio Code.app\" %:S")
+
 
 -- command! -nargs=1 Edit lua edit_remote_file(<f-args>)
 -- command! ServerUpdateInfo lua update_server_info()
