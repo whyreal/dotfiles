@@ -22,11 +22,10 @@ alias secp='copy_remote_screen_message_content_to_local_clipboard'
 alias sqlplus='rlwrap sqlplus'
 alias telnet='nc -vz -w 1'
 
-alias z='_zlua -I'
 export EDITOR='nvim'
 
 set -x FZF_DEFAULT_OPTS "--extended --cycle"
-set -x FZF_DEFAULT_COMMAND 'fd -i -I -L --type f'
+set -x FZF_DEFAULT_COMMAND 'fd -i -L -H -E .git -E .svn --type f'
 set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 
 # golang
@@ -44,10 +43,11 @@ set -x NVIM_LISTEN_ADDRESS /tmp/nvimsocket
 alias vim='nvim'
 
 # use vim as man pager
-set -x MANPAGER "command vim -c 'MANPAGER' -c 'set fdm=indent ts=7 sw=7' -"
-set -g fish_user_paths "/usr/local/sbin" $fish_user_paths
-set -g fish_user_paths "$HOME/Documents/Note/scripts/" $fish_user_paths
-set -g fish_user_paths "/usr/local/opt/mysql-client/bin" $fish_user_paths
+set -x MANPAGER "command vim -c 'MANPAGER' -c 'set fdm=indent ts=7 sw=7 clipboard=unnamed' -"
+
+set -g fish_user_paths "/usr/local/sbin"                  $fish_user_paths
+set -g fish_user_paths "$HOME/Documents/Note/scripts/"    $fish_user_paths
+set -g fish_user_paths "/usr/local/opt/mysql-client/bin"  $fish_user_paths
 set -g fish_user_paths "/Applications/instantclient_18_1" $fish_user_paths
 
 set -g fish_user_paths "/usr/local/apache-maven-3.6.3/bin/" $fish_user_paths
@@ -77,8 +77,6 @@ function ssh.execute_local_script
     end
     set -l host $argv[1]
     set -l script $argv[2]
-    echo $host
-    echo $script
     cat $script | ssh -T $host
 end
 function vs
@@ -108,3 +106,11 @@ function oracle.env.gb2312
     echo export NLS_LANG=AMERICAN_AMERICA.ZHS16GBK
 end
 
+
+function z
+    if test -z $argv[1]
+        _zlua -I .
+    else
+        _zlua -I $argv
+    end
+end
