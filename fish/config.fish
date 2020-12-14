@@ -24,6 +24,8 @@ alias telnet='nc -vz -w 1'
 
 export EDITOR='nvim'
 
+set -x LANG "en_US.UTF-8"
+
 set -x FZF_DEFAULT_OPTS "--extended --cycle"
 set -x FZF_DEFAULT_COMMAND 'fd -i -L -H -E .git -E .svn --type f'
 set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
@@ -35,15 +37,16 @@ set -x GO111MODULE on # Enable the go modules feature
 set -x GOPROXY https://goproxy.cn #Set the GOPROXY environment variable
 
 # lua
-set -x LUA_PATH "./?.lua;./?/init.lua;/usr/local/luarocks/share/lua/5.1/?.lua;/usr/local/luarocks/share/lua/5.1/?/init.lua"
-set -x LUA_CPATH './?.so;/usr/local/luarocks/share/lua/5.1/?.so'
+set -x LUA_PATH "./?.lua;./?/init.lua;/Users/Real/.luarocks/share/lua/5.1/?.lua;/Users/Real/.luarocks/share/lua/5.1/?/init.lua"
+set -x LUA_CPATH './?.so;/Users/Real/.luarocks/lib/lua/5.1/?.so'
+alias luarocks='luarocks --lua-dir=/usr/local/opt/lua@5.1'
 
 # neovim
 set -x NVIM_LISTEN_ADDRESS /tmp/nvimsocket
 alias vim='nvim'
 
 # use vim as man pager
-set -x MANPAGER "command vim -c 'MANPAGER' -c 'set fdm=indent ts=7 sw=7 clipboard=unnamed' -"
+set -x MANPAGER 'nvim +Man!'
 
 set -g fish_user_paths "/usr/local/sbin"                  $fish_user_paths
 set -g fish_user_paths "$HOME/Documents/Note/scripts/"    $fish_user_paths
@@ -62,11 +65,19 @@ set -g fish_user_paths "/Users/Real/Library/Python/3.8/bin" $fish_user_paths
 # rustlang
 set -g fish_user_paths "$HOME/.cargo/bin" $fish_user_paths
 
+# neovim
+set -g fish_user_paths "/usr/local/nvim-osx64/bin/" $fish_user_paths
+
 function proxy.ss.active
+
+    git config --global http.proxy 127.0.0.1:1087
+    #git config --local http.proxy 127.0.0.1:1087
     set -x http_proxy "http://127.0.0.1:1087"
     set -x https_proxy "http://127.0.0.1:1087"
 end
 function proxy.ss.deactive
+    git config --global --unset http.proxy
+    #git config --local --unset http.proxy
     set -x http_proxy ""
     set -x https_proxy ""
 end

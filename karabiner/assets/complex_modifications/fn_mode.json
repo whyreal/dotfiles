@@ -1,7 +1,43 @@
 {
 	"title": "Fn-mode",
 	"rules":[
-
+		{
+			"description": "make grave_accent_and_tilde as Fn",
+			"manipulators": [
+				{
+					"from": {
+						"key_code": "grave_accent_and_tilde",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+					},
+					"to": [
+						{
+							"set_variable": {
+								"name": "fn_mode",
+								"value": 1
+							}
+						}
+					],
+					"to_after_key_up": [
+						{
+							"set_variable": {
+								"name": "fn_mode",
+								"value": 0
+							}
+						}
+					],
+					"to_if_alone": [
+						{
+							"key_code": "grave_accent_and_tilde"
+						}
+					],
+					"type": "basic"
+				}
+			]
+		},
 		{
 			"description": "make right_option as Fn",
 			"manipulators": [
