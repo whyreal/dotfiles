@@ -14,12 +14,15 @@ M.setup = function ()
 		wr.map('n', '<leader>fm', ':Marks<CR>')
 		wr.maplua('n', '<leader>ff', 'wr.fzfwrap.files()')
 		wr.maplua('n', '<leader>fb', 'wr.fzfwrap.buffers()')
+		wr.maplua('n', '<leader>fg', 'wr.fzfwrap.grep()')
 		wr.map('n', '<leader>fw', ':Windows<CR>')
 		wr.map('n', '<leader>fc', ':Commands<CR>')
 		wr.map('n', '<leader>f/', ':History/<CR>')
 		wr.map('n', '<leader>f;', ':History:<CR>')
 		wr.map('n', '<leader>fr', ':History<CR>')
 		wr.map('n', '<leader>fl', ':BLines<CR>')
+
+		wr.new_cmd('-nargs=* Rg', 'call luaeval("wr.fzfwrap.rg(_A)", shellescape(<q-args>))')
 	end }
 end
 

@@ -10,7 +10,9 @@ local init = function()
 
 	require"wr.plugin_builtin_lsp".setup()
 	--require"wr.plugin_coc".setup()
-	require"wr.plugin_treesitter".setup()
+	if vim.fn.has('vimr') == 0 then
+		require"wr.plugin_treesitter".setup()
+	end
 	require"wr.plugin_fuzzy_finder".setup()
 	require"wr.plugin_theme".setup()
 	require"wr.plugin_markdown".setup()
@@ -47,7 +49,7 @@ local init = function()
 	use { 'voldikss/vim-translator',
 	lock = true,
 	config = function()
-		vim.g.translator_default_engines = {'bing'}
+		vim.g.translator_default_engines = {'bing', 'google'}
 		vim.g.translator_history_enable = true
 
 		-- Echo translation in the cmdline
@@ -113,7 +115,7 @@ local init = function()
 end
 
 packer.init({
-	--compile_path = vim.fn.stdpath('config') .. '/plugin/compiled.vim'
+	compile_path = vim.fn.stdpath('config') .. '/plugin/packer_compiled.vim'
 })
 
 packer.reset()

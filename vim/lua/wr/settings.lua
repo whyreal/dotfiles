@@ -35,7 +35,7 @@ vim.o.hidden        = true
 vim.o.updatetime    = 300
 vim.o.completeopt   = "menuone,noinsert,noselect"
 vim.o.shortmess     = "filnxtToOFc"
-vim.o.cedit         = "<C-R>"  -- open command line window
+--vim.o.cedit         = "<C-R>"  -- open command line window
 vim.o.statusline="%t %h%w%m%r %=%(%l,%c%V %= %P%)"
 vim.wo.linebreak = true
 vim.wo.breakindent = true
@@ -47,11 +47,11 @@ vim.wo.breakindentopt = 'shift:0'
 -- map <c-n> <c-p> 后，补全菜单不会自动 insert 体验很差
 --vim.api.nvim_set_keymap('i', '<c-n>',      '<Down>',                      { noremap = false, silent = false })
 --vim.api.nvim_set_keymap('i', '<c-p>',      '<Up>',                        { noremap = false, silent = false })
-wr.map('i', '<c-a>',      '<Home>' )
-wr.map('i', '<c-e>',      '<End>' )
-wr.map('i', '<c-f>',      '<Right>' )
-wr.map('i', '<c-b>',      '<Left>' )
-wr.map('i', '<c-k>',      '<c-o>D' )
+--wr.map('i', '<c-a>',      '<Home>' )
+--wr.map('i', '<c-e>',      '<End>' )
+--wr.map('i', '<c-f>',      '<Right>' )
+--wr.map('i', '<c-b>',      '<Left>' )
+--wr.map('i', '<c-k>',      '<c-o>D' )
 wr.map('i', 'jj',      '<ESC>' )
 
 wr.map('n', 'j',          'gj' )
@@ -72,11 +72,6 @@ wr.maplua('n', '0',          "wr.toggle_home_zero()" )
 --vim.api.nvim_set_keymap('n', 'o',          ':lua add_blank_line_after()<CR>', { noremap = true, silent = true })
 --vim.api.nvim_set_keymap('n', 'O',          ':lua add_blank_line_before()<CR>', { noremap = true, silent = true })
 
-wr.map('n', '<a-1>',  '1gt' )
-wr.map('n', '<a-2>',  '2gt' )
-wr.map('n', '<a-3>',  '3gt' )
-wr.map('n', '<a-4>',  '4gt' )
-wr.map('n', '<a-5>',  '5gt' )
 ----------------
 -- autocmd
 ----------------

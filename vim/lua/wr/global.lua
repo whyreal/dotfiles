@@ -184,6 +184,11 @@ M.fzfwrap.buffers = function()
                                     '--info=inline'}}, false)
 end
 
+M.fzfwrap.rg = function (arg)
+	local cmd = 'rg -L --column --line-number --no-heading --color=always --smart-case -- ' .. arg
+	vim.fn['fzf#vim#grep'](cmd, 1, vim.fn['fzf#vim#with_preview'](), 0)
+end
+
 local Separator = {}
 function Separator:new(str, cursor, after, smart)
  	local o = {}
@@ -215,7 +220,7 @@ function Separator:add()
 	if not self.smart then
 		vim.api.nvim_win_set_cursor(0, self.cursor)
 	elseif self.after then
-		index, _ = self.line:find_right("[^%s]%s", self.cursor[2], false)
+		index, _ = self.line:find_right("[^%s][%s%.,]", self.cursor[2], false)
 
 		if index ~= nil then
 			vim.api.nvim_win_set_cursor(0, {self.cursor[1], index - 1})
@@ -249,7 +254,7 @@ function Separator:remove()
 	vim.api.nvim_buf_set_lines(0, self.cursor[1] - 1, self.cursor[1], false, {self.line})
 
 	if self:should_move_cursor() then
-		vim.api.nvim_win_set_cursor(0, {self.cursor[1], self.cursor[2] - self.len})
+		vim.api.nvim_win_set_cursor(0, {self.cursor[1], self.cursor[2] - self.str:len()})
 	end
 end
 
@@ -326,6 +331,7 @@ function TextRange:make_list()
 	local tmplist = {}
 	for index, line in ipairs(lines) do
 		if line ~= "" then
+			line = line:gsub("^%s+", "", 1)
 			table.insert(tmplist, "- " .. line)
 		end
 	end
@@ -349,6 +355,7 @@ function TextRange:make_ordered_list()
 	local tmplist = {}
 	for index, line in ipairs(lines) do
 		if line ~= "" then
+			line = line:gsub("^%s+", "", 1)
 			table.insert(tmplist, #tmplist + 1 .. ". " .. line)
 		end
 	end
