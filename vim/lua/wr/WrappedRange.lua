@@ -115,7 +115,7 @@ function WrappedRange:range_inner()
 end
 
 function WrappedRange:select_inner()
-	self.range_inner()
+	self:range_inner()
 	vim.api.nvim_command('normal gv')
 end
 

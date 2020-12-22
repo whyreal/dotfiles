@@ -25,19 +25,11 @@ function Range:newFromFind(cursor, str, after, plain)
 		end
 
 		l, r = txt:find_right(str, cursor.col, plain)
-		--if not l then
-			--l = tlen
-			--r = tlen
-		--end
 	else
 		if cursor.col == nil then
 			cursor.col = tlen
 		end
 		l, r = txt:find_left(str, cursor.col, plain)
-		--if not l then
-			--l = 0
-			--r = 0
-		--end
 	end
 
 	local start = Cursor:new({cursor.line, l})
@@ -56,13 +48,13 @@ function Range:newFromCursor(cursor)
 	local txt = vim.api.nvim_buf_get_lines(0, cursor.line - 1, cursor.line, false)[1]
 	local tlen = txt:len()
 
-	local left = Range:newFromFind(cursor, "[^%s][%s%.,]",false, false)
+	local left = Range:newFromFind(cursor, "%S%s",false, false)
 	if not left.start.col then
 		left.start.col = 1
 		left.stop.col = 1
 	end
 
-	local right = Range:newFromFind(cursor, "[^%s]%s", true, false)
+	local right = Range:newFromFind(cursor, "%S%s", true, false)
 	if not right.start.col then
 		right.start.col = tlen
 		right.stop.col = tlen

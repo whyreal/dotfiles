@@ -1,3 +1,5 @@
+local utils = require('wr.utils')
+
 ----------------
 -- option
 ----------------
@@ -52,44 +54,43 @@ vim.wo.breakindentopt = 'shift:0'
 --wr.map('i', '<c-f>',      '<Right>' )
 --wr.map('i', '<c-b>',      '<Left>' )
 --wr.map('i', '<c-k>',      '<c-o>D' )
-wr.map('i', 'jj',      '<ESC>' )
+utils.map('i', 'jj',      '<ESC>' )
 
-wr.map('n', 'j',          'gj' )
-wr.map('n', 'k',          'gk' )
+utils.map('n', 'j',          'gj' )
+utils.map('n', 'k',          'gk' )
 
-wr.mapcmd('n', '<leader>bp', 'bprevious' )
-wr.mapcmd('n', '<leader>bn', 'bnext' )
-wr.mapcmd('n', '<leader>bd', 'bd' )
-wr.mapcmd('n', '<leader>bw', 'bw' )
-wr.mapcmd('n', '<leader>w',  'w' )
-wr.mapcmd('n', '<a-=>',      'split term://$SHELL' )
-wr.map('n', '<leader>bo', '<c-^>' )
+utils.mapcmd('n', '<leader>bp', 'bprevious' )
+utils.mapcmd('n', '<leader>bn', 'bnext' )
+utils.mapcmd('n', '<leader>bd', 'bw' )
+utils.mapcmd('n', '<leader>w',  'w' )
+utils.mapcmd('n', '<a-=>',      'split term://$SHELL' )
+utils.map('n', '<leader>bo', '<c-^>' )
 
-wr.mapcmd('n', '<leader>ve', 'Explore' )
-wr.map('t', '<c-o>',      '<c-\\><c-n>' )
+utils.mapcmd('n', '<leader>ve', 'Explore' )
+utils.map('t', '<c-o>',      '<c-\\><c-n>' )
 
-wr.maplua('n', '0',          "wr.toggle_home_zero()" )
+utils.maplua('n', '0', "require[[wr.utils]].toggle_home_zero()")
 --vim.api.nvim_set_keymap('n', 'o',          ':lua add_blank_line_after()<CR>', { noremap = true, silent = true })
 --vim.api.nvim_set_keymap('n', 'O',          ':lua add_blank_line_before()<CR>', { noremap = true, silent = true })
 
 ----------------
 -- autocmd
 ----------------
-wr.autocmd('FileType go setlocal ts=4 sw=4')
-wr.autocmd('FileType python,yaml,lua,sh,vim setlocal ts=4 sw=4')
-wr.autocmd('FileType java,c,cpp setlocal ts=4 sw=4 et')
-wr.autocmd('FileType nginx setlocal ts=4 sw=4')
-wr.autocmd('FileType snippets setlocal ts=4 sw=4')
-wr.autocmd('FileType jsp,xml,html,css setlocal ts=2 sw=2')
-wr.autocmd('FileType javascript,typescript.tsx,json setlocal ts=2 sw=2')
-wr.autocmd('FileType help nmap <buffer> <c-]> <c-]>')
+utils.autocmd('FileType go setlocal ts=4 sw=4')
+utils.autocmd('FileType python,yaml,lua,sh,vim setlocal ts=4 sw=4')
+utils.autocmd('FileType java,c,cpp setlocal ts=4 sw=4 et')
+utils.autocmd('FileType nginx setlocal ts=4 sw=4')
+utils.autocmd('FileType snippets setlocal ts=4 sw=4')
+utils.autocmd('FileType jsp,xml,html,css setlocal ts=2 sw=2')
+utils.autocmd('FileType javascript,typescript.tsx,json setlocal ts=2 sw=2')
+utils.autocmd('FileType help nmap <buffer> <c-]> <c-]>')
 
-wr.autocmd('BufNewFile,BufRead *.json setlocal filetype=jsonc ts=2 sw=2')
-wr.autocmd('BufNewFile,BufRead *.tsx set filetype=typescript.tsx')
-wr.autocmd('BufNewFile,BufRead *.jsx set filetype=javascript.jsx')
-wr.autocmd('BufNewFile,BufRead *.docker set filetype=Dockerfile')
+utils.autocmd('BufNewFile,BufRead *.json setlocal filetype=jsonc ts=2 sw=2')
+utils.autocmd('BufNewFile,BufRead *.tsx set filetype=typescript.tsx')
+utils.autocmd('BufNewFile,BufRead *.jsx set filetype=javascript.jsx')
+utils.autocmd('BufNewFile,BufRead *.docker set filetype=Dockerfile')
 
-wr.autocmd('BufEnter * if &filetype == "" | setlocal ft=text | endif')
+utils.autocmd('BufEnter * if &filetype == "" | setlocal ft=text | endif')
 
 ---------------------
 -- Command
@@ -97,8 +98,8 @@ wr.autocmd('BufEnter * if &filetype == "" | setlocal ft=text | endif')
 vim.cmd('filetype plugin indent on')
 vim.cmd('colorscheme onehalflight')
 
-wr.new_cmd('VimrcEdit', 'tabe ~/.config/nvim/init.vim')
-wr.new_cmd('Dos2unix', 'e ++ff=unix | %s/\r//g')
+utils.new_cmd('VimrcEdit', 'tabe ~/.config/nvim/init.vim')
+utils.new_cmd('Dos2unix', 'e ++ff=unix | %s/\r//g')
 vim.cmd('syntax on')
 
 if vim.env.tmux_version ~= nil then
@@ -107,19 +108,19 @@ if vim.env.tmux_version ~= nil then
 end
 
 -- Sshconfig
-wr.new_cmd('Sshconfig', 'tabe ~/Documents/Note/scripts/ssh.config.json')
-wr.autocmd('BufWritePost ~/Documents/Note/scripts/ssh.config.json !update_ssh_config.sh')
+utils.new_cmd('Sshconfig', 'tabe ~/Documents/Note/scripts/ssh.config.json')
+utils.autocmd('BufWritePost ~/Documents/Note/scripts/ssh.config.json !update_ssh_config.sh')
 -- shadowsocks config
-wr.new_cmd('Ssconfig', 'tabe ~/.ShadowsocksX/user-rule.txt')
-wr.autocmd('BufWritePost ~/.ShadowsocksX/user-rule.txt !update_ss_config.sh')
+utils.new_cmd('Ssconfig', 'tabe ~/.ShadowsocksX/user-rule.txt')
+utils.autocmd('BufWritePost ~/.ShadowsocksX/user-rule.txt !update_ss_config.sh')
 
-wr.new_cmd("-range TemplateRender", "call luaeval('wr.template_render(unpack(_A))', [<line1>, <line2>])")
-wr.new_cmd("-range TemplateSet", "call luaeval('wr.template_set(unpack(_A))', [<line1>, <line2>])")
+utils.new_cmd("-range TemplateRender", "call luaeval('require[[wr.template]].render(unpack(_A))', [<line1>, <line2>])")
+utils.new_cmd("-range TemplateSet", "call luaeval('require[[wr.template]].set(unpack(_A))', [<line1>, <line2>])")
 
-wr.new_cmd("Reveals", " !open -R %:S")
-wr.new_cmd("Code", "!open -a \"Visual Studio Code.app\" %:S")
+utils.new_cmd("Reveals", " !open -R %:S")
+utils.new_cmd("Code", "!open -a \"Visual Studio Code.app\" %:S")
 
-wr.new_cmd("Docs", "cd /Users/Real/Documents/vim-workspace/docs")
+utils.new_cmd("Docs", "cd /Users/Real/Documents/vim-workspace/docs")
 
 -- command! -nargs=1 Edit lua edit_remote_file(<f-args>)
 -- command! ServerUpdateInfo lua update_server_info()

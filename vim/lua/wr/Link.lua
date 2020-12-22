@@ -19,7 +19,8 @@ function Link:new ()
 		_link = txt
 	end
 
-	if _link:len() == 0 then return o end 
+
+	if _link:len() == 0 then return o end
 
 	if _link:contain("%s") then
 		_start, _end, _link, o.title = _link:find('(%S+)%s+(%S*)')
@@ -38,6 +39,40 @@ function Link:new ()
 	end
 
 	return o
+end
+
+function Link:handler_http()
+	local _cmd
+
+	if self.anchor then
+		_cmd = ("open -a Firefox.app %s://%s#%s"):format(self.proto, self.url, self.anchor)
+	else
+		_cmd = ("open -a Firefox.app %s://%s"):format(self.proto, self.url)
+	end
+
+	vim.fn.system(_cmd)
+end
+
+function Link:handler_https()
+	self:handler_http()
+end
+
+function Link:handler_anchor()
+	self:gotoAnchor()
+end
+
+function Link:handler_scp()
+	vim.cmd(("edit %s://%s"):format(self.proto, self.url))
+	if self.anchor then
+		self:gotoAnchor()
+	end
+end
+
+function Link:handler_file()
+	vim.cmd(("edit %s"):format(self.url))
+	if self.anchor then
+		self:gotoAnchor()
+	end
 end
 
 function Link:copyRWrokspace()
@@ -59,12 +94,13 @@ function Link:copyRWrokspace()
 	local path = vim.fn.expand("%:p")
 	local start, stop, pathRWrokspace
 	local maxTarget = 0
+	local tlen
 	for name, target in pairs(links) do
 		if path:startswith(target) then
 			tlen  = target:len()
 			if tlen > maxTarget then
 				maxTarget = tlen
-				pathRWrokspace = name .. path:sub(tlen + 1)
+				pathRWrokspace = name .. path:sub(tlen)
 			end
 		end
 	end
@@ -88,14 +124,15 @@ function Link:getAnchor()
 		txt = vim.api.nvim_buf_get_lines(0, i - 1, i, false)[1]
 
 		if txt:startswith('#') then
-			_, _, anchor = txt:find("#+%s+(.*)%s*")
+			_, _, anchor = txt:find("#+%s+%[?([^%[%]]+)%]?")
 			return anchor:gsub("%s", "_")
 		end
 	end
 end
 
 function Link:gotoAnchor()
-    local txt, lnr
+    local txt
+	local lnr = 1
 
 	for i = 1, vim.api.nvim_buf_line_count(0) do
 		local txt = vim.api.nvim_buf_get_lines(0, i - 1, i, false)[1]
@@ -107,33 +144,14 @@ function Link:gotoAnchor()
 	end
 
 	vim.api.nvim_win_set_cursor(0, {lnr, 0})
-	vim.cmd("normal zt")
-	vim.cmd("normal zO")
+	vim.cmd("normal! zt")
+	vim.cmd("normal! zO")
 end
 
 function Link:open ()
 	if not self.proto then return end
 
-	if self.proto:startswith("http") then
-		local _cmd
-
-		if self.anchor then
-			_cmd = ("open %s://%s#%s"):format(self.proto, self.url, self.anchor)
-		else
-			_cmd = ("open %s://%s"):format(self.proto, self.url)
-		end
-
-		return vim.fn.system(_cmd)
-	end
-
-	if self.proto == 'anchor' then
-		self:gotoAnchor()
-    end
-
-	if self.proto == 'file' then
-		vim.cmd(("edit %s"):format(self.url) )
-		self:gotoAnchor()
-	end
+	self["handler_" .. self.proto](self)
 end
 
 return Link

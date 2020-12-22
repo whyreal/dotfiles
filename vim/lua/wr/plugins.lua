@@ -5,11 +5,12 @@ local init = function()
 
 	use { 'wbthomason/packer.nvim',
 	config = function()
-		wr.autocmd("BufWritePost plugins.lua PackerCompile")
+local utils = require("wr.utils")
+		utils.autocmd("BufWritePost plugins.lua PackerCompile")
 	end }
 
 	require"wr.plugin_builtin_lsp".setup()
-	--require"wr.plugin_coc".setup()
+	-- require"wr.plugin_coc".setup()
 	if vim.fn.has('vimr') == 0 then
 		require"wr.plugin_treesitter".setup()
 	end
@@ -20,17 +21,18 @@ local init = function()
 	use { 'hrsh7th/vim-vsnip',
 	requires = {{'hrsh7th/vim-vsnip-integ'}},
 	config = function()
+local utils = require("wr.utils")
 		vim.g.vsnip_snippet_dir = vim.env.HOME .. "/.config/nvim/snippets"
 
-		wr.map('i', '<c-!>sej', [[<Plug>(vsnip-expand-or-jump)]] )
-		wr.map('i', '<c-!>sjn', [[<Plug>(vsnip-jump-next)]] )
-		wr.map('i', '<c-!>sjp', [[<Plug>(vsnip-jump-prev)]] )
+		utils.map('i', '<c-!>sej', [[<Plug>(vsnip-expand-or-jump)]] )
+		utils.map('i', '<c-!>sjn', [[<Plug>(vsnip-jump-next)]] )
+		utils.map('i', '<c-!>sjp', [[<Plug>(vsnip-jump-prev)]] )
 
-		wr.maplua('i', '<CR>',    "wr.imap_cr()")
-		wr.maplua('i', '<TAB>',   "wr.imap_tab()")
-		wr.maplua('s', '<TAB>',   "wr.smap_tab()")
-		wr.maplua('i', '<S-TAB>', "wr.imap_stab()")
-		wr.maplua('s', '<S-TAB>', "wr.smap_stab()")
+		utils.maplua('i', '<CR>',    "require[[wr.imap]].cr()")
+		utils.maplua('i', '<TAB>',   "require[[wr.imap]].tab()")
+		utils.maplua('s', '<TAB>',   "require[[wr.smap]].tab()")
+		utils.maplua('i', '<S-TAB>', "require[[wr.imap]].stab()")
+		utils.maplua('s', '<S-TAB>', "require[[wr.smap]].stab()")
 	end }
 
 	-- insert mode auto-completion for quotes, parens, brackets, etc.
@@ -49,22 +51,23 @@ local init = function()
 	use { 'voldikss/vim-translator',
 	lock = true,
 	config = function()
+local utils = require("wr.utils")
 		vim.g.translator_default_engines = {'bing', 'google'}
 		vim.g.translator_history_enable = true
 
 		-- Echo translation in the cmdline
-		wr.map('n', '<leader>tc', '<Plug>Translate')
-		wr.map('v', '<leader>tc', '<Plug>TranslateV')
+		utils.map('n', '<leader>tc', '<Plug>Translate')
+		utils.map('v', '<leader>tc', '<Plug>TranslateV')
 		-- Display translation in a window
-		wr.map('n', '<leader>tw', '<Plug>TranslateW')
-		wr.map('v', '<leader>tw', '<Plug>TranslateWV')
-		wr.map('n', '<LocalLeader>w', '<Plug>TranslateW')
-		wr.map('v', '<LocalLeader>w', '<Plug>TranslateWV')
+		utils.map('n', '<leader>tw', '<Plug>TranslateW')
+		utils.map('v', '<leader>tw', '<Plug>TranslateWV')
+		utils.map('n', '<LocalLeader>w', '<Plug>TranslateW')
+		utils.map('v', '<LocalLeader>w', '<Plug>TranslateWV')
 		-- Replace the text with translation
-		wr.map('n', '<leader>tr', '<Plug>TranslateR')
-		wr.map('v', '<leader>tr', '<Plug>TranslateRV')
+		utils.map('n', '<leader>tr', '<Plug>TranslateR')
+		utils.map('v', '<leader>tr', '<Plug>TranslateRV')
 		-- Translate the text in clipboard
-		wr.map('x', '<leader>x', '<Plug>TranslateX')
+		utils.map('x', '<leader>x', '<Plug>TranslateX')
 
 	end }
 
@@ -81,16 +84,18 @@ local init = function()
 	use { 'vim-voom/VOoM',
 	lock = true,
 	config = function()
+local utils = require("wr.utils")
 		vim.g.voom_tree_placement = 'right'
 		vim.g.voom_ft_modes = {markdown = 'pandoc', vim = 'fmr'}
 		vim.g.voom_always_allow_move_left = 1
-		wr.map('n', '<leader>vv', ':VoomToggle<CR>')
+		utils.map('n', '<leader>vv', ':VoomToggle<CR>')
 	end }
 
 	use { 'preservim/tagbar',
 	lock = true,
 	config = function ()
-		wr.map('n', '<leader>vt', ':TagbarToggle<CR>')
+local utils = require("wr.utils")
+		utils.map('n', '<leader>vt', ':TagbarToggle<CR>')
 	end }
 
 	-- Terminal
@@ -102,10 +107,11 @@ local init = function()
 	use { 'junegunn/vim-easy-align',
 	lock = true,
 	config = function()
+local utils = require("wr.utils")
 		-- Start interactive EasyAlign in visual mode (e.g. vipga)
-		wr.map('x', 'ga', '<Plug>(EasyAlign)')
+		utils.map('x', 'ga', '<Plug>(EasyAlign)')
 		-- Start interactive EasyAlign for a motion/text object (e.g. gaip)
-		wr.map('n', 'ga', '<Plug>(EasyAlign)')
+		utils.map('n', 'ga', '<Plug>(EasyAlign)')
 	end }
 
 	use { 'tpope/vim-surround', lock = true,}
