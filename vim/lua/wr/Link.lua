@@ -1,6 +1,8 @@
 local WrappedRange = require("wr.WrappedRange")
 local mimetypes = require("mimetypes")
 local lfs = require("lfs")
+local lpeg = require("lpeg")
+lpeg.locale(lpeg) 
 
 local Link = {}
 
@@ -8,45 +10,61 @@ local function extension (filename)
     return filename:match(".+%.([%a%d]+)$")
 end
 
-function Link:new()
-    local txt, _start, _end, _link
+local function parse_link(s)
+	local V = lpeg.V
+	local p = lpeg.P{
+		"LINK",
+		LINK = V'md_link'
+		     + V'normal_link',
 
-    local o = {}
+		md_link = "[" * V'id' * "]"
+		        * "(" * V'normal_link'^-1 * V'title'^-1 * ")",
+		id = lpeg.Cg(V'c2', "id"),
+		title = lpeg.space^1 * lpeg.Cg(V'c2', "title"),
+
+		normal_link = V'h' * V'p'
+		            + V'p' * lpeg.Cg(lpeg.Cc("file"), "schema")
+		            + V'fragment' * lpeg.Cg(lpeg.Cc("fragment"), "schema"),
+
+		h = V'schema'^-1 * V'host' * V'port'^-1,
+		host = lpeg.Cg(V'c3' * ("." * V'c3')^1, "host"),
+		schema = lpeg.Cg(V'c', "schema") * "://",
+		port = ":" * lpeg.Cg(lpeg.digit^-5, "port"),
+
+		p = V'path' * V'query'^-1 * V'fragment'^-1,
+		query = "?" * lpeg.Cg(V'c', "query"),
+		fragment = "#" * lpeg.Cg(V'c', "fragment"),
+		path = lpeg.Cg(lpeg.S("~/.")^-3 * V'c' * ("/" * V'c')^0 * lpeg.P"/"^-1, "path"),
+
+		c = (lpeg.P(1) - lpeg.S(" \t\n/[]()@:?#"))^0,
+		c2 = (lpeg.P(1) - lpeg.S("\t\n/[]()@:?#"))^0,
+		c3 = (lpeg.alnum + lpeg.S("-_"))^1,
+	}
+
+	return lpeg.match(lpeg.Ct(p), s)
+end
+
+function Link:new()
+    local tr = WrappedRange:newFromSep("[", ")", false) or
+               WrappedRange:newFromCursor()
+
+    local s = tr:get_all()[1]
+    local o = parse_link(s)
     setmetatable(o, self)
     self.__index = self
 
-    local tr = WrappedRange:newFromSep("[", ")", false) or
-                   WrappedRange:newFromCursor()
+	if o.schema == "file" then
+		o.schema = lfs.symlinkattributes(o.path).mode
+	end
 
-    txt = tr:get_all()[1]
-
-    if txt:startswith('[') then
-        _start, _end, o.id, _link = txt:find('%[([^%]]+)%]%((.*)%)')
-		if _link:contain("%s") then
-			_start, _end, _link, o.title = _link:find('(%S+)%s+(%S*)')
+	if o.schema == "file" then
+		local t = mimetypes.guess(o.path, require("wr.mimedb"))
+		if t:startswith("text") then
+			o.schema = "text"
+		else
+			o.schema = "system"
 		end
-    else
-        _link = txt
-    end
-    if _link:len() == 0 then return o end
-
-    if _link:contain('#') then
-        _start, _end, _link, o.anchor = _link:find('([^%s#]*)#([^%s#]*)')
-		if _link:len() == 0 then
-			o.proto = 'anchor'
-			return o
-		end
-    end
-
-    if _link:contain('://') then
-        _start, _end, o.proto, o.url = _link:find('(%a+)://([^%s]+)')
-    else
-		-- file, directory, link, socket, named pipe, char device, block device or other
-		local attribute = lfs.symlinkattributes(_link)
-
-        o.proto = attribute.mode
-        o.url = _link
-    end
+	end
 
     return o
 end
@@ -54,44 +72,39 @@ end
 function Link:handler_http()
     local _cmd
 
-    if self.anchor then
-        _cmd = ("open -a Firefox.app %s://%s#%s"):format(self.proto, self.url,
-                                                         self.anchor)
-    else
-        _cmd = ("open -a Firefox.app %s://%s"):format(self.proto, self.url)
-    end
+	_cmd = ("open -a Firefox.app %s://%s"):format(self.schema, self.host)
+
+	_cmd = _cmd .. (self.path or "")
+	_cmd = _cmd .. (self.query and ("?%s"):format(self.query) or "")
+	_cmd = _cmd .. (self.fragment and ("#%s"):format(self.fragment) or "")
 
     vim.fn.system(_cmd)
 end
 
 function Link:handler_https() self:handler_http() end
 
-function Link:handler_anchor() self:gotoAnchor() end
+function Link:handler_fragment() self:gotoFragment() end
 
 function Link:handler_scp()
-    vim.cmd(("edit %s://%s"):format(self.proto, self.url))
-    if self.anchor then self:gotoAnchor() end
+    vim.cmd(("edit %s://%s"):format(self.schema, self.path))
+    if self.fragment then self:gotoFragment() end
 end
 
-function Link:handler_file()
+function Link:handler_system()
+	local _cmd = "open " .. self.path
+	return vim.fn.system(_cmd)
+end
 
-	local t = mimetypes.guess(self.url, require("wr.mimedb"))
-	if t:startswith("text") then
-		vim.cmd(("edit %s"):format(self.url))
-		if self.anchor then self:gotoAnchor() end
-	else
-		local _cmd = "open " .. self.url
-		vim.fn.system(_cmd)
-	end
-
+function Link:handler_text()
+	vim.cmd(("edit %s"):format(self.path))
+	if self.fragment then self:gotoFragment() end
 end
 
 function Link:handler_directory()
-	local _cmd = "open " .. self.url
-	vim.fn.system(_cmd)
+	self:handler_system()
 end
 
-function Link:copyRWrokspace(no_anchor)
+function Link:copyRWrokspace(no_frag)
     local attribute
     local ws = vim.fn.getcwd()
     local links = {}
@@ -121,36 +134,36 @@ function Link:copyRWrokspace(no_anchor)
 
     pathRWrokspace = pathRWrokspace or path
 
-	if no_anchor then
+	if no_frag then
 		return vim.fn.setreg("+",
 			("[%s](%s)"):format(basename, pathRWrokspace))
 	else
-		local anchor = self:getAnchor()
+		local fragment = self:getFragment()
 		return vim.fn.setreg("+",
-			("[%s](%s#%s)"):format(anchor, pathRWrokspace, anchor))
+			("[%s](%s#%s)"):format(fragment, pathRWrokspace, fragment))
 	end
 end
 
 function Link:copyRBuf()
-    local anchor = self:getAnchor()
-    return vim.fn.setreg("+", ("[%s](#%s)"):format(anchor, anchor))
+    local fragment = self:getFragment()
+    return vim.fn.setreg("+", ("[%s](#%s)"):format(fragment, fragment))
 end
 
-function Link:getAnchor()
-    local txt, anchor
+function Link:getFragment()
+    local txt, fragment
     local c = vim.api.nvim_win_get_cursor(0)
 
     for i = c[1], 1, -1 do
         txt = vim.api.nvim_buf_get_lines(0, i - 1, i, false)[1]
 
         if txt:startswith('#') then
-            _, _, anchor = txt:find("#+%s+%[?([^%[%]]+)%]?")
-            return anchor:gsub("%s", "_")
+            _, _, fragment = txt:find("#+%s+%[?([^%[%]]+)%]?")
+            return fragment:gsub("%s", "_")
         end
     end
 end
 
-function Link:gotoAnchor()
+function Link:gotoFragment()
     local txt
     local lnr
 
@@ -160,7 +173,7 @@ function Link:gotoAnchor()
 		if txt:startswith('#') then
 			_, _, txt = txt:find("^#+%s+%[?([^%[%]]+)%]?")
 			if txt and txt:len() > 0 then
-				if txt:gsub("%s", "_") == self.anchor then
+				if txt:gsub("%s", "_") == self.fragment then
 					lnr = i
 					break
 				end
@@ -176,19 +189,19 @@ function Link:gotoAnchor()
 end
 
 function Link:open()
-    if not self.proto then
+    if not self.schema then
 		return
 	end
 
-    self["handler_" .. self.proto](self)
+    self["handler_" .. self.schema](self)
 end
 
 function Link:resolv()
-    if self.proto ~= "file" then
+    if self.schema ~= "file" then
 		return
 	end
 
-    vim.fn.system("open -R " .. self.url)
+    vim.fn.system("open -R " .. self.path)
 end
 
 return Link
