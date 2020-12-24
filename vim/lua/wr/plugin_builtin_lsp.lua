@@ -50,7 +50,7 @@ M.setup = function()
         config = function()
 
             -- lua
-            -- sumneko_lua 性能不佳，常驻5%内存消耗
+            -- sumneko_lua 性能不佳，常驻5% CPU 消耗
             -- require'lspconfig'.sumneko_lua.setup{
             -- cmd = { "/Users/Real/.cache/nvim/lspconfig/sumneko_lua/lua-language-server/bin/macOS/lua-language-server",
             -- "-E", "/Users/Real/.cache/nvim/lspconfig/sumneko_lua/lua-language-server/main.lua" },

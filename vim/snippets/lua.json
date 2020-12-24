@@ -68,7 +68,7 @@
 		"new_object":{
 				"prefix": "new_object",
 				"body": [
-					"${1:Object_name} = { }",
+					"local ${1:Object_name} = { }",
 					"function ${1}:new(${2:args})",
 					"\tlocal o = {$0}",
 					"",

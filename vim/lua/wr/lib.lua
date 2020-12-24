@@ -9,25 +9,6 @@ function table.slice(tbl, first, last, step)
 end
 
 string.find_right = string.find
-function string:find_left (pattern, index, plain)
-	local len = self:len()
-	local right, left
-
-	if plain then
-		right, left = string.find(self:reverse(), pattern:reverse(), len - index, plain)
-	else
-		right, left = string.find(self:reverse(), pattern, len - index, plain)
-	end
-
-	if right == nil then
-		return nil, nil
-	end
-
-	left = len - left + 1
-	right = len - right + 1
-
-	return left, right
-end
 
 function string:split(sSeparator, nMax, bRegexp)
 	assert(sSeparator ~= '')
@@ -84,16 +65,24 @@ function string:strip()
 	return self:lstrip():rstrip()
 end
 
-function string:rfind(key)
-	if key == '' then
-		return self:len(), 0
+function string:find_left (pattern, index, plain)
+	local len = self:len()
+	local right, left
+
+	if plain then
+		right, left = string.find(self:reverse(), pattern:reverse(), len - index, plain)
+	else
+		right, left = string.find(self:reverse(), pattern, len - index, plain)
 	end
-	local length = self:len()
-	local start, ends = self:reverse():find(key:reverse(), 1, true)
-	if start == nil then
-		return nil
+
+	if right == nil then
+		return nil, nil
 	end
-	return (length - ends + 1), (length - start + 1)
+
+	left = len - left + 1
+	right = len - right + 1
+
+	return left, right
 end
 
 function string:join(parts)

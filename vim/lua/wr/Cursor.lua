@@ -1,4 +1,4 @@
-Cursor = { }
+local Cursor = { }
 
 function Cursor:new(cursor)
 	local o = {}

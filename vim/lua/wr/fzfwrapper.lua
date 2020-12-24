@@ -8,6 +8,7 @@ fzfwrapper.files = function()
                                     '--bind=alt-c:execute(cp_file2clipboard.sh {})+abort',
                                     '--bind=alt-o:execute(open {})+abort',
                                     '--bind=alt-r:execute(open -R {})+abort',
+                                    '--bind=alt-y:execute(realpath {} | pbcopy)+abort',
                                     '--bind=alt-p:toggle-preview',
                                     '--info=inline'}}, false)
 end

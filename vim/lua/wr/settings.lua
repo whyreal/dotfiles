@@ -66,7 +66,7 @@ utils.mapcmd('n', '<leader>w',  'w' )
 utils.mapcmd('n', '<a-=>',      'split term://$SHELL' )
 utils.map('n', '<leader>bo', '<c-^>' )
 
-utils.mapcmd('n', '<leader>ve', 'Explore' )
+utils.mapcmd('n', '<leader>ve', 'Sexplore' )
 utils.map('t', '<c-o>',      '<c-\\><c-n>' )
 
 utils.maplua('n', '0', "require[[wr.utils]].toggle_home_zero()")
@@ -110,17 +110,16 @@ end
 -- Sshconfig
 utils.new_cmd('Sshconfig', 'tabe ~/Documents/Note/scripts/ssh.config.json')
 utils.autocmd('BufWritePost ~/Documents/Note/scripts/ssh.config.json !update_ssh_config.sh')
+
 -- shadowsocks config
 utils.new_cmd('Ssconfig', 'tabe ~/.ShadowsocksX/user-rule.txt')
 utils.autocmd('BufWritePost ~/.ShadowsocksX/user-rule.txt !update_ss_config.sh')
 
-utils.new_cmd("-range TemplateRender", "call luaeval('require[[wr.template]].render(unpack(_A))', [<line1>, <line2>])")
-utils.new_cmd("-range TemplateSet", "call luaeval('require[[wr.template]].set(unpack(_A))', [<line1>, <line2>])")
+-- Template
+utils.new_cmd("-range TemplateSet", "lua require[[wr.Range]]:newFromVisual():set_tmpl()")
+utils.new_cmd("-range TemplateRender", "lua require[[wr.Range]]:newFromVisual():render_tmpl()")
 
 utils.new_cmd("Reveals", " !open -R %:S")
 utils.new_cmd("Code", "!open -a \"Visual Studio Code.app\" %:S")
 
 utils.new_cmd("Docs", "cd /Users/Real/Documents/vim-workspace/docs")
-
--- command! -nargs=1 Edit lua edit_remote_file(<f-args>)
--- command! ServerUpdateInfo lua update_server_info()

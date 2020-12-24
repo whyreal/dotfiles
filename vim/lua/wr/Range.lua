@@ -1,6 +1,8 @@
 local Cursor = require("wr.Cursor")
+local rt = require "resty.template"
 
-Range = { }
+
+local Range = { }
 
 function Range:new(start, stop)
 	local o = {}
@@ -60,16 +62,13 @@ function Range:newFromCursor(cursor)
 		right.stop.col = tlen
 	end
 
-	local inner = Range:new(Cursor:new({left.stop.line, left.stop.col}),
-							Cursor:new({right.start.line, right.start.col}))
-	return inner
+	return Range:new(Cursor:new({left.stop.line, left.stop.col}),
+                     Cursor:new({right.start.line, right.start.col}))
 end
 
 function Range:make_list()
-	local lines = vim.api.nvim_buf_get_lines(0,
-	                                         self.start.line - 1,
-											 self.stop.line,
-											 false)
+	local lines = self:get_lines()
+
 	local tmplist = {}
 
 	for index, line in ipairs(lines) do
@@ -79,18 +78,12 @@ function Range:make_list()
 		end
 	end
 
-	vim.api.nvim_buf_set_lines(0,
-	                           self.start.line - 1,
-							   self.stop.line,
-							   false,
-							   tmplist)
+	self:set_lines(tmplist)
 end
 
 function Range:make_ordered_list()
-	local lines = vim.api.nvim_buf_get_lines(0,
-	                                         self.start.line - 1,
-											 self.stop.line,
-											 false)
+	local lines = self:get_lines()
+
 	local tmplist = {}
 	for index, line in ipairs(lines) do
 		if line ~= "" then
@@ -99,18 +92,31 @@ function Range:make_ordered_list()
 		end
 	end
 
+	self:set_lines(tmplist)
+end
+
+function Range:get_lines()
+	return vim.api.nvim_buf_get_lines(0,
+									 self.start.line - 1,
+									 self.stop.line,
+									 false)
+end
+
+function Range:set_lines(lines)
 	vim.api.nvim_buf_set_lines(0,
 	                           self.start.line - 1,
 							   self.stop.line,
 							   false,
-							   tmplist)
+							   lines)
+end
+
+function Range:insert_lines(lines, lnr)
+	vim.api.nvim_buf_set_lines(0, lnr, lnr, false, lines)
 end
 
 function Range:remove_list()
-	local lines = vim.api.nvim_buf_get_lines(0,
-	                                         self.start.line - 1,
-											 self.stop.line,
-											 false)
+	local lines = self:get_lines()
+
 	local tmplist = {}
 
 	for index, line in ipairs(lines) do
@@ -122,11 +128,36 @@ function Range:remove_list()
 		end
 	end
 
-	vim.api.nvim_buf_set_lines(0,
-	                           self.start.line - 1,
-							   self.stop.line,
-							   false,
-							   tmplist)
+	self:set_lines(tmplist)
+end
+
+local view = {}
+
+function Range:set_tmpl()
+	view = self:get_lines()
+end
+
+function Range:render_tmpl()
+	local output
+	local data = self:get_lines()
+	local insert_lnr = self.stop.line
+	local vlen = #view
+
+	self:insert_lines({"---------RENDERED---------"}, insert_lnr)
+	insert_lnr = insert_lnr + 1
+
+    for _, datai in ipairs(data) do
+
+        output = string.split(
+					rt.process(
+							table.concat(view, "\n"),
+							{d = datai:split("%s+", nil, true)}),
+					"\n")
+		table.insert(output, "")
+
+		self:insert_lines( output, insert_lnr)
+		insert_lnr = insert_lnr + #output
+    end
 end
 
 return Range

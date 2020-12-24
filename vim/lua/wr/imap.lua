@@ -1,4 +1,4 @@
-
+local utils = require'wr.utils'
 local imap = {}
 
 imap.cr = function ()
@@ -19,7 +19,7 @@ imap.tab = function ()
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<c-n>", true, false, true), 'n', true)
     elseif vim.fn["vsnip#available"](1) ~= 0 then
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<c-!>sej", true, false, true), 't', true)
-    elseif imap.check_back_space() then
+    elseif utils.check_back_space() then
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true), 'n', true)
     else
         vim.fn["completion#trigger_completion"]()

@@ -5,7 +5,7 @@ local init = function()
 
 	use { 'wbthomason/packer.nvim',
 	config = function()
-local utils = require("wr.utils")
+		local utils = require("wr.utils")
 		utils.autocmd("BufWritePost plugins.lua PackerCompile")
 	end }
 
@@ -21,12 +21,12 @@ local utils = require("wr.utils")
 	use { 'hrsh7th/vim-vsnip',
 	requires = {{'hrsh7th/vim-vsnip-integ'}},
 	config = function()
-local utils = require("wr.utils")
+		local utils = require("wr.utils")
 		vim.g.vsnip_snippet_dir = vim.env.HOME .. "/.config/nvim/snippets"
 
 		utils.map('i', '<c-!>sej', [[<Plug>(vsnip-expand-or-jump)]] )
-		utils.map('i', '<c-!>sjn', [[<Plug>(vsnip-jump-next)]] )
-		utils.map('i', '<c-!>sjp', [[<Plug>(vsnip-jump-prev)]] )
+		utils.map('s', '<c-!>sjn', [[<Plug>(vsnip-jump-next)]] )
+		utils.map('s', '<c-!>sjp', [[<Plug>(vsnip-jump-prev)]] )
 
 		utils.maplua('i', '<CR>',    "require[[wr.imap]].cr()")
 		utils.maplua('i', '<TAB>',   "require[[wr.imap]].tab()")
@@ -51,7 +51,7 @@ local utils = require("wr.utils")
 	use { 'voldikss/vim-translator',
 	lock = true,
 	config = function()
-local utils = require("wr.utils")
+		local utils = require("wr.utils")
 		vim.g.translator_default_engines = {'bing', 'google'}
 		vim.g.translator_history_enable = true
 
@@ -84,7 +84,7 @@ local utils = require("wr.utils")
 	use { 'vim-voom/VOoM',
 	lock = true,
 	config = function()
-local utils = require("wr.utils")
+		local utils = require("wr.utils")
 		vim.g.voom_tree_placement = 'right'
 		vim.g.voom_ft_modes = {markdown = 'pandoc', vim = 'fmr'}
 		vim.g.voom_always_allow_move_left = 1
@@ -94,7 +94,7 @@ local utils = require("wr.utils")
 	use { 'preservim/tagbar',
 	lock = true,
 	config = function ()
-local utils = require("wr.utils")
+		local utils = require("wr.utils")
 		utils.map('n', '<leader>vt', ':TagbarToggle<CR>')
 	end }
 
@@ -107,7 +107,7 @@ local utils = require("wr.utils")
 	use { 'junegunn/vim-easy-align',
 	lock = true,
 	config = function()
-local utils = require("wr.utils")
+		local utils = require("wr.utils")
 		-- Start interactive EasyAlign in visual mode (e.g. vipga)
 		utils.map('x', 'ga', '<Plug>(EasyAlign)')
 		-- Start interactive EasyAlign for a motion/text object (e.g. gaip)

@@ -1,8 +1,6 @@
 alias r='open -R'
 alias e='open -e'
 alias o='open'
-alias o.serverlist='open ~/Documents/zkzy/Implementation-doc/中科智云内部环境说明/虚拟机和宿主机分布情况说明.xlsx'
-alias o.dblist='open ~/Documents/zkzy/Implementation-doc/中科智云内部环境说明/database_info.xlsx'
 alias o.notes='cd ~/Documents/vim-workspace/docs && $EDITOR'
 alias drawio='open -a draw.io.app'
 
@@ -69,7 +67,6 @@ set -g fish_user_paths "$HOME/.cargo/bin" $fish_user_paths
 set -g fish_user_paths "/usr/local/nvim-osx64/bin/" $fish_user_paths
 
 function proxy.ss.active
-
     git config --global http.proxy 127.0.0.1:1087
     #git config --local http.proxy 127.0.0.1:1087
     set -x http_proxy "http://127.0.0.1:1087"
@@ -90,14 +87,6 @@ function ssh.execute_local_script
     set -l script $argv[2]
     cat $script | ssh -T $host
 end
-function vs
-    mvim -n \
-        -c "let w:remote_host=\"$1\"" \
-        -c "let &titlestring=w:remote_host" \
-        -c "Edit /root/" \
-        -c "new" -c "ServerUpdateInfo"
-    sshrc $1
-end
 function copy_remote_screen_exchange_content_to_local_clipboard
     ssh $argv[1] cat /tmp/screen-exchange | pbcopy
 end
@@ -116,7 +105,6 @@ end
 function oracle.env.gb2312
     echo export NLS_LANG=AMERICAN_AMERICA.ZHS16GBK
 end
-
 
 function z
     if test -z $argv[1]
