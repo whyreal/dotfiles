@@ -36,14 +36,20 @@ function Link:new()
 		end
 	end
 
+	if o.path then
+		o.path = vim.fn.expand(o.path)
+	end
+
     return o
 end
 
-function Link:handler_http()
+local function add_prefix(p, s)
+	return s and p .. s or ""
+end
 
-	local function add_prefix(p, s)
-		return s and p .. s or ""
-	end
+Link.handlers = {}
+
+function Link.handlers.http(self)
 
     local _cmd = ("open -a Firefox.app '%s://%s"):format(self.schema, self.domain)
 				.. add_prefix("", self.path)
@@ -53,32 +59,32 @@ function Link:handler_http()
 
     vim.fn.system(_cmd)
 end
+Link.handlers.https = Link.handlers.http
 
-function Link:handler_scp()
-    vim.cmd(("edit %s://%s"):format(self.schema, self.path))
-    if self.fragment then self:gotoFragment() end
+function Link.handlers.scp(self)
+	vim.cmd(("edit %s://%s/%s"):format(self.schema, self.domain, self.path))
+	if self.fragment then self:gotoFragment() end
 end
 
-function Link:handler_system()
+function Link.handlers.system(self)
 	local _cmd = "open " .. self.path
 	return vim.fn.system(_cmd)
 end
 
-function Link:handler_text()
+function Link.handlers.text(self)
 	vim.cmd(("edit %s"):format(self.path))
 	if self.fragment then self:gotoFragment() end
 end
 
-function Link:handler_directory()
+function Link.handlers.directory(self)
 	self:handler_system()
 end
 
-Link.handler_https = Link.handler_http
-Link.handler_fragment = Link.gotoFragment
+Link.handlers.fragment = Link.gotoFragment
 
 local function get_workspace_links()
 	local ws = vim.fn.getcwd()
-    local attribute
+    local attribute, target
 
 	local links = {}
 	links["."] = ws
@@ -86,7 +92,12 @@ local function get_workspace_links()
 
 	for name in lfs.dir(ws) do
 		attribute = lfs.symlinkattributes(ws .. "/" .. name)
-		if attribute.mode == "link" then links[name] = attribute.target end
+		if attribute.mode == "link" then
+			target = attribute.target:gsub("/*$", "")
+			table.insert(links, {name = name,
+								target = target,
+								len=target:len()})
+		end
 	end
 
 	return links
@@ -94,20 +105,23 @@ end
 
 local function get_path_in_ws(path)
 	local relapath, tlen
-	local maxTarget = 0
+	local matchedTarget = {}
 
-	for name, target in pairs(get_workspace_links()) do
-		target, _ = target:gsub("/*$", "")
-		if path:startswith(target) then
-			tlen = target:len()
-			if tlen > maxTarget then
-				maxTarget = tlen
-				relapath = name .. path:sub(tlen + 1)
+	for i, link in ipairs(get_workspace_links()) do
+		if path:startswith(link.target) then
+			if #matchedTarget == 0 
+				or (#matchedTarget == 1 and link.len > matchedTarget.len)
+			then
+				matchedTarget = link
 			end
 		end
 	end
 
-	return relapath
+	if #matchedTarget.name  then
+		return matchedTarget.name .. path:sub(matchedTarget.len + 1)
+	else
+		return nil
+	end
 end
 
 function Link:copyFragLinkW(with_frag)
@@ -173,7 +187,8 @@ function Link:gotoFragment()
 end
 
 function Link:open()
-	self["handler_" .. self.schema](self)
+	--self["handler_" .. self.schema](self)
+	self.handlers[self.schema](self)
 end
 
 function Link:resolv()

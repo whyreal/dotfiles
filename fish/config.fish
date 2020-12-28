@@ -35,8 +35,6 @@ set -x GO111MODULE on # Enable the go modules feature
 set -x GOPROXY https://goproxy.cn #Set the GOPROXY environment variable
 
 # lua
-set -x LUA_PATH "./?.lua;./?/init.lua;/Users/Real/.luarocks/share/lua/5.1/?.lua;/Users/Real/.luarocks/share/lua/5.1/?/init.lua"
-set -x LUA_CPATH './?.so;/Users/Real/.luarocks/lib/lua/5.1/?.so'
 alias luarocks='luarocks --lua-dir=/usr/local/opt/lua@5.1'
 
 # neovim

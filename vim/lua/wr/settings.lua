@@ -96,7 +96,7 @@ utils.autocmd('BufEnter * if &filetype == "" | setlocal ft=text | endif')
 -- Command
 ---------------------
 vim.cmd('filetype plugin indent on')
-vim.cmd('colorscheme onehalflight')
+vim.cmd('colorscheme onehalfdark')
 
 utils.new_cmd('VimrcEdit', 'tabe ~/.config/nvim/init.vim')
 utils.new_cmd('Dos2unix', 'e ++ff=unix | %s/\r//g')
