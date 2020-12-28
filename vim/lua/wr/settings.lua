@@ -46,14 +46,6 @@ vim.wo.breakindentopt = 'shift:0'
 ----------------
 -- map
 ----------------
--- map <c-n> <c-p> 后，补全菜单不会自动 insert 体验很差
---vim.api.nvim_set_keymap('i', '<c-n>',      '<Down>',                      { noremap = false, silent = false })
---vim.api.nvim_set_keymap('i', '<c-p>',      '<Up>',                        { noremap = false, silent = false })
---wr.map('i', '<c-a>',      '<Home>' )
---wr.map('i', '<c-e>',      '<End>' )
---wr.map('i', '<c-f>',      '<Right>' )
---wr.map('i', '<c-b>',      '<Left>' )
---wr.map('i', '<c-k>',      '<c-o>D' )
 utils.map('i', 'jj',      '<ESC>' )
 
 utils.map('n', 'j',          'gj' )
@@ -70,8 +62,6 @@ utils.mapcmd('n', '<leader>ve', 'Explore' )
 utils.map('t', '<c-o>',      '<c-\\><c-n>' )
 
 utils.maplua('n', '0', "require[[wr.utils]].toggle_home_zero()")
---vim.api.nvim_set_keymap('n', 'o',          ':lua add_blank_line_after()<CR>', { noremap = true, silent = true })
---vim.api.nvim_set_keymap('n', 'O',          ':lua add_blank_line_before()<CR>', { noremap = true, silent = true })
 
 ----------------
 -- autocmd
@@ -96,10 +86,13 @@ utils.autocmd('BufEnter * if &filetype == "" | setlocal ft=text | endif')
 -- Command
 ---------------------
 vim.cmd('filetype plugin indent on')
-vim.cmd('colorscheme onehalfdark')
 
-utils.new_cmd('VimrcEdit', 'tabe ~/.config/nvim/init.vim')
-utils.new_cmd('Dos2unix', 'e ++ff=unix | %s/\r//g')
+if vim.fn.has('vimr') then
+vim.cmd('colorscheme onehalflight')
+else
+vim.cmd('colorscheme onehalfdark')
+end
+
 vim.cmd('syntax on')
 
 if vim.env.tmux_version ~= nil then
@@ -107,6 +100,8 @@ if vim.env.tmux_version ~= nil then
 	vim.cmd[[highlight Normal guibg=NONE]]
 end
 
+utils.new_cmd('VimrcEdit', 'tabe ~/.config/nvim/init.vim')
+utils.new_cmd('Dos2unix', 'e ++ff=unix | %s/\r//g')
 -- Sshconfig
 utils.new_cmd('Sshconfig', 'tabe ~/Documents/Note/scripts/ssh.config.json')
 utils.autocmd('BufWritePost ~/Documents/Note/scripts/ssh.config.json !update_ssh_config.sh')

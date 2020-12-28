@@ -1,4 +1,3 @@
-
 package.path = vim.fn.getenv("HOME") .. "/.luarocks/share/lua/5.1/?.lua;"
              .. vim.fn.getenv("HOME") .. "/.luarocks/share/lua/5.1/?/init.lua;"
              .. package.path
