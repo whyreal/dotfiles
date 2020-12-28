@@ -54,9 +54,9 @@ M.setup = function ()
 	-- resolv file in Finder
     utils.maplua('n', 'gr', 'require[[wr.Link]]:new():resolv()', {buffer = true})
 
-    utils.new_cmd('-buffer CopyAnchorLinkW', 'lua require[[wr.Link]]:copyRWrokspace()')
-    utils.new_cmd('-buffer CopyNoAnchorLinkW', 'lua require[[wr.Link]]:copyRWrokspace(true)')
-    utils.new_cmd('-buffer CopyAnchorLinkB', 'lua require[[wr.Link]]:copyRBuf()')
+    utils.new_cmd('-buffer CopyFragLinkW', 'lua require[[wr.Link]]:copyFragLinkW(true)')
+    utils.new_cmd('-buffer CopyNoFragLinkW', 'lua require[[wr.Link]]:copyFragLinkW()')
+    utils.new_cmd('-buffer CopyFragLinkB', 'lua require[[wr.Link]]:copyFragLinkB()')
 end
 
 return M

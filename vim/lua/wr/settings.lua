@@ -66,7 +66,7 @@ utils.mapcmd('n', '<leader>w',  'w' )
 utils.mapcmd('n', '<a-=>',      'split term://$SHELL' )
 utils.map('n', '<leader>bo', '<c-^>' )
 
-utils.mapcmd('n', '<leader>ve', 'Sexplore' )
+utils.mapcmd('n', '<leader>ve', 'Explore' )
 utils.map('t', '<c-o>',      '<c-\\><c-n>' )
 
 utils.maplua('n', '0', "require[[wr.utils]].toggle_home_zero()")

@@ -79,5 +79,29 @@
 				],
         "description": "new_object",
         "scope": "source.lua"
+		},
+		"setmetatable" :{
+			"prefix": "setmetatable",
+			"body": [
+				"setmetatable(${1:who}, {${2:__index = ${3:_G}}})"
+			],
+			"scope": "source.lua"
+		},
+		"new setfenv" :{
+			"prefix": "setfenv",
+			"body": [
+				"local old = getfenv()",
+				"setfenv(1, ${1:env})",
+				"setfenv(1, old)"
+			],
+			"scope": "source.lua"
+		},
+		"require luaunit":{
+			"prefix": "luaunit",
+			"body":[
+				"local luaunit = require('luaunit')",
+				"os.exit(luaunit.LuaUnit.run())"
+			],
+			"scope": "source.lua"
 		}
 }

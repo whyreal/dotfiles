@@ -1,3 +1,6 @@
+local lpeg = require("lpeg")
+lpeg.locale(lpeg) 
+
 local M = {}
 
 local map_opts = {noremap = false, silent = true, expr = false}
@@ -98,5 +101,49 @@ function M.print_r ( t )
     end
     print()
 end
+
+M.parse_link = setfenv(function (s)
+	local p = P{
+		"LINK",
+		LINK = V'md_link' + V'url',
+
+		md_link = "[" * V'id'^-1 * "](" * V'url' * V'title'^-1 * ")",
+		url = V'remote_path' + V'local_path' + V'fragment_path',
+
+		remote_path = V'schema' * V'domain' * V'port'^-1 * V'path'^-1 * V'query'^-1 * V'fragment'^-1, 
+		local_path = Cg(Cc("file"), "schema") * V'path' * V'fragment'^-1,
+		fragment_path = Cg(Cc("fragment"), "schema") * V'fragment',
+
+		id = Cg(V'c2'^1, "id"),
+		schema = Cg(alnum^1, "schema") * "://",
+		domain = Cg(V'c3'^1 * ("." * V'c3'^1)^1 , "domain") ,
+		port = ":" * Cg(digit^1 , "port") ,
+		path = Cg((V'path_sep'^0 * V'c'^1 + V'path_sep'^1 * V'c'^0)^1 , "path") ,
+		query = "?" * Cg(V'c'^1 , "query") ,
+		fragment = "#" * Cg(V'c'^1 , "fragment") ,
+		title = space^1 * Cg(V'c2'^0 , "title") ,
+
+		c = 1 - S("\t /()[]:?#"),
+		c2 = 1 - S("])"),
+		c3 = alnum + S("-_"),
+		path_sep = S("~/."),
+	}
+	return match(Ct(p), s)
+end , lpeg)
+
+M.parse_title = setfenv(function(s)
+	local p = P{
+		"TITLE";
+		TITLE = V'with_link' + V'without_link',
+
+		with_link = V'header_sign' * "[" * V'title' * "]",
+		without_link = V'header_sign' * V'title',
+
+		title = C((1 - S("[]"))^1),
+		header_sign = P"#"^1 * space^1,
+	}
+	return match(p, s)
+end, lpeg)
+
 
 return M
