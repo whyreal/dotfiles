@@ -24,15 +24,11 @@ local init = function()
 		local utils = require("wr.utils")
 		vim.g.vsnip_snippet_dir = vim.env.HOME .. "/.config/nvim/snippets"
 
-		utils.map('i', '<c-!>sej', [[<Plug>(vsnip-expand-or-jump)]] )
-		utils.map('s', '<c-!>sjn', [[<Plug>(vsnip-jump-next)]] )
-		utils.map('s', '<c-!>sjp', [[<Plug>(vsnip-jump-prev)]] )
-
-		utils.maplua('i', '<CR>',    "require[[wr.imap]].cr()")
-		utils.maplua('i', '<TAB>',   "require[[wr.imap]].tab()")
-		utils.maplua('s', '<TAB>',   "require[[wr.smap]].tab()")
-		utils.maplua('i', '<S-TAB>', "require[[wr.imap]].stab()")
-		utils.maplua('s', '<S-TAB>', "require[[wr.smap]].stab()")
+		utils.map('i', '<CR>',    "v:lua.imap.cr()", {expr = true})
+		utils.map('i', '<TAB>',   "v:lua.imap.tab()", {expr = true})
+		utils.map('i', '<S-TAB>', "v:lua.imap.stab()", {expr = true})
+		utils.map('s', '<TAB>',   "v:lua.smap.tab()", {expr = true})
+		utils.map('s', '<S-TAB>', "v:lua.smap.stab()", {expr = true})
 	end }
 
 	-- insert mode auto-completion for quotes, parens, brackets, etc.

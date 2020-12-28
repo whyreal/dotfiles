@@ -1,3 +1,5 @@
 require("wr.lib")
 require("wr.settings")
 require("wr.plugins")
+_G.imap = require("wr.imap")
+_G.smap = require("wr.smap")

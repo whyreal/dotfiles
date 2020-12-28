@@ -87,18 +87,18 @@ utils.autocmd('BufEnter * if &filetype == "" | setlocal ft=text | endif')
 ---------------------
 vim.cmd('filetype plugin indent on')
 
-if vim.fn.has('vimr') then
-vim.cmd('colorscheme onehalflight')
+if vim.fn.has('gui_vimr') == 1 then
+	vim.cmd('colorscheme onehalflight')
 else
-vim.cmd('colorscheme onehalfdark')
+	vim.cmd('colorscheme onehalfdark')
 end
-
-vim.cmd('syntax on')
 
 if vim.env.tmux_version ~= nil then
 	vim.o.termguicolors = true
 	vim.cmd[[highlight Normal guibg=NONE]]
 end
+
+vim.cmd('syntax on')
 
 utils.new_cmd('VimrcEdit', 'tabe ~/.config/nvim/init.vim')
 utils.new_cmd('Dos2unix', 'e ++ff=unix | %s/\r//g')
