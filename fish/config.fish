@@ -111,3 +111,4 @@ function z
         _zlua -I $argv
     end
 end
+set -g fish_user_paths "/usr/local/opt/curl/bin" $fish_user_paths

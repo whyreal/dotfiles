@@ -90,7 +90,7 @@ vim.cmd('filetype plugin indent on')
 if vim.fn.has('gui_vimr') == 1 then
 	vim.cmd('colorscheme onehalflight')
 else
-	vim.cmd('colorscheme onehalfdark')
+	vim.cmd('colorscheme onehalflight')
 end
 
 if vim.env.tmux_version ~= nil then
