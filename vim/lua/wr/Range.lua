@@ -47,8 +47,8 @@ end
 
 function Range:newFromVisual()
 	return Range:new(
-		Cursor:new(vim.api.nvim_buf_get_mark(0, '<')):fromVim(),
-		Cursor:new(vim.api.nvim_buf_get_mark(0, '>')):fromVim())
+		Cursor:newFromVim(vim.api.nvim_buf_get_mark(0, '<')),
+		Cursor:newFromVim(vim.api.nvim_buf_get_mark(0, '>')))
 end
 
 function Range:newFromCursor(cursor)

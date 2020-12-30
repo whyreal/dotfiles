@@ -35,6 +35,3 @@ TestRange.test_newFromVisual = function ()
 end
 
 os.exit(luaunit.LuaUnit.run())
-
---vim.api.nvim_win_set_cursor(0, {3, 7})
---l.print_r(r)

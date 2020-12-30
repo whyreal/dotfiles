@@ -15,8 +15,6 @@ function Link:new()
 
     local txt = tr:get_all()[1]
     local o = utils.parse_link(txt)
-	--o.txt = txt
-	--require("wr.utils").print_r(o)
 	assert(type(o) == "table", "Can't parse link!!!")
     setmetatable(o, self)
     self.__index = self

@@ -1,5 +1,6 @@
 local Range = require("wr.Range")
 local Cursor = require("wr.Cursor")
+local utils = require("wr.utils")
 
 WrappedRange = { }
 
@@ -20,13 +21,13 @@ function WrappedRange:newFromVisual()
 end
 
 function WrappedRange:newFromCursor()
-	local c = Cursor:new(vim.api.nvim_win_get_cursor(0)):fromVim()
+	local c = Cursor:newFromVim(vim.api.nvim_win_get_cursor(0))
 
 	return WrappedRange:new(nil, Range:newFromCursor(c), nil)
 end
 
 function WrappedRange:newFromSep(left_sep, right_sep, one_line)
-	local c = Cursor:new(vim.api.nvim_win_get_cursor(0)):fromVim()
+	local c = Cursor:newFromVim(vim.api.nvim_win_get_cursor(0))
 	local left = Range:newFromFind(c, left_sep, false, true)
 	local right = Range:newFromFind(c, right_sep, true, true)
 

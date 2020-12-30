@@ -11,6 +11,10 @@ function Cursor:new(cursor)
 	return o
 end
 
+function Cursor:newFromVim(cursor)
+	return Cursor:new({cursor[1], cursor[2] + 1})
+end
+
 function Cursor:moveToLineBegin()
 	self.col = 1
 	return self
@@ -22,14 +26,8 @@ function Cursor:moveToLineEnd()
 	return self
 end
 
-function Cursor:fromVim()
-	self.col = self.col + 1
-	return self
-end
-
 function Cursor:toVim()
-	self.col = self.col - 1
-	return self
+	return {self.line, self.col - 1}
 end
 
 return Cursor

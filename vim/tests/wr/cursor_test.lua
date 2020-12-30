@@ -10,14 +10,12 @@ TestCursor.test_new = function ()
 end
 
 TestCursor.test_fromVim = function ()
-	local c = C:new({2, 5})
-	c:fromVim()
+	local c = C:newFromVim({2, 5})
 	luaunit.assertEquals(c, {line = 2, col = 6})
 end
 TestCursor.test_toVim = function ()
-	local c = C:new({2, 5})
-	c:toVim()
-	luaunit.assertEquals(c, {line = 2, col = 4})
+	local c = C:newFromVim({2, 5}):toVim()
+	luaunit.assertEquals(c, {2, 5})
 end
 TestCursor.test_moveToLineEnd = function ()
 	local c = C:new({2, 5})
