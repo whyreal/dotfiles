@@ -118,3 +118,6 @@ utils.new_cmd("Reveals", " !open -R %:S")
 utils.new_cmd("Code", "!open -a \"Visual Studio Code.app\" %:S")
 
 utils.new_cmd("Docs", "cd /Users/Real/Documents/vim-workspace/docs")
+
+-- edit joplin note with id
+vim.cmd('command! -nargs=? JEdit call luaeval("require[[wr.utils]].edit_joplin_note(_A)", <q-args>)')

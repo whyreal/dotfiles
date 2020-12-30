@@ -57,6 +57,8 @@ M.setup = function ()
     utils.new_cmd('-buffer CopyFragLinkW', 'lua require[[wr.Link]]:copyFragLinkW(true)')
     utils.new_cmd('-buffer CopyNoFragLinkW', 'lua require[[wr.Link]]:copyFragLinkW()')
     utils.new_cmd('-buffer CopyFragLinkB', 'lua require[[wr.Link]]:copyFragLinkB()')
+    utils.new_cmd('-buffer CopyFragLinkJ', 'lua require[[wr.Link]]:copyJoplinLink(true)')
+    utils.new_cmd('-buffer CopyNoFragLinkJ', 'lua require[[wr.Link]]:copyJoplinLink(false)')
 end
 
 return M

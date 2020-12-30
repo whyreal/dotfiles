@@ -13,8 +13,9 @@ function Link:new()
     local tr = WrappedRange:newFromSep("[", ")", false) or
                WrappedRange:newFromCursor()
 
-    local s = tr:get_all()[1]
-    local o = utils.parse_link(s)
+    local txt = tr:get_all()[1]
+    local o = utils.parse_link(txt)
+	--o.txt = txt
 	--require("wr.utils").print_r(o)
 	assert(type(o) == "table", "Can't parse link!!!")
     setmetatable(o, self)
@@ -60,6 +61,11 @@ function Link.handlers.http(self)
     vim.fn.system(_cmd)
 end
 Link.handlers.https = Link.handlers.http
+
+function Link.handlers.joplin(self)
+	utils.edit_joplin_note(self.joplinid)
+	if self.fragment then self:gotoFragment() end
+end
 
 function Link.handlers.scp(self)
 	vim.cmd(("edit %s://%s/%s"):format(self.schema, self.domain, self.path))
@@ -121,6 +127,26 @@ local function get_path_in_ws(path)
 		return matchedTarget.name .. path:sub(matchedTarget.len + 1)
 	else
 		return nil
+	end
+end
+
+function Link:copyJoplinLink(with_frag)
+	local filename = vim.fn.expand("%:p:t")
+	local id = utils.parse_joplin_file_name(filename)
+	local fragment
+	local title = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1]
+
+	if with_frag then
+		local c = vim.api.nvim_win_get_cursor(0)
+		fragment = self:find_fragment(c[1], false)
+	end
+
+	if with_frag and fragment then
+		return vim.fn.setreg("+",
+			("[%s](:/%s#%s)"):format(title, id, fragment))
+	else
+		return vim.fn.setreg("+",
+			("[%s](:/%s)"):format(title, id))
 	end
 end
 

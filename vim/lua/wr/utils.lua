@@ -108,13 +108,15 @@ M.parse_link = setfenv(function (s)
 		LINK = V'md_link' + V'url',
 
 		md_link = "[" * V'id'^-1 * "](" * V'url' * V'title'^-1 * ")",
-		url = V'remote_path' + V'local_path' + V'fragment_path',
+		url = V'remote_path' + V'local_path' + V'fragment_path' + V'joplin_path',
 
 		remote_path = V'schema' * V'domain' * V'port'^-1 * V'path'^-1 * V'query'^-1 * V'fragment'^-1, 
 		local_path = Cg(Cc("file"), "schema") * V'path' * V'fragment'^-1,
 		fragment_path = Cg(Cc("fragment"), "schema") * V'fragment',
+		joplin_path = Cg(Cc("joplin"), "schema") * ":/" * V'joplinid' * V'fragment'^-1,
 
 		id = Cg(V'c2'^1, "id"),
+		joplinid = Cg(V'c'^1, "joplinid"),
 		schema = Cg(alnum^1, "schema") * "://",
 		domain = Cg(V'c3'^1 * ("." * V'c3'^1)^1 , "domain") ,
 		port = ":" * Cg(digit^1 , "port") ,
@@ -147,6 +149,31 @@ end, lpeg)
 
 function M.esc(cmd)
   return vim.api.nvim_replace_termcodes(cmd, true, false, true)
+end
+
+M.parse_joplin_file_name = setfenv(function(s)
+	local p = P{
+		"ID";
+		ID = "edit-" * C((1 - S"-.")^1) * ".md"
+	}
+	return match(p, s)
+end, lpeg)
+
+function M.edit_joplin_note(id)
+	local script = vim.fn.expand("~/.config/nvim/scripts/joplin_handler.py")
+	local joplin_config_dir = vim.fn.expand("~/.config/joplin-desktop/")
+
+	if id:len() == 0 then
+		local filename = vim.fn.expand("%:p:t")
+		id = M.parse_joplin_file_name(filename)
+	else
+		vim.fn.system(script .. " edit " .. id)
+		vim.cmd(("edit %s/edit-%s.md"):format(joplin_config_dir, id))
+	end
+
+	vim.cmd(("autocmd BufWritePost <buffer> exec '!%s update %s'"):format(script, id))
+	vim.cmd(("autocmd BufWipeout <buffer> exec '!%s delete %s'"):format(script, id))
+
 end
 
 return M

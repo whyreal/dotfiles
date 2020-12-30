@@ -4,7 +4,10 @@ local rt = require "resty.template"
 
 local Range = { }
 
-function Range:new(start, stop)
+function Range:new(
+		start, -- Cursor
+		stop   -- Cursor
+	)
 	local o = {}
 
 	o.start = start
@@ -15,8 +18,10 @@ function Range:new(start, stop)
 	return o
 end
 
-function Range:newFromFind(cursor, str, after, plain)
-
+function Range:newFromFind(
+		cursor, -- Cursor
+		str, after, plain
+	)
 	local txt = vim.api.nvim_buf_get_lines(0, cursor.line - 1, cursor.line, false)[1]
 	local tlen = txt:len()
 	local l, r
