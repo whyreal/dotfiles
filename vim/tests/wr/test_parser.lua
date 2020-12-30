@@ -1,5 +1,3 @@
---package.path = "../?.lua;" .. package.path
-
 local luaunit = require('luaunit')
 local l = require("wr.utils")
 
