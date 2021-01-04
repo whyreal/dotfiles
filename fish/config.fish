@@ -25,7 +25,7 @@ export EDITOR='nvim'
 set -x LANG "en_US.UTF-8"
 
 set -x FZF_DEFAULT_OPTS "--extended --cycle"
-set -x FZF_DEFAULT_COMMAND 'fd -i -L -H -E .git -E .svn --type f'
+set -x FZF_DEFAULT_COMMAND 'fd -i -I -L -H -E .git -E .svn --type f'
 set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 
 # golang

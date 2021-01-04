@@ -53,6 +53,8 @@ M.setup = function ()
     utils.maplua('n', 'gl', 'require[[wr.Link]]:new():open()', {buffer = true})
 	-- resolv file in Finder
     utils.maplua('n', 'gr', 'require[[wr.Link]]:new():resolv()', {buffer = true})
+	-- copy id (joplin) or path (local , path ...)
+    utils.maplua('n', 'gy', 'require[[wr.Link]]:new():copy()', {buffer = true})
 
     utils.new_cmd('-buffer CopyFragLinkW', 'lua require[[wr.Link]]:copyFragLinkW(true)')
     utils.new_cmd('-buffer CopyNoFragLinkW', 'lua require[[wr.Link]]:copyFragLinkW()')

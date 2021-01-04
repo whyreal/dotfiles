@@ -15,6 +15,7 @@ function Link:new()
 
     local txt = tr:get_all()[1]
     local o = utils.parse_link(txt)
+	o.url = o[1]
 	assert(type(o) == "table", "Can't parse link!!!")
     setmetatable(o, self)
     self.__index = self
@@ -216,7 +217,15 @@ function Link:open()
 end
 
 function Link:resolv()
-    vim.fn.system("open -R " .. self.path)
+    vim.fn.system("open -a Finder.app " .. self.path)
+end
+
+function Link:copy()
+	if self.schema == "joplin" then
+		return vim.fn.setreg("+", ("%s"):format(self.id))
+	else
+		return vim.fn.setreg("+", ("%s"):format(self.url))
+	end
 end
 
 return Link

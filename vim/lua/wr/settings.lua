@@ -39,9 +39,9 @@ vim.o.completeopt   = "menuone,noinsert,noselect"
 vim.o.shortmess     = "filnxtToOFc"
 --vim.o.cedit         = "<C-R>"  -- open command line window
 vim.o.statusline="%t %h%w%m%r %=%(%l,%c%V %= %P%)"
-vim.wo.linebreak = true
-vim.wo.breakindent = true
-vim.wo.breakindentopt = 'shift:0'
+--vim.wo.linebreak = true
+--vim.wo.breakindent = true
+--vim.wo.breakindentopt = 'shift:0'
 
 ----------------
 -- map
@@ -121,3 +121,8 @@ utils.new_cmd("Docs", "cd /Users/Real/Documents/vim-workspace/docs")
 
 -- edit joplin note with id
 vim.cmd('command! -nargs=? JEdit call luaeval("require[[wr.utils]].edit_joplin_note(_A)", <q-args>)')
+
+-- NOTE
+-- download html to markdown
+vim.cmd('command! -nargs=1 MarkdownDownload call luaeval("require[[wr.utils]].markdown_download(_A)", <q-args>)')
+vim.cmd('command! -nargs=0 MarkdownUnescape lua require[[wr.utils]].markdown_unescape()')

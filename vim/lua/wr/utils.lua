@@ -1,6 +1,9 @@
 local lpeg = require("lpeg")
 lpeg.locale(lpeg) 
 
+local htmlparser = require("htmlparser")
+local htmlEntities = require("htmlEntities")
+
 local M = {}
 
 local map_opts = {noremap = false, silent = true, expr = false}
@@ -115,7 +118,7 @@ M.parse_link = setfenv(function (s)
 		fragment_path = Cg(Cc("fragment"), "schema") * V'fragment',
 		joplin_path = Cg(Cc("joplin"), "schema") * ":/" * V'joplinid' * V'fragment'^-1,
 
-		id = Cg(V'c2'^1, "id"),
+		id = Cg((1 - S("[]]"))^1, "id"),
 		joplinid = Cg(V'c'^1, "joplinid"),
 		schema = Cg(alnum^1, "schema") * "://",
 		domain = Cg(V'c3'^1 * ("." * V'c3'^1)^1 , "domain") ,
@@ -123,26 +126,31 @@ M.parse_link = setfenv(function (s)
 		path = Cg((V'path_sep'^0 * V'c'^1 + V'path_sep'^1 * V'c'^0)^1 , "path") ,
 		query = "?" * Cg(V'c'^1 , "query") ,
 		fragment = "#" * Cg(V'c'^1 , "fragment") ,
-		title = space^1 * Cg(V'c2'^0 , "title") ,
+		title = space^1 * Cg((1 - S(")"))^0 , "title") ,
 
 		c = 1 - S("\t /()[]:?#"),
-		c2 = 1 - S("])"),
 		c3 = alnum + S("-_"),
-		path_sep = S("~/."),
+		path_sep = S("./"),
 	}
 	return match(Ct(p), s)
 end , lpeg)
 
-M.parse_title = setfenv(function(s)
+M.parse_title = setfenv(function(s, level)
+	local header_sign
+	if not level then
+		header_sign = P"#"^1 * space^1
+	else
+		header_sign = P(("#"):rep(level)) * space^1
+	end
+
 	local p = P{
 		"TITLE";
 		TITLE = V'with_link' + V'without_link',
 
-		with_link = V'header_sign' * "[" * V'title' * "]",
-		without_link = V'header_sign' * V'title',
+		with_link = header_sign * "[" * V'title' * "]",
+		without_link = header_sign * V'title',
 
 		title = C((1 - S("[]"))^1),
-		header_sign = P"#"^1 * space^1,
 	}
 	return match(p, s)
 end, lpeg)
@@ -174,6 +182,80 @@ function M.edit_joplin_note(id)
 	vim.cmd(("autocmd BufWritePost <buffer> exec '!%s update %s'"):format(script, id))
 	vim.cmd(("autocmd BufWipeout <buffer> exec '!%s delete %s'"):format(script, id))
 
+end
+
+function M.markdown_unescape()
+	vim.cmd[[%s/\\-/-/ge]]
+	vim.cmd[[%s/\\!/!/ge]]
+	vim.cmd[[%s/\\././ge]]
+	vim.cmd[[%s/\\\~/\~/ge]]
+
+	vim.cmd[[%s/\*\*//ge]]
+
+	--vim.cmd[[%s/  $/\r/ge]]
+	vim.cmd[[%s/  $//ge]]
+	vim.cmd[[%s/^  *$//ge]]
+
+	vim.cmd[[write]]
+end
+
+local content_path = {}
+
+content_path["www.cnblogs.com"] = "#mainContent"
+
+function M.markdown_download(url)
+	local title, article, html, root, htmlf
+
+	local domain = M.parse_link(url).domain
+	local cookie = vim.fn.getenv("HOME") .. "/Documents/Cookies/" .. domain .. ".txt"
+ 
+	-- wget -k 和 -O - 无法共用，必须使用临时文件
+    local html_path = os.tmpname ()
+	-- 依赖 wget
+	-- wget -k 
+	-- After the download is complete, convert the links in the document to make them suitable for local viewing.
+    os.execute(("wget -k --no-check-certificate "
+	            .. "--header 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:84.0) Gecko/20100101 Firefox/84.0' "
+	            .. "--load-cookies %s --save-cookies %s --keep-session-cookies "
+				.. "%s -O %s -o /dev/null")
+				:format(cookie, cookie, url, html_path))
+	htmlf = io.open(html_path)
+	html = htmlf:read("*a")
+	htmlf:close()
+	os.remove(html_path)
+
+	root = htmlparser.parse(html)
+
+	title = root("head > title")
+	assert(type(title) == "table" )
+	assert(#title >= 1)
+	title = htmlEntities.decode(title[1]:getcontent())
+	title = title:gsub("%/", "_")
+
+	article = root(content_path[domain])
+	article = article or root("article")
+	article = article or root(".content")
+	article = article or root("body")
+	assert(type(article) == "table" and #title >= 1)
+	-- data-original-src 等属性，用来实现延迟加载
+	-- 这里需要将 data-original-src 转换成 src
+	-- 使用gsub 是无奈的选择
+	-- 		pandoc 会忽略 src 为空的 img，无法通过 filter 修改
+	-- 		当前版本 htmlparser 只提供解析，无法正常修改 attr
+	--article = htmlEntities.decode(article[1]:gettext())
+	article = article[1]:gettext()
+	article = article:gsub("data%-original%-", "")
+	article = article:gsub("%/%/upload%-images", "https://upload%-images")
+
+	local markdown = vim.fn.getenv("HOME") .. "/Documents/WebClipping/" .. title:gsub(" ", "_") .. ".md"
+    local f = io.popen(("pandoc --wrap=none -f html-native_divs-native_spans -t gfm+hard_line_breaks -o %q")
+				:format(markdown), "w")
+	f:write(title .. "\n\n")
+	f:write(article)
+	f:flush()
+	f:close()
+
+	vim.cmd("edit " .. markdown)
 end
 
 return M
