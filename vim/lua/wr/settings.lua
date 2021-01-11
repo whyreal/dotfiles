@@ -17,7 +17,7 @@ vim.g.netrw_winsize = 30
 vim.g.netrw_bookmarklist = "[$PWD]"
 
 vim.o.laststatus    = 2
-vim.o.cursorline    = false
+vim.o.cursorline    = true
 vim.o.clipboard     = "unnamed"
 vim.o.foldlevel     = 99
 vim.o.fileencodings = "utf-8,gbk,ucs-bom,cp936,gb18030,big5,latin1"
@@ -126,3 +126,7 @@ vim.cmd('command! -nargs=? JEdit call luaeval("require[[wr.utils]].edit_joplin_n
 -- download html to markdown
 vim.cmd('command! -nargs=1 MarkdownDownload call luaeval("require[[wr.utils]].markdown_download(_A)", <q-args>)')
 vim.cmd('command! -nargs=0 MarkdownUnescape lua require[[wr.utils]].markdown_unescape()')
+
+
+vim.cmd('command! -nargs=0 Md2doc !md2doc %')
+

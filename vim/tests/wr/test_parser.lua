@@ -23,13 +23,13 @@ Test_link_parse = {
 		luaunit.assertEquals(o.path, "whyreal/NOTE")
 	end,
 	test_normal_link = function ()
-		local t = "https://github.com/whyreal/NOTE?a=b#fragment1"
+		local t = "https://zhuanlan.zhihu.com/p/341893512?utm_source=wechat_session&utm_medium=social&utm_oi=27733824372736#123"
 		local o = l.parse_link(t)
-		luaunit.assertEquals(o.domain, "github.com")
+		luaunit.assertEquals(o.domain, "zhuanlan.zhihu.com")
 		luaunit.assertEquals(o.schema, "https")
-		luaunit.assertEquals(o.path, "/whyreal/NOTE")
-		luaunit.assertEquals(o.query, "a=b")
-		luaunit.assertEquals(o.fragment, "fragment1")
+		luaunit.assertEquals(o.path, "/p/341893512")
+		luaunit.assertEquals(o.query, "utm_source=wechat_session&utm_medium=social&utm_oi=27733824372736")
+		luaunit.assertEquals(o.fragment, "123")
 
 		local t = "https://github.com/whyreal/NOTE?a=b"
 		local o = l.parse_link(t)

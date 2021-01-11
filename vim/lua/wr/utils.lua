@@ -108,29 +108,51 @@ end
 M.parse_link = setfenv(function (s)
 	local p = P{
 		"LINK",
-		LINK = V'md_link' + V'url',
+		LINK = V'remote_link' + V'local_link' + V'fragment_link' + V'help_link' + V'joplin_link',
 
-		md_link = "[" * V'id'^-1 * "](" * V'url' * V'title'^-1 * ")",
-		url = V'remote_path' + V'local_path' + V'fragment_path' + V'joplin_path',
+		remote_link   = "[" * V'id'^-1 * "](" * V'remote_path' * V'title'^-1 * ")"
+				    	           + P('"<')  * V'remote_path' * P('>"')
+				    	                      + V'remote_path',
 
-		remote_path = V'schema' * V'domain' * V'port'^-1 * V'path'^-1 * V'query'^-1 * V'fragment'^-1, 
-		local_path = Cg(Cc("file"), "schema") * V'path' * V'fragment'^-1,
+		local_link    = "[" * V'id'^-1 * "](" * V'local_path' * ")"
+		                                      + V'local_path',
+
+		fragment_link = "[" * V'id'^-1 * "](" * V'fragment_path' * ")"
+		                                      + V'fragment_path',
+
+		help_link     = "[" * V'id'^-1 * "](" * V'help_path'* ")"
+				    						  + V'help_path',
+		joplin_link   = "[" * V'id'^-1 * "](" * V'joplin_path'* ")",
+
+		help_path =  V'help_schema' * Cg((1 - space - P")")^1, "subject"),
 		fragment_path = Cg(Cc("fragment"), "schema") * V'fragment',
-		joplin_path = Cg(Cc("joplin"), "schema") * ":/" * V'joplinid' * V'fragment'^-1,
+		local_path    = Cg(Cc("file"),     "schema") * V'path2' * V'fragment'^-1,
+		joplin_path   = Cg(Cc("joplin"),   "schema") * ":/" * Cg(alnum^1, "path") * V'fragment'^-1,
 
-		id = Cg((1 - S("[]]"))^1, "id"),
-		joplinid = Cg(V'c'^1, "joplinid"),
-		schema = Cg(alnum^1, "schema") * "://",
+		remote_path = V'schema' * V'domain' * V'port'^-1
+					* V'path'^-1 * V'query'^-1 * V'fragment'^-1, 
+
+
+		id = Cg((1 - V's1')^1, "id"),
+		schema = Cg(alnum^1, "schema") * "://"
+	             - V'help_schema',
+		help_schema = Cg(P("help"), "schema") * "://",
 		domain = Cg(V'c3'^1 * ("." * V'c3'^1)^1 , "domain") ,
 		port = ":" * Cg(digit^1 , "port") ,
 		path = Cg((V'path_sep'^0 * V'c'^1 + V'path_sep'^1 * V'c'^0)^1 , "path") ,
+		path2 = Cg((V'path_sep'^0 * V'c2'^1 + V'path_sep'^1 * V'c2'^0)^1 , "path") ,
 		query = "?" * Cg(V'c'^1 , "query") ,
 		fragment = "#" * Cg(V'c'^1 , "fragment") ,
-		title = space^1 * Cg((1 - S(")"))^0 , "title") ,
+		title = space^1 * Cg((1 - V's2')^0 , "title") ,
 
-		c = 1 - S("\t /()[]:?#"),
+		c = 1 - S(":?#") - V'path_sep' - V's1' - V's2' - V's4' - space,
+		c2 = 1 - S(":?#") - V'path_sep' - V's1' - V's2' - V's4',
 		c3 = alnum + S("-_"),
-		path_sep = S("./"),
+
+		path_sep = S("/"),
+		s1 = S("[]"),
+		s2 = S("()"),
+		s4 = S("<>"),
 	}
 	return match(Ct(p), s)
 end , lpeg)
@@ -147,8 +169,8 @@ M.parse_title = setfenv(function(s, level)
 		"TITLE";
 		TITLE = V'with_link' + V'without_link',
 
-		with_link = header_sign * "[" * V'title' * "]",
-		without_link = header_sign * V'title',
+		with_link = P(1 - P"#")^0 * header_sign * "[" * V'title' * "]",
+		without_link = P(1 - P"#")^0 * header_sign * V'title',
 
 		title = C((1 - S("[]"))^1),
 	}
@@ -187,8 +209,9 @@ end
 function M.markdown_unescape()
 	vim.cmd[[%s/\\-/-/ge]]
 	vim.cmd[[%s/\\!/!/ge]]
-	vim.cmd[[%s/\\././ge]]
-	vim.cmd[[%s/\\\~/\~/ge]]
+	vim.cmd[[%s/\\\././ge]]
+	vim.cmd[[%s/\\\~/~/ge]]
+	vim.cmd[[%s/\\\*/*/ge]]
 
 	vim.cmd[[%s/\*\*//ge]]
 
@@ -208,7 +231,7 @@ function M.markdown_download(url)
 
 	local domain = M.parse_link(url).domain
 	local cookie = vim.fn.getenv("HOME") .. "/Documents/Cookies/" .. domain .. ".txt"
- 
+
 	-- wget -k 和 -O - 无法共用，必须使用临时文件
     local html_path = os.tmpname ()
 	-- 依赖 wget
@@ -217,26 +240,27 @@ function M.markdown_download(url)
     os.execute(("wget -k --no-check-certificate "
 	            .. "--header 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:84.0) Gecko/20100101 Firefox/84.0' "
 	            .. "--load-cookies %s --save-cookies %s --keep-session-cookies "
-				.. "%s -O %s -o /dev/null")
+				.. "%q -O %s -o /dev/null")
 				:format(cookie, cookie, url, html_path))
 	htmlf = io.open(html_path)
 	html = htmlf:read("*a")
 	htmlf:close()
 	os.remove(html_path)
 
-	root = htmlparser.parse(html)
+	root = htmlparser.parse(html, 10000)
 
 	title = root("head > title")
 	assert(type(title) == "table" )
 	assert(#title >= 1)
 	title = htmlEntities.decode(title[1]:getcontent())
-	title = title:gsub("%/", "_")
 
 	article = root(content_path[domain])
-	article = article or root("article")
-	article = article or root(".content")
-	article = article or root("body")
-	assert(type(article) == "table" and #title >= 1)
+	article = #article ~= 0 and article or root("article")
+	article = #article ~= 0 and article or root("#content")
+	article = #article ~= 0 and article or root("body")
+	print(#article)
+	assert(type(article) == "table")
+	assert(#article >= 1)
 	-- data-original-src 等属性，用来实现延迟加载
 	-- 这里需要将 data-original-src 转换成 src
 	-- 使用gsub 是无奈的选择
@@ -247,7 +271,7 @@ function M.markdown_download(url)
 	article = article:gsub("data%-original%-", "")
 	article = article:gsub("%/%/upload%-images", "https://upload%-images")
 
-	local markdown = vim.fn.getenv("HOME") .. "/Documents/WebClipping/" .. title:gsub(" ", "_") .. ".md"
+	local markdown = vim.fn.getenv("HOME") .. "/Documents/WebClipping/" .. title:gsub("[%p%s]", "_") .. ".md"
     local f = io.popen(("pandoc --wrap=none -f html-native_divs-native_spans -t gfm+hard_line_breaks -o %q")
 				:format(markdown), "w")
 	f:write(title .. "\n\n")

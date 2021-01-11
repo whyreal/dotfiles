@@ -36,6 +36,8 @@ set -x GOPROXY https://goproxy.cn #Set the GOPROXY environment variable
 
 # lua
 alias luarocks='luarocks --lua-dir=/usr/local/opt/lua@5.1'
+set -x LUA_PATH "$HOME/.luarocks/share/lua/5.1/?.lua;$HOME/.luarocks/share/lua/5.1/?/init.lua;$LUA_PATH"
+export LUA_CPATH="$HOME/.luarocks/lib/lua/5.1/?.so;$LUA_CPATH"
 
 # neovim
 set -x NVIM_LISTEN_ADDRESS /tmp/nvimsocket

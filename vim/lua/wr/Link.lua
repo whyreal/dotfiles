@@ -15,7 +15,8 @@ function Link:new()
 
     local txt = tr:get_all()[1]
     local o = utils.parse_link(txt)
-	o.url = o[1]
+	--o.url = o[1]
+	--utils.print_r(o)
 	assert(type(o) == "table", "Can't parse link!!!")
     setmetatable(o, self)
     self.__index = self
@@ -49,6 +50,10 @@ end
 
 Link.handlers = {}
 
+function Link.handlers.help(self)
+	vim.cmd(("help %s"):format(self.subject))
+end
+
 function Link.handlers.http(self)
 
     local _cmd = ("open -a Firefox.app '%s://%s"):format(self.schema, self.domain)
@@ -62,7 +67,7 @@ end
 Link.handlers.https = Link.handlers.http
 
 function Link.handlers.joplin(self)
-	utils.edit_joplin_note(self.joplinid)
+	utils.edit_joplin_note(self.path)
 	if self.fragment then self:gotoFragment() end
 end
 
@@ -72,7 +77,7 @@ function Link.handlers.scp(self)
 end
 
 function Link.handlers.system(self)
-	local _cmd = "open " .. self.path
+	local _cmd = ("open %q"):format(self.path)
 	return vim.fn.system(_cmd)
 end
 
@@ -82,7 +87,7 @@ function Link.handlers.text(self)
 end
 
 function Link.handlers.directory(self)
-	self:handler_system()
+	self.handlers.system(self)
 end
 
 Link.handlers.fragment = Link.gotoFragment
@@ -212,19 +217,18 @@ function Link:gotoFragment()
 end
 
 function Link:open()
-	--self["handler_" .. self.schema](self)
 	self.handlers[self.schema](self)
 end
 
 function Link:resolv()
-    vim.fn.system("open -a Finder.app " .. self.path)
+    vim.fn.system("open -R " .. self.path)
 end
 
 function Link:copy()
 	if self.schema == "joplin" then
 		return vim.fn.setreg("+", ("%s"):format(self.id))
 	else
-		return vim.fn.setreg("+", ("%s"):format(self.url))
+		--return vim.fn.setreg("+", ("%s"):format(self.url))
 	end
 end
 
