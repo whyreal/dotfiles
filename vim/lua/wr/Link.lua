@@ -48,6 +48,16 @@ local function add_prefix(p, s)
 	return s and p .. s or ""
 end
 
+function Link:gotoFragment()
+    local _, lnr = self:find_fragment(1, true, true)
+	if not lnr then return end
+
+	vim.api.nvim_win_set_cursor(0, {lnr, 0})
+
+	vim.cmd("normal! zO")
+	vim.cmd("normal! zt")
+end
+
 Link.handlers = {}
 
 function Link.handlers.help(self)
@@ -72,7 +82,7 @@ function Link.handlers.joplin(self)
 end
 
 function Link.handlers.scp(self)
-	vim.cmd(("edit %s://%s/%s"):format(self.schema, self.domain, self.path))
+	vim.cmd(("tabedit %s://%s/%s"):format(self.schema, self.domain, self.path))
 	if self.fragment then self:gotoFragment() end
 end
 
@@ -82,7 +92,7 @@ function Link.handlers.system(self)
 end
 
 function Link.handlers.text(self)
-	vim.cmd(("edit %s"):format(self.path))
+	vim.cmd(("tabedit %s"):format(self.path))
 	if self.fragment then self:gotoFragment() end
 end
 
@@ -204,16 +214,6 @@ function Link:find_fragment(start, after, compare_s)
 		end
     end
 	return fragment, lnr
-end
-
-function Link:gotoFragment()
-    local _, lnr = self:find_fragment(1, true, true)
-	if not lnr then return end
-
-	vim.api.nvim_win_set_cursor(0, {lnr, 0})
-
-	vim.cmd("normal! zO")
-	vim.cmd("normal! zt")
 end
 
 function Link:open()

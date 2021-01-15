@@ -39,14 +39,14 @@ vim.o.completeopt   = "menuone,noinsert,noselect"
 vim.o.shortmess     = "filnxtToOFc"
 --vim.o.cedit         = "<C-R>"  -- open command line window
 vim.o.statusline="%t %h%w%m%r %=%(%l,%c%V %= %P%)"
---vim.wo.linebreak = true
---vim.wo.breakindent = true
---vim.wo.breakindentopt = 'shift:0'
+vim.wo.linebreak = true
+vim.wo.breakindent = true
+vim.wo.breakindentopt = 'shift:0'
 
 ----------------
 -- map
 ----------------
-utils.map('i', 'jj',      '<ESC>' )
+--utils.map('i', 'jj',      '<ESC>' )
 
 utils.map('n', 'j',          'gj' )
 utils.map('n', 'k',          'gk' )
@@ -58,7 +58,7 @@ utils.mapcmd('n', '<leader>w',  'w' )
 utils.mapcmd('n', '<a-=>',      'split term://$SHELL' )
 utils.map('n', '<leader>bo', '<c-^>' )
 
-utils.mapcmd('n', '<leader>ve', 'Explore' )
+utils.mapcmd('n', '<leader>ve', 'Texplore' )
 utils.map('t', '<c-o>',      '<c-\\><c-n>' )
 
 utils.maplua('n', '0', "require[[wr.utils]].toggle_home_zero()")

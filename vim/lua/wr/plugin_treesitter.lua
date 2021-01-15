@@ -6,7 +6,7 @@ M.setup = function()
 	use { 'nvim-treesitter/nvim-treesitter',
 	config = function()
 		require'nvim-treesitter.configs'.setup {
-			ensure_installed = "maintained",
+			ensure_installed = {"lua", "go"},
 			highlight = {enable = true}
 		}
 		vim.wo.foldmethod = "expr"

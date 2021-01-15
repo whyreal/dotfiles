@@ -122,7 +122,7 @@ M.parse_link = setfenv(function (s)
 
 		help_link     = "[" * V'id'^-1 * "](" * V'help_path'* ")"
 				    						  + V'help_path',
-		joplin_link   = "[" * V'id'^-1 * "](" * V'joplin_path'* ")",
+		joplin_link   = "[" * V'id'^-1 * "](" * V'joplin_path' * ")",
 
 		help_path =  V'help_schema' * Cg((1 - space - P")")^1, "subject"),
 		fragment_path = Cg(Cc("fragment"), "schema") * V'fragment',
@@ -145,7 +145,8 @@ M.parse_link = setfenv(function (s)
 		fragment = "#" * Cg(V'c'^1 , "fragment") ,
 		title = space^1 * Cg((1 - V's2')^0 , "title") ,
 
-		c = 1 - S(":?#") - V'path_sep' - V's1' - V's2' - V's4' - space,
+		c = 1 - S(":?#") - V'path_sep' - V's1' - V's2' - V's4',
+		--c = 1 - S(":?#") - V'path_sep' - V's1' - V's2' - V's4' - space,
 		c2 = 1 - S(":?#") - V'path_sep' - V's1' - V's2' - V's4',
 		c3 = alnum + S("-_"),
 
@@ -207,11 +208,14 @@ function M.edit_joplin_note(id)
 end
 
 function M.markdown_unescape()
-	vim.cmd[[%s/\\-/-/ge]]
-	vim.cmd[[%s/\\!/!/ge]]
-	vim.cmd[[%s/\\\././ge]]
-	vim.cmd[[%s/\\\~/~/ge]]
-	vim.cmd[[%s/\\\*/*/ge]]
+	--vim.cmd[[%s/\\-/-/ge]]
+	--vim.cmd[[%s/\\!/!/ge]]
+	--vim.cmd[[%s/\\\././ge]]
+	--vim.cmd[[%s/\\\~/~/ge]]
+	--vim.cmd[[%s/\\\*/*/ge]]
+	--vim.cmd[[%s/\\\[/[/ge]]
+	--vim.cmd[[%s/\\\]/]/ge]]
+	vim.cmd[[%s/\\\([\[\]\.\-\*\~\!\#\_]\)/\1/g]]
 
 	vim.cmd[[%s/\*\*//ge]]
 
