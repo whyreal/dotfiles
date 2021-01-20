@@ -6,6 +6,7 @@ M.setup = function ()
 	-- preview
 	use {'euclio/vim-markdown-composer',
 	lock = true,
+	--disable = true,
 	run = 'cargo build --release',
 	config = function()
 		vim.g.markdown_composer_autostart = 1

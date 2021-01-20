@@ -211,4 +211,7 @@ filenames['LICENSE'] = 'text/plain'
 filenames['Makefile'] = 'text/x-makefile'
 filenames['README'] = 'text/plain'
 
+--filenames['.gitignore_global'] = 'text/plain'
+--filenames['.gitignore'] = 'text/plain'
+
 return {extensions = extensions, filenames = filenames}

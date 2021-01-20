@@ -39,7 +39,7 @@ vim.o.completeopt   = "menuone,noinsert,noselect"
 vim.o.shortmess     = "filnxtToOFc"
 --vim.o.cedit         = "<C-R>"  -- open command line window
 vim.o.statusline="%t %h%w%m%r %=%(%l,%c%V %= %P%)"
-vim.wo.linebreak = true
+vim.wo.linebreak = false
 vim.wo.breakindent = true
 vim.wo.breakindentopt = 'shift:0'
 
@@ -90,7 +90,7 @@ vim.cmd('filetype plugin indent on')
 if vim.fn.has('gui_vimr') == 1 then
 	vim.cmd('colorscheme onehalflight')
 else
-	vim.cmd('colorscheme onehalflight')
+	vim.cmd('colorscheme challenger_deep')
 end
 
 if vim.env.tmux_version ~= nil then
@@ -98,7 +98,7 @@ if vim.env.tmux_version ~= nil then
 	vim.cmd[[highlight Normal guibg=NONE]]
 end
 
-vim.cmd('syntax on')
+vim.cmd('syntax off')
 
 utils.new_cmd('VimrcEdit', 'tabe ~/.config/nvim/init.vim')
 utils.new_cmd('Dos2unix', 'e ++ff=unix | %s/\r//g')
@@ -130,3 +130,10 @@ vim.cmd('command! -nargs=0 MarkdownUnescape lua require[[wr.utils]].markdown_une
 
 vim.cmd('command! -nargs=0 Md2doc !md2doc %')
 
+-- open Link
+utils.maplua('n', 'gl', 'require[[wr.Link]]:new():open()', {buffer = true})
+-- resolv file in Finder
+utils.maplua('n', 'gr', 'require[[wr.Link]]:new():resolv()', {buffer = true})
+-- copy id (joplin) or path (local , path ...)
+utils.maplua('n', 'gy', 'require[[wr.Link]]:new():copy()', {buffer = true})
+utils.map('n', 'gf', 'gl')

@@ -105,55 +105,53 @@ function M.print_r ( t )
     print()
 end
 
-M.parse_link = setfenv(function (s)
+M.parse_link = function (s)
+	local link, title
+
+	link = string.match(s, "(%b())")	
+	if link then
+		link = string.sub(link, 2, -2)
+
+		title = string.match(link, '%b""')
+		if title then
+			link = string.sub(link, 1, -1 - title:len()):rstrip()
+			title = string.sub(title, 2, -2)
+		end
+	else
+		link = string.match(s, "(%b<>)")	
+		if link then
+			link = string.sub(s, 2, -2)
+		else
+			link = s
+		end
+	end
+
+	link = M._parse_link(link)
+	link.title = title
+	return link
+end
+
+M._parse_link = setfenv(function (s)
 	local p = P{
 		"LINK",
-		LINK = V'remote_link' + V'local_link' + V'fragment_link' + V'help_link' + V'joplin_link',
+		LINK = V'fragment_path' + V'help_path' + V'vscode_path' + V'vimr_path' + V'joplin_path' + V'remote_path' + V'local_path',
 
-		remote_link   = "[" * V'id'^-1 * "](" * V'remote_path' * V'title'^-1 * ")"
-				    	           + P('"<')  * V'remote_path' * P('>"')
-				    	                      + V'remote_path',
-
-		local_link    = "[" * V'id'^-1 * "](" * V'local_path' * ")"
-		                                      + V'local_path',
-
-		fragment_link = "[" * V'id'^-1 * "](" * V'fragment_path' * ")"
-		                                      + V'fragment_path',
-
-		help_link     = "[" * V'id'^-1 * "](" * V'help_path'* ")"
-				    						  + V'help_path',
-		joplin_link   = "[" * V'id'^-1 * "](" * V'joplin_path' * ")",
-
-		help_path =  V'help_schema' * Cg((1 - space - P")")^1, "subject"),
-		fragment_path = Cg(Cc("fragment"), "schema") * V'fragment',
-		local_path    = Cg(Cc("file"),     "schema") * V'path2' * V'fragment'^-1,
 		joplin_path   = Cg(Cc("joplin"),   "schema") * ":/" * Cg(alnum^1, "path") * V'fragment'^-1,
-
-		remote_path = V'schema' * V'domain' * V'port'^-1
+		help_path     = Cg(P("help"), "schema") * "://" * Cg(P(1)^1, "subject"),
+		vscode_path     = Cg(P("code"), "schema") * "://" * Cg(P(1)^1, "path"),
+		vimr_path     = Cg(P("vimr"), "schema") * "://" * Cg(P(1)^1, "path"),
+		remote_path = Cg(alnum^1 - P"help" - P"code", "schema") * "://" * V'domain' * V'port'^-1
 					* V'path'^-1 * V'query'^-1 * V'fragment'^-1, 
+		local_path    = Cg(Cc("file"),     "schema") * V'path' * V'fragment'^-1,
+		fragment_path = Cg(Cc("fragment"), "schema") * V'fragment',
 
-
-		id = Cg((1 - V's1')^1, "id"),
-		schema = Cg(alnum^1, "schema") * "://"
-	             - V'help_schema',
-		help_schema = Cg(P("help"), "schema") * "://",
-		domain = Cg(V'c3'^1 * ("." * V'c3'^1)^1 , "domain") ,
+		domain = Cg((alnum + S"-_.")^1 , "domain") ,
 		port = ":" * Cg(digit^1 , "port") ,
-		path = Cg((V'path_sep'^0 * V'c'^1 + V'path_sep'^1 * V'c'^0)^1 , "path") ,
-		path2 = Cg((V'path_sep'^0 * V'c2'^1 + V'path_sep'^1 * V'c2'^0)^1 , "path") ,
+		path = Cg(V'c'^1, "path"),
 		query = "?" * Cg(V'c'^1 , "query") ,
 		fragment = "#" * Cg(V'c'^1 , "fragment") ,
-		title = space^1 * Cg((1 - V's2')^0 , "title") ,
 
-		c = 1 - S(":?#") - V'path_sep' - V's1' - V's2' - V's4',
-		--c = 1 - S(":?#") - V'path_sep' - V's1' - V's2' - V's4' - space,
-		c2 = 1 - S(":?#") - V'path_sep' - V's1' - V's2' - V's4',
-		c3 = alnum + S("-_"),
-
-		path_sep = S("/"),
-		s1 = S("[]"),
-		s2 = S("()"),
-		s4 = S("<>"),
+		c = 1 - S(":?#"),
 	}
 	return match(Ct(p), s)
 end , lpeg)
@@ -177,6 +175,18 @@ M.parse_title = setfenv(function(s, level)
 	}
 	return match(p, s)
 end, lpeg)
+
+M.parse_path = setfenv(function(path)
+	local p = P{
+		"PATH";
+		PATH = V'dir' * V'filename',
+
+		dir = Cg((P("/")^0 * V'c'^1 * P("/")^1)^0, "dir"),
+		filename = Cg(V'c'^1, "filename"),
+		c = P(1) - P"/"
+	}
+	return match(Ct(p), path)
+end, require("lpeg"))
 
 function M.esc(cmd)
   return vim.api.nvim_replace_termcodes(cmd, true, false, true)

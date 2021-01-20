@@ -69,7 +69,7 @@ local init = function()
 
 	-- 平滑滚动
 	-- https://github.com/psliwka/vim-smoothie
-	use {'psliwka/vim-smoothie', lock = true}
+	--use {'psliwka/vim-smoothie', lock = true}
 
 	-- 注释
 	use {'scrooloose/nerdcommenter', lock = true}

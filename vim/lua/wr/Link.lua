@@ -10,13 +10,13 @@ local function extension (filename)
 end
 
 function Link:new()
-    local tr = WrappedRange:newFromSep("[", ")", false) or
+    local tr = WrappedRange:newMarkdownLink() or
                WrappedRange:newFromCursor()
 
     local txt = tr:get_all()[1]
     local o = utils.parse_link(txt)
 	--o.url = o[1]
-	--utils.print_r(o)
+	-- utils.print_r(o)
 	assert(type(o) == "table", "Can't parse link!!!")
     setmetatable(o, self)
     self.__index = self
@@ -29,11 +29,12 @@ function Link:new()
 	end
 
 	if o.schema == "file" then
-		local t = mimetypes.guess(o.path, require("wr.mimedb"))
-		if t and t:startswith("text") then
-			o.schema = "text"
-		else
+		local t = mimetypes.guess(utils.parse_path(o.path).filename, require("wr.mimedb"))
+
+		if t and not t:startswith("text") then
 			o.schema = "system"
+		else
+			o.schema = "text"
 		end
 	end
 
@@ -64,11 +65,19 @@ function Link.handlers.help(self)
 	vim.cmd(("help %s"):format(self.subject))
 end
 
+function Link.handlers.code(self)
+	vim.fn.system(("code %q"):format(self.path))
+end
+
+function Link.handlers.vimr(self)
+	vim.fn.system(("cd %q && vimr"):format(self.path))
+end
+
 function Link.handlers.http(self)
 
     local _cmd = ("open -a Firefox.app '%s://%s"):format(self.schema, self.domain)
-				.. add_prefix("", self.path)
 	            .. add_prefix(":", self.port)
+				.. add_prefix("", self.path)
 	            .. add_prefix("?", self.query)
 	            .. add_prefix("#", self.fragment) .. "'"
 
@@ -87,7 +96,13 @@ function Link.handlers.scp(self)
 end
 
 function Link.handlers.system(self)
-	local _cmd = ("open %q"):format(self.path)
+	local _cmd
+	local app = ""
+	if self.path:endswith("drawio.png") then
+		app = "-a draw.io.app"
+	end
+
+	_cmd = ("open %s %q"):format(app, self.path)
 	return vim.fn.system(_cmd)
 end
 
@@ -104,11 +119,13 @@ Link.handlers.fragment = Link.gotoFragment
 
 local function get_workspace_links()
 	local ws = vim.fn.getcwd()
+	local home = vim.fn.getenv("HOME")
+
     local attribute, target
 
 	local links = {}
-	links["."] = ws
-	links["~"] = vim.fn.getenv("HOME")
+	table.insert(links, {name = ".", target = ws, len=ws:len()})
+	table.insert(links, {name = "~", target = home, len=home:len()})
 
 	for name in lfs.dir(ws) do
 		attribute = lfs.symlinkattributes(ws .. "/" .. name)
@@ -129,15 +146,19 @@ local function get_path_in_ws(path)
 
 	for i, link in ipairs(get_workspace_links()) do
 		if path:startswith(link.target) then
-			if #matchedTarget == 0 
-				or (#matchedTarget == 1 and link.len > matchedTarget.len)
+			if not matchedTarget.target
+				or (matchedTarget.target and link.len > matchedTarget.len)
 			then
 				matchedTarget = link
 			end
 		end
 	end
 
-	if #matchedTarget.name  then
+	if not matchedTarget.target == 0 then
+		return nil
+	end
+
+	if matchedTarget.name  then
 		return matchedTarget.name .. path:sub(matchedTarget.len + 1)
 	else
 		return nil

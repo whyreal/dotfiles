@@ -1,5 +1,6 @@
 local Cursor = require("wr.Cursor")
 local rt = require "resty.template"
+local utils= require("wr.utils")
 
 
 local Range = { }
