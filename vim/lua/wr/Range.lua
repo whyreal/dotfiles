@@ -1,9 +1,17 @@
 local Cursor = require("wr.Cursor")
 local rt = require "resty.template"
 local utils= require("wr.utils")
+local lpeg = require("lpeg")
+local R = require("lamda")
 
 
 local Range = { }
+
+local patterns = {}
+patterns.indent_line = lpeg.Cg(lpeg.space^0) * lpeg.Cg(lpeg.P(1)^0)
+patterns.block_line = (lpeg.S("`-|") + lpeg.R("09") + lpeg.space )^0
+
+local view = {}
 
 function Range:new(
 		start, -- Cursor
@@ -52,6 +60,12 @@ function Range:newFromVisual()
 		Cursor:newFromVim(vim.api.nvim_buf_get_mark(0, '>')))
 end
 
+function Range:newFromCurrentLine()
+	local c = Cursor:newFromVim(vim.api.nvim_win_get_cursor(0))
+	return Range:new(c:moveToLineBegin(), c:moveToLineEnd())
+end
+
+-- current word
 function Range:newFromCursor(cursor)
 	local txt = vim.api.nvim_buf_get_lines(0, cursor.line - 1, cursor.line, false)[1]
 	local tlen = txt:len()
@@ -72,43 +86,14 @@ function Range:newFromCursor(cursor)
                      Cursor:new({right.start.line, right.start.col}))
 end
 
-function Range:make_list()
-	local lines = self:get_lines()
-
-	local tmplist = {}
-
-	for index, line in ipairs(lines) do
-		if line ~= "" then
-			line = line:gsub("^%s+", "", 1)
-			table.insert(tmplist, "- " .. line)
-		end
-	end
-
-	self:set_lines(tmplist)
-end
-
-function Range:make_ordered_list()
-	local lines = self:get_lines()
-
-	local tmplist = {}
-	for index, line in ipairs(lines) do
-		if line ~= "" then
-			line = line:gsub("^%s+", "", 1)
-			table.insert(tmplist, #tmplist + 1 .. ". " .. line)
-		end
-	end
-
-	self:set_lines(tmplist)
-end
-
-function Range:get_lines()
+function Range:linesGet()
 	return vim.api.nvim_buf_get_lines(0,
 									 self.start.line - 1,
 									 self.stop.line,
 									 false)
 end
 
-function Range:set_lines(lines)
+function Range:linesSet(lines)
 	vim.api.nvim_buf_set_lines(0,
 	                           self.start.line - 1,
 							   self.stop.line,
@@ -116,54 +101,117 @@ function Range:set_lines(lines)
 							   lines)
 end
 
-function Range:insert_lines(lines, lnr)
+function Range:linesInsert(lines, lnr)
+	--print(R.toString(lines))
 	vim.api.nvim_buf_set_lines(0, lnr, lnr, false, lines)
 end
 
-function Range:remove_list()
-	local lines = self:get_lines()
+function Range:lineModify(listPrefix)
 
-	local tmplist = {}
+	assert(R.isFunction(listPrefix), "listPrefix should be a function!")
 
-	for index, line in ipairs(lines) do
-		if line ~= "" then
-			line, _ = line:gsub("^- ", "", 1)
-			-- ordered
-			line, _ = line:gsub("^%d+%. ", "", 1)
-			table.insert(tmplist, line)
-		end
+	return R.reject(
+	function (i)
+		return R.isEmpty(i)
+	end,
+	R.mapAccum(function (acc, l)
+			local indent, ltxt = lpeg.match(patterns.indent_line, l)
+			if R.isEmpty(ltxt) then return {acc, ""} end
+			return {acc + 1, indent .. listPrefix(acc, ltxt)}
+		end,
+		1,
+		self:linesGet())[2])
+end
+
+local rejectEmpty = R.reject(
+	function (i)
+		return R.isEmpty(i)
+	end)
+
+function Range:mdCreateUnOrderedList()
+	self:linesSet(self:lineModify(function (acc, ltxt)
+		return "- " .. ltxt
+	end))
+end
+
+function Range:mdCreateOrderedList()
+	self:linesSet(self:lineModify(function (acc, ltxt)
+		return acc .. ". " .. ltxt
+	end))
+end
+
+function Range:mdDeleteList()
+	self:linesSet(self:lineModify(function (acc, ltxt)
+		-- unordered
+		ltxt, _ = ltxt:gsub("^- ", "", 1)
+		-- ordered
+		ltxt, _ = ltxt:gsub("^%d+%. ", "", 1)
+		return ltxt
+	end))
+end
+
+function Range:mdCreateCodeBlock(lines)
+	if not lines then
+		lines = self:linesGet()
 	end
+	local indent, _ = lpeg.match(patterns.indent_line, R.head(lines))
 
-	self:set_lines(tmplist)
+	table.insert(lines, 1, indent .. "```")
+	table.insert(lines, indent .. "```")
+	self:linesSet(lines)
 end
 
-local view = {}
-
-function Range:set_tmpl()
-	view = self:get_lines()
+function Range:mdCreateCodeBlockFromeCodeLine()
+	self:mdCreateCodeBlock(R.map(function (line)
+			return line:strip():gsub("[`]", "")
+		end, R.reject(function (line)
+			return lpeg.match(patterns.block_line, line) == #line + 1
+		end, self:linesGet())))
 end
 
-function Range:render_tmpl()
-	local output
-	local data = self:get_lines()
-	local insert_lnr = self.stop.line
-	local vlen = #view
+function Range:mdCreateCodeBlockFromeTable()
+	self:mdCreateCodeBlock(R.map(function (line)
+			return (line:split("|")[3] or ""):strip():gsub("[`]", "")
+		end, R.reject(function (line)
+			return lpeg.match(patterns.block_line, line) == #line + 1
+		end, self:linesGet())))
+end
 
-	self:insert_lines({"---------RENDERED---------"}, insert_lnr)
-	insert_lnr = insert_lnr + 1
+function Range:tplSet()
+	view = self:linesGet()
+end
 
-    for _, datai in ipairs(data) do
+function Range:tplRender()
 
-        output = string.split(
-					rt.process(
-							table.concat(view, "\n"),
-							{d = datai:split("%s+", nil, true)}),
-					"\n")
-		table.insert(output, "")
+	self:linesInsert(
+		R.reduce(
+			R.concat,
+			{"---------RENDERED---------"},
+			R.map(function (data)
+				return R.append("", string.split(
+							rt.process(
+									R.join("\n", view),
+									{d = data:split("%s+", nil, true)}),
+							"\n"))
+			end, self:linesGet())),
+		self.stop.line)
+end
 
-		self:insert_lines( output, insert_lnr)
-		insert_lnr = insert_lnr + #output
-    end
+local function sendTextToTmux(text)
+	text = R.trim(text)
+	text = R.replace('"', '\\"', 0, text)
+	vim.fn.system('tmux send-keys "' .. text .. '" ENTER')
+end
+
+function Range:sendTextToTmux()
+	local line = self:linesGet()[1]
+	sendTextToTmux(line)
+end
+
+function Range:sendVisualToTmux()
+	for _, line in ipairs(self:linesGet()) do
+		sendTextToTmux(line)
+	end
 end
 
 return Range

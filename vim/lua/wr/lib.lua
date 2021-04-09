@@ -33,21 +33,21 @@ function string:split(sSeparator, nMax, bRegexp)
 	return aRecord
 end
 
-function string:startswith(text)
-	local size = text:len()
-	if self:sub(1, size) == text then
-		return true
-	end
-	return false
-end
+--function string:startswith(text)
+	--local size = text:len()
+	--if self:sub(1, size) == text then
+		--return true
+	--end
+	--return false
+--end
 
 function string:endswith(text)
 	return text == "" or self:sub(-#text) == text
 end
 
-function string:contain(text)
-    return self:find(text, 0, true) and true or false
-end
+--function string:contain(text)
+    --return self:find(text, 0, true) and true or false
+--end
 
 function string:lstrip()
 	if self == nil then return nil end

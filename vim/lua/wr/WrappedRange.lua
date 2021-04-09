@@ -4,7 +4,11 @@ local utils = require("wr.utils")
 
 WrappedRange = { }
 
-function WrappedRange:new(left, inner, right)
+function WrappedRange:new(
+		left, -- Range
+		inner,  -- Range
+		right)  -- Range
+
 	local o = {}
 
 	o.left = left
@@ -36,7 +40,7 @@ function WrappedRange:newMarkdownLink()
 		return nil
 	end
 
-	_, r = txt:find('%b()', l)
+	l, r = txt:find('%b[]%b()', l)
 
 	local left = Range:new(Cursor:new({c.line, l}),
 							Cursor:new({c.line, l}))
@@ -117,8 +121,9 @@ function WrappedRange:get_all()
 	end
 
 	return lines
-	
+
 end
+
 function WrappedRange:range_all()
 	local start = self.left.start
 	local stop = self.right.stop
@@ -145,14 +150,14 @@ end
 function WrappedRange.toggle_wrap(left_sep, right_sep, visual)
 	local r
 
-	r = WrappedRange:newFromSep(left_sep, right_sep)
-	if r ~= nil then
-		return r:remove_sep()
-	end
-
 	if visual then
 		r = WrappedRange:newFromVisual()
 	else
+		r = WrappedRange:newFromSep(left_sep, right_sep)
+		if r ~= nil then
+			return r:remove_sep()
+		end
+
 		r = WrappedRange:newFromCursor()
 		if r.inner.start.col == nil then r.inner.start:moveToLineBegin() end
 		if r.inner.stop.col == nil then r.inner.stop:moveToLineEnd() end

@@ -2,7 +2,7 @@ local fzfwrapper = {}
 
 fzfwrapper.files = function()
 	vim.fn['fzf#vim#files']("", {options = {
-		'--history=' .. vim.env.HOME .. '/.fzf.history',
+		'--history=' .. HOME .. '/.fzf.history',
 		'--preview', 'cat {}',
 		'--preview-window', 'right:50%:hidden',
 		'--bind=alt-o:execute(open {})+abort',
@@ -14,7 +14,7 @@ end
 
 fzfwrapper.buffers = function()
 	vim.fn['fzf#vim#buffers']("", {options = {
-		'--history=' .. vim.env.HOME .. '/.fzf.history',
+		'--history=' .. HOME .. '/.fzf.history',
 		'--bind=alt-c:execute(cp_file2clipboard.sh {4})+abort',
 		'--bind=alt-o:execute(eval open {4})+abort',
 		'--bind=alt-r:execute(eval open -R {4})+abort',

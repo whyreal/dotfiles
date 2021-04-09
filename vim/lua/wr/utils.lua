@@ -1,8 +1,9 @@
 local lpeg = require("lpeg")
-lpeg.locale(lpeg) 
+lpeg.locale(lpeg)
 
 local htmlparser = require("htmlparser")
 local htmlEntities = require("htmlEntities")
+local R = require("lamda")
 
 local M = {}
 
@@ -19,17 +20,17 @@ M.map = function(mode, lhs, rhs, opts)
     vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
 end
 
-M.map_norange_lua = function (mode, lhs, rhs, opts)
-    M.map(mode, lhs, (":<C-U>lua %s<CR>"):format(rhs), opts)
-end
+-- M.map_norange_lua = function (mode, lhs, rhs, opts)
+--     M.map(mode, lhs, (":<C-U>lua %s<CR>"):format(rhs), opts)
+-- end
 
-M.maplua = function(mode, lhs, rhs, opts)
-    M.map(mode, lhs, ("<cmd>lua %s<CR>"):format(rhs), opts)
-end
+-- M.maplua = function(mode, lhs, rhs, opts)
+--     M.map(mode, lhs, ("<cmd>lua %s<CR>"):format(rhs), opts)
+-- end
 
-M.mapcmd = function(mode, lhs, rhs, opts)
-    M.map(mode, lhs, ("<cmd>%s<CR>"):format(rhs), opts)
-end
+-- M.mapcmd = function(mode, lhs, rhs, opts)
+--     M.map(mode, lhs, ("<cmd>%s<CR>"):format(rhs), opts)
+-- end
 
 M.check_back_space = function ()
     local col = vim.fn.col('.') - 1
@@ -41,7 +42,7 @@ M.check_back_space = function ()
 end
 
 M.new_cmd = function(name, cmd)
-    vim.cmd(('command! %s %s'):format(name, cmd))
+    vim.cmd(('silent command! %s %s'):format(name, cmd))
 end
 
 M.toggle_home_zero = function()
@@ -71,8 +72,6 @@ function M.add_blank_line_after()
     vim.api.nvim_buf_set_lines(0, current_line, current_line,0, {""})
 end
 
-function M.print_r ( t )  
-    local print_r_cache={}
     local function sub_print_r(t,indent)
         if (print_r_cache[tostring(t)]) then
             print(indent.."*"..tostring(t))
@@ -95,6 +94,9 @@ function M.print_r ( t )
             end
         end
     end
+
+function M.print_r ( t )
+    local print_r_cache={}
     if (type(t)=="table") then
         print(tostring(t).." {")
         sub_print_r(t,"  ")
@@ -108,7 +110,7 @@ end
 M.parse_link = function (s)
 	local link, title
 
-	link = string.match(s, "(%b())")	
+	link = string.match(s, "](%b())")
 	if link then
 		link = string.sub(link, 2, -2)
 
@@ -118,7 +120,7 @@ M.parse_link = function (s)
 			title = string.sub(title, 2, -2)
 		end
 	else
-		link = string.match(s, "(%b<>)")	
+		link = string.match(s, "(%b<>)")
 		if link then
 			link = string.sub(s, 2, -2)
 		else
@@ -134,14 +136,15 @@ end
 M._parse_link = setfenv(function (s)
 	local p = P{
 		"LINK",
-		LINK = V'fragment_path' + V'help_path' + V'vscode_path' + V'vimr_path' + V'joplin_path' + V'remote_path' + V'local_path',
+		LINK = V'fragment_path' + V'help_path' + V'vscode_path' + V'vimr_path' + V'vim_path' + V'joplin_path' + V'remote_path' + V'local_path',
 
 		joplin_path   = Cg(Cc("joplin"),   "schema") * ":/" * Cg(alnum^1, "path") * V'fragment'^-1,
 		help_path     = Cg(P("help"), "schema") * "://" * Cg(P(1)^1, "subject"),
 		vscode_path     = Cg(P("code"), "schema") * "://" * Cg(P(1)^1, "path"),
 		vimr_path     = Cg(P("vimr"), "schema") * "://" * Cg(P(1)^1, "path"),
+		vim_path     = Cg(P("vim"), "schema") * "://" * Cg(P(1)^1, "path"),
 		remote_path = Cg(alnum^1 - P"help" - P"code", "schema") * "://" * V'domain' * V'port'^-1
-					* V'path'^-1 * V'query'^-1 * V'fragment'^-1, 
+					* V'path'^-1 * V'query'^-1 * V'fragment'^-1,
 		local_path    = Cg(Cc("file"),     "schema") * V'path' * V'fragment'^-1,
 		fragment_path = Cg(Cc("fragment"), "schema") * V'fragment',
 
@@ -244,12 +247,12 @@ function M.markdown_download(url)
 	local title, article, html, root, htmlf
 
 	local domain = M.parse_link(url).domain
-	local cookie = vim.fn.getenv("HOME") .. "/Documents/Cookies/" .. domain .. ".txt"
+	local cookie = HOME .. "/Documents/Cookies/" .. domain .. ".txt"
 
 	-- wget -k 和 -O - 无法共用，必须使用临时文件
     local html_path = os.tmpname ()
 	-- 依赖 wget
-	-- wget -k 
+	-- wget -k
 	-- After the download is complete, convert the links in the document to make them suitable for local viewing.
     os.execute(("wget -k --no-check-certificate "
 	            .. "--header 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.16; rv:84.0) Gecko/20100101 Firefox/84.0' "
@@ -285,7 +288,7 @@ function M.markdown_download(url)
 	article = article:gsub("data%-original%-", "")
 	article = article:gsub("%/%/upload%-images", "https://upload%-images")
 
-	local markdown = vim.fn.getenv("HOME") .. "/Documents/WebClipping/" .. title:gsub("[%p%s]", "_") .. ".md"
+	local markdown = HOME .. "/Documents/WebClipping/" .. title:gsub("[%p%s]", "_") .. ".md"
     local f = io.popen(("pandoc --wrap=none -f html-native_divs-native_spans -t gfm+hard_line_breaks -o %q")
 				:format(markdown), "w")
 	f:write(title .. "\n\n")
