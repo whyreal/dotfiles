@@ -7,7 +7,7 @@ end
 M = {}
 
 function M.help(link)
-	vim.cmd(("help %s"):format(link.subject))
+	vim.cmd(("help %s"):format(link.path))
 end
 
 function M.code(link)

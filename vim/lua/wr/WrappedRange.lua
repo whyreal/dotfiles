@@ -30,28 +30,6 @@ function WrappedRange:newFromCursor()
 	return WrappedRange:new(nil, Range:newFromCursor(c), nil)
 end
 
-function WrappedRange:newMarkdownLink()
-	local c = Cursor:newFromVim(vim.api.nvim_win_get_cursor(0))
-	local txt = vim.api.nvim_buf_get_lines(0, c.line - 1, c.line, false)[1]
-	local l, r
-
-	l, _ = txt:find_left('[', c.col, true)
-	if not l then
-		return nil
-	end
-
-	l, r = txt:find('%b[]%b()', l)
-
-	local left = Range:new(Cursor:new({c.line, l}),
-							Cursor:new({c.line, l}))
-	local right = Range:new(Cursor:new({c.line, r}),
-							Cursor:new({c.line, r}))
-	local inner = Range:new(Cursor:new({c.line, l + 1}),
-							Cursor:new({c.line, r - 1}))
-
-	return WrappedRange:new(left, inner, right)
-end
-
 function WrappedRange:newFromSep(left_sep, right_sep, one_line)
 	local c = Cursor:newFromVim(vim.api.nvim_win_get_cursor(0))
 	local left = Range:newFromFind(c, left_sep, false, true)

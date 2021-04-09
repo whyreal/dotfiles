@@ -4,14 +4,51 @@ local lfs = require("lfs")
 local utils = require("wr.utils")
 local R = require("lamda")
 local opener = require("wr.LinkOpener")
+local Range = require("wr.Range")
+local Cursor = require("wr.Cursor")
 
 local Link = {}
 
-function Link:new()
-    local wr = WrappedRange:newMarkdownLink() or
-               WrappedRange:newFromCursor()
+local function detectMarkdownUrl()
+	local c = Cursor:newFromVim(vim.api.nvim_win_get_cursor(0))
+	local txt = vim.api.nvim_buf_get_lines(0, c.line - 1, c.line, false)[1]
+	local l, r, url, title, range
 
-    local url = wr:get_all()[1]
+	l, _ = txt:find_left('[', c.col, true)
+	if l then
+		url = string.match(txt, "](%b())", l)
+		if url then
+			url = string.sub(url, 2, -2)
+
+			title = string.match(url, '%b""')
+			if title then
+				url = string.sub(url, 1, -1 - title:len()):rstrip()
+				title = string.sub(title, 2, -2)
+			end
+			return url
+		else
+			return nil
+		end
+	end
+
+	l, _ = txt:find_left('<', c.col, true)
+	if l then
+		url = string.match(txt, "(%b<>)", l)
+		if url then
+			return string.sub(url, 2, -2)
+		else
+			return nil
+		end
+	end
+
+	range = Range:newFromCursor(c)
+
+	return string.sub(txt, range.start.col, range.stop.col)
+end
+
+function Link:new()
+    local url = detectMarkdownUrl()
+
     local parsedUrl = utils.parse_link(url)
 	assert(type(parsedUrl) == "table", "Can't parse link!!!")
     setmetatable(parsedUrl, self)
