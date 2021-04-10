@@ -1,7 +1,8 @@
 command Reveals execute 'silent !open -R %:S'
 command Code    execute 'silent !open -a "Visual Studio Code.app" %:S'
 command Typora  execute 'silent !open -a "Typora.app" %:S'
-command Docs cd /Users/Real/Documents/Notes/
+command ENotes     Explore ~/Documents/Notes/
+command EDownloads Explore ~/Downloads/
 
 " download html to markdown
 "command! -nargs=1 MDDownload call luaeval("require[[wr.utils]].markdown_download(_A)", <q-args>)

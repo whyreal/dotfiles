@@ -112,12 +112,17 @@ M.parse_link = setfenv(function (s)
 		"LINK",
 		LINK = V'fragment_path' + V'joplin_path' + V'remote_path' + V'local_path',
 
-		joplin_path   = Cg(Cc("joplin"),   "schema") * ":/" * Cg(alnum^1, "path") * V'fragment'^-1,
-		remote_path = Cg(alnum^1, "schema") * "://" * V'domain'^-1 * V'port'^-1
+		remote_path = Cg(alnum^1, "schema") * V'remote' * "://"
+                    * V'domain' * V'port'^-1
 					* V'path'^-1 * V'query'^-1 * V'fragment'^-1,
-		local_path    = Cg(Cc("file"),     "schema") * V'path' * V'fragment'^-1,
+		joplin_path   = Cg(Cc("joplin"),   "schema") * ":/" * Cg(alnum^1, "path") * V'fragment'^-1,
 		fragment_path = Cg(Cc("fragment"), "schema") * V'fragment',
+		local_path    = Cg(alnum^1, "schema") * "://" * V'path' * V'fragment'^-1
+                      + Cg(Cc("file"),   "schema") * V'path' * V'fragment'^-1,
 
+        remote = Cmt(Cb("schema"), function (t, i, schema)
+            return R.contains(schema, {"http", "https", "scp"})
+        end),
 		domain = Cg((alnum + S"-_.")^1 , "domain") ,
 		port = ":" * Cg(digit^1 , "port") ,
 		path = Cg(V'c'^1, "path"),

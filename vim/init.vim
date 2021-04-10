@@ -63,3 +63,5 @@ _G.imap = require("wr.imap")
 _G.smap = require("wr.smap")
 require("wr.lib")
 EOF
+
+au VimEnter * let g:ws=$PWD

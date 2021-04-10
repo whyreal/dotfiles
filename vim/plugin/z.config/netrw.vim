@@ -8,6 +8,7 @@ let g:netrw_winsize = 30
 let g:netrw_sort_options="i"
 
 highlight link netrwMarkFile Visual
+
 " NFH_suffix(filename)
 fun! NFH_md(filename)
 	echomsg(a:filename)

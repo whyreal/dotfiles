@@ -54,9 +54,22 @@ function Link:new()
     setmetatable(parsedUrl, self)
     self.__index = self
 
+	if parsedUrl.path then
+		parsedUrl.path = vim.fn.expand(parsedUrl.path)
+	end
+
 	--
 	-- detect the type of url
 	--
+	if parsedUrl.schema == "ws" then
+        -- workspace path
+        parsedUrl.schema = "file"
+        parsedUrl.path = vim.fn.simplify(vim.g.ws .. "/" .. parsedUrl.path)
+    elseif parsedUrl.schema == "file" then
+        -- 相对路径
+        parsedUrl.path = vim.fn.simplify(vim.fn.expand("%:h:p") .. "/" .. parsedUrl.path)
+    end
+
 	-- directory or link
 	if parsedUrl.schema == "file" then
 	    local a = lfs.symlinkattributes(parsedUrl.path)
@@ -74,10 +87,6 @@ function Link:new()
 		else
 			parsedUrl.schema = "system"
 		end
-	end
-
-	if parsedUrl.path then
-		parsedUrl.path = vim.fn.expand(parsedUrl.path)
 	end
 
     return parsedUrl
