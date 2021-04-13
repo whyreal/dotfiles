@@ -30,4 +30,8 @@ function Cursor:toVim()
 	return {self.line, self.col - 1}
 end
 
+function Cursor.current()
+	return Cursor:newFromVim(vim.api.nvim_win_get_cursor(0))
+end
+
 return Cursor

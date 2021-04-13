@@ -13,6 +13,6 @@ tmap <c-o> <c-\><c-n>
 
 nmap 0 <cmd>lua require[[wr.utils]].toggle_home_zero()<CR>
 
-nmap <leader>tt <cmd>lua require[[wr.Range]]:newFromCurrentLine():sendTextToTmux()<CR>
+nmap <leader>tt <cmd>lua require[[wr.Line]]:new():sendToTmux()<CR>
 xmap <leader>tt :<C-U>lua require[[wr.Range]]:newFromVisual():sendVisualToTmux()<CR>
 

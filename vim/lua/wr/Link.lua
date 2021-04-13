@@ -6,57 +6,66 @@ local R = require("lamda")
 local opener = require("wr.LinkOpener")
 local Range = require("wr.Range")
 local Cursor = require("wr.Cursor")
+local Line = require("wr.Line")
 
 local Link = {}
 
-local function detectMarkdownUrl()
-	local c = Cursor:newFromVim(vim.api.nvim_win_get_cursor(0))
-	local txt = vim.api.nvim_buf_get_lines(0, c.line - 1, c.line, false)[1]
+local function detectUrl()
+	local c = Cursor.current()
+	local txt = Line:new().txt
 	local l, r, url, title, range
 
+    -- format [txt](http://xxxxx "title")
 	l, _ = txt:find_left('[', c.col, true)
 	if l then
 		url = string.match(txt, "](%b())", l)
-		if url then
-			url = string.sub(url, 2, -2)
+        if not url then return nil end
 
-			title = string.match(url, '%b""')
-			if title then
-				url = string.sub(url, 1, -1 - title:len()):rstrip()
-				title = string.sub(title, 2, -2)
-			end
-			return url
-		else
-			return nil
-		end
+        url = string.sub(url, 2, -2)
+
+        title = string.match(url, '%b""')
+        if title then
+            url = string.sub(url, 1, -1 - title:len()):rstrip()
+            title = string.sub(title, 2, -2)
+        end
+
+        return url
 	end
 
+    -- src="lskdjfldkj"
+	l, _ = txt:find_left('src="', c.col, true)
+	if l then
+		url = string.match(txt, '(%b"")', l)
+		if not url then return nil end
+
+        return string.sub(url, 2, -2)
+	end
+
+    -- <http://xxxxx>
 	l, _ = txt:find_left('<', c.col, true)
 	if l then
 		url = string.match(txt, "(%b<>)", l)
-		if url then
-			return string.sub(url, 2, -2)
-		else
-			return nil
-		end
+		if not url then return nil end
+
+        return string.sub(url, 2, -2)
 	end
 
+    -- just url
 	range = Range:newFromCursor(c)
-
 	return string.sub(txt, range.start.col, range.stop.col)
 end
 
 function Link:new()
-    local url = detectMarkdownUrl()
+    local url = detectUrl()
 
     local parsedUrl = utils.parse_link(url)
 	assert(type(parsedUrl) == "table", "Can't parse link!!!")
     setmetatable(parsedUrl, self)
     self.__index = self
 
-	if parsedUrl.path then
-		parsedUrl.path = vim.fn.expand(parsedUrl.path)
-	end
+	--if parsedUrl.path then
+		--parsedUrl.path = vim.fn.expand(parsedUrl.path)
+	--end
 
 	--
 	-- detect the type of url
@@ -109,7 +118,7 @@ local function getDirEntrieAttr(path)
 		end, entries))
 end
 
-local isLink = R.filter(R.propEq('mode', 'link'))
+local filterLink = R.filter(R.propEq('mode', 'link'))
 
 local inWorkspace = function (path)
 	return R.filter(
@@ -126,7 +135,7 @@ end), {target = ""})
 local function get_path_in_ws(path)
 
 	local ws = vim.fn.getcwd()
-	local t = R.pipe(isLink, inWorkspace(path), longestTarget)(getDirEntrieAttr(ws))
+	local t = R.pipe(filterLink, inWorkspace(path), longestTarget)(getDirEntrieAttr(ws))
 
 	if not t.name then return path end
 

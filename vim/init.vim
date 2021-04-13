@@ -43,7 +43,7 @@ Plug 'voldikss/vim-translator', {'frozen': 1}
 " 注释
 Plug 'scrooloose/nerdcommenter', {'frozen': 1}
 " outline
-Plug 'vim-voom/VOoM', {'frozen': 1}
+"Plug 'vim-voom/VOoM', {'frozen': 1}
 Plug 'preservim/tagbar', {'frozen': 1, 'do': ':lua tagbar()'}
 " 对齐
 Plug 'junegunn/vim-easy-align', {'frozen': 1}
@@ -58,6 +58,17 @@ filetype plugin indent on
 lua<<EOF
 DefaultBrowser = "Microsoft Edge.app"
 HOME = vim.env.HOME
+vim.g.projects = {
+    Notes     = "~/Documents/Notes/",
+    Downloads = "~/Downloads",
+    dotfile   = "~/code/whyreal/dotfiles/",
+    vimconfig = "~/code/whyreal/dotfiles/vim/"
+}
+
+-- function EProject(name)
+--     print(name)
+--     vim.cmd("Explore" .. vim.g.projects[name])
+-- end
 
 _G.imap = require("wr.imap")
 _G.smap = require("wr.smap")

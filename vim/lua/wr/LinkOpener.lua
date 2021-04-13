@@ -7,7 +7,6 @@ end
 M = {}
 
 function M.help(link)
-print(("help %s"):format(link.path))
 	vim.cmd(("help %s"):format(link.path))
 end
 
