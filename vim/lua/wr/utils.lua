@@ -1,10 +1,24 @@
 local lpeg = require("lpeg")
 lpeg.locale(lpeg)
+local P = lpeg.P
+local V = lpeg.V
+local S = lpeg.S
+local Cmt = lpeg.Cmt
+local Cg = lpeg.Cg
+local Cc = lpeg.Cc
+local alnum = lpeg.alnum
+local digit = lpeg.digit
+local space = lpeg.space
+local Cb = lpeg.Cb
+local Ct = lpeg.Ct
+local C = lpeg.C
+local match = lpeg.match
 
 local htmlparser = require("htmlparser")
 local htmlEntities = require("htmlEntities")
 local R = require("lamda")
 
+local HOME = vim.env.HOME
 local M = {}
 
 local map_opts = {noremap = false, silent = true, expr = false}
@@ -72,42 +86,42 @@ function M.add_blank_line_after()
     vim.api.nvim_buf_set_lines(0, current_line, current_line,0, {""})
 end
 
-    local function sub_print_r(t,indent)
-        if (print_r_cache[tostring(t)]) then
-            print(indent.."*"..tostring(t))
-        else
-            print_r_cache[tostring(t)]=true
-            if (type(t)=="table") then
-                for pos,val in pairs(t) do
-                    if (type(val)=="table") then
-                        print(indent.."["..pos.."] => "..tostring(t).." {")
-                        sub_print_r(val,indent..string.rep(" ",string.len(pos)+8))
-                        print(indent..string.rep(" ",string.len(pos)+6).."}")
-                    elseif (type(val)=="string") then
-                        print(indent.."["..pos..'] => "'..val..'"')
-                    else
-                        print(indent.."["..pos.."] => "..tostring(val))
-                    end
-                end
-            else
-                print(indent..tostring(t))
-            end
-        end
-    end
+--local function sub_print_r(t,indent)
+    --if (print_r_cache[tostring(t)]) then
+        --print(indent.."*"..tostring(t))
+    --else
+        --print_r_cache[tostring(t)]=true
+        --if (type(t)=="table") then
+            --for pos,val in pairs(t) do
+                --if (type(val)=="table") then
+                    --print(indent.."["..pos.."] => "..tostring(t).." {")
+                    --sub_print_r(val,indent..string.rep(" ",string.len(pos)+8))
+                    --print(indent..string.rep(" ",string.len(pos)+6).."}")
+                --elseif (type(val)=="string") then
+                    --print(indent.."["..pos..'] => "'..val..'"')
+                --else
+                    --print(indent.."["..pos.."] => "..tostring(val))
+                --end
+            --end
+        --else
+            --print(indent..tostring(t))
+        --end
+    --end
+--end
 
-function M.print_r ( t )
-    local print_r_cache={}
-    if (type(t)=="table") then
-        print(tostring(t).." {")
-        sub_print_r(t,"  ")
-        print("}")
-    else
-        sub_print_r(t,"  ")
-    end
-    print()
-end
+--function M.print_r ( t )
+    --local print_r_cache={}
+    --if (type(t)=="table") then
+        --print(tostring(t).." {")
+        --sub_print_r(t,"  ")
+        --print("}")
+    --else
+        --sub_print_r(t,"  ")
+    --end
+    --print()
+--end
 
-M.parse_link = setfenv(function (s)
+M.parse_link = function (s)
 	local p = P{
 		"LINK",
 		LINK = V'fragment_path' + V'joplin_path' + V'remote_path' + V'local_path',
@@ -120,7 +134,7 @@ M.parse_link = setfenv(function (s)
 		local_path    = Cg(alnum^1, "schema") * "://" * V'path' * V'fragment'^-1
                       + Cg(Cc("file"),   "schema") * V'path' * V'fragment'^-1,
 
-        remote = Cmt(Cb("schema"), function (t, i, schema)
+        remote = Cmt(Cb("schema"), function (_, _, schema)
             return R.contains(schema, {"http", "https", "scp"})
         end),
 		domain = Cg((alnum + S"-_.")^1 , "domain") ,
@@ -132,9 +146,9 @@ M.parse_link = setfenv(function (s)
 		c = 1 - S(":?#"),
 	}
 	return match(Ct(p), s)
-end , lpeg)
+end
 
-M.parse_title = setfenv(function(s, level)
+M.parse_title = function(s, level)
 	local header_sign
 	if not level then
 		header_sign = P"#"^1 * space^1
@@ -152,9 +166,9 @@ M.parse_title = setfenv(function(s, level)
 		title = C((1 - S("[]"))^1),
 	}
 	return match(p, s)
-end, lpeg)
+end
 
-M.parse_path = setfenv(function(path)
+M.parse_path = function(path)
 	local p = P{
 		"PATH";
 		PATH = V'dir' * V'filename',
@@ -164,7 +178,7 @@ M.parse_path = setfenv(function(path)
 		c = P(1) - P"/"
 	}
 	return match(Ct(p), path)
-end, require("lpeg"))
+end
 
 function M.esc(cmd)
   return vim.api.nvim_replace_termcodes(cmd, true, false, true)
@@ -196,20 +210,9 @@ function M.edit_joplin_note(id)
 end
 
 function M.markdown_unescape()
-	--vim.cmd[[%s/\\-/-/ge]]
-	--vim.cmd[[%s/\\!/!/ge]]
-	--vim.cmd[[%s/\\\././ge]]
-	--vim.cmd[[%s/\\\~/~/ge]]
-	--vim.cmd[[%s/\\\*/*/ge]]
-	--vim.cmd[[%s/\\\[/[/ge]]
-	--vim.cmd[[%s/\\\]/]/ge]]
-	vim.cmd[[%s/\\\([\[\]\.\-\*\~\!\#\_]\)/\1/g]]
+	vim.cmd[[%s/\\\([\[\]\.\-\*\~\!\#\_\=]\)/\1/g]]
 
-	vim.cmd[[%s/\*\*//ge]]
-
-	--vim.cmd[[%s/  $/\r/ge]]
 	vim.cmd[[%s/  $//ge]]
-	vim.cmd[[%s/^  *$//ge]]
 
 	vim.cmd[[write]]
 end

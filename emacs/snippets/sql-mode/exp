@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: exp
-# key: exp
-# --
-exp ${1:${2:USERNAME}/${3:PASSWORD}@${4:HOST}/${5:SID}} file=${6:dmpfile_path}

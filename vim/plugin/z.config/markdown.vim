@@ -3,4 +3,6 @@
 let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_folding_level = 1
 let g:vim_markdown_follow_anchor = 1
-set conceallevel=2
+lua <<EOF
+vim.g.vim_markdown_fenced_languages = { 'js=javascript', 'ts=typescript' }
+EOF

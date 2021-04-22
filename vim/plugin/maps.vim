@@ -1,5 +1,7 @@
 nmap j gj
 nmap k gk
+xmap j gj
+xmap k gk
 
 nmap <leader>bp <cmd>bprevious<CR>
 nmap <leader>bn <cmd>bnext<CR>
@@ -15,4 +17,3 @@ nmap 0 <cmd>lua require[[wr.utils]].toggle_home_zero()<CR>
 
 nmap <leader>tt <cmd>lua require[[wr.Line]]:new():sendToTmux()<CR>
 xmap <leader>tt :<C-U>lua require[[wr.Range]]:newFromVisual():sendVisualToTmux()<CR>
-

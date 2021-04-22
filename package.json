@@ -1,0 +1,19 @@
+{
+  "name": "wrtools",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "relink": "npm uninstall wrtools -g; npm link"
+  },
+  "bin": {
+    "md2doc": "bin/md2doc.js",
+    "md2pdf": "bin/md2pdf.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^14.14.41"
+  }
+}

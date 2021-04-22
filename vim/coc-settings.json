@@ -6,6 +6,7 @@
 	"json.enable":true,
 	"json.format.enable":true,
 	"diagnostic.enable": true,
-	"lua.commandPath":"/Users/Real/.luarocks/lib/luarocks/rocks-5.1/lua-lsp/scm-5/bin/lua-lsp",
-	"lua.version": "5.1"
+  "Lua.diagnostics.globals": ["vim", "setfenv"],
+  "Lua.runtime.version": "Lua 5.1",
+  "javascript.suggestionActions.enabled": false
 }

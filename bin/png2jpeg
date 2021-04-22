@@ -1,0 +1,1 @@
+sips -s format jpeg -Z 1280 /Users/Real/Documents/Notes/_resources/$1.png --out /Users/Real/Documents/Notes/_resources/$1.jpeg

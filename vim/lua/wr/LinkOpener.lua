@@ -1,4 +1,5 @@
 local utils = require("wr.utils")
+local R = require("lamda")
 
 local function add_prefix(p, s)
 	return s and p .. s or ""
@@ -47,7 +48,7 @@ end
 function M.system(link)
 	local _cmd
 	local app = ""
-	if link.path:endswith("drawio.png") then
+	if R.endsWith("drawio.png", link.path) then
 		app = "-a draw.io.app"
 	end
 

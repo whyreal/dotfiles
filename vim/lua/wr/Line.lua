@@ -1,9 +1,10 @@
 local R = require"lamda"
 local lpeg = require("lpeg")
+lpeg.locale(lpeg)
 
 local patterns = {}
 patterns.indent_line = lpeg.Cg(lpeg.space^0) * lpeg.Cg(lpeg.P(1)^0)
-patterns.block_line = (lpeg.S("`-|") + lpeg.R("09") + lpeg.space )^0
+patterns.block_line = lpeg.space^0
 
 local M = { }
 
@@ -82,8 +83,9 @@ function M:append(txtList)
 end
 
 function M:sendToTmux()
-    local cmd = R.replace('"', '\\"', 0, R.trim(self.txt)) .. '" ENTER'
-	vim.fn.system('tmux send-keys "' .. cmd)
+    local cmd = R.replace('"', '\\"', 0, R.trim(self.txt))
+    cmd = R.replace(';$', '\\;', 1, cmd)
+	vim.fn.system('tmux send-keys "' .. cmd .. '" ENTER')
 end
 
 function M:getIndent()

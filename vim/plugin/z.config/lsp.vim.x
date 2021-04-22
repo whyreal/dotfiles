@@ -34,14 +34,30 @@ require'lspconfig'.sumneko_lua.setup{
 
 -- python
 require'lspconfig'.jedi_language_server.setup {
-	root_dir = function(fname) return vim.fn.getcwd() end
+	root_dir = function(fname) return vim.fn.getcwd() end,
+	filetypes = { "python"},
 }
 
 -- golang
 require'lspconfig'.gopls.setup {
-	root_dir = function(fname) return vim.fn.getcwd() end
+	root_dir = function(fname) return vim.fn.getcwd() end,
+	filetypes = { "golang"},
 }
-require'lspconfig'.jdtls.setup {}
+
+-- typescript & javascript
+require'lspconfig'.tsserver.setup{
+	root_dir = function(fname) return vim.fn.getcwd() end,
+	filetypes = { "javascript", "typescript" },
+}
+
+-- viml
+require'lspconfig'.vimls.setup{
+	root_dir = function(fname) return vim.fn.getcwd() end,
+}
+
+-- java
+--require'lspconfig'.jdtls.setup {}
+
 EOF
 
 " nmap <c-]> <cmd>lua vim.lsp.buf.definition()<CR>

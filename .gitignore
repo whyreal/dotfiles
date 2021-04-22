@@ -3,7 +3,6 @@
 
 vim/bundle/
 vim/.netrw*
-vim/autoload/plug.vim*
 vim/plugged
 vim/sessions/
 
@@ -17,5 +16,9 @@ vscode-user/globalStorage
 vscode-user/workspaceStorage
 vscode-user/sync/*
 
-vim.vim
+# vim packer
 vim/plugin/packer_compiled.vim
+
+# nodejs
+node_modules/
+lib/

@@ -125,26 +125,8 @@ function WrappedRange:select_inner()
 	vim.api.nvim_command('normal gv')
 end
 
-function WrappedRange.toggle_wrap(left_sep, right_sep, visual)
-	local r
-
-	if visual then
-		r = WrappedRange:newFromVisual()
-	else
-		r = WrappedRange:newFromSep(left_sep, right_sep)
-		if r ~= nil then
-			return r:remove_sep()
-		end
-
-		r = WrappedRange:newFromCursor()
-		if r.inner.start.col == nil then r.inner.start:moveToLineBegin() end
-		if r.inner.stop.col == nil then r.inner.stop:moveToLineEnd() end
-	end
-
-	r:add_sep(left_sep, right_sep)
-end
-
 function WrappedRange:add_sep(left_sep, right_sep)
+    print(left_sep, right_sep)
 	vim.api.nvim_win_set_cursor(0, self.inner.stop:toVim())
 	vim.api.nvim_put({right_sep}, "c", true, true)
 

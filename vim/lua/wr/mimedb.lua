@@ -151,6 +151,7 @@ extensions['vrml'] = 'model/vrml'
 
 -- text/
 extensions['tcl']      = 'text/x-tcl'
+extensions['el']      = 'text/x-eclisp'
 extensions['sh']       = 'text/x-sh'
 extensions['js']       = 'text/javascript'
 extensions['json']     = 'text/json'

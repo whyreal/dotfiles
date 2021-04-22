@@ -1,19 +1,17 @@
-local WrappedRange = require("wr.WrappedRange")
+local Cursor    = require("wr.Cursor")
+local R         = require("lamda")
+local Range     = require("wr.Range")
+local lfs       = require("lfs")
 local mimetypes = require("mimetypes")
-local lfs = require("lfs")
-local utils = require("wr.utils")
-local R = require("lamda")
-local opener = require("wr.LinkOpener")
-local Range = require("wr.Range")
-local Cursor = require("wr.Cursor")
-local Line = require("wr.Line")
+local opener    = require("wr.LinkOpener")
+local utils     = require("wr.utils")
 
 local Link = {}
 
 local function detectUrl()
 	local c = Cursor.current()
-	local txt = Line:new().txt
-	local l, r, url, title, range
+	local txt = vim.api.nvim_get_current_line()
+	local l, url, title, range
 
     -- format [txt](http://xxxxx "title")
 	l, _ = txt:find_left('[', c.col, true)
@@ -25,7 +23,7 @@ local function detectUrl()
 
         title = string.match(url, '%b""')
         if title then
-            url = string.sub(url, 1, -1 - title:len()):rstrip()
+            url = string.sub(url, 1, -1 - title:len()):strip()
             title = string.sub(title, 2, -2)
         end
 
@@ -63,6 +61,8 @@ function Link:new()
     setmetatable(parsedUrl, self)
     self.__index = self
 
+    self.url = url
+
 	--if parsedUrl.path then
 		--parsedUrl.path = vim.fn.expand(parsedUrl.path)
 	--end
@@ -97,6 +97,9 @@ function Link:new()
 			parsedUrl.schema = "system"
 		end
 	end
+
+    self.url = R.contains(parsedUrl.schema, {"file", "ws"})
+        and self.path or self.url
 
     return parsedUrl
 end
@@ -224,11 +227,7 @@ function Link:resolv()
 end
 
 function Link:copy()
-	if self.schema == "joplin" then
-		return vim.fn.setreg("+", ("%s"):format(self.id))
-	else
-		--return vim.fn.setreg("+", ("%s"):format(self.url))
-	end
+    return vim.fn.setreg("+", ("%s"):format(self.url))
 end
 
 return Link

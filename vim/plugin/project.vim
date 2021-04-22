@@ -1,9 +1,9 @@
 func! ProjectComplate(A,L,P)
-    return join(keys(g:projects), "\n")
+    return luaeval('require("wr.Project").getProjects()')
 endfunc
 
 func! EProject(name)
-    execute "Explore " . g:projects[a:name]
+    call luaeval('require("wr.Project").exploreProject("' . a:name . '")')
 endfunc
 
 command -complete=custom,ProjectComplate -nargs=? EProject call EProject(<q-args>)

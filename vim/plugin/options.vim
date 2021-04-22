@@ -7,7 +7,7 @@ package.cpath = HOME .. "/.luarocks/lib/lua/5.1/?.so;" .. package.cpath
 EOF
 end
 
-let g:loaded_node_provider=0
+"let g:loaded_node_provider=0
 let g:loaded_python_provider=0
 "let g:loaded_python3_provider=0
 let g:loaded_ruby_provider=0
@@ -17,14 +17,13 @@ let g:ft_man_folding_enable=1
 "set cedit=<C-R>  "open command line window
 "set cmdheight=2
 set autowrite
-set background=light
-"set background=dark
+"set background=light
+set background=dark
 set clipboard=unnamed
 set colorcolumn=+0
 set completeopt=menuone,noinsert,noselect
 set cursorline
 set fileencodings=utf-8,gbk,ucs-bom,cp936,gb18030,big5,latin1
-set foldclose=all
 set foldlevel=0
 set foldlevelstart=0
 set foldmethod=indent

@@ -5,14 +5,8 @@ local lpeg = require("lpeg")
 local R = require("lamda")
 local Line = require("wr.Line")
 
-
 local Range = { }
-
-local patterns = {}
-patterns.indent_line = lpeg.Cg(lpeg.space^0) * lpeg.Cg(lpeg.P(1)^0)
-patterns.block_line = (lpeg.S("`-|") + lpeg.R("09") + lpeg.space )^0
-
-local view = {}
+Range.view = {}
 
 function Range:new(
 		start, -- Cursor
@@ -41,7 +35,7 @@ function Range:newFromFind(
 			cursor.col = 0
 		end
 
-		l, r = txt:find_right(str, cursor.col, plain)
+		l, r = txt:find(str, cursor.col, plain)
 	else
 		if cursor.col == nil then
 			cursor.col = tlen
@@ -82,49 +76,10 @@ function Range:newFromCursor(cursor)
                      Cursor:new({right.start.line, right.start.col}))
 end
 
-function Range:linesInsert(lines, lnr)
-	--print(R.toString(lines))
-	vim.api.nvim_buf_set_lines(0, lnr, lnr, false, lines)
-end
-
 local rejectEmpty = R.reject(
 	function (i)
 		return R.isEmpty(i)
 	end)
-
-function Range:mdCreateUnOrderedList()
-    R.forEach(function (ln)
-        local l = Line:new(ln)
-        if not l:isBlank() then
-            l:addMdUnOrderListPrefix()
-        end
-    end,
-    R.range(self.start.line, self.stop.line + 1)
-    )
-end
-
-function Range:mdCreateOrderedList()
-    local o = 1
-
-    R.forEach(function (ln)
-        local l = Line:new(ln)
-        if not l:isBlank() then
-            l:addMdOrderListPrefix(o)
-            o = o+1
-        end
-    end,
-    R.range(self.start.line, self.stop.line + 1)
-    )
-end
-
-function Range:mdDeleteList()
-    R.forEach(function (ln)
-        local l = Line:new(ln)
-        l:removeMdListPrefix()
-    end,
-    R.range(self.start.line, self.stop.line + 1)
-    )
-end
 
 function Range:mdCreateCodeBlock()
     local indent = Line:new(self.start.line):getIndent()
@@ -139,12 +94,12 @@ function Range:mdCreateCodeBlockFromeCodeLine()
     Line:new(self.stop.line):append({indent .. "```"})
 
     R.forEach(function (ln)
-        local l = Line:new(ln)
-        if l:isBlank() then l:delete() end
+            local l = Line:new(ln)
+            if l:isBlank() then return l:delete() end
 
-        l:removeBackQuote()
-    end,
-    R.reverse(R.range(self.start.line, self.stop.line + 1))
+            l:removeBackQuote()
+        end,
+        R.reverse(R.range(self.start.line, self.stop.line + 1))
     )
 
     Line:new(self.start.line):insert({indent .. "```"})
@@ -169,11 +124,10 @@ function Range:mdCreateCodeBlockFromeTable()
 end
 
 function Range:tplSet()
-    view = R.map(function (ln)
+    self.view = R.map(function (ln)
         return Line:new(ln).txt
     end,
     R.range(self.start.line, self.stop.line + 1))
-
 end
 
 function Range:tplRender()
@@ -201,33 +155,6 @@ function Range:sendVisualToTmux()
         Line:new(ln):sendToTmux()
     end,
     R.range(self.start.line, self.stop.line + 1)
-    )
-end
-
-function Range:filterMdHeader()
-    return R.filter(function (l)
-            return l:isHeader()
-        end,
-        R.map(function (lineNr)
-                return Line:new(lineNr)
-            end,
-            R.reverse(R.range(self.start.line, self.stop.line + 1))
-    ))
-end
-
-function Range:headerLevelUp()
-    R.map(function (l)
-            l:headerLevelUp()
-        end,
-        self:filterMdHeader()
-    )
-end
-
-function Range:headerLevelDown()
-    R.map(function (l)
-            l:headerLevelDown()
-        end,
-        self:filterMdHeader()
     )
 end
 
