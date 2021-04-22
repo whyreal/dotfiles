@@ -22,3 +22,6 @@ vim/plugin/packer_compiled.vim
 # nodejs
 node_modules/
 lib/
+
+# fish plugin
+fish/functions/

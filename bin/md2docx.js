@@ -8,4 +8,4 @@ if (process.argv.length < 3) {
 const inputFile = process.argv[2]
 
 const {Pandoc} = require("../lib/pandoc.js")
-new Pandoc(inputFile, "md", "pdf").convert()
+new Pandoc(inputFile, "md", "docx").convert()

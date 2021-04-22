@@ -4,7 +4,6 @@
 git clone https://github.com/whyreal/dotfiles.git ~/code/whyreal/dotfiles
 
 cd ~/.config
-ln -s ~/code/whyreal/dotfiles/alacritty/ ./
 ln -s ~/code/whyreal/dotfiles/fish/ ./
 ln -s ~/code/whyreal/dotfiles/karabiner ./
 ln -s ~/code/whyreal/dotfiles/vim ./
@@ -17,7 +16,7 @@ ln -s ~/code/whyreal/dotfiles/_tmux.conf ./.tmux.conf
 # Homebrew
 
 ```sh
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+npm run install-homebrew
 
 brew install lua lua@5.1 luajit luarocks
 brew install fish
@@ -34,7 +33,6 @@ brew install hammerspoon karabiner-elements
 # Lua
 
 ```sh
-lua/lua5.1_deps_install.sh
+npm run install-lua-deps
 ```
 
-# zlua

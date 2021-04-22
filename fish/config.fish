@@ -1,6 +1,7 @@
 alias r='open -R'
 alias e='open -e'
 alias o='open'
+alias d='cd "/Users/Real/Documents/Notes/" && vim'
 alias o.notes='cd ~/Documents/vim-workspace/docs && $EDITOR'
 alias drawio='open -a draw.io.app'
 
@@ -70,15 +71,15 @@ set -g fish_user_paths "/usr/local/nvim-osx64/bin/" $fish_user_paths
 function proxy.ss.active
     git config --global http.proxy 127.0.0.1:1087
     #git config --local http.proxy 127.0.0.1:1087
-    set -x http_proxy "http://127.0.0.1:1087"
-    set -x https_proxy "http://127.0.0.1:1087"
+    set -gx http_proxy "http://127.0.0.1:1087"
+    set -gx https_proxy "http://127.0.0.1:1087"
 end
 
 function proxy.ss.deactive
     git config --global --unset http.proxy
     #git config --local --unset http.proxy
-    set -x http_proxy ""
-    set -x https_proxy ""
+    set -gx http_proxy ""
+    set -gx https_proxy ""
 end
 
 function ssh.execute_local_script

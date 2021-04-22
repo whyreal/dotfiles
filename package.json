@@ -1,19 +1,23 @@
 {
   "name": "wrtools",
   "version": "1.0.0",
-  "description": "",
+  "description": "build command line env for myself",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "relink": "npm uninstall wrtools -g; npm link"
+    "relink": "tsc && npm uninstall ${npm_package_name} -g; npm link",
+    "install-lua-deps": "luarocks --lua-dir=/usr/local/opt/lua@5.1 install --only-deps ./dotfiles-1.0-1.rockspec",
+    "install-brew": "/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
   },
   "bin": {
-    "md2doc": "bin/md2doc.js",
-    "md2pdf": "bin/md2pdf.js"
+    "md2docx": "bin/md2docx.js",
+    "md2pdf": "bin/md2pdf.js",
+    "docx2md": "bin/docx2md.js"
   },
-  "author": "",
+  "author": "whyreal",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^14.14.41"
+    "@types/node": "^14.14.41",
+    "ramda": "^0.27.1"
   }
 }
