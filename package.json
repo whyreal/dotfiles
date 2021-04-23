@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "relink": "tsc && npm uninstall ${npm_package_name} -g; npm link",
     "install-lua-deps": "luarocks --lua-dir=/usr/local/opt/lua@5.1 install --only-deps ./dotfiles-1.0-1.rockspec",
-    "install-brew": "/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
+    "install-brew": "/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"",
+    "install-fisher": "curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher"
   },
   "bin": {
     "md2docx": "bin/md2docx.js",
