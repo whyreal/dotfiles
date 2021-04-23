@@ -13,7 +13,7 @@ nmap <leader>bo <c-^>
 nmap <leader>ve <cmd>Explore<cr>
 tmap <c-o> <c-\><c-n>
 
-nmap 0 <cmd>lua require[[wr.utils]].toggle_home_zero()<CR>
+nmap 0 <cmd>GotoFirstChar<CR>
 
 nmap <leader>tt <cmd>lua require[[wr.Line]]:new():sendToTmux()<CR>
 xmap <leader>tt :<C-U>lua require[[wr.Range]]:newFromVisual():sendVisualToTmux()<CR>

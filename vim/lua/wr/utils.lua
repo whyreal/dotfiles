@@ -59,18 +59,6 @@ M.new_cmd = function(name, cmd)
     vim.cmd(('silent command! %s %s'):format(name, cmd))
 end
 
-M.toggle_home_zero = function()
-    local char_postion, _ = vim.api.nvim_get_current_line():find("[^%s]")
-    if char_postion == nil then return end
-    char_postion = char_postion    - 1
-    local position = vim.api.nvim_win_get_cursor(0)
-    if position[2] == char_postion then
-        vim.api.nvim_win_set_cursor(0, {position[1], 0})
-    else
-        vim.api.nvim_win_set_cursor(0, {position[1], char_postion})
-    end
-end
-
 function M.cd_workspace(path)
     vim.cmd("lcd " .. path)
     vim.cmd("Explore " .. path)
