@@ -12,6 +12,11 @@
     "deploy": "tsc && nvim --headless +UpdateRemotePlugins +quit"
   },
   "devDependencies": {
+    "@types/mime-types": "^2.1.0",
     "neovim": "^4.10.0"
+  },
+  "dependencies": {
+    "mime-types": "^2.1.30",
+    "ramda": "^0.27.1"
   }
 }

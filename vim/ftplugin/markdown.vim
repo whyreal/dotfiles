@@ -7,18 +7,23 @@ set foldclose=all
 let g:tagbar_sort=0
 let g:vim_markdown_no_default_key_mappings=1
 
-" create list
-xmap <buffer> <LocalLeader>nl :<C-U>lua S.markdown.createUnOrderedList()<CR>
-xmap <buffer> <LocalLeader>no :<C-U>lua S.markdown.createOrderedList()<CR>
+xmap <buffer> <LocalLeader>nl :<C-U>ListCreate<CR>
+xmap <buffer> <LocalLeader>no :<C-U>OrderListCreate<CR>
+xmap <buffer> <LocalLeader>dl :<C-U>ListDelete<CR>
 
-" delete list
-xmap <buffer> <LocalLeader>dl :<C-U>lua S.markdown.deleteList()<CR>
+" open Link
+nmap <buffer> gf gl
+nmap <buffer> gl <cmd>OpenURL<CR>
+" resolv file in Finder
+nmap <buffer> gr <cmd>RevealURL<CR>
+" copy id (joplin) or path (local , path ...)
+nmap <buffer> gy <cmd>lua S.link.copy()<CR>
 
 " header
-nmap <buffer> <a-[> :<C-U>lua S.markdown.headerLevelUp()<CR>
-nmap <buffer> <a-]> :<C-U>lua S.markdown.headerLevelDown()<CR>
-xmap <buffer> <a-[> :<C-U>lua S.markdown.multiHeaderLevelUp()<CR>
-xmap <buffer> <a-]> :<C-U>lua S.markdown.multiHeaderLevelDown()<CR>
+nmap <buffer> <a-[> :MdHeaderLevelUp<CR>
+nmap <buffer> <a-]> :MdHeaderLevelDown<CR>
+xmap <buffer> <a-[> :<C-U>MdHeaderLevelUpRange<CR>
+xmap <buffer> <a-]> :<C-U>MdHeaderLevelDownRange<CR>
 
 " Toggle
 nmap <buffer> <LocalLeader>" <cmd>lua S.markdown.toggleQuoteByWord()<CR>
@@ -57,18 +62,3 @@ command -buffer CopyNoFragLinkW lua require[[wr.Link]]:copyFragLinkW()
 command -buffer CopyFragLinkB lua require[[wr.Link]]:copyFragLinkB()
 command -buffer CopyFragLinkJ lua require[[wr.Link]]:copyJoplinLink(true)
 command -buffer CopyNoFragLinkJ lua require[[wr.Link]]:copyJoplinLink(false)
-
-
-" open Link
-nmap <buffer> gf gl
-nmap <buffer> gl <cmd>lua S.link.open()<CR>
-" resolv file in Finder
-nmap <buffer> gr <cmd>lua S.link.resolv()<CR>
-" copy id (joplin) or path (local , path ...)
-nmap <buffer> gy <cmd>lua S.link.copy()<CR>
-
-"augroup update_outline
-	"au!
-	""au BufWinEnter *.md Voom
-	"au BufWinLeave *.md Voomquit
-"augroup END

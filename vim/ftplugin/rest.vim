@@ -1,3 +1,1 @@
-lua Rest = require"service.rest"
-
-nmap <leader>tt <cmd>lua Rest.send()<CR>
+nmap <leader>tt <cmd>RestSendRequest<CR>

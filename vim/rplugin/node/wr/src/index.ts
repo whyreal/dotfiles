@@ -1,35 +1,36 @@
-import { NvimPlugin } from "neovim";
+import {NvimPlugin} from "neovim";
+import {cxt} from "./env";
 
-module.exports = (plugin: NvimPlugin) => {
-    plugin.setOptions({dev: false});
+import {gotoFirstChar} from "./commands";
+import {cmdSendLine, cmdSendRange} from "./cmd";
+import {restSendRequest} from "./rest";
+import { mdHeaderLevelUp, mdHeaderLevelDown,mdHeaderLevelDownRange, mdHeaderLevelUpRange, mdListCreate, mdListDelete, mdOrderListCreate } from "./markdown";
+import {openURL, revealURL} from "./link";
 
-    plugin.registerCommand('EchoMessage', async () => {
-        try {
-            await plugin.nvim.outWrite('Dayman (ah-ah-ah) \n');
-        } catch (err) {
-            console.error(err);
-        }
-    }, {sync: false});
+function setup(plugin: NvimPlugin) {
+    cxt.api = plugin.nvim
 
-    plugin.registerFunction('SetLines', async () => {
-        await plugin.nvim.setLine('May I offer you an egg in these troubling times');
-        return console.log('Line should be set');
-    }, {sync: false})
-  
-    //plugin.registerAutocmd('BufEnter', async (fileName) => {
-    //await plugin.nvim.buffer.append('BufEnter for a JS File?')
-    //}, {sync: false, pattern: '*.js', eval: 'expand("<afile>")'})
+    plugin.setOptions({dev: false})
+    //plugin.setOptions({dev: true, alwaysInit: true});
 
-    plugin.registerCommand("GotoFirstChar", async () => {
-        const l = await plugin.nvim.line
-        const c = await plugin.nvim.window.cursor
-        const fc = l.search(/[^\s]/)
+    plugin.registerCommand("GotoFirstChar", gotoFirstChar, {sync: false})
 
-        if (c[1] == fc) {
-            plugin.nvim.window.cursor = [c[0], 0]
-        } else {
-            plugin.nvim.window.cursor = [c[0], fc]
-        }
-    });
+    plugin.registerCommand("CmdSendLine",  cmdSendLine,  {sync: false})
+    plugin.registerCommand("CmdSendRange", cmdSendRange, {sync: false})
 
+    plugin.registerCommand("RestSendRequest", restSendRequest, {sync: false})
+
+    plugin.registerCommand("MdHeaderLevelUp",        mdHeaderLevelUp,        {sync: false})
+    plugin.registerCommand("MdHeaderLevelDown",      mdHeaderLevelDown,      {sync: false})
+    plugin.registerCommand("MdHeaderLevelUpRange", mdHeaderLevelUpRange, {sync: false})
+    plugin.registerCommand("MdHeaderLevelDownRange", mdHeaderLevelDownRange, {sync: false})
+
+    plugin.registerCommand("ListCreate", mdListCreate, {sync: false})
+    plugin.registerCommand("ListDelete", mdListDelete, {sync: false})
+    plugin.registerCommand("OrderListCreate", mdOrderListCreate, {sync: false})
+
+    plugin.registerCommand("OpenURL", openURL, {sync: false})
+    plugin.registerCommand("RevealURL", revealURL, {sync: false})
 };
+
+module.exports = setup

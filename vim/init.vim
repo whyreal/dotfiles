@@ -66,5 +66,5 @@ filetype plugin indent on
 
 lua require("GInit")
 
-au VimEnter * let g:ws=$PWD
+au VimEnter * let g:workspace=$PWD
 
