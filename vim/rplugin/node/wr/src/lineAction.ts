@@ -71,11 +71,6 @@ export const orderListCreate = curry((order: number, lg: LineGroup) => {
     }
     return lg
 })
-
-function lineGroupFromLine(line: Line): LineGroup{
-    return {cur: line}
-}
-
 export function excuteAction(actions: Map<number, LineAction[]>,
                       lines: Line[]): string[] {
 
@@ -95,6 +90,9 @@ export function excuteAction(actions: Map<number, LineAction[]>,
     return y.map(prop("txt"))
 }
 
+function lineGroupFromLine(line: Line): LineGroup{
+    return {cur: line}
+}
 function lineListFromStringList(lines: string[]): Line[] {
     return lines.map((str) => {
         return {txt: str, nr: -1}

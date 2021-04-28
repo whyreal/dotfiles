@@ -1,6 +1,6 @@
 import {codeBlockCreateFromCodeLineScan, codeBlockCreateFromTableScan, codeBlockCreateScan, deleteBlankLineScan, mdHeaderLevelDownScan, mdHeaderLevelUpScan, mdListCreateScan, mdListDeleteScan, mdOrderListCreateScan} from "./line";
 import {getHeaderRange, getVisualLineRange, updateLineRange} from "./range";
-import { excuteAction } from "./action";
+import { excuteAction } from "./lineAction";
 
 export async function deleteBlankLine() {
     const lineRange = await getVisualLineRange()

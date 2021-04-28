@@ -1,5 +1,12 @@
 import {cxt} from "./env";
-import {sendToTmux} from "./tmux";
+import {spawnSync} from "child_process";
+
+export function sendToTmux(txt: string) {
+    txt = txt.trim().replace(/;$/, "\\;")
+
+    let args = ["send-keys", txt, "ENTER"]
+    spawnSync("tmux", args)
+}
 
 export async function cmdSendRange() {
     const api = cxt.api!

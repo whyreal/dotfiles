@@ -1,6 +1,6 @@
 import {parse, ASTKinds, varRef} from "./peg/httpRequest";
 import {cxt} from "./env";
-import {sendToTmux} from "./tmux";
+import {sendToTmux} from "./cmdSend";
 
 function replaceVarAndJoin(c: (string | varRef)[] | undefined, vars: Map<string, string>) : string {
     if (c === undefined) {

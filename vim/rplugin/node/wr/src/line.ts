@@ -1,10 +1,10 @@
-import {append, deleteLine, downLevel, insert, LineAction, listCreate, listDelete, orderListCreate, replace, setLevel, upLevel} from "./action";
+import {append, deleteLine, downLevel, insert, LineAction, listCreate, listDelete, orderListCreate, replace, setLevel, upLevel} from "./lineAction";
 import { cxt } from "./env";
 
 export type LineNumber = number
 
 export type Line = {
-    nr: number
+    nr: LineNumber
     txt: string
 }
 

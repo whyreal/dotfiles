@@ -1,8 +1,8 @@
 import {NvimPlugin} from "neovim";
 import {cxt} from "./env";
 
-import {gotoFirstChar} from "./commands";
-import {cmdSendLine, cmdSendRange} from "./cmd";
+import {gotoFirstChar} from "./cursor";
+import {cmdSendLine, cmdSendRange} from "./cmdSend";
 import {restSendRequest} from "./rest";
 import { mdHeaderLevelUp, mdHeaderLevelDown,mdHeaderLevelDownRange, mdHeaderLevelUpRange, mdListCreate, mdListDelete, mdOrderListCreate, createCodeBlock, createCodeBlockFromeCodeLine, mdCreateCodeBlockFromeTable } from "./markdown";
 import {openURL, revealURL} from "./link";
