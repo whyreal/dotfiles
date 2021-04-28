@@ -35,7 +35,6 @@ function setup(plugin: NvimPlugin) {
     plugin.registerCommand("MdCreateCodeBlock", createCodeBlock, {range: ''})
     plugin.registerCommand("MdCreateCodeBlockFromeCodeLine", createCodeBlockFromeCodeLine, {range: ''})
     plugin.registerCommand("MdCreateCodeBlockFromeTable", mdCreateCodeBlockFromeTable, {range: ''})
-    
 };
 
 module.exports = setup

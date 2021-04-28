@@ -1,4 +1,4 @@
-import {LineAction} from "./action";
+import {append, deleteLine, downLevel, insert, LineAction, listCreate, listDelete, orderListCreate, replace, setLevel, upLevel} from "./action";
 import { cxt } from "./env";
 
 export type LineNumber = number
@@ -6,6 +6,12 @@ export type LineNumber = number
 export type Line = {
     nr: number
     txt: string
+}
+
+export type LineGroup = {
+    cur?: Line
+    before?: Line[]
+    after?: Line[]
 }
 
 export async function getLine(): Promise<Line>
@@ -34,7 +40,7 @@ export function mdListDeleteScan(r: LineRange) {
     r.lines.map(line => {
         if (!line.txt.match(/^\s*$/)) {
             const cla = actions.get(line.nr) || []
-            cla.push({name: "ListDelete"})
+            cla.push(listDelete)
             actions.set(line.nr, cla)
         }
     });
@@ -47,7 +53,7 @@ export function mdOrderListCreateScan(r: LineRange) {
     r.lines.forEach(line => {
         if (!line.txt.match(/^\s*$/)) {
             const cla = actions.get(line.nr) || []
-            cla.push({name: "OrderListCreate", args: order})
+            cla.push(orderListCreate(order))
             actions.set(line.nr, cla)
             order++
         }
@@ -60,7 +66,7 @@ export function mdListCreateScan(r: LineRange) {
     r.lines.map(line => {
         if (!line.txt.match(/^\s*$/)) {
             const cla = actions.get(line.nr) || []
-            cla.push({name: "ListCreate"})
+            cla.push(listCreate)
             actions.set(line.nr, cla)
         }
     });
@@ -72,20 +78,20 @@ export function mdHeaderLevelUpScan(r: LineRange) {
     r.lines.map(line => {
         if (line.txt.startsWith("#")) {
             const cla = actions.get(line.nr) || []
-            cla.push({name: "LevelUp"})
+            cla.push(upLevel)
             actions.set(line.nr, cla)
         } else if (line.txt.startsWith("===")) {
             const cla = actions.get(line.nr) || []
             const lla = actions.get(line.nr - 1) || []
-            cla.push({name: "Delete"})
-            lla.push({name: "SetLevel", args: 0})
+            cla.push(deleteLine)
+            lla.push(setLevel(0))
             actions.set(line.nr, cla)
             actions.set(line.nr - 1, lla)
         } else if (line.txt.startsWith("---")) {
             const cla = actions.get(line.nr) || []
             const lla = actions.get(line.nr - 1) || []
-            cla.push({name: "Delete"})
-            lla.push({name: "SetLevel", args: 1})
+            cla.push(deleteLine)
+            lla.push(setLevel(1))
             actions.set(line.nr, cla)
             actions.set(line.nr - 1, lla)
         }
@@ -98,7 +104,7 @@ export function deleteBlankLineScan(r: LineRange) {
     r.lines.map(line => {
         if (line.txt.trim() == "") {
             const cla = actions.get(line.nr) || []
-            cla.push({name: "Delete"})
+            cla.push(deleteLine)
             actions.set(line.nr, cla)
         }
     });
@@ -112,25 +118,25 @@ export function mdHeaderLevelDownScan(r: LineRange, level0?: boolean): Map<numbe
     r.lines.map(line => {
         if (line.txt.startsWith("#")) {
             const cla = actions.get(line.nr) || []
-            cla.push({name: "LevelDown"})
+            cla.push(downLevel)
             actions.set(line.nr, cla)
         } else if (line.txt.startsWith("===")) {
             const cla = actions.get(line.nr) || []
             const lla = actions.get(line.nr - 1) || []
-            cla.push({name: "Delete"})
-            lla.push({name: "SetLevel", args: 2})
+            cla.push(deleteLine)
+            lla.push(setLevel(2))
             actions.set(line.nr, cla)
             actions.set(line.nr - 1, lla)
         } else if (line.txt.startsWith("---")) {
             const cla = actions.get(line.nr) || []
             const lla = actions.get(line.nr - 1) || []
-            cla.push({name: "Delete"})
-            lla.push({name: "SetLevel", args: 3})
+            cla.push(deleteLine)
+            lla.push(setLevel(3))
             actions.set(line.nr, cla)
             actions.set(line.nr - 1, lla)
         } else if (level0) {
             const cla = actions.get(line.nr) || []
-            cla.push({name: "SetLevel", args: 1})
+            cla.push(setLevel(1))
             actions.set(line.nr, cla)
         }
     });
@@ -144,11 +150,11 @@ export function codeBlockCreateScan(lineRange: LineRange) {
     lineRange.lines.map((line, index) => {
         if (index == 0) {
             const cla = actions.get(line.nr) || []
-            cla.push({name: "Insert", args: [indent + "```"]})
+            cla.push(insert([indent + "```"]))
             actions.set(line.nr, cla)
         } else if (index == lineRange.length - 1) {
             const cla = actions.get(line.nr) || []
-            cla.push({name: "Append", args: [indent + "```"]})
+            cla.push(append([indent + "```"]))
             actions.set(line.nr, cla)
         }
     });
@@ -160,11 +166,11 @@ export function codeBlockCreateFromCodeLineScan(lineRange: LineRange) {
     const indent = lineRange.lines[0].txt.match(/^\s*/)
     lineRange.lines.map((line, index) => {
         const cla = actions.get(line.nr) || []
-        cla.push({name: "Replace", args: line.txt.replace(/`/g, "")})
+        cla.push(replace(line.txt.replace(/`/g, "")))
         if (index == 0) {
-            cla.push({name: "Insert", args: [indent + "```"]})
+            cla.push(insert([indent + "```"]))
         } else if (index == lineRange.length - 1) {
-            cla.push({name: "Append", args: [indent + "```"]})
+            cla.push(append([indent + "```"]))
         }
         actions.set(line.nr, cla)
         cxt.api?.outWrite(JSON.stringify(actions.get(line.nr)) + "\n")
@@ -178,14 +184,14 @@ export function codeBlockCreateFromTableScan(lineRange: LineRange) {
     lineRange.lines.map((line, index) => {
         const cla = actions.get(line.nr) || []
         if (line.txt.match(/^\s*$/)) {
-            cla.push({name: "Delete"})
+            cla.push(deleteLine)
         } else {
-            cla.push({name: "Replace", args: line.txt.split("|")[2].replace(/`/g, "")})
+            cla.push(replace(line.txt.split("|")[2].replace(/`/g, "")))
         }
         if (index == 0) {
-            cla.push({name: "Insert", args: [indent + "```"]})
+            cla.push(insert([indent + "```"]))
         } else if (index == lineRange.length - 1) {
-            cla.push({name: "Append", args: [indent + "```"]})
+            cla.push(append([indent + "```"]))
         }
         actions.set(line.nr, cla)
         cxt.api?.outWrite(JSON.stringify(actions.get(line.nr)) + "\n")

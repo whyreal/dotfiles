@@ -1,118 +1,102 @@
-import {Line} from "./line";
+import {prop, curry} from "ramda";
+import {cxt} from "./env";
+import {Line, LineGroup} from "./line";
 
-type ReplaceAction = {
-    name: "Replace",
-    args: string
-}
-type AppendAction = {
-    name: "Append",
-    args: string[]
-}
-type InsertAction = {
-    name: "Insert",
-    args: string[]
-}
-type OrderListCreateAction = {
-    name: "OrderListCreate",
-    args: number
-}
-type SetLevelAction = {
-    name: "SetLevel",
-    args: number
-}
-export type LineAction = { name: "Delete" | "LevelUp" | "LevelDown" | "ListCreate" | "ListDelete"} |
-    SetLevelAction | OrderListCreateAction |
-    ReplaceAction | AppendAction | InsertAction
+export type LineAction = (a: LineGroup) => LineGroup
 
-function downLevel(line: string): string {
-    if (line.startsWith("#")) {
-        line = "#" + line
-    } else {
-        line= "# " + line
+export function downLevel(lg: LineGroup): LineGroup {
+    cxt.api!.outWrite(JSON.stringify(lg) + "downLevel()\n")
+    if (lg.cur) {
+        if (lg.cur.txt.startsWith("#")) {
+            lg.cur.txt = "#" + lg.cur.txt
+        } else {
+            lg.cur.txt = "# " + lg.cur.txt
+        }
     }
-    return line
+    return lg
 }
-
-function upLevel(line: string): string {
-    line = line.replace(/^#\s*/, "")
-    return line
-}
-
-function setLevel(line: string, level: number): string {
-    let prefix = "#".repeat(level)
-    if (level > 0) {
-        prefix = prefix + " "
+export function deleteLine(lg: LineGroup): LineGroup {
+    if (lg.cur) {
+        delete lg.cur
     }
-
-    line = line.replace(/^#*\s*/, prefix)
-    return line
+    return lg
 }
-
-function listDelete(txt: string): string {
-    return txt.replace(/(\s*)(-|\d+\.)\s*(.*)/, "$1$3")
+export const append = curry((lines: string[], lg: LineGroup): LineGroup => {
+    lg.after = lineListFromStringList(lines).concat(lg.after || [])
+    return lg
+})
+export const insert = curry((lines:string[], lg:LineGroup): LineGroup => {
+    lg.before = (lg.before || []).concat(lineListFromStringList(lines))
+    return lg
+})
+export const replace = curry((str: string, lg: LineGroup): LineGroup => {
+    if (lg.cur) {
+        lg.cur.txt = str
+    }
+    return lg
+})
+export const upLevel = (lg: LineGroup): LineGroup => {
+    if (lg.cur) {
+        lg.cur.txt = lg.cur.txt.replace(/^#\s*/, "")
+    }
+    cxt.api!.outWrite(JSON.stringify(lg) + "upLevel()\n")
+    return lg
 }
+export const setLevel = curry((level: number, lg: LineGroup): LineGroup => {
+    if (lg.cur) {
+        let prefix = "#".repeat(level)
+        if (level > 0) {
+            prefix = prefix + " "
+        }
 
-function listCreate(txt: string): string {
-    return txt.replace(/(\s*)(.*)/, "$1- $2")
+        lg.cur.txt = lg.cur.txt.replace(/^#*\s*/, prefix)
+    }
+    return lg
+})
+export const listDelete = (lg: LineGroup) => {
+    if (lg.cur) {
+        lg.cur.txt = lg.cur.txt.replace(/(\s*)(-|\d+\.)\s*(.*)/, "$1$3")
+    }
+    return lg
 }
+export function listCreate(lg: LineGroup) {
+    if (lg.cur) {
+        lg.cur.txt = lg.cur.txt.replace(/(\s*)(.*)/, "$1- $2")
+    }
+    return lg
+}
+export const orderListCreate = curry((order: number, lg: LineGroup) => {
+    if (lg.cur) {
+        lg.cur.txt = lg.cur.txt.replace(/(\s*)(.*)/, "$1" + order + ". $2")
+    }
+    return lg
+})
 
-function orderListCreate(txt: string, order: number): string {
-    return txt.replace(/(\s*)(.*)/, "$1" + order + ". $2")
+function lineGroupFromLine(line: Line): LineGroup{
+    return {cur: line}
 }
 
 export function excuteAction(actions: Map<number, LineAction[]>,
                       lines: Line[]): string[] {
 
     const x = lines.map(line => {
-        if (!actions.has(line.nr)) {
-            return [line.txt]
+        let lg = lineGroupFromLine(line)
+
+        if (actions.has(line.nr)) {
+            actions.get(line.nr)?.forEach((action) => {
+                lg = action(lg)
+            })
         }
-        const cla = actions.get(line.nr)!
-
-        let txt: string | null = line.txt
-        let linesBefore: string[] = []
-        let linesAfter: string[] = []
-        cla.forEach(a => {
-            switch (a.name) {
-                case "Delete":
-                    txt = null;
-                    break;
-                case "Append":
-                    linesAfter = a.args.concat(linesAfter);
-                    break;
-                case "Insert":
-                    linesBefore = linesBefore.concat(a.args);
-                    break;
-                case "Replace":
-                    txt = a.args;
-                    break;
-                case "LevelDown":
-                    txt = downLevel(txt!);
-                    break;
-                case "LevelUp":
-                    txt = upLevel(txt!);
-                    break;
-                case "SetLevel":
-                    txt = setLevel(txt!, a.args);
-                    break;
-                case "ListDelete":
-                    txt = listDelete(txt!);
-                    break;
-                case "ListCreate":
-                    txt = listCreate(txt!);
-                    break;
-                case "OrderListCreate":
-                    txt = orderListCreate(txt!, a.args);
-                break;
-                default:
-                    break;
-            }
-        })
-
-        return linesBefore.concat(txt ? [txt] : []).concat(linesAfter)
+        return (lg.before || []).concat(lg.cur && [lg.cur] || []).concat(lg.after || [])
     })
     const y = x.reduce((acc, cur) => {
         return acc.concat(cur)
     })
-    return y
+    return y.map(prop("txt"))
+}
+
+function lineListFromStringList(lines: string[]): Line[] {
+    return lines.map((str) => {
+        return {txt: str, nr: -1}
+    })
 }
