@@ -4,7 +4,7 @@ import {cxt} from "./env";
 import {gotoFirstChar} from "./commands";
 import {cmdSendLine, cmdSendRange} from "./cmd";
 import {restSendRequest} from "./rest";
-import { mdHeaderLevelUp, mdHeaderLevelDown,mdHeaderLevelDownRange, mdHeaderLevelUpRange, mdListCreate, mdListDelete, mdOrderListCreate } from "./markdown";
+import { mdHeaderLevelUp, mdHeaderLevelDown,mdHeaderLevelDownRange, mdHeaderLevelUpRange, mdListCreate, mdListDelete, mdOrderListCreate, createCodeBlock, createCodeBlockFromeCodeLine, mdCreateCodeBlockFromeTable } from "./markdown";
 import {openURL, revealURL} from "./link";
 
 function setup(plugin: NvimPlugin) {
@@ -31,6 +31,11 @@ function setup(plugin: NvimPlugin) {
 
     plugin.registerCommand("OpenURL", openURL, {sync: false})
     plugin.registerCommand("RevealURL", revealURL, {sync: false})
+
+    plugin.registerCommand("MdCreateCodeBlock", createCodeBlock, {range: ''})
+    plugin.registerCommand("MdCreateCodeBlockFromeCodeLine", createCodeBlockFromeCodeLine, {range: ''})
+    plugin.registerCommand("MdCreateCodeBlockFromeTable", mdCreateCodeBlockFromeTable, {range: ''})
+    
 };
 
 module.exports = setup

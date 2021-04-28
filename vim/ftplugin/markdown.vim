@@ -12,8 +12,8 @@ xmap <buffer> <LocalLeader>no :<C-U>OrderListCreate<CR>
 xmap <buffer> <LocalLeader>dl :<C-U>ListDelete<CR>
 
 " open Link
-nmap <buffer> gf gl
-nmap <buffer> gl <cmd>OpenURL<CR>
+nmap <buffer> gf gx
+nmap <buffer> gx <cmd>OpenURL<CR>
 " resolv file in Finder
 nmap <buffer> gr <cmd>RevealURL<CR>
 " copy id (joplin) or path (local , path ...)
@@ -25,7 +25,15 @@ nmap <buffer> <a-]> :MdHeaderLevelDown<CR>
 xmap <buffer> <a-[> :<C-U>MdHeaderLevelUpRange<CR>
 xmap <buffer> <a-]> :<C-U>MdHeaderLevelDownRange<CR>
 
-" Toggle
+"command -buffer -range MdCreateCodeBlockFromeTable lua S.markdown.createCodeBlockFromeTable()
+
+command -buffer CopyFragLinkW lua require[[wr.Link]]:copyFragLinkW(true)
+command -buffer CopyNoFragLinkW lua require[[wr.Link]]:copyFragLinkW()
+command -buffer CopyFragLinkB lua require[[wr.Link]]:copyFragLinkB()
+command -buffer CopyFragLinkJ lua require[[wr.Link]]:copyJoplinLink(true)
+command -buffer CopyNoFragLinkJ lua require[[wr.Link]]:copyJoplinLink(false)
+
+" Toggle quote(")
 nmap <buffer> <LocalLeader>" <cmd>lua S.markdown.toggleQuoteByWord()<CR>
 xmap <buffer> <LocalLeader>" :<C-U>lua S.markdown.addQuoteByVisual()<CR>
 
@@ -41,10 +49,6 @@ xmap <buffer> <LocalLeader>i :<C-U>lua S.markdown.addItalicByVisual()<CR>
 nmap <buffer> <LocalLeader>c  <cmd>lua S.markdown.toggleInlineCodeByWord()<CR>
 xmap <buffer> <LocalLeader>c  :<C-U>lua S.markdown.addInlineCodeByVisual()<CR>
 
-command -buffer -range MDCreateCodeBlock lua S.markdown.createCodeBlock()
-command -buffer -range MDCreateCodeBlockFromeTable lua S.markdown.createCodeBlockFromeTable()
-command -buffer -range MDCreateCodeBlockFromeCodeLine lua S.markdown.createCodeBlockFromeCodeLine()
-
 " Bold object
 xmap <buffer> ab :<C-U>lua require[[wr.WrappedRange]]:newFromSep("**", "**"):select_all()<CR>
 xmap <buffer> ib :<C-U>lua require[[wr.WrappedRange]]:newFromSep("**", "**"):select_inner()<CR>
@@ -57,8 +61,5 @@ xmap <buffer> ii :<C-U>lua require[[wr.WrappedRange]]:newFromSep("*",  "*"):sele
 omap <buffer> ai :<C-U>lua require[[wr.WrappedRange]]:newFromSep("*",  "*"):select_all()<CR>
 omap <buffer> ii :<C-U>lua require[[wr.WrappedRange]]:newFromSep("*",  "*"):select_inner()<CR>
 
-command -buffer CopyFragLinkW lua require[[wr.Link]]:copyFragLinkW(true)
-command -buffer CopyNoFragLinkW lua require[[wr.Link]]:copyFragLinkW()
-command -buffer CopyFragLinkB lua require[[wr.Link]]:copyFragLinkB()
-command -buffer CopyFragLinkJ lua require[[wr.Link]]:copyJoplinLink(true)
-command -buffer CopyNoFragLinkJ lua require[[wr.Link]]:copyJoplinLink(false)
+command! -nargs=0 MdUnescape lua require[[wr.utils]].markdown_unescape()
+

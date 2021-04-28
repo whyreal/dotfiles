@@ -4,6 +4,7 @@ import { cxt } from "./env";
 export type LineRange = {
     start: LineNumber
     end: LineNumber
+    length: number
     lines: Line[]
 }
 
@@ -24,6 +25,7 @@ export async function getHeaderRange(): Promise<LineRange> {
     return {
         start: start,
         end: end,
+        length: end - start,
         lines: (await api.buffer.getLines({
             start: start,
             end: end,
@@ -41,6 +43,7 @@ export async function getVisualLineRange(): Promise<LineRange> {
     return {
         start: start,
         end: end,
+        length: end - start,
         lines: (await api.buffer.getLines({
             start: start,
             end: end,
@@ -49,5 +52,13 @@ export async function getVisualLineRange(): Promise<LineRange> {
             return { txt: txt, nr: index + start}
         })
     }
+}
+
+export function updateLineRange(lines: string[], lineRange: LineRange) {
+    const api = cxt.api!
+    api.buffer.setLines(lines,
+                        { start: lineRange.start,
+                            end: lineRange.end, strictIndexing: false}
+                       )
 }
 
