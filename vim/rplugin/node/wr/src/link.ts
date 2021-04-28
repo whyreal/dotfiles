@@ -137,7 +137,6 @@ export async function openURL() {
             break;
     }
 }
-
 export async function revealURL() {
     const api = cxt.api!
     const urltxt = await detectUrl()
@@ -152,4 +151,11 @@ export async function revealURL() {
         default:
             break;
     }
+}
+export async function copyURL() {
+    const api = cxt.api!
+    const urltxt = await detectUrl()
+    const uo = await parseUrl(urltxt)
+
+    api.call("setreg", ["+", uo.url.href])
 }

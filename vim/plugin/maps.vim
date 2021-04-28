@@ -17,4 +17,13 @@ tmap <c-o> <c-\><c-n>
 nmap 0 <cmd>GotoFirstChar<CR>
 
 nmap <leader>tt <cmd>CmdSendLine<CR>
-xmap <leader>tt :<C-U>CmdSendRange<CR>
+xmap <leader>tt <cmd>CmdSendRange<CR>
+
+" open Link
+nmap <buffer> gf gx
+nmap <buffer> gx <cmd>OpenURL<CR>
+" resolv file in Finder
+nmap <buffer> gr <cmd>RevealURL<CR>
+" copy id (joplin) or path (local , path ...)
+nmap <buffer> gy <cmd>CopyURL<CR>
+

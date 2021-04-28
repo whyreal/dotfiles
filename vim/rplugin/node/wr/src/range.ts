@@ -54,7 +54,7 @@ export async function getVisualLineRange(): Promise<LineRange> {
     }
 }
 
-export function updateLineRange(lines: string[], lineRange: LineRange) {
+export function freshRange(lines: string[], lineRange: LineRange) {
     const api = cxt.api!
     api.buffer.setLines(lines,
                         { start: lineRange.start,

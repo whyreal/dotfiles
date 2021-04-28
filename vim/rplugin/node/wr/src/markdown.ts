@@ -1,85 +1,51 @@
-import {codeBlockCreateFromCodeLineScan, codeBlockCreateFromTableScan, codeBlockCreateScan, deleteBlankLineScan, mdHeaderLevelDownScan, mdHeaderLevelUpScan, mdListCreateScan, mdListDeleteScan, mdOrderListCreateScan} from "./line";
-import {getHeaderRange, getVisualLineRange, updateLineRange} from "./range";
-import { excuteAction } from "./lineAction";
+import {codeBlockCreateFromCodeLineScan, codeBlockCreateFromTableScan, codeBlockCreateScan, deleteBlankLineScan, mdHeaderLevelDownScan, mdHeaderLevelUpScan, mdListCreateScan, mdListDeleteScan, mdOrderListCreateScan} from "./lineScan";
+import {getHeaderRange, getVisualLineRange, LineRange, freshRange} from "./range";
+import {excuteAction, LineAction} from "./lineAction";
+import {curry} from "ramda";
+
+type RangeSelector = () => Promise<LineRange>
+type RangeScanner = (a: LineRange) => Map<number, LineAction[]>
+
+async function updateRange(selector: RangeSelector, scanner: RangeScanner) {
+    const lineRange = await selector()
+
+    const actions = scanner(lineRange)
+    const lines = excuteAction(actions, lineRange)
+    freshRange(lines, lineRange)
+}
 
 export async function deleteBlankLine() {
-    const lineRange = await getVisualLineRange()
-    const actions = deleteBlankLineScan(lineRange)
-    const lines = excuteAction(actions, lineRange.lines)
-
-    updateLineRange(lines, lineRange)
+    updateRange(getVisualLineRange, deleteBlankLineScan)
 }
-
 export async function mdHeaderLevelUpRange() {
-    const lineRange = await getVisualLineRange()
-    const actions = mdHeaderLevelUpScan(lineRange)
-    const lines = excuteAction(actions, lineRange.lines)
-
-    updateLineRange(lines, lineRange)
+    updateRange(getVisualLineRange, mdHeaderLevelUpScan)
 }
 export async function mdHeaderLevelDownRange() {
-    const lineRange = await getVisualLineRange()
-    const actions = mdHeaderLevelDownScan(lineRange)
-    const lines = excuteAction(actions, lineRange.lines)
-
-    updateLineRange(lines, lineRange)
+    updateRange(getVisualLineRange, curry(mdHeaderLevelDownScan)(false))
 }
 export async function mdHeaderLevelDown() {
-    const lineRange = await getHeaderRange()
-    const actions = mdHeaderLevelDownScan(lineRange, true)
-    const lines = excuteAction(actions, lineRange.lines)
-
-    updateLineRange(lines, lineRange)
+    updateRange(getHeaderRange, curry(mdHeaderLevelDownScan)(true))
 }
 export async function mdHeaderLevelUp() {
-    const lineRange = await getHeaderRange()
-    const actions = mdHeaderLevelUpScan(lineRange)
-    const lines = excuteAction(actions, lineRange.lines)
-
-    updateLineRange(lines, lineRange)
+    updateRange(getHeaderRange, mdHeaderLevelUpScan)
 }
-
 export async function mdListCreate() {
-    const lineRange = await getVisualLineRange()
-    const actions = mdListCreateScan(lineRange)
-    const lines = excuteAction(actions, lineRange.lines)
-
-    updateLineRange(lines, lineRange)
+    updateRange(getVisualLineRange, mdListCreateScan)
 }
 export async function mdListDelete() {
-    const lineRange = await getVisualLineRange()
-    const actions = mdListDeleteScan(lineRange)
-    const lines = excuteAction(actions, lineRange.lines)
-
-    updateLineRange(lines, lineRange)
+    updateRange(getVisualLineRange, mdListDeleteScan)
 }
 export async function mdOrderListCreate() {
-    const lineRange = await getVisualLineRange()
-    const actions = mdOrderListCreateScan(lineRange)
-    const lines = excuteAction(actions, lineRange.lines)
-
-    updateLineRange(lines, lineRange)
+    updateRange(getVisualLineRange, mdOrderListCreateScan)
 }
 
 export async function createCodeBlock() {
-    const lineRange = await getVisualLineRange()
-    const actions = codeBlockCreateScan(lineRange)
-    const lines = excuteAction(actions, lineRange.lines)
-
-    updateLineRange(lines, lineRange)
+    updateRange(getVisualLineRange, codeBlockCreateScan)
 }
 export async function createCodeBlockFromeCodeLine() {
-    const lineRange = await getVisualLineRange()
-    const actions = codeBlockCreateFromCodeLineScan(lineRange)
-    const lines = excuteAction(actions, lineRange.lines)
-
-    updateLineRange(lines, lineRange)
+    updateRange(getVisualLineRange, codeBlockCreateFromCodeLineScan)
 }
 
 export async function mdCreateCodeBlockFromeTable() {
-    const lineRange = await getVisualLineRange()
-    const actions = codeBlockCreateFromTableScan(lineRange)
-    const lines = excuteAction(actions, lineRange.lines)
-
-    updateLineRange(lines, lineRange)
+    updateRange(getVisualLineRange, codeBlockCreateFromTableScan)
 }

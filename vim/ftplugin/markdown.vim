@@ -11,19 +11,11 @@ xmap <buffer> <LocalLeader>nl :<C-U>ListCreate<CR>
 xmap <buffer> <LocalLeader>no :<C-U>OrderListCreate<CR>
 xmap <buffer> <LocalLeader>dl :<C-U>ListDelete<CR>
 
-" open Link
-nmap <buffer> gf gx
-nmap <buffer> gx <cmd>OpenURL<CR>
-" resolv file in Finder
-nmap <buffer> gr <cmd>RevealURL<CR>
-" copy id (joplin) or path (local , path ...)
-nmap <buffer> gy <cmd>lua S.link.copy()<CR>
-
 " header
 nmap <buffer> <a-[> :MdHeaderLevelUp<CR>
 nmap <buffer> <a-]> :MdHeaderLevelDown<CR>
-xmap <buffer> <a-[> :<C-U>MdHeaderLevelUpRange<CR>
-xmap <buffer> <a-]> :<C-U>MdHeaderLevelDownRange<CR>
+xmap <buffer> <a-[> :MdHeaderLevelUpRange<CR>
+xmap <buffer> <a-]> :MdHeaderLevelDownRange<CR>
 
 command -buffer CopyFragLinkW lua require[[wr.Link]]:copyFragLinkW(true)
 command -buffer CopyNoFragLinkW lua require[[wr.Link]]:copyFragLinkW()

@@ -1,6 +1,7 @@
 import {prop, curry} from "ramda";
 import {cxt} from "./env";
 import {Line, LineGroup} from "./line";
+import {LineRange} from "./range";
 
 export type LineAction = (a: LineGroup) => LineGroup
 
@@ -72,9 +73,9 @@ export const orderListCreate = curry((order: number, lg: LineGroup) => {
     return lg
 })
 export function excuteAction(actions: Map<number, LineAction[]>,
-                      lines: Line[]): string[] {
+                      lr: LineRange): string[] {
 
-    const x = lines.map(line => {
+    const x = lr.lines.map(line => {
         let lg = lineGroupFromLine(line)
 
         if (actions.has(line.nr)) {

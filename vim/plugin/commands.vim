@@ -28,4 +28,3 @@ command -range TemplateRender lua require[[wr.Range]]:newFromVisual():tplRender(
 
 " download html to markdown
 "command! -nargs=1 MDDownload call luaeval("require[[wr.utils]].markdown_download(_A)", <q-args>)
-
