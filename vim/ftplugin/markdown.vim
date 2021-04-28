@@ -25,8 +25,6 @@ nmap <buffer> <a-]> :MdHeaderLevelDown<CR>
 xmap <buffer> <a-[> :<C-U>MdHeaderLevelUpRange<CR>
 xmap <buffer> <a-]> :<C-U>MdHeaderLevelDownRange<CR>
 
-"command -buffer -range MdCreateCodeBlockFromeTable lua S.markdown.createCodeBlockFromeTable()
-
 command -buffer CopyFragLinkW lua require[[wr.Link]]:copyFragLinkW(true)
 command -buffer CopyNoFragLinkW lua require[[wr.Link]]:copyFragLinkW()
 command -buffer CopyFragLinkB lua require[[wr.Link]]:copyFragLinkB()

@@ -24,7 +24,6 @@ export type LineAction = { name: "Delete" | "LevelUp" | "LevelDown" | "ListCreat
     SetLevelAction | OrderListCreateAction |
     ReplaceAction | AppendAction | InsertAction
 
-
 function downLevel(line: string): string {
     if (line.startsWith("#")) {
         line = "#" + line
