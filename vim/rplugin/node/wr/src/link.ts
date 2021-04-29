@@ -13,7 +13,7 @@ async function detectUrl(): Promise<string> {
     // [txt](url "title")
     let link = new RegExp(
         /\[[^\[\]]*\]/.source // [txt]
-        + /\(([^\(\)\s]*)/.source // (url
+        + /\(([^\(\)"]*)/.source // (url
         + /(?:\s*"[^"]*")?/.source // "title")
         , 'g')
 
@@ -59,7 +59,7 @@ async function detectUrl(): Promise<string> {
 
     // word
     link = new RegExp(
-        /(\w+)/
+        /(\S+)/
         , "g")
 
     matched = line.matchAll(link);
@@ -79,7 +79,6 @@ type UrlWithOpener = {
     url: URL
     opener: string
 }
-
 export async function parseUrl(txt: string): Promise<UrlWithOpener> {
     const api = cxt.api!
     let url: URL
@@ -97,9 +96,8 @@ export async function parseUrl(txt: string): Promise<UrlWithOpener> {
         if (txt.startsWith("/")) {
             url = new URL(txt.replace(/^\/+/, "file:///"))
         } else {
-            url = new URL(txt.replace(/^\.*\/*/, "file:///"))
             const dir: string = await api.call("expand", "%:p:h")
-            url.pathname = path.join(dir, url.pathname)
+            url = new URL(`file://${dir}/${txt}`)
         }
     }
 
@@ -115,7 +113,6 @@ export async function parseUrl(txt: string): Promise<UrlWithOpener> {
         opener: opener
     }
 }
-
 export async function openURL() {
     const api = cxt.api!
     const urltxt = await detectUrl()
@@ -145,8 +142,8 @@ export async function revealURL() {
     switch (uo.opener) {
         case "vim":
         case "system":
-            path = fileURLToPath("file://" + uo.url.pathname)
-            api.command(`!open -R ${path}`)
+            path = fileURLToPath(`file://${uo.url.pathname}`)
+            api.command(`!open -R '${path}'`)
             break;
         default:
             break;

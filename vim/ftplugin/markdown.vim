@@ -53,3 +53,11 @@ omap <buffer> ii :<C-U>lua require[[wr.WrappedRange]]:newFromSep("*",  "*"):sele
 
 command! -nargs=0 MdUnescape lua require[[wr.utils]].markdown_unescape()
 
+" open Link
+nmap <buffer> gf gx
+nmap <buffer> gx <cmd>OpenURL<CR>
+" resolv file in Finder
+nmap <buffer> gr <cmd>RevealURL<CR>
+" copy id (joplin) or path (local , path ...)
+nmap <buffer> gy <cmd>CopyURL<CR>
+

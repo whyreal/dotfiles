@@ -48,14 +48,14 @@ export function mdHeaderLevelUpScan(r: LineRange) {
             const cla = actions.get(line.nr) || []
             cla.push(upLevel)
             actions.set(line.nr, cla)
-        } else if (line.txt.startsWith("===")) {
+        } else if (line.txt.startsWith("==")) {
             const cla = actions.get(line.nr) || []
             const lla = actions.get(line.nr - 1) || []
             cla.push(deleteLine)
             lla.push(setLevel(0))
             actions.set(line.nr, cla)
             actions.set(line.nr - 1, lla)
-        } else if (line.txt.startsWith("---")) {
+        } else if (line.txt.startsWith("--")) {
             const cla = actions.get(line.nr) || []
             const lla = actions.get(line.nr - 1) || []
             cla.push(deleteLine)
@@ -86,14 +86,14 @@ export function mdHeaderLevelDownScan( level0: boolean, r: LineRange): Map<numbe
             const cla = actions.get(line.nr) || []
             cla.push(downLevel)
             actions.set(line.nr, cla)
-        } else if (line.txt.startsWith("===")) {
+        } else if (line.txt.startsWith("==")) {
             const cla = actions.get(line.nr) || []
             const lla = actions.get(line.nr - 1) || []
             cla.push(deleteLine)
             lla.push(setLevel(2))
             actions.set(line.nr, cla)
             actions.set(line.nr - 1, lla)
-        } else if (line.txt.startsWith("---")) {
+        } else if (line.txt.startsWith("--")) {
             const cla = actions.get(line.nr) || []
             const lla = actions.get(line.nr - 1) || []
             cla.push(deleteLine)
@@ -118,7 +118,8 @@ export function codeBlockCreateScan(lineRange: LineRange) {
             const cla = actions.get(line.nr) || []
             cla.push(insert([indent + "```"]))
             actions.set(line.nr, cla)
-        } else if (index == lineRange.length - 1) {
+        }
+        if (index == lineRange.length - 1) {
             const cla = actions.get(line.nr) || []
             cla.push(append([indent + "```"]))
             actions.set(line.nr, cla)
