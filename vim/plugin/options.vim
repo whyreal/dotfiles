@@ -85,3 +85,9 @@ else
   set signcolumn=yes
 endif
 
+let g:projects = { 
+            \ "Notes": "~/Documents/Notes/",
+            \ "Downloads": "~/Downloads",
+            \ "dotfile": "~/code/whyreal/dotfiles/",
+            \ "vimconfig": "~/code/whyreal/dotfiles/vim/"
+            \ }

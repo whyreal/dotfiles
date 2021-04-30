@@ -14,10 +14,12 @@
   "devDependencies": {
     "@types/mime-types": "^2.1.0",
     "@types/ramda": "^0.27.40",
+    "@types/urlencode": "^1.1.2",
     "neovim": "^4.10.0"
   },
   "dependencies": {
     "mime-types": "^2.1.30",
-    "ramda": "^0.27.1"
+    "ramda": "^0.27.1",
+    "urlencode": "^1.1.0"
   }
 }

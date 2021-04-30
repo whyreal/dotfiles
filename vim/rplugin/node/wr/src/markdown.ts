@@ -1,5 +1,5 @@
 import {codeBlockCreateFromCodeLineScan, codeBlockCreateFromTableScan, codeBlockCreateScan, deleteBlankLineScan, mdHeaderLevelDownScan, mdHeaderLevelUpScan, mdListCreateScan, mdListDeleteScan, mdOrderListCreateScan} from "./lineScan";
-import {getHeaderRange, getVisualLineRange, LineRange, freshRange} from "./range";
+import {getHeaderRangeAtCursor, getVisualLineRange, LineRange, freshRange} from "./range";
 import {excuteAction, LineAction} from "./lineAction";
 import {curry} from "ramda";
 
@@ -24,10 +24,10 @@ export async function mdHeaderLevelDownRange() {
     updateRange(getVisualLineRange, curry(mdHeaderLevelDownScan)(false))
 }
 export async function mdHeaderLevelDown() {
-    updateRange(getHeaderRange, curry(mdHeaderLevelDownScan)(true))
+    updateRange(getHeaderRangeAtCursor, curry(mdHeaderLevelDownScan)(true))
 }
 export async function mdHeaderLevelUp() {
-    updateRange(getHeaderRange, mdHeaderLevelUpScan)
+    updateRange(getHeaderRangeAtCursor, mdHeaderLevelUpScan)
 }
 export async function mdListCreate() {
     updateRange(getVisualLineRange, mdListCreateScan)

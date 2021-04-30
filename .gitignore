@@ -26,3 +26,4 @@ lib/
 # fish plugin
 fish/functions/
 
+vim/rplugin/node/wr/yarn.lock

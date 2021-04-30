@@ -7,8 +7,7 @@ export type LineRange = {
     length: number
     lines: Line[]
 }
-
-export async function getHeaderRange(): Promise<LineRange> {
+export async function getHeaderRangeAtCursor(): Promise<LineRange> {
     const api = cxt.api!
     const cursor = await api.window.cursor
 
@@ -35,7 +34,20 @@ export async function getHeaderRange(): Promise<LineRange> {
         })
     }
 }
+export async function currentHeaderLine(): Promise<Line> {
+    const api = cxt.api!
+    const cursor = await api.window.cursor
+    const doc = await api.buffer.lines
 
+    for (let index = cursor[0]; index >= 0; index--) {
+        api.outWrite(JSON.stringify([index, doc[index]]) + "\n")
+
+        if (doc[index].startsWith("#")) {
+            return {nr: index, txt: doc[index]}
+        }
+    }
+    throw new Error("No header!");
+}
 export async function getVisualLineRange(): Promise<LineRange> {
     const api = cxt.api!
     const start = (await api.buffer.mark('<'))[0] - 1
@@ -53,7 +65,6 @@ export async function getVisualLineRange(): Promise<LineRange> {
         })
     }
 }
-
 export function freshRange(lines: string[], lineRange: LineRange) {
     const api = cxt.api!
     api.buffer.setLines(lines,

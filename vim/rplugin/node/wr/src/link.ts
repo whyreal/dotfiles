@@ -3,6 +3,9 @@ import {fileURLToPath, URL} from "url";
 import { lookup } from "mime-types";
 import * as path from "path";
 import {spawnSync} from "child_process";
+import {Line} from "./line";
+import {currentHeaderLine} from "./range";
+import { decode } from "urlencode";
 
 
 async function detectUrl(): Promise<string> {
@@ -107,7 +110,6 @@ export async function parseUrl(txt: string): Promise<UrlWithOpener> {
             opener = "vim"
         }
     }
-
     return {
         url: url,
         opener: opener
@@ -121,7 +123,10 @@ export async function openURL() {
     switch (uo.opener) {
         case "vim":
             path = fileURLToPath("file://" + uo.url.pathname)
-            api.command(`edit ${path}`)
+            await api.command(`edit ${path}`)
+            if (uo.url.hash) {
+                gotoHeader(uo.url.hash)
+            }
             break;
         case "system":
             path = fileURLToPath("file://" + uo.url.pathname)
@@ -155,4 +160,47 @@ export async function copyURL() {
     const uo = await parseUrl(urltxt)
 
     api.call("setreg", ["+", uo.url.href])
+}
+export async function copyHeaderLink() {
+    const api = cxt.api!
+    const header: Line = await currentHeaderLine()
+    //vim.fn.setreg("+", ("[%s](#%s)"): format(fragment, fragment))
+    const hash = header.txt.trim().replace(/^#+\s*/, "").replace(/\s+/g, "-")
+    api.call("setreg", ["+", `[${hash}][#${hash}]`])
+}
+export async function copyWorkSpaceLinkWithHeader() {
+    const api = cxt.api!
+
+    const header: Line = await currentHeaderLine()
+    const hash = header.txt.trim().replace(/^#+\s*/, "")
+
+    const workspace = await api.getVar("workspace") as string
+    const p = await api.call("expand", ["%:p"])
+    const filePathInWorkSpace = path.relative(workspace, p)
+
+    api.call("setreg", ["+", `[${hash}](workspace://${filePathInWorkSpace}#${hash.replace(/\s+/g, "-")})`])
+}
+export async function copyWorkSpaceLink() {
+    const api = cxt.api!
+
+    const workspace = await api.getVar("workspace") as string
+    const p = await api.call("expand", ["%:p"])
+    const filePathInWorkSpace = path.relative(workspace, p)
+
+    api.call("setreg", ["+", `[${path.basename(p)}](workspace://${filePathInWorkSpace})`])
+}
+
+async function gotoHeader(hash: string) {
+    const api = cxt.api!
+    const doc = await api.buffer.lines
+
+    for (let index = 0; index < doc.length; index++) {
+        if (doc[index].startsWith("#")
+            && doc[index].trim().replace(/^#+\s*/, "").replace(/\s+/g, "-") == decode(hash).replace(/^#/, "")
+           ) {
+               api.window.cursor = [index + 1, 1]
+               await api.command("normal! zt")
+               await api.command("normal! zO")
+           }
+    }
 }

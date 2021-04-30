@@ -17,11 +17,13 @@ nmap <buffer> <a-]> :MdHeaderLevelDown<CR>
 xmap <buffer> <a-[> :MdHeaderLevelUpRange<CR>
 xmap <buffer> <a-]> :MdHeaderLevelDownRange<CR>
 
-command -buffer CopyFragLinkW lua require[[wr.Link]]:copyFragLinkW(true)
-command -buffer CopyNoFragLinkW lua require[[wr.Link]]:copyFragLinkW()
-command -buffer CopyFragLinkB lua require[[wr.Link]]:copyFragLinkB()
-command -buffer CopyFragLinkJ lua require[[wr.Link]]:copyJoplinLink(true)
-command -buffer CopyNoFragLinkJ lua require[[wr.Link]]:copyJoplinLink(false)
+" open Link
+nmap <buffer> gf gx
+nmap <buffer> gx <cmd>OpenURL<CR>
+" resolv file in Finder
+nmap <buffer> gr <cmd>RevealURL<CR>
+" copy id (joplin) or path (local , path ...)
+nmap <buffer> gy <cmd>CopyURL<CR>
 
 " Toggle quote(")
 nmap <buffer> <LocalLeader>" <cmd>lua S.markdown.toggleQuoteByWord()<CR>
@@ -52,12 +54,3 @@ omap <buffer> ai :<C-U>lua require[[wr.WrappedRange]]:newFromSep("*",  "*"):sele
 omap <buffer> ii :<C-U>lua require[[wr.WrappedRange]]:newFromSep("*",  "*"):select_inner()<CR>
 
 command! -nargs=0 MdUnescape lua require[[wr.utils]].markdown_unescape()
-
-" open Link
-nmap <buffer> gf gx
-nmap <buffer> gx <cmd>OpenURL<CR>
-" resolv file in Finder
-nmap <buffer> gr <cmd>RevealURL<CR>
-" copy id (joplin) or path (local , path ...)
-nmap <buffer> gy <cmd>CopyURL<CR>
-

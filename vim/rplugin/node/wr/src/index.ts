@@ -4,8 +4,10 @@ import {cxt} from "./env";
 import {gotoFirstChar} from "./cursor";
 import {cmdSendLine, cmdSendRange} from "./cmdSend";
 import {restSendRequest} from "./rest";
-import { mdHeaderLevelUp, mdHeaderLevelDown,mdHeaderLevelDownRange, mdHeaderLevelUpRange, mdListCreate, mdListDelete, mdOrderListCreate, createCodeBlock, createCodeBlockFromeCodeLine, mdCreateCodeBlockFromeTable } from "./markdown";
-import {copyURL, openURL, revealURL} from "./link";
+import {mdHeaderLevelUp, mdHeaderLevelDown, mdHeaderLevelDownRange, mdHeaderLevelUpRange, mdListCreate, mdListDelete, mdOrderListCreate, createCodeBlock, createCodeBlockFromeCodeLine, mdCreateCodeBlockFromeTable} from "./markdown";
+import {copyHeaderLink, copyURL, copyWorkSpaceLink, copyWorkSpaceLinkWithHeader, openURL, revealURL} from "./link";
+
+import { setup as projectSetup} from "./project";
 
 function setup(plugin: NvimPlugin) {
     cxt.api = plugin.nvim
@@ -33,9 +35,14 @@ function setup(plugin: NvimPlugin) {
     plugin.registerCommand("RevealURL", revealURL, {sync: false})
     plugin.registerCommand("CopyURL", copyURL, {sync: false})
 
+    plugin.registerCommand("CopyHeaderLink", copyHeaderLink, {sync: false})
+    plugin.registerCommand("CopyWorkSpaceLinkWithHeader", copyWorkSpaceLinkWithHeader, {sync: false})
+    plugin.registerCommand("CopyWorkSpaceLink", copyWorkSpaceLink, {sync: false})
+
     plugin.registerCommand("MdCreateCodeBlock", createCodeBlock, {range: ''})
     plugin.registerCommand("MdCreateCodeBlockFromeCodeLine", createCodeBlockFromeCodeLine, {range: ''})
     plugin.registerCommand("MdCreateCodeBlockFromeTable", mdCreateCodeBlockFromeTable, {range: ''})
+    projectSetup(plugin)
 };
 
 module.exports = setup
