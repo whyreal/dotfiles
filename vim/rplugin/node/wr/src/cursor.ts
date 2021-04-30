@@ -1,6 +1,11 @@
+import {NvimPlugin} from "neovim";
 import {cxt} from "./env";
 
-export async function gotoFirstChar() {
+export function setup(plugin: NvimPlugin) {
+    plugin.registerCommand("GotoFirstChar", gotoFirstChar, {sync: false})
+}
+
+async function gotoFirstChar() {
     const api = cxt.api!
     const l = await api.line
     const c = await api.window.cursor

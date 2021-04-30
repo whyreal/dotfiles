@@ -1,6 +1,11 @@
 import {parse, ASTKinds, varRef} from "./peg/httpRequest";
 import {cxt} from "./env";
-import {sendToTmux} from "./cmdSend";
+import {sendToTmux} from "./tmux";
+import { NvimPlugin } from "neovim";
+
+export function setup(plugin: NvimPlugin) {
+    plugin.registerCommand("RestSendRequest", restSendRequest, {sync: false})
+}
 
 function replaceVarAndJoin(c: (string | varRef)[] | undefined, vars: Map<string, string>) : string {
     if (c === undefined) {
@@ -24,7 +29,7 @@ interface HttpRequest {
     body?: string
 }
 
-export function parseHttpRequest(txt: string) {
+function parseHttpRequest(txt: string) {
     const vars = new Map<string, string>()
     const ast = parse(txt).ast
 
@@ -88,7 +93,7 @@ async function fetchRequestLines() {
     return reqLines.concat(await api.buffer.getLines({start: start, end: stop, strictIndexing: false}))
 }
 
-export function getCurlCmd(r: HttpRequest) {
+function getCurlCmd(r: HttpRequest) {
     let cmd = `curl -X ${r.method} ${r.url} `
     if (r.headers.length > 0) {
         cmd += r.headers.map((h) => {
@@ -101,7 +106,7 @@ export function getCurlCmd(r: HttpRequest) {
     return cmd
 }
 
-export async function restSendRequest() {
+async function restSendRequest() {
     const lines = await fetchRequestLines()
     const cmd = getCurlCmd(parseHttpRequest(lines.join("\n")))
     sendToTmux(cmd)

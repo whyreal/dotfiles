@@ -1,4 +1,3 @@
-import {cxt} from "./env";
 import {append, deleteLine, downLevel, insert, LineAction, listCreate, listDelete, orderListCreate, replace, setLevel, upLevel} from "./lineAction";
 import { LineRange } from "./range";
 
@@ -140,7 +139,6 @@ export function codeBlockCreateFromCodeLineScan(lineRange: LineRange) {
             cla.push(append([indent + "```"]))
         }
         actions.set(line.nr, cla)
-        cxt.api?.outWrite(JSON.stringify(actions.get(line.nr)) + "\n")
     });
     return actions
 }
@@ -161,7 +159,6 @@ export function codeBlockCreateFromTableScan(lineRange: LineRange) {
             cla.push(append([indent + "```"]))
         }
         actions.set(line.nr, cla)
-        cxt.api?.outWrite(JSON.stringify(actions.get(line.nr)) + "\n")
     });
     return actions
 }

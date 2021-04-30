@@ -6,8 +6,17 @@ import {spawnSync} from "child_process";
 import {Line} from "./line";
 import {currentHeaderLine} from "./range";
 import { decode } from "urlencode";
+import {NvimPlugin} from "neovim";
 
+export function setup(plugin: NvimPlugin) {
+    plugin.registerCommand("OpenURL", openURL, {sync: false})
+    plugin.registerCommand("RevealURL", revealURL, {sync: false})
+    plugin.registerCommand("CopyURL", copyURL, {sync: false})
 
+    plugin.registerCommand("CopyHeaderLink", copyHeaderLink, {sync: false})
+    plugin.registerCommand("CopyWorkSpaceLinkWithHeader", copyWorkSpaceLinkWithHeader, {sync: false})
+    plugin.registerCommand("CopyWorkSpaceLink", copyWorkSpaceLink, {sync: false})
+}
 async function detectUrl(): Promise<string> {
     const api = cxt.api!
     const line = await api.getLine()
@@ -77,12 +86,11 @@ async function detectUrl(): Promise<string> {
 
     return ""
 }
-
 type UrlWithOpener = {
     url: URL
     opener: string
 }
-export async function parseUrl(txt: string): Promise<UrlWithOpener> {
+async function parseUrl(txt: string): Promise<UrlWithOpener> {
     const api = cxt.api!
     let url: URL
     let opener = "system"
@@ -115,7 +123,7 @@ export async function parseUrl(txt: string): Promise<UrlWithOpener> {
         opener: opener
     }
 }
-export async function openURL() {
+async function openURL() {
     const api = cxt.api!
     const urltxt = await detectUrl()
     const uo = await parseUrl(urltxt)
@@ -139,7 +147,7 @@ export async function openURL() {
             break;
     }
 }
-export async function revealURL() {
+async function revealURL() {
     const api = cxt.api!
     const urltxt = await detectUrl()
     const uo = await parseUrl(urltxt)
@@ -154,21 +162,21 @@ export async function revealURL() {
             break;
     }
 }
-export async function copyURL() {
+async function copyURL() {
     const api = cxt.api!
     const urltxt = await detectUrl()
     const uo = await parseUrl(urltxt)
 
     api.call("setreg", ["+", uo.url.href])
 }
-export async function copyHeaderLink() {
+async function copyHeaderLink() {
     const api = cxt.api!
     const header: Line = await currentHeaderLine()
     //vim.fn.setreg("+", ("[%s](#%s)"): format(fragment, fragment))
     const hash = header.txt.trim().replace(/^#+\s*/, "").replace(/\s+/g, "-")
     api.call("setreg", ["+", `[${hash}][#${hash}]`])
 }
-export async function copyWorkSpaceLinkWithHeader() {
+async function copyWorkSpaceLinkWithHeader() {
     const api = cxt.api!
 
     const header: Line = await currentHeaderLine()
@@ -180,7 +188,7 @@ export async function copyWorkSpaceLinkWithHeader() {
 
     api.call("setreg", ["+", `[${hash}](workspace://${filePathInWorkSpace}#${hash.replace(/\s+/g, "-")})`])
 }
-export async function copyWorkSpaceLink() {
+async function copyWorkSpaceLink() {
     const api = cxt.api!
 
     const workspace = await api.getVar("workspace") as string

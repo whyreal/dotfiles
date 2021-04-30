@@ -1,14 +1,14 @@
 import {cxt} from "./env";
-import {spawnSync} from "child_process";
+import {NvimPlugin} from "neovim";
+import {sendToTmux} from "./tmux";
 
-export function sendToTmux(txt: string) {
-    txt = txt.trim().replace(/;$/, "\\;")
 
-    let args = ["send-keys", txt, "ENTER"]
-    spawnSync("tmux", args)
+export function setup(plugin: NvimPlugin) {
+    plugin.registerCommand("CmdSendLine", cmdSendLine, {sync: false})
+    plugin.registerCommand("CmdSendRange", cmdSendRange, {range: ''})
 }
 
-export async function cmdSendRange() {
+async function cmdSendRange() {
     const api = cxt.api!
     const start = await api.buffer.mark('<')
     const end = await api.buffer.mark('>')
@@ -23,8 +23,7 @@ export async function cmdSendRange() {
         setTimeout(sendToTmux, i * 50, l)
     })
 }
-
-export async function cmdSendLine() {
+async function cmdSendLine() {
     const api = cxt.api!
     sendToTmux(await api.line)
 }
