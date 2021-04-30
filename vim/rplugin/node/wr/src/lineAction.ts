@@ -1,79 +1,12 @@
 import {prop, curry} from "ramda";
-import {cxt} from "./env";
 import {Line, LineGroup} from "./line";
-import {LineRange} from "./range";
+import {LineRange} from "./lineRange";
 
 export type LineAction = (a: LineGroup) => LineGroup
 
-export function downLevel(lg: LineGroup): LineGroup {
-    cxt.api!.outWrite(JSON.stringify(lg) + "downLevel()\n")
-    if (lg.cur) {
-        if (lg.cur.txt.startsWith("#")) {
-            lg.cur.txt = "#" + lg.cur.txt
-        } else {
-            lg.cur.txt = "# " + lg.cur.txt
-        }
-    }
-    return lg
-}
-export function deleteLine(lg: LineGroup): LineGroup {
-    if (lg.cur) {
-        delete lg.cur
-    }
-    return lg
-}
-export const append = curry((lines: string[], lg: LineGroup): LineGroup => {
-    lg.after = lineListFromStringList(lines).concat(lg.after || [])
-    return lg
-})
-export const insert = curry((lines:string[], lg:LineGroup): LineGroup => {
-    lg.before = (lg.before || []).concat(lineListFromStringList(lines))
-    return lg
-})
-export const replace = curry((str: string, lg: LineGroup): LineGroup => {
-    if (lg.cur) {
-        lg.cur.txt = str
-    }
-    return lg
-})
-export const upLevel = (lg: LineGroup): LineGroup => {
-    if (lg.cur) {
-        lg.cur.txt = lg.cur.txt.replace(/^#\s*/, "")
-    }
-    cxt.api!.outWrite(JSON.stringify(lg) + "upLevel()\n")
-    return lg
-}
-export const setLevel = curry((level: number, lg: LineGroup): LineGroup => {
-    if (lg.cur) {
-        let prefix = "#".repeat(level)
-        if (level > 0) {
-            prefix = prefix + " "
-        }
 
-        lg.cur.txt = lg.cur.txt.replace(/^#*\s*/, prefix)
-    }
-    return lg
-})
-export const listDelete = (lg: LineGroup) => {
-    if (lg.cur) {
-        lg.cur.txt = lg.cur.txt.replace(/(\s*)(-|\d+\.)\s*(.*)/, "$1$3")
-    }
-    return lg
-}
-export function listCreate(lg: LineGroup) {
-    if (lg.cur) {
-        lg.cur.txt = lg.cur.txt.replace(/(\s*)(.*)/, "$1- $2")
-    }
-    return lg
-}
-export const orderListCreate = curry((order: number, lg: LineGroup) => {
-    if (lg.cur) {
-        lg.cur.txt = lg.cur.txt.replace(/(\s*)(.*)/, "$1" + order + ". $2")
-    }
-    return lg
-})
 export function excuteAction(actions: Map<number, LineAction[]>,
-                      lr: LineRange): string[] {
+    lr: LineRange): string[] {
 
     const x = lr.lines.map(line => {
         let lg = lineGroupFromLine(line)
@@ -90,8 +23,7 @@ export function excuteAction(actions: Map<number, LineAction[]>,
     })
     return y.map(prop("txt"))
 }
-
-function lineGroupFromLine(line: Line): LineGroup{
+function lineGroupFromLine(line: Line): LineGroup {
     return {cur: line}
 }
 function lineListFromStringList(lines: string[]): Line[] {
@@ -99,3 +31,105 @@ function lineListFromStringList(lines: string[]): Line[] {
         return {txt: str, nr: -1}
     })
 }
+
+export const append = curry((lines: string[], lg: LineGroup): LineGroup => {
+    lg.after = lineListFromStringList(lines).concat(lg.after || [])
+    return lg
+})
+export const insert = curry((lines: string[], lg: LineGroup): LineGroup => {
+    lg.before = (lg.before || []).concat(lineListFromStringList(lines))
+    return lg
+})
+export const replace = curry((str: string, lg: LineGroup): LineGroup => {
+    if (lg.cur) {
+        lg.cur.txt = str
+    }
+    return lg
+})
+export function deleteLine(lg: LineGroup): LineGroup {
+    if (lg.cur) {
+        delete lg.cur
+    }
+    return lg
+}
+export function downLevel(lg: LineGroup): LineGroup {
+    if (lg.cur) {
+        if (lg.cur.txt.startsWith("#")) {
+            lg.cur.txt = "#" + lg.cur.txt
+        } else {
+            lg.cur.txt = "# " + lg.cur.txt
+        }
+    }
+    return lg
+}
+
+export const upLevel = (lg: LineGroup): LineGroup => {
+    if (lg.cur) {
+        lg.cur.txt = lg.cur.txt.replace(/^#\s*/, "")
+    }
+    return lg
+}
+export const setLevel = curry((level: number, lg: LineGroup): LineGroup => {
+    if (lg.cur) {
+        let prefix = "#".repeat(level)
+        if (level > 0) {
+            prefix = prefix + " "
+        }
+
+        lg.cur.txt = lg.cur.txt.replace(/^#*\s*/, prefix)
+    }
+    return lg
+})
+export const mdListDelete = (lg: LineGroup) => {
+    if (lg.cur) {
+        lg.cur.txt = lg.cur.txt.replace(/(\s*)(-|\d+\.)\s*(.*)/, "$1$3")
+    }
+    return lg
+}
+export const mdListCreate = (lg: LineGroup) => {
+    if (lg.cur) {
+        lg.cur.txt = lg.cur.txt.replace(/(\s*)(.*)/, "$1- $2")
+    }
+    return lg
+}
+export const mdOrderListCreate = curry((order: number, lg: LineGroup) => {
+    if (lg.cur) {
+        lg.cur.txt = lg.cur.txt.replace(/(\s*)(.*)/, "$1" + order + ". $2")
+    }
+    return lg
+})
+export const toggleWordWith = curry((left: string, right: string, charRange: {start: number, stop: number}, lg: LineGroup): LineGroup => {
+    if (!lg.cur) {return lg}
+
+    const txt = lg.cur.txt
+    const word = txt.slice(charRange.start, charRange.stop)
+    if (word.startsWith(left) && word.endsWith(right)) {
+        lg.cur.txt = txt.slice(0, charRange.start)
+            + txt.slice(charRange.start + left.length, charRange.stop - right.length)
+            + txt.slice(charRange.stop, txt.length)
+    } else {
+
+        lg.cur.txt = txt.slice(0, charRange.start) + left
+            + txt.slice(charRange.start, charRange.stop) + right
+            + txt.slice(charRange.stop, txt.length)
+    }
+    return lg
+})
+export const insertStr = curry((str: string, col: number, lg: LineGroup) => {
+    // TODO: test
+    if (lg.cur) {
+        const txt = lg.cur.txt
+        lg.cur.txt = txt.slice(0, col) + str
+            + txt.slice(col, txt.length)
+    }
+    return lg
+})
+export const deleteStr = curry((charRange: [start: number, stop: number], lg: LineGroup) => {
+    // TODO: test
+    if (lg.cur) {
+        const txt = lg.cur.txt
+        lg.cur.txt = txt.slice(0, charRange[0])
+            + txt.slice(charRange[1], txt.length)
+    }
+    return lg
+})

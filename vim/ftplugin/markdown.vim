@@ -25,20 +25,16 @@ nmap <buffer> gr <cmd>RevealURL<CR>
 " copy id (joplin) or path (local , path ...)
 nmap <buffer> gy <cmd>CopyURL<CR>
 
-" Toggle quote(")
-nmap <buffer> <LocalLeader>" <cmd>lua S.markdown.toggleQuoteByWord()<CR>
-xmap <buffer> <LocalLeader>" :<C-U>lua S.markdown.addQuoteByVisual()<CR>
-
 " Toggle Bold
-nmap <buffer> <LocalLeader>b <cmd>lua S.markdown.toggleBoldByWord()<CR>
+nmap <buffer> <LocalLeader>b <cmd>ToggleWordWrapWithBold<CR>
 xmap <buffer> <LocalLeader>b :<C-U>lua S.markdown.addBoldByVisual()<CR>
 
 " Toggle Italic
-nmap <buffer> <LocalLeader>i <cmd>lua S.markdown.toggleItalicByWord()<CR>
+nmap <buffer> <LocalLeader>i <cmd>ToggleWordWrapWithItalic<CR>
 xmap <buffer> <LocalLeader>i :<C-U>lua S.markdown.addItalicByVisual()<CR>
 
 " Toggle Inline code
-nmap <buffer> <LocalLeader>c  <cmd>lua S.markdown.toggleInlineCodeByWord()<CR>
+nmap <buffer> <LocalLeader>c  <cmd>ToggleWordWrapWithBackquote<CR>
 xmap <buffer> <LocalLeader>c  :<C-U>lua S.markdown.addInlineCodeByVisual()<CR>
 
 " Bold object

@@ -5,6 +5,9 @@ call plug#begin()
 "call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-sensible'
 
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
 Plug 'junegunn/fzf', {'do': ':call fzf#install()'}
 Plug 'junegunn/fzf.vim', {}
 
@@ -32,32 +35,6 @@ Plug 'tpope/vim-surround', {'frozen': 1}
 
 "coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-"Plug 'kyazdani42/nvim-web-devicons', {'frozen': 1}
-"lsp
-"Plug 'nvim-lua/completion-nvim'
-"Plug 'neovim/nvim-lspconfig'
-"treesitter
-"Plug 'nvim-treesitter/nvim-treesitter'
-"Plug 'nvim-treesitter/completion-treesitter'
-"vsnip
-"Plug 'rafamadriz/friendly-snippets'
-"Plug 'hrsh7th/vim-vsnip-integ'
-"Plug 'hrsh7th/vim-vsnip',
-
-" insert mode auto-completion for quotes, parens, brackets, etc.
-"Plug 'Raimondi/delimitMate', {'frozen': 1}
-
-" 输入法切换
-" [smartim](https://github.com/ybian/smartim)
-" use [macism](https://github.com/laishulu/macism/) as Input Source Manager
-	" 其他切换工具切换书输入法后无法正常使用
-"Plug 'ybian/smartim', {'frozen':1, 'do': 'cp /usr/local/bin/macism plugin/im-select'}
-" rest client
-"Plug 'diepm/vim-rest-console'
-
-"Plug 'vim-airline/vim-airline'
-"Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()
 
