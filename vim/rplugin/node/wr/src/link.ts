@@ -4,7 +4,7 @@ import { lookup } from "mime-types";
 import * as path from "path";
 import {spawnSync} from "child_process";
 import {Line} from "./line";
-import {currentHeaderLine} from "./range";
+import {currentHeaderLine} from "./line";
 import { decode } from "urlencode";
 import {NvimPlugin} from "neovim";
 

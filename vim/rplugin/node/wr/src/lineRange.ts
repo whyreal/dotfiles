@@ -34,19 +34,52 @@ export async function getHeaderRangeAtCursor(): Promise<LineRange> {
         })
     }
 }
-export async function currentHeaderLine(): Promise<Line> {
+export async function getWordRangeAtCursor(): Promise<LineRange> {
     const api = cxt.api!
     const cursor = await api.window.cursor
-    const doc = await api.buffer.lines
 
-    for (let index = cursor[0]; index >= 0; index--) {
-        api.outWrite(JSON.stringify([index, doc[index]]) + "\n")
+    const start = cursor[0] - 1
+    let end = cursor[0]
 
-        if (doc[index].startsWith("#")) {
-            return {nr: index, txt: doc[index]}
+    if (cursor[0] < await api.buffer.length) {
+        const nextLine = await getLine(cursor[0] + 1)
+        if (nextLine.txt.startsWith("===") || nextLine.txt.startsWith('---')) {
+            end = cursor[0] + 1
         }
     }
-    throw new Error("No header!");
+
+    return {
+        start: start,
+        end: end,
+        length: end - start,
+        lines: (await api.buffer.getLines({
+            start: start,
+            end: end,
+            strictIndexing: false
+        })).map((txt, index) => {
+            return { txt: txt, nr: index + start}
+        })
+    }
+}
+export async function getLineAtCursor() {
+    const api = cxt.api!
+    const cursor = await api.window.cursor
+
+    const start = cursor[0] - 1
+    let end = cursor[0]
+
+    return {
+        start: start,
+        end: end,
+        length: end - start,
+        lines: (await api.buffer.getLines({
+            start: start,
+            end: end,
+            strictIndexing: false
+        })).map((txt, index) => {
+            return { txt: txt, nr: index + start}
+        })
+    }
 }
 export async function getVisualLineRange(): Promise<LineRange> {
     const api = cxt.api!

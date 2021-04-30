@@ -13,6 +13,21 @@ export type LineGroup = {
     after?: Line[]
 }
 
+export async function currentHeaderLine(): Promise<Line> {
+    const api = cxt.api!
+    const cursor = await api.window.cursor
+    const doc = await api.buffer.lines
+
+    for (let index = cursor[0]; index >= 0; index--) {
+        api.outWrite(JSON.stringify([index, doc[index]]) + "\n")
+
+        if (doc[index].startsWith("#")) {
+            return {nr: index, txt: doc[index]}
+        }
+    }
+    throw new Error("No header!");
+}
+
 export async function getLine(): Promise<Line>
 export async function getLine(nr: number): Promise<Line>
 export async function getLine(nr?: number): Promise<Line> {
