@@ -7,6 +7,7 @@ Plug 'tpope/vim-sensible'
 
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/gv.vim'
 
 Plug 'junegunn/fzf', {'do': ':call fzf#install()'}
 Plug 'junegunn/fzf.vim', {}

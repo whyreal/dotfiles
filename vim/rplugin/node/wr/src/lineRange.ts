@@ -16,7 +16,7 @@ export async function getHeaderRangeAtCursor(): Promise<LineRange> {
 
     if (cursor[0] < await api.buffer.length) {
         const nextLine = await getLine(cursor[0] + 1)
-        if (nextLine.txt.startsWith("===") || nextLine.txt.startsWith('---')) {
+        if (nextLine.txt.startsWith("==") || nextLine.txt.startsWith('--')) {
             end = cursor[0] + 1
         }
     }

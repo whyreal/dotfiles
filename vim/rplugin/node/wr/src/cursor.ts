@@ -11,10 +11,9 @@ async function gotoFirstChar() {
     const c = await api.window.cursor
     const fc = l.search(/[^\s]/)
 
-    if (c[1] == fc) {
+    if (c[1] == fc || fc < 0) {
         api.window.cursor = [c[0], 0]
     } else {
-
         api.window.cursor = [c[0], fc]
     }
 }

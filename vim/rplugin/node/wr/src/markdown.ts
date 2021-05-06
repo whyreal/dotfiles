@@ -3,6 +3,7 @@ import {getHeaderRangeAtCursor, getVisualLineRange, LineRange, freshRange, getLi
 import {excuteAction, LineAction} from "./lineAction";
 import {curry} from "ramda";
 import {NvimPlugin} from "neovim";
+import {cxt} from "./env";
 
 export function setup(plugin: NvimPlugin) {
     plugin.registerCommand("MdHeaderLevelUp", mdHeaderLevelUp, {sync: false})
@@ -21,6 +22,8 @@ export function setup(plugin: NvimPlugin) {
     plugin.registerCommand("ToggleWordWrapWithBold", toggleWordWrap("**", "**"), {sync: false})
     plugin.registerCommand("ToggleWordWrapWithItalic", toggleWordWrap("*", "*"), {sync: false})
     plugin.registerCommand("ToggleWordWrapWithBackquote", toggleWordWrap("`", "`"), {sync: false})
+
+    plugin.registerCommand("MdAddDefaultImgTxt", mdAddDefaultImgTxt, {sync: false})
 }
 
 type RangeSelector = () => Promise<LineRange>
@@ -67,4 +70,9 @@ async function createCodeBlockFromeCodeLine() {
 }
 async function mdCreateCodeBlockFromeTable() {
     updateRange(getVisualLineRange, codeBlockCreateFromTableScan)
+}
+
+async function mdAddDefaultImgTxt() {
+    const api = cxt.api!
+    api.command('%s/!\\[\\]/![img]/g')
 }
