@@ -108,7 +108,6 @@ export const toggleWordWith = curry((left: string, right: string, charRange: {st
             + txt.slice(charRange.start + left.length, charRange.stop - right.length)
             + txt.slice(charRange.stop, txt.length)
     } else {
-
         lg.cur.txt = txt.slice(0, charRange.start) + left
             + txt.slice(charRange.start, charRange.stop) + right
             + txt.slice(charRange.stop, txt.length)

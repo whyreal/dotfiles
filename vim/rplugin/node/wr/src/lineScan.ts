@@ -1,8 +1,7 @@
-import {cxt} from "./env";
 import {append, deleteLine, downLevel, insert, LineAction, mdListCreate, mdListDelete, mdOrderListCreate, replace, setLevel, upLevel, toggleWordWith} from "./lineAction";
 import {LineRange} from "./lineRange";
 
-export async function mdListDeleteScan(r: LineRange) {
+export function mdListDeleteScan(r: LineRange) {
     const actions = new Map<number, LineAction[]>()
 
     r.lines.map(line => {
@@ -14,7 +13,7 @@ export async function mdListDeleteScan(r: LineRange) {
     });
     return actions
 }
-export async function mdOrderListCreateScan(r: LineRange) {
+export function mdOrderListCreateScan(r: LineRange) {
     const actions = new Map<number, LineAction[]>()
 
     let order = 1
@@ -28,7 +27,7 @@ export async function mdOrderListCreateScan(r: LineRange) {
     });
     return actions
 }
-export async function mdListCreateScan(r: LineRange) {
+export function mdListCreateScan(r: LineRange) {
     const actions = new Map<number, LineAction[]>()
 
     r.lines.map(line => {
@@ -40,7 +39,7 @@ export async function mdListCreateScan(r: LineRange) {
     });
     return actions
 }
-export async function mdHeaderLevelUpScan(r: LineRange) {
+export function mdHeaderLevelUpScan(r: LineRange) {
     const actions = new Map<number, LineAction[]>()
 
     r.lines.map(line => {
@@ -66,7 +65,7 @@ export async function mdHeaderLevelUpScan(r: LineRange) {
     });
     return actions
 }
-export async function deleteBlankLineScan(r: LineRange) {
+export function deleteBlankLineScan(r: LineRange) {
     const actions = new Map<number, LineAction[]>()
 
     r.lines.map(line => {
@@ -78,7 +77,7 @@ export async function deleteBlankLineScan(r: LineRange) {
     });
     return actions
 }
-export async function mdHeaderLevelDownScan(level0: boolean, r: LineRange) {
+export function mdHeaderLevelDownScan(level0: boolean, r: LineRange) {
     const actions = new Map<number, LineAction[]>()
 
     r.lines.map(line => {
@@ -109,7 +108,7 @@ export async function mdHeaderLevelDownScan(level0: boolean, r: LineRange) {
 
     return actions
 }
-export async function codeBlockCreateScan(lineRange: LineRange) {
+export function codeBlockCreateScan(lineRange: LineRange) {
     const actions = new Map<number, LineAction[]>()
 
     const indent = lineRange.lines[0].txt.match(/^\s*/)
@@ -119,7 +118,7 @@ export async function codeBlockCreateScan(lineRange: LineRange) {
             cla.push(insert([indent + "```"]))
             actions.set(line.nr, cla)
         }
-        if (index == lineRange.length - 1) {
+        if (index == lineRange.lineCount - 1) {
             const cla = actions.get(line.nr) || []
             cla.push(append([indent + "```"]))
             actions.set(line.nr, cla)
@@ -127,7 +126,7 @@ export async function codeBlockCreateScan(lineRange: LineRange) {
     });
     return actions
 }
-export async function codeBlockCreateFromCodeLineScan(lineRange: LineRange) {
+export function codeBlockCreateFromCodeLineScan(lineRange: LineRange) {
     const actions = new Map<number, LineAction[]>()
 
     const indent = lineRange.lines[0].txt.match(/^\s*/)
@@ -136,14 +135,14 @@ export async function codeBlockCreateFromCodeLineScan(lineRange: LineRange) {
         cla.push(replace(line.txt.replace(/`/g, "")))
         if (index == 0) {
             cla.push(insert([indent + "```"]))
-        } else if (index == lineRange.length - 1) {
+        } else if (index == lineRange.lineCount - 1) {
             cla.push(append([indent + "```"]))
         }
         actions.set(line.nr, cla)
     });
     return actions
 }
-export async function codeBlockCreateFromTableScan(lineRange: LineRange) {
+export function codeBlockCreateFromTableScan(lineRange: LineRange) {
     const actions = new Map<number, LineAction[]>()
 
     const indent = lineRange.lines[0].txt.match(/^\s*/)
@@ -157,7 +156,7 @@ export async function codeBlockCreateFromTableScan(lineRange: LineRange) {
         }
         if (index == 0) {
             cla.push(insert([indent + "```"]))
-        } else if (index == lineRange.length - 1) {
+        } else if (index == lineRange.lineCount - 1) {
             cla.push(append([indent + "```"]))
         }
 
@@ -165,12 +164,12 @@ export async function codeBlockCreateFromTableScan(lineRange: LineRange) {
     });
     return actions
 }
-export async function wrapWordWithScan(left: string, right: string, lineRange: LineRange) {
+export function wrapWordWithScan(left: string, right: string, lineRange: LineRange) {
     const actions = new Map<number, LineAction[]>()
 
     const line = lineRange.lines[0]
     let charRange = {start: 0, stop: 0}
-    const cursor = await cxt.api?.window.cursor
+    const cursor = lineRange.cursor
 
     // word
     const wordReg = new RegExp(/(\S+)/, "g")

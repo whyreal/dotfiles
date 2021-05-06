@@ -27,17 +27,17 @@ export function setup(plugin: NvimPlugin) {
 }
 
 type RangeSelector = () => Promise<LineRange>
-type RangeScanner = (a: LineRange) => Promise<Map<number, LineAction[]>>
+type RangeScanner = (a: LineRange) => Map<number, LineAction[]>
 
 async function updateRange(selector: RangeSelector, scanner: RangeScanner) {
     const lineRange = await selector()
-    const actions = await scanner(lineRange)
+    const actions = scanner(lineRange)
 
     const lines = excuteAction(actions, lineRange)
     freshRange(lines, lineRange)
 }
 function toggleWordWrap(left: string, right: string) {
-    return async () => {
+    return () => {
         updateRange(getLineAtCursor, curry(wrapWordWithScan)(left, right))
     }
 }
