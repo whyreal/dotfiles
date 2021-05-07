@@ -171,6 +171,9 @@ export function wrapWordWithScan(left: string, right: string, lineRange: LineRan
     let charRange = {start: 0, stop: 0}
     const cursor = lineRange.cursor
 
+    // covert byte index to char index
+    cursor[1] = Buffer.from(line.txt).toString('utf-8', 0, cursor[1]).length
+
     // word
     const wordReg = new RegExp(/(\S+)/, "g")
 
@@ -179,12 +182,12 @@ export function wrapWordWithScan(left: string, right: string, lineRange: LineRan
             break
         }
 
-        charRange.start = i.index
-        charRange.stop = i.index + Buffer.byteLength(i[0])
-
         if (cursor[1] < i.index) {
             break
         }
+
+        charRange.start = i.index
+        charRange.stop = i.index + i[0].length
     }
 
     lineRange.lines.map(line => {
@@ -194,4 +197,3 @@ export function wrapWordWithScan(left: string, right: string, lineRange: LineRan
     });
     return actions
 }
-
