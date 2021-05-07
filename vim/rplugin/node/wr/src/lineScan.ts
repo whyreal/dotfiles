@@ -178,9 +178,12 @@ export function wrapWordWithScan(left: string, right: string, lineRange: LineRan
         if (typeof i.index == "undefined") {
             break
         }
-        if (cursor![1] >= i.index && cursor![1] <= i.index + i[0].length) {
-            charRange.start = i.index
-            charRange.stop = i.index + i[0].length
+
+        charRange.start = i.index
+        charRange.stop = i.index + Buffer.byteLength(i[0])
+
+        if (cursor[1] < i.index) {
+            break
         }
     }
 
