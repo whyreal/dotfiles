@@ -11,8 +11,8 @@ export function excuteAction(actions: Map<number, LineAction[]>,
     const x = lr.lines.map(line => {
         let lg = lineGroupFromLine(line)
 
-        if (actions.has(line.nr)) {
-            actions.get(line.nr)?.forEach((action) => {
+        if (actions.has(line.ln)) {
+            actions.get(line.ln)?.forEach((action) => {
                 lg = action(lg)
             })
         }
@@ -28,7 +28,7 @@ function lineGroupFromLine(line: Line): LineGroup {
 }
 function lineListFromStringList(lines: string[]): Line[] {
     return lines.map((str) => {
-        return {txt: str, nr: -1}
+        return {txt: str, ln: -1}
     })
 }
 
@@ -98,7 +98,7 @@ export const mdOrderListCreate = curry((order: number, lg: LineGroup) => {
     }
     return lg
 })
-export const toggleWordWith = curry((left: string, right: string, charRange: {start: number, stop: number}, lg: LineGroup): LineGroup => {
+export const toggleWordWrap = curry((left: string, right: string, charRange: {start: number, stop: number}, lg: LineGroup): LineGroup => {
     if (!lg.cur) {return lg}
 
     const txt = lg.cur.txt

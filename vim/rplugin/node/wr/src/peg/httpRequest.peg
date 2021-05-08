@@ -22,9 +22,9 @@ headerLine := newLine name=wordC+ _ ':' _ value=wordWithVar
 bodyLine := value='.+' newLine?
 
 // sets
-wordWithVar    := {wordC | varRef}+
+wordWithVar    := {urlC | varRef}+
 varRef  := '{{' name = wordC+ '}}'
-urlC    := '[0-9a-zA-z_\-:/.?#]'
+urlC    := '[0-9a-zA-z_\-:/.?#=]'
 wordC   := '[0-9a-zA-z_\-.]'
 newLine := _ '\n'
 _       := '[ \t]*'

@@ -26,27 +26,33 @@ nmap <buffer> gr <cmd>RevealURL<CR>
 nmap <buffer> gy <cmd>CopyURL<CR>
 
 " Toggle Bold
-nmap <buffer> <LocalLeader>b <cmd>ToggleWordWrapWithBold<CR>
-xmap <buffer> <LocalLeader>b :<C-U>lua S.markdown.addBoldByVisual()<CR>
+nmap <buffer> <LocalLeader>b :ToggleWordWrapWithBold<CR>
+xmap <buffer> <LocalLeader>b :ToggleRangeWrapWithBold<CR>
 
 " Toggle Italic
-nmap <buffer> <LocalLeader>i <cmd>ToggleWordWrapWithItalic<CR>
-xmap <buffer> <LocalLeader>i :<C-U>lua S.markdown.addItalicByVisual()<CR>
+nmap <buffer> <LocalLeader>i :ToggleWordWrapWithItalic<CR>
+xmap <buffer> <LocalLeader>i :ToggleRangeWrapWithItalic<CR>
 
 " Toggle Inline code
-nmap <buffer> <LocalLeader>c  <cmd>ToggleWordWrapWithBackquote<CR>
-xmap <buffer> <LocalLeader>c  :<C-U>lua S.markdown.addInlineCodeByVisual()<CR>
+nmap <buffer> <LocalLeader>c  :ToggleWordWrapWithBackquote<CR>
+xmap <buffer> <LocalLeader>c  :ToggleRangeWrapWithBackquote<CR>
 
 " Bold object
-xmap <buffer> ab :<C-U>lua require[[wr.WrappedRange]]:newFromSep("**", "**"):select_all()<CR>
-xmap <buffer> ib :<C-U>lua require[[wr.WrappedRange]]:newFromSep("**", "**"):select_inner()<CR>
-omap <buffer> ab :<C-U>lua require[[wr.WrappedRange]]:newFromSep("**", "**"):select_all()<CR>
-omap <buffer> ib :<C-U>lua require[[wr.WrappedRange]]:newFromSep("**", "**"):select_inner()<CR>
+xmap <buffer> ab :SelectBoldRangeAll<CR>
+xmap <buffer> ib :SelectBoldRangeInner<CR>
+omap <buffer> ab :SelectBoldRangeAll<CR>
+omap <buffer> ib :SelectBoldRangeInner<CR>
 
 " Italic object
-xmap <buffer> ai :<C-U>lua require[[wr.WrappedRange]]:newFromSep("*",  "*"):select_all()<CR>
-xmap <buffer> ii :<C-U>lua require[[wr.WrappedRange]]:newFromSep("*",  "*"):select_inner()<CR>
-omap <buffer> ai :<C-U>lua require[[wr.WrappedRange]]:newFromSep("*",  "*"):select_all()<CR>
-omap <buffer> ii :<C-U>lua require[[wr.WrappedRange]]:newFromSep("*",  "*"):select_inner()<CR>
+xmap <buffer> ai :SelectItalicRangeAll<CR>
+xmap <buffer> ii :SelectItalicRangeInner<CR>
+omap <buffer> ai :SelectItalicRangeAll<CR>
+omap <buffer> ii :SelectItalicRangeInner<CR>
+
+" Italic object
+xmap <buffer> ac :SelectBackquoteRangeAll<CR>
+xmap <buffer> ic :SelectBoldRangeInner<CR>
+omap <buffer> ac :SelectBackquoteRangeAll<CR>
+omap <buffer> ic :SelectBoldRangeInner<CR>
 
 command! -nargs=0 MdUnescape lua require[[wr.utils]].markdown_unescape()

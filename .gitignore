@@ -1,29 +1,30 @@
 **.DS_Store
 **#*#
 
-vim/bundle/
-vim/.netrw*
-vim/plugged
-vim/sessions/
-
 sublime_user_conf/Package\ Control*
 sublime_user_conf/*crt
 
 karabiner/automatic_backups/
 
 # vscode
-vscode-user/globalStorage
-vscode-user/workspaceStorage
-vscode-user/sync/*
-
-# vim packer
-vim/plugin/packer_compiled.vim
+/vscode-user/globalStorage
+/vscode-user/workspaceStorage
+/vscode-user/sync/*
 
 # nodejs
-**/node_modules
-lib/
+/**/node_modules
 
 # fish plugin
-fish/functions/
+/fish/functions/
 
-vim/rplugin/node/wr/yarn.lock
+/vim/bundle/
+/vim/.netrw*
+/vim/plugged
+/vim/sessions/
+/vim/rplugin/node/wr/yarn.lock
+/vim/rplugin/node/wr/node_modules
+/vim/rplugin/node/wr/lib
+/vim/rplugin/node/wr/src/peg/*.ts
+
+# vim packer
+/vim/plugin/packer_compiled.vim

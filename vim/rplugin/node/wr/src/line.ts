@@ -1,9 +1,10 @@
+import {getCursor} from "./cursor";
 import { cxt } from "./env";
 
 export type LineNumber = number
 
 export type Line = {
-    nr: LineNumber
+    ln: LineNumber
     txt: string
 }
 
@@ -15,14 +16,14 @@ export type LineGroup = {
 
 export async function currentHeaderLine(): Promise<Line> {
     const api = cxt.api!
-    const cursor = await api.window.cursor
+    const cursor = await getCursor()
     const doc = await api.buffer.lines
 
     for (let index = cursor[0]; index >= 0; index--) {
         api.outWrite(JSON.stringify([index, doc[index]]) + "\n")
 
         if (doc[index].startsWith("#")) {
-            return {nr: index, txt: doc[index]}
+            return {ln: index, txt: doc[index]}
         }
     }
     throw new Error("No header!");
@@ -32,16 +33,16 @@ export async function getLine(): Promise<Line>
 export async function getLine(nr: number): Promise<Line>
 export async function getLine(nr?: number): Promise<Line> {
     const api = cxt.api!
-    if (nr) {
+    if (typeof nr === "number") {
         return {
             txt: (await api.buffer.getLines(
-                {start: nr - 1, end: nr, strictIndexing: false}))[0],
-            nr: nr
+                {start: nr, end: nr + 1, strictIndexing: false}))[0],
+            ln: nr
         }
     } else {
         return {
             txt: (await api.getLine())!,
-            nr: (await api.window.cursor)![0]
+            ln: (await getCursor())![0]
         }
     }
 }

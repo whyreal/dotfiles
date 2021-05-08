@@ -1,1 +1,1 @@
-nmap <leader>tt <cmd>RestSendRequest<CR>
+nmap <buffer> <leader>tt <cmd>RestSendRequest<CR>

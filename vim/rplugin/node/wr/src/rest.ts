@@ -2,6 +2,8 @@ import {parse, ASTKinds, varRef} from "./peg/httpRequest";
 import {cxt} from "./env";
 import {sendToTmux} from "./tmux";
 import { NvimPlugin } from "neovim";
+import {getCursor} from "./cursor";
+import {getLines} from "./lineRange";
 
 export function setup(plugin: NvimPlugin) {
     plugin.registerCommand("RestSendRequest", restSendRequest, {sync: false})
@@ -31,7 +33,7 @@ interface HttpRequest {
 
 function parseHttpRequest(txt: string) {
     const vars = new Map<string, string>()
-    const ast = parse(txt).ast
+    const ast = parse(txt).ast!
 
     // proto 不能省略
     const req: HttpRequest = {url: "", method: "GET", headers:[]}
@@ -64,7 +66,6 @@ async function fetchRequestLines() {
     const api = cxt.api!
     const reqLines: string[] = []
     const lines = await api.buffer.lines
-    const c = await api.window.cursor
 
     for (let index = 0; index <= lines.length - 1; index++) {
         if (lines[index].startsWith("###")) {
@@ -73,28 +74,30 @@ async function fetchRequestLines() {
         reqLines.push(lines[index])
     }
 
-    let start = c[0] - 1
-    let stop:number = 0
-    for (let index = start; index >= 0; index--) {
+    let start = await getCursor()
+    for (let index = start[0]; index >= 0; index--) {
         if (lines[index].startsWith("###")) {
-            start = index + 1
+            start[0] = index + 1
+            break
         }
     }
 
-    for (let index = c[0]; index <= lines.length - 1; index++) {
+    let end = await getCursor()
+    for (let index = end[0]; index < lines.length; index++) {
         if (lines[index].startsWith("###")) {
-            stop = index
+            end[0] = index - 1
+            break
+        } else if (index === lines.length - 1) {
+            end[0] = index
+            break
         }
     }
-    if (stop == 0) {
-        stop = lines.length
-    }
 
-    return reqLines.concat(await api.buffer.getLines({start: start, end: stop, strictIndexing: false}))
+    return reqLines.concat(await getLines(start, end))
 }
 
 function getCurlCmd(r: HttpRequest) {
-    let cmd = `curl -X ${r.method} ${r.url} `
+    let cmd = `curl -X ${r.method} '${r.url}' `
     if (r.headers.length > 0) {
         cmd += r.headers.map((h) => {
             return `-H '${h[0]}: ${h[1]}' `

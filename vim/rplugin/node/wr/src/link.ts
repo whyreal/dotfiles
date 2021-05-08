@@ -7,6 +7,7 @@ import {Line} from "./line";
 import {currentHeaderLine} from "./line";
 import { decode } from "urlencode";
 import {NvimPlugin} from "neovim";
+import {getCursor, setCursor} from "./cursor";
 
 export function setup(plugin: NvimPlugin) {
     plugin.registerCommand("OpenURL", openURL, {sync: false})
@@ -20,7 +21,7 @@ export function setup(plugin: NvimPlugin) {
 async function detectUrl(): Promise<string> {
     const api = cxt.api!
     const line = await api.getLine()
-    const cursor = await api.window.cursor
+    const cursor = await getCursor()
 
     // [txt](url "title")
     let link = new RegExp(
@@ -205,8 +206,8 @@ async function gotoHeader(hash: string) {
     for (let index = 0; index < doc.length; index++) {
         if (doc[index].startsWith("#")
             && doc[index].trim().replace(/^#+\s*/, "").replace(/\s+/g, "-") == decode(hash).replace(/^#/, "")
-           ) {
-               api.window.cursor = [index + 1, 1]
+        ) {
+               await setCursor([index, 1])
                await api.command("normal! zt")
                await api.command("normal! zO")
            }

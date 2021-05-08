@@ -1,48 +1,65 @@
 import {getLine, Line} from "./line"
 import {cxt} from "./env";
-
-type Cursor = [number, number]
+import {Cursor, getCursor, getPos} from "./cursor";
 
 export type LineRange = {
     start: Cursor
     end: Cursor
     cursor: Cursor
+    encoding: string
     lineCount: number
     lines: Line[]
 }
-export async function getHeaderRangeAtCursor(): Promise<LineRange> {
+export function freshRange(lines: string[], lineRange: LineRange) {
     const api = cxt.api!
-    const cursor = await api.window.cursor
-
-    const start = [cursor[0] - 1, cursor[1]] as Cursor
-    let end = cursor
-
-    if (cursor[0] < await api.buffer.length) {
-        const nextLine = await getLine(cursor[0] + 1)
-        if (nextLine.txt.startsWith("==") || nextLine.txt.startsWith('--')) {
-            end = [cursor[0] + 1, cursor[1]]
-        }
-    }
+    api.buffer.setLines(lines,
+                        { start: lineRange.start[0],
+                            end: lineRange.end[0] + 1, strictIndexing: false}
+                       )
+}
+async function newLineRange(start: Cursor, end: Cursor, c?: Cursor): Promise<LineRange> {
+    const api = cxt.api!
+    const cursor = c || await getCursor()
+    const encoding = await api.getOption("encoding") as BufferEncoding
+    const lines = (await api.buffer.getLines({
+        start: start[0],
+        end: end[0] + 1,
+        strictIndexing: false
+    })).map((txt, index) => {
+        const ln = index + start[0]
+        return {txt: txt, ln: ln}
+    })
 
     return {
         start: start,
         end: end,
         cursor: cursor,
-        lineCount: end[0] - start[0],
-        lines: (await api.buffer.getLines({
-            start: start[0],
-            end: end[0],
-            strictIndexing: false
-        })).map((txt, index) => {
-            return { txt: txt, nr: index + start[0]}
-        })
+        encoding: encoding,
+        lineCount: end[0] - start[0] + 1,
+        lines: lines
     }
+}
+export async function getHeaderRangeAtCursor(): Promise<LineRange> {
+    const api = cxt.api!
+    const cursor = await getCursor()
+
+    const start = cursor
+    let end = cursor
+
+    if (cursor[0] < await api.buffer.length) {
+        const nextLine = await getLine(cursor[0])
+        if (nextLine.txt.startsWith("==") || nextLine.txt.startsWith('--')) {
+            end = [cursor[0], cursor[1]]
+        }
+    }
+
+    return newLineRange(start, end, cursor)
 }
 export async function getWordRangeAtCursor(): Promise<LineRange> {
     const api = cxt.api!
     const cursor = await api.window.cursor
 
-    const start = [cursor[0] - 1, cursor[1]] as Cursor
+    const start = cursor
     let end = cursor
 
     if (cursor[0] < await api.buffer.length) {
@@ -52,65 +69,98 @@ export async function getWordRangeAtCursor(): Promise<LineRange> {
         }
     }
 
-    return {
-        start: start,
-        end: end,
-        lineCount: end[0] - start[0],
-        cursor: cursor,
-        lines: (await api.buffer.getLines({
-            start: start[0],
-            end: end[0],
-            strictIndexing: false
-        })).map((txt, index) => {
-            return { txt: txt, nr: index + start[0]}
-        })
-    }
+    return newLineRange(start, end, cursor)
 }
 export async function getLineAtCursor(): Promise<LineRange> {
-    const api = cxt.api!
-    const cursor = await api.window.cursor
+    const cursor = await getCursor()
 
-    const start = [cursor[0] - 1, cursor[1]] as Cursor
-    let end = cursor as Cursor
-
-    return {
-        start: start,
-        end: end,
-        lineCount: end[0] - start[0],
-        cursor: cursor,
-        lines: (await api.buffer.getLines({
-            start: start[0],
-            end: end[0],
-            strictIndexing: false
-        })).map((txt, index) => {
-            return { txt: txt, nr: index + start[0]}
-        })
-    }
+    return newLineRange(cursor, cursor, cursor)
 }
 export async function getVisualLineRange(): Promise<LineRange> {
+    const start = await getPos('<')
+    const end = await getPos('>')
+    return newLineRange(start, end)
+}
+export type WrapType = "Inner" | "All"
+
+export async function getWrapRange(type: WrapType, left: string, right: string) {
     const api = cxt.api!
-    const start = (await api.buffer.mark('<'))
-    const end = (await api.buffer.mark('>'))
-    const cursor = await api.window.cursor
-    return {
-        start: [start[0] -1 , start[1]],
-        end: end,
-        lineCount: end[0] - start[0],
-        cursor: cursor,
-        lines: (await api.buffer.getLines({
-            start: start[0],
-            end: end[0],
-            strictIndexing: false
-        })).map((txt, index) => {
-            return { txt: txt, nr: index + start[0]}
-        })
+    const lines = await api.buffer.lines
+    const cursor = await getCursor()
+
+    let start: Cursor | null = null
+    let end: Cursor | null = null
+
+    left = left
+    right = right
+    const r = new RegExp(`(${escapeRegExp(left)}|${escapeRegExp(right)})`, 'g')
+
+    let stack = 1
+    for (let index = cursor[0]; index >= 0; index--) {
+        for (const s of [...lines[index].matchAll(r)].reverse()) {
+
+            if (index === cursor[0] && s.index! > cursor[1]) {
+                continue
+            }
+            if (s[1] === left) {
+                stack -= 1
+            } else if (s[1] === right) {
+                stack += 1
+            }
+            if (stack === 0) {
+                if (type === "Inner") {
+                    start = [index, s.index! + left.length]
+                } else if (type === "All") {
+                    start = [index, s.index!]
+                }
+                break
+            }
+        }
+        if (start) {break}
+    }
+
+    stack = 1
+    for (let index = cursor[0]; index < lines.length; index++) {
+        for (const s of lines[index].matchAll(r)) {
+            if (index === cursor[0] && s.index! < cursor[1]) {
+                continue
+            }
+            if (s[1] === right) {
+                stack -= 1
+            } else if (s[1] === left) {
+                stack += 1
+            }
+            if (stack === 0) {
+                if (type === "Inner") {
+                    if (s.index! === 0) {
+                        end = [index - 1, lines[index - 1].length]
+                    } else {
+                        end = [index, s.index! - 1]
+                    }
+                } else if (type === "All") {
+                    end = [index, s.index! + right.length - 1]
+                }
+                break
+            }
+        }
+        if (end) {break}
+    }
+
+    if (start && end) {
+        return newLineRange(start, end)
     }
 }
-export function freshRange(lines: string[], lineRange: LineRange) {
-    const api = cxt.api!
-    api.buffer.setLines(lines,
-                        { start: lineRange.start[0],
-                            end: lineRange.end[0], strictIndexing: false}
-                       )
+
+function escapeRegExp(s: string) {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
 
+export async function getLines(start: Cursor, end: Cursor) {
+    const api = cxt.api!
+    console.log("getLines", start, end)
+    return await api.buffer.getLines({
+        start: start[0],
+        end: end[0] + 1,
+        strictIndexing: false
+    })
+}
