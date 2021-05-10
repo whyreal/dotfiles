@@ -27,7 +27,7 @@ async function detectUrl(): Promise<string> {
     let link = new RegExp(
         /\[[^\[\]]*\]/.source // [txt]
         + /\(([^\(\)"]*)/.source // (url
-        + /(?:\s*"[^"]*")?/.source // "title")
+        + /(?:\s*"[^"]*")?\)/.source // "title")
         , 'g')
 
     let matched = line.matchAll(link);
@@ -55,7 +55,7 @@ async function detectUrl(): Promise<string> {
         }
     }
 
-    // src="lskdjflkj"
+    // src="http://xxxxx"
     link = new RegExp(
         /src="([^"]*)"/
         , "g")
@@ -87,14 +87,20 @@ async function detectUrl(): Promise<string> {
 
     return ""
 }
+
+type Opener = "vim" | "browser" | "system" | "hash"
+
 type UrlWithOpener = {
     url: URL
-    opener: string
+    opener: "vim" | "browser" | "system"
+} | {
+    url: string
+    opener: "hash"
 }
 async function parseUrl(txt: string): Promise<UrlWithOpener> {
     const api = cxt.api!
     let url: URL
-    let opener = "system"
+    let opener: Opener = "system"
 
     if (txt.search(/^\w+:\/\//) >= 0) {  //local path
         if (txt.startsWith("workspace://")) {
@@ -104,13 +110,16 @@ async function parseUrl(txt: string): Promise<UrlWithOpener> {
             url = new URL(txt)
             opener = "browser"
         }
-    } else {
-        if (txt.startsWith("/")) {
-            url = new URL(txt.replace(/^\/+/, "file:///"))
-        } else {
-            const dir: string = await api.call("expand", "%:p:h")
-            url = new URL(`file://${dir}/${txt}`)
+    } else if (txt.startsWith("#")) {
+        return {
+            url: txt,
+            opener: "hash"
         }
+    } else if (txt.startsWith("/")) {
+        url = new URL(txt.replace(/^\/+/, "file:///"))
+    } else {
+        const dir: string = await api.call("expand", "%:p:h")
+        url = new URL(`file://${dir}/${txt}`)
     }
 
     if (url.protocol == "file:") {
@@ -132,7 +141,7 @@ async function openURL() {
     switch (uo.opener) {
         case "vim":
             path = fileURLToPath("file://" + uo.url.pathname)
-            await api.command(`edit ${path}`)
+            await api.command(`edit ${path}`);
             if (uo.url.hash) {
                 gotoHeader(uo.url.hash)
             }
@@ -144,6 +153,9 @@ async function openURL() {
         case "browser":
             spawnSync("open", ["-a", "Microsoft Edge.app", uo.url.href])
             break;
+        case "hash":
+            gotoHeader(uo.url)
+            break;
         default:
             break;
     }
@@ -152,11 +164,11 @@ async function revealURL() {
     const api = cxt.api!
     const urltxt = await detectUrl()
     const uo = await parseUrl(urltxt)
-    let path: string = ""
+
     switch (uo.opener) {
         case "vim":
         case "system":
-            path = fileURLToPath(`file://${uo.url.pathname}`)
+            const path = fileURLToPath(`file://${uo.url.pathname}`)
             api.command(`!open -R '${path}'`)
             break;
         default:
@@ -168,14 +180,21 @@ async function copyURL() {
     const urltxt = await detectUrl()
     const uo = await parseUrl(urltxt)
 
-    api.call("setreg", ["+", uo.url.href])
+    switch (uo.opener) {
+        case "hash":
+            api.call("setreg", ["+", uo.url])
+            break;
+        default:
+            api.call("setreg", ["+", uo.url.href])
+            break;
+    }
 }
 async function copyHeaderLink() {
     const api = cxt.api!
     const header: Line = await currentHeaderLine()
     //vim.fn.setreg("+", ("[%s](#%s)"): format(fragment, fragment))
     const hash = header.txt.trim().replace(/^#+\s*/, "").replace(/\s+/g, "-")
-    api.call("setreg", ["+", `[${hash}][#${hash}]`])
+    api.call("setreg", ["+", `[${hash}](#${hash})`])
 }
 async function copyWorkSpaceLinkWithHeader() {
     const api = cxt.api!
@@ -210,6 +229,6 @@ async function gotoHeader(hash: string) {
                await setCursor([index, 1])
                await api.command("normal! zt")
                await api.command("normal! zO")
-           }
+        }
     }
 }

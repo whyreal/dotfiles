@@ -40,13 +40,11 @@ async function updateRange(selector: RangeSelector, scanner: RangeScanner) {
     freshRange(lines, lineRange)
 }
 async function toggleWordWrap(args: string[]) {
-    const left = args[0]
-    const right = args[1]
+    const [left, right] = args
     updateRange(getLineAtCursor, curry(toggleWordWrapScan)(left, right))
 }
 async function toggleRangeWrap(args: string[]){
-    const left = args[0]
-    const right = args[1]
+    const [left, right] = args
     updateRange(getVisualLineRange, curry(toggleRangeWrapScan)(left, right))
 }
 async function mdHeaderLevelUpRange() {
@@ -83,10 +81,8 @@ async function mdAddDefaultImgTxt() {
     const api = cxt.api!
     api.command('%s/!\\[\\]/![img]/g')
 }
-async function selectWrapRange(args: string[]) {
-    const type = args[0] as WrapType
-    const left = args[1]
-    const right = args[2]
+async function selectWrapRange(args: [WrapType, string, string]) {
+    const [type, left, right] = args
     const api = cxt.api!
     const lineRange = await getWrapRange(type, left, right)
     if (!lineRange) {
