@@ -203,10 +203,6 @@ export function toggleRangeWrapScan(left: string, right: string, lineRange: Line
     const fl = lineRange.lines[0]
     const ll = lineRange.lines.slice(-1)[0]
 
-    console.log(lineRange)
-
-    console.log(fl.txt.substring(lineRange.start[1], lineRange.start[1] + left.length))
-    console.log(ll.txt.substring(lineRange.end[1] - right.length + 1, lineRange.end[1] + 1))
     //All
     if (fl.txt.substring(lineRange.start[1], lineRange.start[1] + left.length) === left &&
         ll.txt.substring(lineRange.end[1] - right.length + 1, lineRange.end[1] + 1) === right ) {

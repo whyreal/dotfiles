@@ -26,33 +26,33 @@ nmap <buffer> gr <cmd>RevealURL<CR>
 nmap <buffer> gy <cmd>CopyURL<CR>
 
 " Toggle Bold
-nmap <buffer> <LocalLeader>b :ToggleWordWrapWithBold<CR>
-xmap <buffer> <LocalLeader>b :ToggleRangeWrapWithBold<CR>
+nmap <buffer> <LocalLeader>b :call ToggleWordWrapWith("**", "**")<CR>
+xmap <buffer> <LocalLeader>b :call ToggleRangeWrapWith("**", "**")<CR>
 
 " Toggle Italic
-nmap <buffer> <LocalLeader>i :ToggleWordWrapWithItalic<CR>
-xmap <buffer> <LocalLeader>i :ToggleRangeWrapWithItalic<CR>
+nmap <buffer> <LocalLeader>i :call ToggleWordWrapWith("*", "*")<CR>
+xmap <buffer> <LocalLeader>i :call ToggleRangeWrapWith("*", "*")<CR>
 
 " Toggle Inline code
-nmap <buffer> <LocalLeader>c  :ToggleWordWrapWithBackquote<CR>
-xmap <buffer> <LocalLeader>c  :ToggleRangeWrapWithBackquote<CR>
+nmap <buffer> <LocalLeader>c :call ToggleWordWrapWith("`", "`")<CR>
+xmap <buffer> <LocalLeader>c  :call ToggleRangeWrapWith("`", "`")<CR>
 
 " Bold object
-xmap <buffer> ab :SelectBoldRangeAll<CR>
-xmap <buffer> ib :SelectBoldRangeInner<CR>
-omap <buffer> ab :SelectBoldRangeAll<CR>
-omap <buffer> ib :SelectBoldRangeInner<CR>
+xmap <buffer> ab :<C-U>call SelectWrapRange("All", "**", "**")<CR>
+xmap <buffer> ib :<C-U>call SelectWrapRange("Inner", "**", "**")<CR>
+omap <buffer> ab :<C-U>call SelectWrapRange("All", "**", "**")<CR>
+omap <buffer> ib :<C-U>call SelectWrapRange("Inner", "**", "**")<CR>
 
 " Italic object
-xmap <buffer> ai :SelectItalicRangeAll<CR>
-xmap <buffer> ii :SelectItalicRangeInner<CR>
-omap <buffer> ai :SelectItalicRangeAll<CR>
-omap <buffer> ii :SelectItalicRangeInner<CR>
+xmap <buffer> ai :<C-U>call SelectWrapRange("All", "*", "*")<CR>
+xmap <buffer> ai :<C-U>call SelectWrapRange("Inner", "*", "*")<CR>
+omap <buffer> ai :<C-U>call SelectWrapRange("All", "*", "*")<CR>
+omap <buffer> ai :<C-U>call SelectWrapRange("Inner", "*", "*")<CR>
 
 " Italic object
-xmap <buffer> ac :SelectBackquoteRangeAll<CR>
-xmap <buffer> ic :SelectBoldRangeInner<CR>
-omap <buffer> ac :SelectBackquoteRangeAll<CR>
-omap <buffer> ic :SelectBoldRangeInner<CR>
+xmap <buffer> ac :<C-U>call SelectWrapRange("All", "`", "`")<CR>
+xmap <buffer> ac :<C-U>call SelectWrapRange("Inner", "`", "`")<CR>
+omap <buffer> ac :<C-U>call SelectWrapRange("All", "`", "`")<CR>
+omap <buffer> ac :<C-U>call SelectWrapRange("Inner", "`", "`")<CR>
 
 command! -nargs=0 MdUnescape lua require[[wr.utils]].markdown_unescape()

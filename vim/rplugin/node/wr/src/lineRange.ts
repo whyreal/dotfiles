@@ -157,7 +157,6 @@ function escapeRegExp(s: string) {
 
 export async function getLines(start: Cursor, end: Cursor) {
     const api = cxt.api!
-    console.log("getLines", start, end)
     return await api.buffer.getLines({
         start: start[0],
         end: end[0] + 1,

@@ -20,24 +20,13 @@ export function setup(plugin: NvimPlugin) {
     plugin.registerCommand("MdCreateCodeBlockFromeCodeLine", createCodeBlockFromeCodeLine, {range: ''})
     plugin.registerCommand("MdCreateCodeBlockFromeTable", mdCreateCodeBlockFromeTable, {range: ''})
 
-    plugin.registerCommand("ToggleWordWrapWithBold", toggleWordWrap("**", "**"), {sync: false})
-    plugin.registerCommand("ToggleWordWrapWithItalic", toggleWordWrap("*", "*"), {sync: false})
-    plugin.registerCommand("ToggleWordWrapWithBackquote", toggleWordWrap("`", "`"), {sync: false})
+    plugin.registerFunction("ToggleWordWrapWith", toggleWordWrap, {sync: false})
 
     plugin.registerCommand("MdAddDefaultImgTxt", mdAddDefaultImgTxt, {sync: false})
 
-    plugin.registerCommand("ToggleRangeWrapWithBold",      toggleRangeWrap("**", "**"), {sync: false, range: ''})
-    plugin.registerCommand("ToggleRangeWrapWithItalic",    toggleRangeWrap("*", "*"), {sync: false, range: ''})
-    plugin.registerCommand("ToggleRangeWrapWithBackquote", toggleRangeWrap("`", "`"), {sync: false, range: ''})
+    plugin.registerFunction("ToggleRangeWrapWith", toggleRangeWrap, {sync: false, range: ''})
 
-    plugin.registerCommand("SelectBoldRangeInner", selectWrapRange("Inner", "**", "**"), {sync: true, range: ''})
-    plugin.registerCommand("SelectBoldRangeAll", selectWrapRange("All", "**", "**"), {sync: true, range: ''})
-
-    plugin.registerCommand("SelectItalicRangeInner", selectWrapRange("Inner", "*", "*"), {sync: true, range: ''})
-    plugin.registerCommand("SelectItalicRangeAll", selectWrapRange("All", "*", "*"), {sync: true, range: ''})
-
-    plugin.registerCommand("SelectBackquoteRangeInner", selectWrapRange("Inner", "`", "`"), {sync: true, range: ''})
-    plugin.registerCommand("SelectBackquoteRangeAll", selectWrapRange("All", "`", "`"), {sync: true, range: ''})
+    plugin.registerFunction("SelectWrapRange", selectWrapRange)
 }
 
 type RangeSelector = () => Promise<LineRange>
@@ -50,15 +39,15 @@ async function updateRange(selector: RangeSelector, scanner: RangeScanner) {
     const lines = excuteAction(actions, lineRange)
     freshRange(lines, lineRange)
 }
-function toggleWordWrap(left: string, right: string) {
-    return async () => {
-        updateRange(getLineAtCursor, curry(toggleWordWrapScan)(left, right))
-    }
+async function toggleWordWrap(args: string[]) {
+    const left = args[0]
+    const right = args[1]
+    updateRange(getLineAtCursor, curry(toggleWordWrapScan)(left, right))
 }
-function toggleRangeWrap(left: string, right: string): Function {
-    return async () => {
-        updateRange(getVisualLineRange, curry(toggleRangeWrapScan)(left, right))
-    }
+async function toggleRangeWrap(args: string[]){
+    const left = args[0]
+    const right = args[1]
+    updateRange(getVisualLineRange, curry(toggleRangeWrapScan)(left, right))
 }
 async function mdHeaderLevelUpRange() {
     updateRange(getVisualLineRange, mdHeaderLevelUpScan)
@@ -94,16 +83,17 @@ async function mdAddDefaultImgTxt() {
     const api = cxt.api!
     api.command('%s/!\\[\\]/![img]/g')
 }
-function selectWrapRange(type:WrapType, left: string, right: string) {
-    return async () => {
-        const api = cxt.api!
-        const lineRange = await getWrapRange(type, left, right)
-        if (!lineRange) {
-            return
-        }
-
-        await setPos("<", lineRange.start)
-        await setPos(">", lineRange.end)
-        await api.command("normal gv")
+async function selectWrapRange(args: string[]) {
+    const type = args[0] as WrapType
+    const left = args[1]
+    const right = args[2]
+    const api = cxt.api!
+    const lineRange = await getWrapRange(type, left, right)
+    if (!lineRange) {
+        return
     }
+
+    await setPos("<", lineRange.start)
+    await setPos(">", lineRange.end)
+    await api.command("normal gv")
 }

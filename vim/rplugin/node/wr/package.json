@@ -9,6 +9,7 @@
     "url": "https://github.com/neovim/node-client.git"
   },
   "scripts": {
+    "update-peg": "tspeg src/peg/httpRequest.peg src/peg/httpRequest.ts",
     "deploy": "tsc && nvim --headless +UpdateRemotePlugins +quit"
   },
   "devDependencies": {
