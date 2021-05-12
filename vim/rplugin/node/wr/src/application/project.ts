@@ -1,6 +1,6 @@
 import {NvimPlugin} from "neovim";
 import {keys} from "ramda";
-import { cxt } from "./env";
+import { cxt } from "../infra/env";
 
 export function setup(plugin: NvimPlugin) {
     plugin.registerFunction("ListProjects", listProject, {sync:true})

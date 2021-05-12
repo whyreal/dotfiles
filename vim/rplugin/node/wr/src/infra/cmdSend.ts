@@ -1,7 +1,7 @@
 import {cxt} from "./env";
 import {NvimPlugin} from "neovim";
-import {sendToTmux} from "./tmux";
-import {getVisualLineRange} from "./lineRange";
+import {sendToTmux as sendCmd} from "./tmux";
+import {getVisualLineRange as getRange} from "./lineRange";
 
 
 export function setup(plugin: NvimPlugin) {
@@ -10,13 +10,13 @@ export function setup(plugin: NvimPlugin) {
 }
 
 async function cmdSendRange() {
-    const lines = (await getVisualLineRange()).lines
+    const lines = (await getRange()).lines
     lines.forEach(l => {
         // 发的太快的话 shell 中会出现  不知道是啥意思
-        setTimeout(sendToTmux, (l.ln - lines[0].ln) * 50, l.txt)
+        setTimeout(sendCmd, (l.ln - lines[0].ln) * 50, l.txt)
     })
 }
 async function cmdSendLine() {
     const api = cxt.api!
-    sendToTmux(await api.line)
+    sendCmd(await api.line)
 }

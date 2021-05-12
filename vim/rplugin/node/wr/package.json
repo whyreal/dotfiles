@@ -2,7 +2,7 @@
   "name": "nvim-example",
   "version": "1.0.0",
   "description": "An example node plugin",
-  "main": "lib/index.js",
+  "main": "lib/input/setup.js",
   "license": "MIT",
   "repository": {
     "type": "git",

@@ -1,7 +1,9 @@
+import {Range} from "../domain/range";
 import {append, deleteLine, downLevel, insert, LineAction, mdListCreate, mdListDelete, mdOrderListCreate, replace, setLevel, upLevel, toggleWordWrap} from "./lineAction";
-import {LineRange} from "./lineRange";
 
-export function mdListDeleteScan(r: LineRange) {
+export type RangeScanner = (a: Range) => Map<number, LineAction[]>
+
+export function mdListDeleteScan(r: Range) {
     const actions = new Map<number, LineAction[]>()
 
     r.lines.map(line => {
@@ -13,7 +15,7 @@ export function mdListDeleteScan(r: LineRange) {
     });
     return actions
 }
-export function mdOrderListCreateScan(r: LineRange) {
+export function mdOrderListCreateScan(r: Range) {
     const actions = new Map<number, LineAction[]>()
 
     let order = 1
@@ -27,7 +29,7 @@ export function mdOrderListCreateScan(r: LineRange) {
     });
     return actions
 }
-export function mdListCreateScan(r: LineRange) {
+export function mdListCreateScan(r: Range) {
     const actions = new Map<number, LineAction[]>()
 
     r.lines.map(line => {
@@ -39,7 +41,7 @@ export function mdListCreateScan(r: LineRange) {
     });
     return actions
 }
-export function mdHeaderLevelUpScan(r: LineRange) {
+export function mdHeaderLevelUpScan(r: Range) {
     const actions = new Map<number, LineAction[]>()
 
     r.lines.map(line => {
@@ -65,7 +67,7 @@ export function mdHeaderLevelUpScan(r: LineRange) {
     });
     return actions
 }
-export function deleteBlankLineScan(r: LineRange) {
+export function deleteBlankLineScan(r: Range) {
     const actions = new Map<number, LineAction[]>()
 
     r.lines.map(line => {
@@ -77,7 +79,7 @@ export function deleteBlankLineScan(r: LineRange) {
     });
     return actions
 }
-export function mdHeaderLevelDownScan(level0: boolean, r: LineRange) {
+export function mdHeaderLevelDownScan(level0: boolean, r: Range) {
     const actions = new Map<number, LineAction[]>()
 
     r.lines.map(line => {
@@ -108,7 +110,7 @@ export function mdHeaderLevelDownScan(level0: boolean, r: LineRange) {
 
     return actions
 }
-export function codeBlockCreateScan(lineRange: LineRange) {
+export function codeBlockCreateScan(lineRange: Range) {
     const actions = new Map<number, LineAction[]>()
 
     const indent = lineRange.lines[0].txt.match(/^\s*/)
@@ -126,7 +128,7 @@ export function codeBlockCreateScan(lineRange: LineRange) {
     });
     return actions
 }
-export function codeBlockCreateFromCodeLineScan(lineRange: LineRange) {
+export function codeBlockCreateFromCodeLineScan(lineRange: Range) {
     const actions = new Map<number, LineAction[]>()
 
     const indent = lineRange.lines[0].txt.match(/^\s*/)
@@ -142,7 +144,7 @@ export function codeBlockCreateFromCodeLineScan(lineRange: LineRange) {
     });
     return actions
 }
-export function codeBlockCreateFromTableScan(lineRange: LineRange) {
+export function codeBlockCreateFromTableScan(lineRange: Range) {
     const actions = new Map<number, LineAction[]>()
 
     const indent = lineRange.lines[0].txt.match(/^\s*/)
@@ -164,7 +166,7 @@ export function codeBlockCreateFromTableScan(lineRange: LineRange) {
     });
     return actions
 }
-export function toggleWordWrapScan(left: string, right: string, lineRange: LineRange) {
+export function toggleWordWrapScan(left: string, right: string, lineRange: Range) {
     const actions = new Map<number, LineAction[]>()
 
     const line = lineRange.lines[0]
@@ -194,7 +196,7 @@ export function toggleWordWrapScan(left: string, right: string, lineRange: LineR
     });
     return actions
 }
-export function toggleRangeWrapScan(left: string, right: string, lineRange: LineRange) {
+export function toggleRangeWrapScan(left: string, right: string, lineRange: Range) {
     const actions = new Map<number, LineAction[]>()
 
     const fla = actions.get(lineRange.start[0]) || []

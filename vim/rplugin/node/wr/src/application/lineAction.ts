@@ -1,13 +1,10 @@
 import {prop, curry} from "ramda";
-import {Line, LineGroup} from "./line";
-import {LineRange} from "./lineRange";
+import {Line, LineGroup} from "../domain/line";
+import {Range} from "../domain/range";
 
 export type LineAction = (a: LineGroup) => LineGroup
 
-
-export function excuteAction(actions: Map<number, LineAction[]>,
-    lr: LineRange): string[] {
-
+export function excuteAction(actions: Map<number, LineAction[]>, lr: Range): string[] {
     const x = lr.lines.map(line => {
         let lg = lineGroupFromLine(line)
 

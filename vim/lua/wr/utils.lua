@@ -199,9 +199,7 @@ end
 
 function M.markdown_unescape()
 	vim.cmd[[%s/\\\([\[\]\.\-\*\~\!\#\_\=]\)/\1/g]]
-
 	vim.cmd[[%s/  $//ge]]
-
 	vim.cmd[[write]]
 end
 

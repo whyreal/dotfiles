@@ -1,14 +1,8 @@
-import {NvimPlugin} from "neovim";
+import {Cursor} from "../domain/cursor";
 import {cxt} from "./env";
 import {getLine} from "./line";
 
-export type Cursor = [number, number]
-
-export function setup(plugin: NvimPlugin) {
-    plugin.registerCommand("GotoFirstChar", gotoFirstChar, {sync: false})
-}
-
-async function gotoFirstChar() {
+export async function gotoFirstChar() {
     const api = cxt.api!
     const l = await api.line
     const c = await getCursor()
@@ -46,7 +40,10 @@ export async function setPos(mark: string, cursor: Cursor) {
     byteIndex(line.txt, cursor)
 
     cursor = [cursor[0] + 1, cursor[1] + 1] // ln and col base 0 to base 1
-    api.callFunction("setpos", ["'" + mark, [0, cursor[0], cursor[1], 0]])
+    if (!(mark === ".")) {
+        mark = "'" + mark
+    }
+    api.callFunction("setpos", [mark, [0, cursor[0], cursor[1], 0]])
 }
 
 export const getCursor = getPos

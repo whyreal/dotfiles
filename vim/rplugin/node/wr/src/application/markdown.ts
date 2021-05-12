@@ -1,10 +1,11 @@
-import {codeBlockCreateFromCodeLineScan, codeBlockCreateFromTableScan, codeBlockCreateScan, mdHeaderLevelDownScan, mdHeaderLevelUpScan, mdListCreateScan, mdListDeleteScan, mdOrderListCreateScan, toggleRangeWrapScan, toggleWordWrapScan} from "./lineScan";
-import {getHeaderRangeAtCursor, getVisualLineRange, LineRange, freshRange, getLineAtCursor, getWrapRange, WrapType} from "./lineRange";
-import {excuteAction, LineAction} from "./lineAction";
+import {codeBlockCreateFromCodeLineScan, codeBlockCreateFromTableScan, codeBlockCreateScan, mdHeaderLevelDownScan, mdHeaderLevelUpScan, mdListCreateScan, mdListDeleteScan, mdOrderListCreateScan, RangeScanner, toggleRangeWrapScan, toggleWordWrapScan} from "./lineScan";
+import {getHeaderRangeAtCursor, getVisualLineRange, freshRange, getLineAtCursor, getWrapRange, WrapType} from "../infra/lineRange";
 import {curry} from "ramda";
 import {NvimPlugin} from "neovim";
-import {cxt} from "./env";
-import {setPos} from "./cursor";
+import {cxt} from "../infra/env";
+import {setPos} from "../infra/cursor";
+import { Range } from "../domain/range";
+import {excuteAction} from "./lineAction";
 
 export function setup(plugin: NvimPlugin) {
     plugin.registerCommand("MdHeaderLevelUp", mdHeaderLevelUp, {sync: false})
@@ -29,53 +30,51 @@ export function setup(plugin: NvimPlugin) {
     plugin.registerFunction("SelectWrapRange", selectWrapRange)
 }
 
-type RangeSelector = () => Promise<LineRange>
-type RangeScanner = (a: LineRange) => Map<number, LineAction[]>
+async function updateRange(lr:Range, scanner: RangeScanner) {
+    const actions = scanner(lr)
 
-async function updateRange(selector: RangeSelector, scanner: RangeScanner) {
-    const lineRange = await selector()
-    const actions = scanner(lineRange)
-
-    const lines = excuteAction(actions, lineRange)
-    freshRange(lines, lineRange)
+    const lines = excuteAction(actions, lr)
+    freshRange(lines, lr)
 }
 async function toggleWordWrap(args: string[]) {
     const [left, right] = args
-    updateRange(getLineAtCursor, curry(toggleWordWrapScan)(left, right))
+    const lr = await getLineAtCursor()
+    updateRange(lr, curry(toggleWordWrapScan)(left, right))
+    //setPos(".", [lr.cursor[0], lr.cursor[1] + left.length])
 }
 async function toggleRangeWrap(args: string[]){
     const [left, right] = args
-    updateRange(getVisualLineRange, curry(toggleRangeWrapScan)(left, right))
+    updateRange(await getVisualLineRange(), curry(toggleRangeWrapScan)(left, right))
 }
 async function mdHeaderLevelUpRange() {
-    updateRange(getVisualLineRange, mdHeaderLevelUpScan)
+    updateRange(await getVisualLineRange(), mdHeaderLevelUpScan)
 }
 async function mdHeaderLevelDownRange() {
-    updateRange(getVisualLineRange, curry(mdHeaderLevelDownScan)(false))
+    updateRange(await getVisualLineRange(), curry(mdHeaderLevelDownScan)(false))
 }
 async function mdHeaderLevelDown() {
-    updateRange(getHeaderRangeAtCursor, curry(mdHeaderLevelDownScan)(true))
+    updateRange(await getHeaderRangeAtCursor(), curry(mdHeaderLevelDownScan)(true))
 }
 async function mdHeaderLevelUp() {
-    updateRange(getHeaderRangeAtCursor, mdHeaderLevelUpScan)
+    updateRange(await getHeaderRangeAtCursor(), mdHeaderLevelUpScan)
 }
 async function mdListCreate() {
-    updateRange(getVisualLineRange, mdListCreateScan)
+    updateRange(await getVisualLineRange(), mdListCreateScan)
 }
 async function mdListDelete() {
-    updateRange(getVisualLineRange, mdListDeleteScan)
+    updateRange(await getVisualLineRange(), mdListDeleteScan)
 }
 async function mdOrderListCreate() {
-    updateRange(getVisualLineRange, mdOrderListCreateScan)
+    updateRange(await getVisualLineRange(), mdOrderListCreateScan)
 }
 async function createCodeBlock() {
-    updateRange(getVisualLineRange, codeBlockCreateScan)
+    updateRange(await getVisualLineRange(), codeBlockCreateScan)
 }
 async function createCodeBlockFromeCodeLine() {
-    updateRange(getVisualLineRange, codeBlockCreateFromCodeLineScan)
+    updateRange(await getVisualLineRange(), codeBlockCreateFromCodeLineScan)
 }
 async function mdCreateCodeBlockFromeTable() {
-    updateRange(getVisualLineRange, codeBlockCreateFromTableScan)
+    updateRange(await getVisualLineRange(), codeBlockCreateFromTableScan)
 }
 async function mdAddDefaultImgTxt() {
     const api = cxt.api!

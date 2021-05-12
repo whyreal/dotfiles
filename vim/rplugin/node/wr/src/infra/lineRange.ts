@@ -1,23 +1,17 @@
-import {getLine, Line} from "./line"
+import {getLine} from "./line"
 import {cxt} from "./env";
-import {Cursor, getCursor, getPos} from "./cursor";
+import {getCursor, getPos} from "./cursor";
+import {Range} from "../domain/range";
+import {Cursor} from "../domain/cursor";
 
-export type LineRange = {
-    start: Cursor
-    end: Cursor
-    cursor: Cursor
-    encoding: string
-    lineCount: number
-    lines: Line[]
-}
-export function freshRange(lines: string[], lineRange: LineRange) {
+export function freshRange(lines: string[], lineRange: Range) {
     const api = cxt.api!
     api.buffer.setLines(lines,
                         { start: lineRange.start[0],
                             end: lineRange.end[0] + 1, strictIndexing: false}
                        )
 }
-async function newLineRange(start: Cursor, end: Cursor, c?: Cursor): Promise<LineRange> {
+async function newLineRange(start: Cursor, end: Cursor, c?: Cursor): Promise<Range> {
     const api = cxt.api!
     const cursor = c || await getCursor()
     const encoding = await api.getOption("encoding") as BufferEncoding
@@ -39,7 +33,7 @@ async function newLineRange(start: Cursor, end: Cursor, c?: Cursor): Promise<Lin
         lines: lines
     }
 }
-export async function getHeaderRangeAtCursor(): Promise<LineRange> {
+export async function getHeaderRangeAtCursor(): Promise<Range> {
     const api = cxt.api!
     const cursor = await getCursor()
 
@@ -55,7 +49,7 @@ export async function getHeaderRangeAtCursor(): Promise<LineRange> {
 
     return newLineRange(start, end, cursor)
 }
-export async function getWordRangeAtCursor(): Promise<LineRange> {
+export async function getWordRangeAtCursor(): Promise<Range> {
     const api = cxt.api!
     const cursor = await api.window.cursor
 
@@ -71,12 +65,12 @@ export async function getWordRangeAtCursor(): Promise<LineRange> {
 
     return newLineRange(start, end, cursor)
 }
-export async function getLineAtCursor(): Promise<LineRange> {
+export async function getLineAtCursor(): Promise<Range> {
     const cursor = await getCursor()
 
     return newLineRange(cursor, cursor, cursor)
 }
-export async function getVisualLineRange(): Promise<LineRange> {
+export async function getVisualLineRange(): Promise<Range> {
     const start = await getPos('<')
     const end = await getPos('>')
     return newLineRange(start, end)

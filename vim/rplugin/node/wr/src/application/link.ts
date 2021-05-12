@@ -1,13 +1,13 @@
-import {cxt} from "./env";
 import {fileURLToPath, URL} from "url";
 import { lookup } from "mime-types";
 import * as path from "path";
 import {spawnSync} from "child_process";
-import {Line} from "./line";
-import {currentHeaderLine} from "./line";
+import {currentHeaderLine} from "../infra/line";
 import { decode } from "urlencode";
 import {NvimPlugin} from "neovim";
-import {getCursor, setCursor} from "./cursor";
+import {cxt} from "../infra/env";
+import {getCursor, setCursor} from "../infra/cursor";
+import {Line} from "../domain/line";
 
 export function setup(plugin: NvimPlugin) {
     plugin.registerCommand("OpenURL", openURL, {sync: false})
@@ -217,7 +217,6 @@ async function copyWorkSpaceLink() {
 
     api.call("setreg", ["+", `[${path.basename(p)}](workspace://${filePathInWorkSpace})`])
 }
-
 async function gotoHeader(hash: string) {
     const api = cxt.api!
     const doc = await api.buffer.lines

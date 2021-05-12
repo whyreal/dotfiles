@@ -55,4 +55,9 @@ xmap <buffer> ac :<C-U>call SelectWrapRange("Inner", "`", "`")<CR>
 omap <buffer> ac :<C-U>call SelectWrapRange("All", "`", "`")<CR>
 omap <buffer> ac :<C-U>call SelectWrapRange("Inner", "`", "`")<CR>
 
-command! -nargs=0 MdUnescape lua require[[wr.utils]].markdown_unescape()
+function MdUnescape() abort
+	%s/\\\([\[\]\.\-\*\~\!\#\_\=\+]\)/\1/g
+	%s/  $//ge
+	write
+endfunction
+command! -nargs=0 MdUnescape call MdUnescape()
