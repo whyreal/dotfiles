@@ -1,5 +1,5 @@
 au FileType jsp,xml,html,css setlocal sts=2 ts=2 sw=2
-au FileType javascript,typescript.tsx,json,jsonc setlocal sts=2 ts=2 sw=2
+au FileType javascript,typescript.tsx,json,jsonc,vue setlocal sts=2 ts=2 sw=2
 
 au BufNewFile,BufRead *.json   set filetype=jsonc
 au BufNewFile,BufRead *.tsx    set filetype=typescript.tsx

@@ -37,6 +37,8 @@ Plug 'tpope/vim-surround', {'frozen': 1}
 "coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+Plug 'posva/vim-vue'
+
 call plug#end()
 
 syntax on

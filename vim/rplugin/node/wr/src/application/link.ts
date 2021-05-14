@@ -8,6 +8,7 @@ import {NvimPlugin} from "neovim";
 import {cxt} from "../infra/env";
 import {getCursor, setCursor} from "../infra/cursor";
 import {Line} from "../domain/line";
+import {filter, pipe, startsWith} from "ramda";
 
 export function setup(plugin: NvimPlugin) {
     plugin.registerCommand("OpenURL", openURL, {sync: false})
@@ -221,13 +222,13 @@ async function gotoHeader(hash: string) {
     const api = cxt.api!
     const doc = await api.buffer.lines
 
-    for (let index = 0; index < doc.length; index++) {
-        if (doc[index].startsWith("#")
-            && doc[index].trim().replace(/^#+\s*/, "").replace(/\s+/g, "-") == decode(hash).replace(/^#/, "")
+    doc.forEach(async (v, i) => {
+        if(v.startsWith("#")
+            && v.trim().replace(/^#+\s*/, "").replace(/\s+/g, "-") == decode(hash).replace(/^#/, "")
         ) {
-               await setCursor([index, 1])
-               await api.command("normal! zt")
-               await api.command("normal! zO")
+            await setCursor([i, 1])
+            await api.command("normal! zt")
+            await api.command("normal! zO")
         }
-    }
+    })
 }

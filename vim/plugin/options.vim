@@ -44,16 +44,11 @@ set breakindentopt=shift:0
 set nolinebreak
 set sts=4 ts=4 sw=4 et
 
-if has("gui_vimr")
-   colorscheme PaperColor
-else
-   colorscheme PaperColor
-endif
-
-if getenv("tmux_version") != v:null
+if getenv("tmux_version") != v:null || getenv("LC_TERMINAL") == "iTerm2"
    set termguicolors
-   highlight Normal guibg=NONE
 endif
+colorscheme PaperColor
+highlight Normal guibg=NONE
 
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
