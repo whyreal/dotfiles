@@ -4,8 +4,8 @@ export type Line = {
     txt: string
 }
 export type LineGroup = {
-    cur?: Line
-    before?: Line[]
-    after?: Line[]
+    cur: Line[]
+    before: Line[]
+    after: Line[]
 }
 

@@ -8,7 +8,6 @@ import {NvimPlugin} from "neovim";
 import {cxt} from "../infra/env";
 import {getCursor, setCursor} from "../infra/cursor";
 import {Line} from "../domain/line";
-import {filter, pipe, startsWith} from "ramda";
 
 export function setup(plugin: NvimPlugin) {
     plugin.registerCommand("OpenURL", openURL, {sync: false})
