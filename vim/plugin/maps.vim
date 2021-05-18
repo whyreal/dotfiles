@@ -19,3 +19,6 @@ nmap 0 <cmd>GotoFirstChar<CR>
 nmap <leader>tt <cmd>CmdSendLine<CR>
 xmap <leader>tt <cmd>CmdSendRange<CR>
 
+nmap <c-d> <c-d>zz
+nmap <c-u> <c-u>zz
+

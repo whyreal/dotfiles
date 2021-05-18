@@ -27,15 +27,15 @@ nmap <buffer> gy <cmd>CopyURL<CR>
 
 " Toggle Bold
 nmap <buffer> <LocalLeader>b :call ToggleWordWrapWith("**", "**")<CR>
-xmap <buffer> <LocalLeader>b :call ToggleRangeWrapWith("**", "**")<CR>
+xmap <buffer> <LocalLeader>b :ToggleRangeWrapWith ** **<CR>
 
 " Toggle Italic
 nmap <buffer> <LocalLeader>i :call ToggleWordWrapWith("*", "*")<CR>
-xmap <buffer> <LocalLeader>i :call ToggleRangeWrapWith("*", "*")<CR>
+xmap <buffer> <LocalLeader>i :ToggleRangeWrapWith * *<CR>
 
 " Toggle Inline code
 nmap <buffer> <LocalLeader>c :call ToggleWordWrapWith("`", "`")<CR>
-xmap <buffer> <LocalLeader>c  :call ToggleRangeWrapWith("`", "`")<CR>
+xmap <buffer> <LocalLeader>c  :ToggleRangeWrapWith ` `<CR>
 
 " Bold object
 xmap <buffer> ab :<C-U>call SelectWrapRange("All", "**", "**")<CR>

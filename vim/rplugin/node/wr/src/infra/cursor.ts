@@ -24,7 +24,6 @@ export async function getPos(mark?: string) {
         cursor = await api.window.cursor
     }
 
-
     cursor[0] = cursor[0] - 1 // ln base 1 to base 0
 
     const line = await getLine(cursor[0])

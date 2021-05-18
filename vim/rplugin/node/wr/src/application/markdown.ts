@@ -17,7 +17,7 @@ export function setup(plugin: NvimPlugin) {
     plugin.registerCommand("ListDelete", mdListDelete, {sync: false})
     plugin.registerCommand("OrderListCreate", mdOrderListCreate, {sync: false})
 
-    plugin.registerCommand("MdCreateCodeBlock", createCodeBlock, {range: ''})
+    plugin.registerCommand("MdCreateCodeBlock", createCodeBlock, {range: '', nargs:'?'})
     plugin.registerCommand("MdCreateCodeBlockFromeCodeLine", createCodeBlockFromeCodeLine, {range: ''})
     plugin.registerCommand("MdCreateCodeBlockFromeTable", mdCreateCodeBlockFromeTable, {range: ''})
 
@@ -25,22 +25,22 @@ export function setup(plugin: NvimPlugin) {
 
     plugin.registerCommand("MdAddDefaultImgTxt", mdAddDefaultImgTxt, {sync: false})
 
-    plugin.registerFunction("ToggleRangeWrapWith", toggleRangeWrap, {sync: false, range: ''})
+    plugin.registerCommand("ToggleRangeWrapWith", toggleRangeWrap, {range: '', nargs: '+'})
 
     plugin.registerFunction("SelectWrapRange", selectWrapRange)
 }
 
-async function updateRange(lr:Range, scanner: RangeScanner) {
+async function updateRange(lr: Range, scanner: RangeScanner) {
+    const c = lr.cursor
     const actions = scanner(lr)
 
     const lines = excuteAction(actions, lr)
     freshRange(lines, lr)
+    setPos(".", c)
 }
 async function toggleWordWrap(args: string[]) {
     const [left, right] = args
-    const lr = await getLineAtCursor()
-    updateRange(lr, curry(toggleWordWrapScan)(left, right))
-    //setPos(".", [lr.cursor[0], lr.cursor[1] + left.length])
+    updateRange(await getLineAtCursor(), curry(toggleWordWrapScan)(left, right))
 }
 async function toggleRangeWrap(args: string[]){
     const [left, right] = args
@@ -67,8 +67,9 @@ async function mdListDelete() {
 async function mdOrderListCreate() {
     updateRange(await getVisualLineRange(), mdOrderListCreateScan)
 }
-async function createCodeBlock() {
-    updateRange(await getVisualLineRange(), codeBlockCreateScan)
+async function createCodeBlock(lang: string) {
+    lang = lang || ""
+    updateRange(await getVisualLineRange(), curry(codeBlockCreateScan)(lang))
 }
 async function createCodeBlockFromeCodeLine() {
     updateRange(await getVisualLineRange(), codeBlockCreateFromCodeLineScan)

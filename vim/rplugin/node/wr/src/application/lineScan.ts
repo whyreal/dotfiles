@@ -110,14 +110,14 @@ export function mdHeaderLevelDownScan(level0: boolean, r: Range) {
 
     return actions
 }
-export function codeBlockCreateScan(lineRange: Range) {
+export function codeBlockCreateScan(lang: string, lineRange: Range) {
     const actions = new Map<number, LineAction[]>()
 
     const indent = lineRange.lines[0].txt.match(/^\s*/)
     lineRange.lines.map((line, index) => {
         if (index == 0) {
             const cla = actions.get(line.ln) || []
-            cla.push(insert([indent + "```"]))
+            cla.push(insert([indent + "```" + lang]))
             actions.set(line.ln, cla)
         }
         if (index == lineRange.lineCount - 1) {
@@ -206,8 +206,8 @@ export function toggleRangeWrapScan(left: string, right: string, lineRange: Rang
     const ll = lineRange.lines.slice(-1)[0]
 
     //All
-    if (fl.txt.substring(lineRange.start[1], lineRange.start[1] + left.length) === left &&
-        ll.txt.substring(lineRange.end[1] - right.length + 1, lineRange.end[1] + 1) === right ) {
+    if (fl.txt.substring(lineRange.start[1], lineRange.start[1] + left.length) === left
+        && ll.txt.substring(lineRange.end[1] - right.length + 1, lineRange.end[1] + 1) === right ) {
         
         if (fl.ln === ll.ln) {
             lla.push(replace(

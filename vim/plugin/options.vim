@@ -17,8 +17,8 @@ let g:ft_man_folding_enable=1
 "set cedit=<C-R>  "open command line window
 "set cmdheight=2
 set autowrite
-"set background=light
-set background=dark
+set background=light
+"set background=dark
 set clipboard=unnamed
 set colorcolumn=+0
 set completeopt=menuone,noinsert,noselect
@@ -43,6 +43,7 @@ set breakindent
 set breakindentopt=shift:0
 set nolinebreak
 set sts=4 ts=4 sw=4 et
+set nu relativenumber
 
 if getenv("tmux_version") != v:null || getenv("LC_TERMINAL") == "iTerm2"
    set termguicolors
