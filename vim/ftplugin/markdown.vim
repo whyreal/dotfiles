@@ -1,8 +1,10 @@
 set sts=4 tabstop=4 shiftwidth=4
 set expandtab
 set foldmethod=expr fdl=1 fdls=1
-set conceallevel=2
+"set conceallevel=2
 set foldclose=all
+
+"au ColorScheme *.md highlight! link htmlBold Search
 
 let g:tagbar_sort=0
 let g:vim_markdown_no_default_key_mappings=1

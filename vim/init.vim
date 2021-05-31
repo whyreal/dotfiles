@@ -18,6 +18,8 @@ Plug 'altercation/vim-colors-solarized', {'frozen': 1}
 Plug 'Glench/Vim-Jinja2-Syntax', {'frozen': 1}
 Plug 'neoclide/jsonc.vim', {'frozen': 1}
 Plug 'dag/vim-fish', {'frozen': 1}
+Plug 'wizicer/vim-jison'
+
 " markdown
 Plug 'plasticboy/vim-markdown', {'frozen': 1}
 
@@ -47,4 +49,3 @@ filetype plugin indent on
 lua require("GInit")
 
 au VimEnter * let g:workspace=$PWD
-

@@ -50,7 +50,6 @@ class Pandoc {
      * convert
      */
     public convert() {
-
         const convertor = spawn("pandoc", this.getArgs())
         //console.log(convertor.spawnargs);
         

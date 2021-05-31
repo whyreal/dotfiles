@@ -17,8 +17,6 @@ let g:ft_man_folding_enable=1
 "set cedit=<C-R>  "open command line window
 "set cmdheight=2
 set autowrite
-set background=light
-"set background=dark
 set clipboard=unnamed
 set colorcolumn=+0
 set completeopt=menuone,noinsert,noselect
@@ -45,12 +43,6 @@ set nolinebreak
 set sts=4 ts=4 sw=4 et
 set nu relativenumber
 
-if getenv("tmux_version") != v:null || getenv("LC_TERMINAL") == "iTerm2"
-   set termguicolors
-endif
-colorscheme PaperColor
-highlight Normal guibg=NONE
-
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
 set encoding=utf-8
@@ -63,7 +55,7 @@ set nobackup
 set nowritebackup
 
 " Give more space for displaying messages.
-set cmdheight=2
+"set cmdheight=2
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
@@ -84,6 +76,6 @@ endif
 let g:projects = { 
             \ "Notes": "~/Documents/Notes/",
             \ "Downloads": "~/Downloads",
-            \ "dotfile": "~/code/whyreal/dotfiles/",
-            \ "vimconfig": "~/code/whyreal/dotfiles/vim/"
+            \ "Dotfile": "~/code/whyreal/dotfiles/",
+            \ "Vimconfig": "~/code/whyreal/dotfiles/vim/"
             \ }

@@ -1,7 +1,8 @@
 alias r='open -R'
 alias e='open -e'
+alias s='ssh'
+alias d='cd "/Users/Real/Documents/Notes/" && vimr'
 alias o='open'
-alias d='cd "/Users/Real/Documents/Notes/" && vim'
 alias o.notes='cd ~/Documents/vim-workspace/docs && $EDITOR'
 alias drawio='open -a draw.io.app'
 
@@ -22,7 +23,7 @@ alias sqlplus='rlwrap sqlplus'
 alias telnet='nc -vz -w 1'
 alias tmux='command tmux attach || command tmux'
 
-export EDITOR='nvim'
+set -x EDITOR 'nvim'
 
 set -x LANG "en_US.UTF-8"
 
@@ -119,19 +120,23 @@ function z
     end
 end
 
-function s
-    if test -z $argv[1]
-        set -l host (command cat \
-        (command awk '/^[ \t]*[Hh]ost/ && $2 != "*" {for (i = 2; i <= NF; i++) print $i}' ~/.ssh/config /etc/ssh/ssh_config | psub) \
-        (command awk '/^[a-z1-9]/{print $1}' /etc/hosts ~/.ssh/known_hosts | psub) \
-        | sort -u | fzf --reverse --history="$HOME/.fzf.history")
+#function s
+    #if test -z $argv[1]
+        #set -l host (command cat \
+        #(command awk '/^[ \t]*[Hh]ost/ && $2 != "*" {for (i = 2; i <= NF; i++) print $i}' ~/.ssh/config /etc/ssh/ssh_config | psub) \
+        #(command awk '/^[a-z1-9]/{print $1}' /etc/hosts ~/.ssh/known_hosts | psub) \
+        #| sort -u | fzf --reverse --history="$HOME/.fzf.history")
 
-        if test -n "$host"
-            ssh $host
-        end
-    else
-        ssh $argv
-    end
-end
+        #if test -n "$host"
+            #ssh $host
+        #end
+    #else
+        #ssh $argv
+    #end
+#end
 
 set -g fish_user_paths "/usr/local/opt/curl/bin" $fish_user_paths
+
+# FZF Tab Completions (https://github.com/jethrokuan/fzf/wiki/FZF-Tab-Completions)
+set -U FZF_COMPLETE 3
+

@@ -1,5 +1,6 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
+SETUVAR FZF_COMPLETE:3
 SETUVAR --export FZF_DEFAULT_OPTS:\x2d\x2dextended\x20\x2d\x2dcycle\x20\x2d\x2dhistory\x3d/Users/Real/\x2efzf\x2ehistory
 SETUVAR FZF_DISABLE_KEYBINDINGS:0
 SETUVAR FZF_LEGACY_KEYBINDINGS:1
@@ -9,6 +10,7 @@ SETUVAR FZF_TMUX_HEIGHT:40\x25
 SETUVAR __fish_initialized:3100
 SETUVAR _fisher_jethrokuan_2F_fzf_files:/Users/Real/\x2econfig/fish/functions/__fzf_cd\x2efish\x1e/Users/Real/\x2econfig/fish/functions/__fzf_complete\x2efish\x1e/Users/Real/\x2econfig/fish/functions/__fzf_complete_preview\x2efish\x1e/Users/Real/\x2econfig/fish/functions/__fzf_find_file\x2efish\x1e/Users/Real/\x2econfig/fish/functions/__fzf_get_dir\x2efish\x1e/Users/Real/\x2econfig/fish/functions/__fzf_open\x2efish\x1e/Users/Real/\x2econfig/fish/functions/__fzf_parse_commandline\x2efish\x1e/Users/Real/\x2econfig/fish/functions/__fzf_reverse_isearch\x2efish\x1e/Users/Real/\x2econfig/fish/functions/__fzfcmd\x2efish\x1e/Users/Real/\x2econfig/fish/conf\x2ed/fzf\x2efish
 SETUVAR _fisher_jorgebucaran_2F_fisher_files:/Users/Real/\x2econfig/fish/functions/fisher\x2efish\x1e/Users/Real/\x2econfig/fish/completions/fisher\x2efish
+SETUVAR _fisher_plugins:jorgebucaran/fisher\x1ejethrokuan/fzf
 SETUVAR fish_color_autosuggestion:3BA3D0
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:0772A1
