@@ -1,7 +1,7 @@
 alias r='open -R'
 alias e='open -e'
 alias s='ssh'
-alias d='cd "/Users/Real/Documents/Notes/" && vimr'
+alias d='cd "/Users/Real/Documents/Notes/" && vim'
 alias o='open'
 alias o.notes='cd ~/Documents/vim-workspace/docs && $EDITOR'
 alias drawio='open -a draw.io.app'
