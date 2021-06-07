@@ -6,8 +6,9 @@ import {setup as restSetup} from "../application/rest";
 import {setup as linkSetup} from "../application/link";
 
 import {setup as projectSetup} from "../application/project";
-import { setup as mdSetup} from "../application/markdown";
+import {setup as mdSetup} from "../application/markdown";
 import {gotoFirstChar} from "../infra/cursor";
+import { setup as tplSetup} from "../application/template";
 
 function setup(plugin: NvimPlugin) {
     cxt.api = plugin.nvim
@@ -20,6 +21,7 @@ function setup(plugin: NvimPlugin) {
     linkSetup(plugin)
     restSetup(plugin)
     cmdSetup(plugin)
+    tplSetup(plugin)
 
     plugin.registerCommand("GotoFirstChar", gotoFirstChar, {sync: false})
 };

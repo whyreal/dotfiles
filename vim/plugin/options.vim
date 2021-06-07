@@ -20,7 +20,7 @@ set autowrite
 set clipboard=unnamed
 set colorcolumn=+0
 set completeopt=menuone,noinsert,noselect
-set cursorline
+"set cursorline
 set fileencodings=utf-8,gbk,ucs-bom,cp936,gb18030,big5,latin1
 set foldlevel=0
 set foldlevelstart=0

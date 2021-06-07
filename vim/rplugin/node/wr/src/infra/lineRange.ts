@@ -9,9 +9,16 @@ export function freshRange(lines: string[], lineRange: Range) {
     api.buffer.setLines(lines,
                         { start: lineRange.start[0],
                             end: lineRange.end[0] + 1, strictIndexing: false}
-                       )
+    )
 }
-async function newLineRange(start: Cursor, end: Cursor, c?: Cursor): Promise<Range> {
+export function appendRange(lines:string[], lineRange: Range) {
+    const api = cxt.api!
+    api.buffer.setLines(lines,
+                        { start: lineRange.end[0] + 1,
+                            end: lineRange.end[0] + 1, strictIndexing: false}
+    )
+}
+export async function newLineRange(start: Cursor, end: Cursor, c?: Cursor): Promise<Range> {
     const api = cxt.api!
     const cursor = c || await getCursor()
     const encoding = await api.getOption("encoding") as BufferEncoding
@@ -75,6 +82,7 @@ export async function getVisualLineRange(): Promise<Range> {
     const end = await getPos('>')
     return newLineRange(start, end)
 }
+
 export type WrapType = "Inner" | "All"
 
 export async function getWrapRange(type: WrapType, left: string, right: string) {

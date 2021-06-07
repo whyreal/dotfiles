@@ -18,7 +18,3 @@ command Sshconfig tabe ~/.ssh/config
 " shadowsocks config
 command Ssconfig tabe ~/.ShadowsocksX/user-rule.txt
 au BufWritePost ~/.ShadowsocksX/user-rule.txt !update_ss_config.sh
-
-" Template
-command -range TemplateSet lua require[[wr.Range]]:newFromVisual():tplSet()
-command -range TemplateRender lua require[[wr.Range]]:newFromVisual():tplRender()
