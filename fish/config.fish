@@ -1,9 +1,10 @@
+set -x EDITOR 'nvim'
+
 alias r='open -R'
 alias e='open -e'
 alias s='ssh'
-alias d='cd "/Users/Real/Documents/Notes/" && vim'
+alias d='cd "/Users/Real/Documents/Notes/" && $EDITOR'
 alias o='open'
-alias o.notes='cd ~/Documents/vim-workspace/docs && $EDITOR'
 alias drawio='open -a draw.io.app'
 
 alias ....='cd ../../..'
@@ -12,8 +13,9 @@ alias ...='cd ../..'
 alias pwgen='pwgen -r0oOiIlL'
 alias grep='grep --color'
 alias ssh-with-password='ssh -F /dev/null -o "PreferredAuthentications=keyboard-interactive,password"'
-alias mysql='mysql --default-auth=mysql_native_password'
-alias mysql8='command mysql'
+# alias mysql='mysql --default-auth=mysql_native_password'
+# alias mysql8='command mysql'
+alias mysql='mycli'
 alias mysqldump='mysqldump --column-statistics=0'
 alias mysqldump8='command mysqldump'
 alias tl='python3 ~/code/translator/translator.py'
@@ -22,8 +24,6 @@ alias secp='copy_remote_screen_message_content_to_local_clipboard'
 alias sqlplus='rlwrap sqlplus'
 alias telnet='nc -vz -w 1'
 alias tmux='command tmux attach || command tmux'
-
-set -x EDITOR 'nvim'
 
 set -x LANG "en_US.UTF-8"
 
@@ -61,13 +61,16 @@ set -g fish_user_paths "$HOME/.yarn/bin" $fish_user_paths
 set -g fish_user_paths "$HOME/.config/yarn/global/node_modules/.bin" $fish_user_paths
 
 # python
-set -g fish_user_paths "/Users/Real/Library/Python/3.8/bin" $fish_user_paths
+set -g fish_user_paths "/Users/Real/Library/Python/3.9/bin" $fish_user_paths
 
 # rustlang
 set -g fish_user_paths "$HOME/.cargo/bin" $fish_user_paths
 
 # neovim
 set -g fish_user_paths "/usr/local/nvim-osx64/bin/" $fish_user_paths
+
+# rclone
+set -g fish_user_paths "/usr/local/rclone/" $fish_user_paths
 
 function proxy.ss.active
     git config --global http.proxy 127.0.0.1:1087
@@ -138,5 +141,5 @@ end
 set -g fish_user_paths "/usr/local/opt/curl/bin" $fish_user_paths
 
 # FZF Tab Completions (https://github.com/jethrokuan/fzf/wiki/FZF-Tab-Completions)
-set -U FZF_COMPLETE 3
+#set -U FZF_COMPLETE 0
 

@@ -5,6 +5,10 @@ call plug#begin()
 "call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-sensible'
 
+"k8s
+Plug 'rottencandy/vimkubectl'
+Plug 'andrewstuart/vim-kubernetes'
+
 " git
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -24,6 +28,8 @@ Plug 'wizicer/vim-jison', {'frozen': 1}
 Plug 'wgwoods/vim-systemd-syntax', {'frozen': 1}
 Plug 'plasticboy/vim-markdown', {'frozen': 1}
 
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
+
 " Translator
 Plug 'voldikss/vim-translator', {'frozen': 1}
 
@@ -36,6 +42,12 @@ Plug 'scrooloose/nerdcommenter', {'frozen': 1}
 Plug 'junegunn/vim-easy-align', {'frozen': 1}
 
 Plug 'tpope/vim-surround', {'frozen': 1}
+
+" 输入法切换
+" [smartim](https://github.com/ybian/smartim)
+" use [macism](https://github.com/laishulu/macism/) as Input Source Manager
+	" 其他切换工具切换书输入法后无法正常使用
+Plug 'ybian/smartim', {'frozen':1, 'do': 'cp /usr/local/bin/macism plugin/im-select'}
 
 "coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -50,3 +62,15 @@ filetype plugin indent on
 lua require("GInit")
 
 au VimEnter * let g:workspace=$PWD
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+    -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+    ensure_installed = "maintained",
+    ignore_install = {}, -- List of parsers to ignore installing
+    highlight = {
+        enable = true,              -- false will disable the whole extension
+        disable = {},  -- list of language that will be disabled
+    },
+}
+EOF

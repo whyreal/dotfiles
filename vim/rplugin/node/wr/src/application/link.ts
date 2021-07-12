@@ -88,11 +88,11 @@ async function detectUrl(): Promise<string> {
     return ""
 }
 
-type Opener = "vim" | "browser" | "system" | "hash"
+type Opener = "vim" | "browser" | "system" | "hash" | "netrw"
 
 type UrlWithOpener = {
     url: URL
-    opener: "vim" | "browser" | "system"
+    opener: "vim" | "browser" | "system" | "netrw"
 } | {
     url: string
     opener: "hash"
@@ -106,6 +106,9 @@ async function parseUrl(txt: string): Promise<UrlWithOpener> {
         if (txt.startsWith("workspace://")) {
             url = new URL(txt.replace(/^workspace:\/+/, "file:///"))
             url.pathname = path.join((await api.getVar("workspace")).toString(), url.pathname)
+        } else if (txt.startsWith("scp://")) {
+            url = new URL(txt)
+            opener = "netrw"
         } else {
             url = new URL(txt)
             opener = "browser"
@@ -155,6 +158,9 @@ async function openURL() {
             break;
         case "hash":
             gotoHeader(uo.url)
+            break;
+        case "netrw":
+            await api.command(`edit ${uo.url.href}`);
             break;
         default:
             break;

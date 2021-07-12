@@ -29,7 +29,7 @@ set hidden
 set ignorecase
 set laststatus=2
 set modeline
-set modelines=1
+"set modelines=1
 set mouse=a
 set previewheight=8
 set shortmess=filnxtToOFc
