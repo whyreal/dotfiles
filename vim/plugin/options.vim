@@ -31,7 +31,7 @@ set laststatus=2
 set modeline
 "set modelines=1
 set mouse=a
-set previewheight=8
+"set previewheight=8
 set shortmess=filnxtToOFc
 set smartcase
 set splitbelow
@@ -41,7 +41,7 @@ set breakindent
 set breakindentopt=shift:0
 set nolinebreak
 set sts=4 ts=4 sw=4 et
-set nu relativenumber
+"set nu relativenumber
 
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim
@@ -74,7 +74,7 @@ else
 endif
 
 let g:projects = { 
-            \ "Notes": "~/Documents/Notes/",
+            \ "DocBase": "~/Documents/DocBase/",
             \ "Downloads": "~/Downloads",
             \ "Dotfile": "~/code/whyreal/dotfiles/",
             \ "Vimconfig": "~/code/whyreal/dotfiles/vim/"

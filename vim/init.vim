@@ -6,21 +6,22 @@ call plug#begin()
 Plug 'tpope/vim-sensible'
 
 "k8s
-Plug 'rottencandy/vimkubectl'
-Plug 'andrewstuart/vim-kubernetes'
+"Plug 'rottencandy/vimkubectl'
+"Plug 'andrewstuart/vim-kubernetes'
 
 " git
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'junegunn/gv.vim'
+"Plug 'tpope/vim-fugitive'
+"Plug 'airblade/vim-gitgutter'
+"Plug 'junegunn/gv.vim'
 
 " fzf
-Plug 'junegunn/fzf', {'do': ':call fzf#install()'}
-Plug 'junegunn/fzf.vim', {}
+"Plug 'junegunn/fzf', {'do': ':call fzf#install()'}
+"Plug 'junegunn/fzf.vim', {}
 
 Plug 'NLKNguyen/papercolor-theme', {'frozen': 1}
 Plug 'challenger-deep-theme/vim', {'frozen': 1}
 Plug 'altercation/vim-colors-solarized', {'frozen': 1}
+
 Plug 'Glench/Vim-Jinja2-Syntax', {'frozen': 1}
 Plug 'neoclide/jsonc.vim', {'frozen': 1}
 Plug 'dag/vim-fish', {'frozen': 1}
@@ -47,7 +48,7 @@ Plug 'tpope/vim-surround', {'frozen': 1}
 " [smartim](https://github.com/ybian/smartim)
 " use [macism](https://github.com/laishulu/macism/) as Input Source Manager
 	" 其他切换工具切换书输入法后无法正常使用
-Plug 'ybian/smartim', {'frozen':1, 'do': 'cp /usr/local/bin/macism plugin/im-select'}
+"Plug 'ybian/smartim', {'frozen':1, 'do': 'cp /usr/local/bin/macism plugin/im-select'}
 
 "coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}

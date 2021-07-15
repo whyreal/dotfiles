@@ -137,7 +137,8 @@ export function codeBlockCreateFromCodeLineScan(lineRange: Range) {
         cla.push(replace(line.txt.replace(/`/g, "")))
         if (index == 0) {
             cla.push(insert([indent + "```"]))
-        } else if (index == lineRange.lineCount - 1) {
+        }
+        if (index == lineRange.lineCount - 1) {
             cla.push(append([indent + "```"]))
         }
         actions.set(line.ln, cla)

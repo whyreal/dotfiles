@@ -1,12 +1,12 @@
-nmap j gj
-nmap k gk
-xmap j gj
-xmap k gk
+"nmap j gj
+"nmap k gk
+"xmap j gj
+"xmap k gk
 imap kk <ESC>
 
 "use s for folding
-nmap s z
-nmap ss zz
+"nmap s z
+"nmap ss zz
 
 nmap <leader>bp <cmd>bprevious<CR>
 nmap <leader>bn <cmd>bnext<CR>

@@ -3,7 +3,7 @@ set -x EDITOR 'nvim'
 alias r='open -R'
 alias e='open -e'
 alias s='ssh'
-alias d='cd "/Users/Real/Documents/Notes/" && $EDITOR'
+alias d='cd "/Users/Real/Documents/DocBase/" && $EDITOR'
 alias o='open'
 alias drawio='open -a draw.io.app'
 

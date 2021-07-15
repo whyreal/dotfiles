@@ -12,4 +12,5 @@
   "java.home": "/Library/Java/JavaVirtualMachines/jdk-11.0.11+9/Contents/Home",
   "java.autobuild.enabled": false,
   "vetur.ignoreProjectWarning": true,
+  "list.height": 30,
 }
