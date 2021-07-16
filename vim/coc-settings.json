@@ -13,4 +13,5 @@
   "java.autobuild.enabled": false,
   "vetur.ignoreProjectWarning": true,
   "list.height": 30,
+  "smartf.timeout": 2000
 }

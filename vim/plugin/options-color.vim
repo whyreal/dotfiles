@@ -11,4 +11,6 @@ colorscheme PaperColor
 
 highlight Normal guibg=NONE
 highlight Normal ctermbg=NONE
+highlight NonText guibg=NONE
+highlight NonText ctermbg=NONE
 

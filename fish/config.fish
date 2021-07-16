@@ -1,5 +1,7 @@
 set -x EDITOR 'nvim'
 
+alias ls='exa'
+alias cat='bat'
 alias r='open -R'
 alias e='open -e'
 alias s='ssh'
@@ -115,11 +117,20 @@ function oracle.env.gb2312
     echo export NLS_LANG=AMERICAN_AMERICA.ZHS16GBK
 end
 
+#function z
+    #if test -z $argv[1]
+        #_zlua -I .
+    #else
+        #_zlua -I $argv
+    #end
+#end
+
+zoxide init fish | source
 function z
     if test -z $argv[1]
-        _zlua -I .
+        __zoxide_zi
     else
-        _zlua -I $argv
+        __zoxide_z $argv
     end
 end
 
