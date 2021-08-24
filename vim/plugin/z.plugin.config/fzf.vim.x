@@ -1,3 +1,4 @@
+" vim: ft=vim
 let g:fzf_preview_window = ['right:50%:hidden', 'alt-p']
 
 nmap <leader>fm :Marks<CR>

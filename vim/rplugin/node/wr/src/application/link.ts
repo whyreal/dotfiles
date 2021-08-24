@@ -127,7 +127,9 @@ async function parseUrl(txt: string): Promise<UrlWithOpener> {
 
     if (url.protocol == "file:") {
         const mime = lookup(url.pathname)
-        if (mime && mime.startsWith("text")) {
+        if (mime &&
+            (mime.startsWith("text")
+                || ["application/x-sh", "application/x-sql"].includes(mime))) {
             opener = "vim"
         }
     }

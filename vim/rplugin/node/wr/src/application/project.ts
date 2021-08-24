@@ -20,4 +20,5 @@ async function gotoProject(p: string) {
     const api = cxt.api!
     const projects = await api.getVar("projects") as {[key: string]: string}
     api.command(`Explore ${projects[p]}`)
+    api.command(`lcd ${projects[p]}`)
 }

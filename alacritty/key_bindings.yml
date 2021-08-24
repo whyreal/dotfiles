@@ -78,4 +78,5 @@ key_bindings:
   - { key: Equals,    mods: Alt,       chars: "\x1b="                       } # Alt + =    
   - { key: LBracket,    mods: Alt,       chars: "\x1b["                       } # Alt + [            
   - { key: RBracket,    mods: Alt,       chars: "\x1b]"                       } # Alt + ]    
+  - { key: Back, action:  ReceiveChar}
 

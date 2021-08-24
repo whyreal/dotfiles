@@ -10,9 +10,9 @@ Plug 'tpope/vim-sensible'
 "Plug 'andrewstuart/vim-kubernetes'
 
 " git
-"Plug 'tpope/vim-fugitive'
-"Plug 'airblade/vim-gitgutter'
-"Plug 'junegunn/gv.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/gv.vim'
 
 " fzf
 "Plug 'junegunn/fzf', {'do': ':call fzf#install()'}
@@ -28,17 +28,15 @@ Plug 'dag/vim-fish', {'frozen': 1}
 Plug 'wizicer/vim-jison', {'frozen': 1}
 Plug 'wgwoods/vim-systemd-syntax', {'frozen': 1}
 Plug 'plasticboy/vim-markdown', {'frozen': 1}
+Plug 'pprovost/vim-ps1', {'frozen': 1}
 
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
+Plug 'nvim-treesitter/nvim-treesitter', { 'branch': '0.5-compat', 'do': ':TSUpdate' }
 
 " Translator
 Plug 'voldikss/vim-translator', {'frozen': 1}
 
 " 注释
 Plug 'scrooloose/nerdcommenter', {'frozen': 1}
-" outline
-"Plug 'vim-voom/VOoM', {'frozen': 1}
-"Plug 'preservim/tagbar', {'frozen': 1, 'do': ':lua tagbar()'}
 " 对齐
 Plug 'junegunn/vim-easy-align', {'frozen': 1}
 
@@ -52,9 +50,6 @@ Plug 'tpope/vim-surround', {'frozen': 1}
 
 "coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-Plug 'posva/vim-vue'
-
 call plug#end()
 
 syntax on
@@ -63,6 +58,10 @@ filetype plugin indent on
 lua require("GInit")
 
 au VimEnter * let g:workspace=$PWD
+
+" 根据焦点变化自动保存或读取文件
+au FocusGained,BufEnter * :silent! !
+au FocusLost,WinLeave * :silent! w
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {

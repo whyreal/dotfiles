@@ -15,7 +15,11 @@ nmap <leader>w  <cmd>w<CR>
 nmap <a-=> <cmd>split term://$SHELL<CR>
 nmap <leader>bo <c-^>
 
-nmap <leader>ve <cmd>Explore<cr>
+nmap <leader>e <cmd>Explore<cr>
+nmap <leader>te <cmd>Texplore<cr>
+nmap <leader>se <cmd>Sexplore<cr>
+nmap <leader>ve <cmd>Vexplore<cr>
+
 tmap <c-o> <c-\><c-n>
 
 nmap 0 <cmd>GotoFirstChar<CR>

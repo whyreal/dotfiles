@@ -150,7 +150,7 @@ end
 #end
 
 set -g fish_user_paths "/usr/local/opt/curl/bin" $fish_user_paths
+set -g fish_user_paths "/usr/local/opt/ncurses/bin" $fish_user_paths
 
 # FZF Tab Completions (https://github.com/jethrokuan/fzf/wiki/FZF-Tab-Completions)
 #set -U FZF_COMPLETE 0
-

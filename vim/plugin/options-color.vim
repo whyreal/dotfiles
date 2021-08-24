@@ -2,9 +2,12 @@ if getenv("TERM_PROGRAM") == "tmux" || getenv("LC_TERMINAL") == "iTerm2" || gete
     set termguicolors
 endif
 
-set background=light
-if has("gui_vimr") || getenv("TERM_PROGRAM") == "vscode"
+set background=dark
+if has("gui_vimr")
     set background=light
+endif
+if getenv("TERM_PROGRAM") == "vscode"
+    "set background=light
 endif
 
 colorscheme PaperColor

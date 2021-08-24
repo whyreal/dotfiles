@@ -47,9 +47,9 @@ omap <buffer> ib :<C-U>call SelectWrapRange("Inner", "**", "**")<CR>
 
 " Italic object
 xmap <buffer> ai :<C-U>call SelectWrapRange("All", "*", "*")<CR>
-xmap <buffer> ai :<C-U>call SelectWrapRange("Inner", "*", "*")<CR>
+xmap <buffer> ii :<C-U>call SelectWrapRange("Inner", "*", "*")<CR>
 omap <buffer> ai :<C-U>call SelectWrapRange("All", "*", "*")<CR>
-omap <buffer> ai :<C-U>call SelectWrapRange("Inner", "*", "*")<CR>
+omap <buffer> ii :<C-U>call SelectWrapRange("Inner", "*", "*")<CR>
 
 " Italic object
 xmap <buffer> ac :<C-U>call SelectWrapRange("All", "`", "`")<CR>
@@ -57,9 +57,24 @@ xmap <buffer> ac :<C-U>call SelectWrapRange("Inner", "`", "`")<CR>
 omap <buffer> ac :<C-U>call SelectWrapRange("All", "`", "`")<CR>
 omap <buffer> ac :<C-U>call SelectWrapRange("Inner", "`", "`")<CR>
 
+command Typora  execute 'silent !open -a "Typora.app" %:S'
+command! -nargs=0 Md2doc !md2doc %
+
 function MdUnescape() abort
 	%s/\\\([\[\]\.\-\*\~\!\#\_\=\+]\)/\1/g
 	%s/  $//ge
 	write
 endfunction
 command! -nargs=0 MdUnescape call MdUnescape()
+
+function DeleteBlankLine(l1, l2) abort
+    execute a:l1 . "," . a:l2 . "g/^ *$/d"
+	write
+endfunction
+command! -nargs=0 -range DeleteBlankLine call DeleteBlankLine(<line1>, <line2>)
+
+function DeleteTailBlankSpace(l1, l2) abort
+    execute a:l1 . "," . a:l2 . "s/  *$//g"
+	write
+endfunction
+command! -nargs=0 -range=% DeleteTailBlankSpace call DeleteTailBlankSpace(<line1>, <line2>)
