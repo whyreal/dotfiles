@@ -11,7 +11,7 @@ export function freshRange(lines: string[], lineRange: Range) {
                             end: lineRange.end[0] + 1, strictIndexing: false}
     )
 }
-export function appendRange(lines:string[], lineRange: Range) {
+export function appendRange(lines: string[], lineRange: Range) {
     const api = cxt.api!
     api.buffer.setLines(lines,
                         { start: lineRange.end[0] + 1,

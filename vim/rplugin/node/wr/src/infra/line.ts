@@ -34,7 +34,7 @@ export async function getLine(nr?: number): Promise<Line> {
         }
     }
 }
-export async function fetchRequestLines() {
+export async function fetchRestLines() {
     const api = cxt.api!
     const reqLines: string[] = []
     const lines = await api.buffer.lines

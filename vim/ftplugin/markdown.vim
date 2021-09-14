@@ -9,53 +9,63 @@ set foldclose=all
 let g:tagbar_sort=0
 let g:vim_markdown_no_default_key_mappings=1
 
-xmap <buffer> <LocalLeader>nl :<C-U>ListCreate<CR>
-xmap <buffer> <LocalLeader>no :<C-U>OrderListCreate<CR>
-xmap <buffer> <LocalLeader>dl :<C-U>ListDelete<CR>
+xmap <buffer> <LocalLeader>nl <Plug>(coc-markdown-create-list)
+xmap <buffer> <LocalLeader>no <Plug>(coc-markdown-create-orderlist)
+xmap <buffer> <LocalLeader>dl <Plug>(coc-markdown-delete-list)
 
 " header
-nmap <buffer> <a-[> :MdHeaderLevelUp<CR>
-nmap <buffer> <a-]> :MdHeaderLevelDown<CR>
-xmap <buffer> <a-[> :MdHeaderLevelUpRange<CR>
-xmap <buffer> <a-]> :MdHeaderLevelDownRange<CR>
+nmap <buffer> <a-[> <Plug>(coc-markdown-header-level-up)
+nmap <buffer> <a-]> <Plug>(coc-markdown-header-level-down)
+xmap <buffer> <a-[> <Plug>(coc-markdown-header-level-up-range)
+xmap <buffer> <a-]> <Plug>(coc-markdown-header-level-down-range)
 
 " open Link
 nmap <buffer> gf gx
-nmap <buffer> gx <cmd>OpenURL<CR>
+nmap <buffer> gx <cmd>CocCommand OpenURL<CR>
 " resolv file in Finder
-nmap <buffer> gr <cmd>RevealURL<CR>
+nmap <buffer> gr <cmd>CocCommand RevealURL<CR>
 " copy id (joplin) or path (local , path ...)
-nmap <buffer> gy <cmd>CopyURL<CR>
+nmap <buffer> gy <cmd>CocCommand CopyURL<CR>
 
 " Toggle Bold
-nmap <buffer> <LocalLeader>b :call ToggleWordWrapWith("**", "**")<CR>
-xmap <buffer> <LocalLeader>b :ToggleRangeWrapWith ** **<CR>
+nmap <buffer> <LocalLeader>b <Plug>(coc-wrap-bold-word)
+vmap <buffer> <LocalLeader>b <Plug>(coc-wrap-bold-range)
+
+" Toggle strike through
+nmap <buffer> <LocalLeader>s <Plug>(coc-wrap-strikethrough-word)
+xmap <buffer> <LocalLeader>s <Plug>(coc-wrap-strikethrough-range)
 
 " Toggle Italic
-nmap <buffer> <LocalLeader>i :call ToggleWordWrapWith("*", "*")<CR>
-xmap <buffer> <LocalLeader>i :ToggleRangeWrapWith * *<CR>
+nmap <buffer> <LocalLeader>i <Plug>(coc-wrap-italic-word)
+xmap <buffer> <LocalLeader>i <Plug>(coc-wrap-italic-range)
 
 " Toggle Inline code
-nmap <buffer> <LocalLeader>c :call ToggleWordWrapWith("`", "`")<CR>
-xmap <buffer> <LocalLeader>c  :ToggleRangeWrapWith ` `<CR>
+nmap <buffer> <LocalLeader>c <Plug>(coc-wrap-code-word)
+xmap <buffer> <LocalLeader>c <Plug>(coc-wrap-code-range)
 
 " Bold object
-xmap <buffer> ab :<C-U>call SelectWrapRange("All", "**", "**")<CR>
-xmap <buffer> ib :<C-U>call SelectWrapRange("Inner", "**", "**")<CR>
-omap <buffer> ab :<C-U>call SelectWrapRange("All", "**", "**")<CR>
-omap <buffer> ib :<C-U>call SelectWrapRange("Inner", "**", "**")<CR>
+xmap <buffer> ab <Plug>(coc-v-range-select-bold-all)
+xmap <buffer> ib <Plug>(coc-v-range-select-bold-inner)
+omap <buffer> ab <Plug>(coc-o-range-select-bold-all)
+omap <buffer> ib <Plug>(coc-o-range-select-bold-inner)
 
 " Italic object
-xmap <buffer> ai :<C-U>call SelectWrapRange("All", "*", "*")<CR>
-xmap <buffer> ii :<C-U>call SelectWrapRange("Inner", "*", "*")<CR>
-omap <buffer> ai :<C-U>call SelectWrapRange("All", "*", "*")<CR>
-omap <buffer> ii :<C-U>call SelectWrapRange("Inner", "*", "*")<CR>
+xmap <buffer> ai <Plug>(coc-v-range-select-italic-all)
+xmap <buffer> ii <Plug>(coc-v-range-select-italic-inner)
+omap <buffer> ai <Plug>(coc-o-range-select-italic-all)
+omap <buffer> ii <Plug>(coc-o-range-select-italic-inner)
 
-" Italic object
-xmap <buffer> ac :<C-U>call SelectWrapRange("All", "`", "`")<CR>
-xmap <buffer> ac :<C-U>call SelectWrapRange("Inner", "`", "`")<CR>
-omap <buffer> ac :<C-U>call SelectWrapRange("All", "`", "`")<CR>
-omap <buffer> ac :<C-U>call SelectWrapRange("Inner", "`", "`")<CR>
+" code object
+xmap <buffer> ac <Plug>(coc-v-range-select-code-all)
+xmap <buffer> ic <Plug>(coc-v-range-select-code-inner)
+omap <buffer> ac <Plug>(coc-o-range-select-code-all)
+omap <buffer> ic <Plug>(coc-o-range-select-code-inner)
+
+" strikethrough object
+xmap <buffer> as <Plug>(coc-v-range-select-strikethrough-all)
+xmap <buffer> is <Plug>(coc-v-range-select-strikethrough-inner)
+omap <buffer> as <Plug>(coc-o-range-select-strikethrough-all)
+omap <buffer> is <Plug>(coc-o-range-select-strikethrough-inner)
 
 command Typora  execute 'silent !open -a "Typora.app" %:S'
 command! -nargs=0 Md2doc !md2doc %
@@ -77,4 +87,5 @@ function DeleteTailBlankSpace(l1, l2) abort
     execute a:l1 . "," . a:l2 . "s/  *$//g"
 	write
 endfunction
+
 command! -nargs=0 -range=% DeleteTailBlankSpace call DeleteTailBlankSpace(<line1>, <line2>)

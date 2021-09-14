@@ -6,8 +6,11 @@ import {currentHeaderLine} from "../infra/line";
 import { decode } from "urlencode";
 import {NvimPlugin} from "neovim";
 import {cxt} from "../infra/env";
-import {getCursor, setCursor} from "../infra/cursor";
+import {setCursor} from "../infra/cursor";
 import {Line} from "../domain/line";
+import {getLineAtCursor} from "../infra/lineRange";
+import {Range} from "../domain/range";
+import {upload} from "../infra/picgo"
 
 export function setup(plugin: NvimPlugin) {
     plugin.registerCommand("OpenURL", openURL, {sync: false})
@@ -17,26 +20,30 @@ export function setup(plugin: NvimPlugin) {
     plugin.registerCommand("CopyHeaderLink", copyHeaderLink, {sync: false})
     plugin.registerCommand("CopyWorkSpaceLinkWithHeader", copyWorkSpaceLinkWithHeader, {sync: false})
     plugin.registerCommand("CopyWorkSpaceLink", copyWorkSpaceLink, {sync: false})
+
+    plugin.registerCommand("ImgUpload", imgUpload, {sync: false})
 }
-async function detectUrl(): Promise<string> {
-    const api = cxt.api!
-    const line = await api.getLine()
-    const cursor = await getCursor()
+async function detectLink(): Promise<Range> {
+    const line = await getLineAtCursor()
+    const cursor = line.cursor
+    const txt = line.lines[0].txt
 
     // [txt](url "title")
     let link = new RegExp(
-        /\[[^\[\]]*\]/.source // [txt]
-        + /\(([^\(\)"]*)/.source // (url
+        /(\[[^\[\]]*\]\()/.source // [txt](
+        + /([^\(\)"]*)/.source // url
         + /(?:\s*"[^"]*")?\)/.source // "title")
         , 'g')
 
-    let matched = line.matchAll(link);
+    let matched = txt.matchAll(link);
     for (const i of matched) {
         if (typeof i.index == "undefined") {
             break
         }
         if (cursor[1] >= i.index && cursor[1] <= i.index + i[0].length) {
-            return i[1]
+            line.start = [cursor[0], i.index + i[1].length]
+            line.end = [cursor[0], i.index + i[1].length + i[2].length]
+            return line
         }
     }
 
@@ -45,13 +52,15 @@ async function detectUrl(): Promise<string> {
         /<([^<>]*)>/.source //<link>
         , "g")
 
-    matched = line.matchAll(link);
+    matched = txt.matchAll(link);
     for (const i of matched) {
         if (typeof i.index == "undefined") {
             break
         }
         if (cursor[1] >= i.index && cursor[1] <= i.index + i[0].length) {
-            return i[1]
+            line.start = [cursor[0], i.index + 1]
+            line.end = [cursor[0], i.index + 1 + i[1].length]
+            return line
         }
     }
 
@@ -60,13 +69,15 @@ async function detectUrl(): Promise<string> {
         /src="([^"]*)"/
         , "g")
 
-    matched = line.matchAll(link);
+    matched = txt.matchAll(link);
     for (const i of matched) {
         if (typeof i.index == "undefined") {
             break
         }
         if (cursor[1] >= i.index && cursor[1] <= i.index + i[0].length) {
-            return i[1]
+            line.start = [cursor[0], i.index + 4]
+            line.end = [cursor[0], i.index + 4 + i[1].length]
+            return line
         }
     }
 
@@ -75,17 +86,19 @@ async function detectUrl(): Promise<string> {
         /(\S+)/
         , "g")
 
-    matched = line.matchAll(link);
+    matched = txt.matchAll(link);
     for (const i of matched) {
         if (typeof i.index == "undefined") {
             break
         }
         if (cursor[1] >= i.index && cursor[1] <= i.index + i[0].length) {
-            return i[1]
+            line.start = [cursor[0], i.index]
+            line.end = [cursor[0], i.index + i[0].length]
+            return line
         }
     }
 
-    return ""
+    return line
 }
 
 type Opener = "vim" | "browser" | "system" | "hash" | "netrw"
@@ -140,8 +153,9 @@ async function parseUrl(txt: string): Promise<UrlWithOpener> {
 }
 async function openURL() {
     const api = cxt.api!
-    const urltxt = await detectUrl()
-    const uo = await parseUrl(urltxt)
+    const link = await detectLink()
+    const url = link.lines[0].txt.substr(link.start[1], link.end[1] - link.start[1])
+    const uo = await parseUrl(url)
     let path: string = ""
     switch (uo.opener) {
         case "vim":
@@ -170,8 +184,9 @@ async function openURL() {
 }
 async function revealURL() {
     const api = cxt.api!
-    const urltxt = await detectUrl()
-    const uo = await parseUrl(urltxt)
+    const link = await detectLink()
+    const url = link.lines[0].txt.substr(link.start[1], link.end[1] - link.start[1])
+    const uo = await parseUrl(url)
 
     switch (uo.opener) {
         case "vim":
@@ -185,8 +200,9 @@ async function revealURL() {
 }
 async function copyURL() {
     const api = cxt.api!
-    const urltxt = await detectUrl()
-    const uo = await parseUrl(urltxt)
+    const link = await detectLink()
+    const url = link.lines[0].txt.substr(link.start[1], link.end[1] - link.start[1])
+    const uo = await parseUrl(url)
 
     switch (uo.opener) {
         case "hash":
@@ -238,4 +254,34 @@ async function gotoHeader(hash: string) {
             await api.command("normal! zO")
         }
     })
+}
+
+async function imgUpload(url: string | undefined) {
+    if (url == undefined) {
+        const link = await detectLink()
+        url = link.lines[0].txt.substr(link.start[1], link.end[1] - link.start[1])
+    }
+
+    const suffix = /\.(png|jpg|jpeg|webp|gif|bmp|tiff|ico)$/;
+    if (!suffix.test(url)) {
+        return null
+    }
+
+    // remote 
+    if (url.startsWith("http")) {
+        return upload(url)
+    }
+
+    // local
+    if (!url.startsWith("/")) {
+
+    }
+
+    //url = path.isAbsolute(url) ? url : path.join(Uri.parse(doc.uri).fsPath, '../', url);
+    //if (fs.existsSync(result)) {
+        //return vspicgo.upload([result]);
+    //} else {
+        //return workspace.showMessage('No such image.' + result);
+    //}
+    return upload(url)
 }

@@ -1,6 +1,6 @@
-nmap <leader>ff :CocList files<CR>
-nmap <leader>fb :CocList buffers<CR>
-nmap <leader>fr :CocList mru<CR>
+nmap <space>lf :CocList files<CR>
+nmap <space>lb :CocList buffers<CR>
+nmap <space>lr :CocList mru<CR>
 
 function CocListOpenWith(coc_list_context, cmd)
   let list_name = a:coc_list_context["name"]

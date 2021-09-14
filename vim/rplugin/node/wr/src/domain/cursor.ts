@@ -1,2 +1,3 @@
-export type Cursor = [number, number]
-
+type x = number
+type y = number
+export type Cursor = [x, y]

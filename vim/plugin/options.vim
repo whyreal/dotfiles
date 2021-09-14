@@ -72,10 +72,3 @@ if has("patch-8.1.1564")
 else
   set signcolumn=yes
 endif
-
-let g:projects = { 
-            \ "DocBase": "~/Documents/DocBase/",
-            \ "Downloads": "~/Downloads",
-            \ "Dotfile": "~/code/whyreal/dotfiles/",
-            \ "Vimconfig": "~/code/whyreal/dotfiles/vim/"
-            \ }

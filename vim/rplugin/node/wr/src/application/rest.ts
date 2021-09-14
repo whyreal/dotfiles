@@ -1,7 +1,7 @@
 import {sendToTmux as sendCmd} from "../infra/tmux";
 import { NvimPlugin } from "neovim";
 import {HttpRequest, parseHttpRequest} from "../domain/rest";
-import {fetchRequestLines} from "../infra/line";
+import {fetchRestLines} from "../infra/line";
 import {always, ap, cond, curry, has, join, map, of, pipe, prop, T} from "ramda";
 
 export function setup(plugin: NvimPlugin) {
@@ -9,7 +9,7 @@ export function setup(plugin: NvimPlugin) {
 }
 
 function restSendRequest() {
-    fetchRequestLines().then(pipe(
+    fetchRestLines().then(pipe(
         join("\n"),
         parseHttpRequest,
         getCurlCmd,

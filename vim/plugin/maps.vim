@@ -22,10 +22,10 @@ nmap <leader>ve <cmd>Vexplore<cr>
 
 tmap <c-o> <c-\><c-n>
 
-nmap 0 <cmd>GotoFirstChar<CR>
+nmap 0 <Plug>(coc-goto-first)
 
-nmap <leader>tt <cmd>CmdSendLine<CR>
-xmap <leader>tt <cmd>CmdSendRange<CR>
+nmap <leader>tt <Plug>(coc-command-send-line)
+xmap <leader>tt <Plug>(coc-command-send-range)
 
 nmap <c-d> <c-d>zz
 nmap <c-u> <c-u>zz

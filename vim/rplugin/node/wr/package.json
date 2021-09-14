@@ -1,16 +1,13 @@
 {
-  "name": "nvim-example",
+  "name": "wr-example",
   "version": "1.0.0",
-  "description": "An example node plugin",
-  "main": "lib/input/setup.js",
+  "description": "",
+  "main": "lib/index.js",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/neovim/node-client.git"
-  },
   "scripts": {
     "update-peg": "tspeg src/peg/httpRequest.peg src/peg/httpRequest.ts",
-    "deploy": "tsc && nvim --headless +UpdateRemotePlugins +quit"
+    "deploy": "rm -rf lib && tsc && nvim --headless +UpdateRemotePlugins +quit",
+    "clean": "rm -rf lib"
   },
   "devDependencies": {
     "@types/mime-types": "^2.1.0",
@@ -22,6 +19,7 @@
   "dependencies": {
     "eta": "^1.12.1",
     "mime-types": "^2.1.30",
+    "monet": "^0.9.2",
     "ramda": "^0.27.1",
     "urlencode": "^1.1.0"
   }

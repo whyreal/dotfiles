@@ -1,4 +1,5 @@
 {
+  "coc.preferences.extensionUpdateCheck": "daily",
   "coc.preferences.colorSupport": true,
   "suggest.floatEnable": true,
   "suggest.maxCompleteItemCount": 20,
@@ -6,16 +7,24 @@
   "json.enable":true,
   "json.format.enable":true,
   "diagnostic.enable": true,
-  "Lua.diagnostics.globals": ["vim", "setfenv"],
-  "Lua.runtime.version": "Lua 5.1",
-  "javascript.suggestionActions.enabled": false,
-  "java.home": "/Library/Java/JavaVirtualMachines/jdk-11.0.11+9/Contents/Home",
-  "java.autobuild.enabled": false,
-  "vetur.ignoreProjectWarning": true,
   "list.height": 30,
   "smartf.timeout": 2000,
   "list.insertMappings": {
     "<A-x>": "call:OpenWithSystemApp",
     "<A-r>": "call:OpenWithFinder"
   },
+  "picgo.dataPath": "/Users/Real/Library/Application Support/picgo/data.json",
+  "picgo.configPath": "/Users/Real/Library/Application Support/picgo/data.json",
+  "Lua.diagnostics.globals": ["vim", "setfenv"],
+  "Lua.runtime.version": "Lua 5.1",
+  "javascript.suggestionActions.enabled": false,
+  "java.home": "/Library/Java/JavaVirtualMachines/jdk-11.0.11+9/Contents/Home",
+  "java.autobuild.enabled": false,
+  "vetur.ignoreProjectWarning": true,
+  "coc-helper.projects": {
+            "DocBase": "~/Documents/DocBase/",
+            "Downloads": "~/Downloads",
+            "Dotfile": "~/code/whyreal/dotfiles/",
+            "Vimconfig": "~/code/whyreal/dotfiles/vim/"
+  }
 }

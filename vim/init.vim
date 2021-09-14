@@ -5,6 +5,8 @@ call plug#begin()
 "call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-sensible'
 
+Plug 'editorconfig/editorconfig-vim'
+
 "k8s
 "Plug 'rottencandy/vimkubectl'
 "Plug 'andrewstuart/vim-kubernetes'
@@ -17,11 +19,11 @@ Plug 'junegunn/gv.vim'
 " fzf
 "Plug 'junegunn/fzf', {'do': ':call fzf#install()'}
 "Plug 'junegunn/fzf.vim', {}
-
+" theme
 Plug 'NLKNguyen/papercolor-theme', {'frozen': 1}
 Plug 'challenger-deep-theme/vim', {'frozen': 1}
 Plug 'altercation/vim-colors-solarized', {'frozen': 1}
-
+" syntax
 Plug 'Glench/Vim-Jinja2-Syntax', {'frozen': 1}
 Plug 'neoclide/jsonc.vim', {'frozen': 1}
 Plug 'dag/vim-fish', {'frozen': 1}
@@ -29,12 +31,12 @@ Plug 'wizicer/vim-jison', {'frozen': 1}
 Plug 'wgwoods/vim-systemd-syntax', {'frozen': 1}
 Plug 'plasticboy/vim-markdown', {'frozen': 1}
 Plug 'pprovost/vim-ps1', {'frozen': 1}
+Plug 'leafgarland/typescript-vim'
 
 Plug 'nvim-treesitter/nvim-treesitter', { 'branch': '0.5-compat', 'do': ':TSUpdate' }
 
 " Translator
 Plug 'voldikss/vim-translator', {'frozen': 1}
-
 " 注释
 Plug 'scrooloose/nerdcommenter', {'frozen': 1}
 " 对齐
@@ -50,27 +52,19 @@ Plug 'tpope/vim-surround', {'frozen': 1}
 
 "coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug '~/code/whyreal/coc-helper/', {'do': 'yarn install --frozen-lockfile'}
+
+Plug 'honza/vim-snippets'
+
 call plug#end()
 
 syntax on
 filetype plugin indent on
 
-lua require("GInit")
+"lua require("GInit")
 
 au VimEnter * let g:workspace=$PWD
 
 " 根据焦点变化自动保存或读取文件
-au FocusGained,BufEnter * :silent! !
-au FocusLost,WinLeave * :silent! w
-
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-    -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-    ensure_installed = "maintained",
-    ignore_install = {}, -- List of parsers to ignore installing
-    highlight = {
-        enable = true,              -- false will disable the whole extension
-        disable = {},  -- list of language that will be disabled
-    },
-}
-EOF
+"au FocusGained,BufEnter * :silent! !
+"au FocusLost,WinLeave * :silent! w

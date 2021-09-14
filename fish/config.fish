@@ -15,16 +15,16 @@ alias ...='cd ../..'
 alias pwgen='pwgen -r0oOiIlL'
 alias grep='grep --color'
 alias ssh-with-password='ssh -F /dev/null -o "PreferredAuthentications=keyboard-interactive,password"'
+# use mycli
 # alias mysql='mysql --default-auth=mysql_native_password'
 # alias mysql8='command mysql'
-alias mysql='mycli'
 alias mysqldump='mysqldump --column-statistics=0'
 alias mysqldump8='command mysqldump'
 alias tl='python3 ~/code/translator/translator.py'
 alias ldd='otool -L'
 alias secp='copy_remote_screen_message_content_to_local_clipboard'
 alias sqlplus='rlwrap sqlplus'
-alias telnet='nc -vz -w 1'
+#alias telnet='nc -vz -w 1'
 alias tmux='command tmux attach || command tmux'
 
 set -x LANG "en_US.UTF-8"
