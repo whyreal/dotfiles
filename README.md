@@ -16,9 +16,10 @@ ln -s ~/code/whyreal/dotfiles/_tmux.conf ./.tmux.conf
 # Homebrew
 
 ```sh
-npm run install-homebrew
+/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"
 
 brew install lua lua@5.1 luajit luarocks
+
 brew install fish
 chsh -s /usr/local/bin/fish
 
@@ -29,10 +30,3 @@ brew install coreutils gnu-sed gawk
 
 brew install hammerspoon karabiner-elements
 ```
-
-# Lua
-
-```sh
-npm run install-lua-deps
-```
-

@@ -2,7 +2,7 @@ import { spawn } from "child_process";
 
 type FileType = "md" | "docx" | "pdf";
 
-class Pandoc {
+export class Pandoc {
     from: FileType;
     to: FileType;
     inputFile: string;
@@ -62,8 +62,4 @@ class Pandoc {
 
         })
     }
-}
-
-module.exports = {
-    Pandoc
 }

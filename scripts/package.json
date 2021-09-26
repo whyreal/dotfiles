@@ -4,11 +4,12 @@
   "description": "build command line env for myself",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "relink": "tsc && npm uninstall ${npm_package_name} -g; npm link",
-    "install-lua-deps": "luarocks --lua-dir=/usr/local/opt/lua@5.1 install --only-deps ./dotfiles-1.0-1.rockspec",
-    "install-brew": "/bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"",
-    "install-fisher": "curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher"
+    "lint": "eslint src --ext ts",
+    "clean": "rimraf lib",
+    "watch": "node esbuild.js --watch",
+    "build": "node esbuild.js",
+    "relink": "npm uninstall ${npm_package_name} -g; npm link",
+    "prepare": "node esbuild.js"
   },
   "bin": {
     "md2docx": "bin/md2docx.js",
@@ -19,6 +20,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^14.14.41",
+    "esbuild": "^0.13.2",
     "ramda": "^0.27.1"
   }
 }

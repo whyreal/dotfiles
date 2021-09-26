@@ -13,7 +13,7 @@ Plug 'editorconfig/editorconfig-vim'
 
 " git
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
+"Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/gv.vim'
 
 " fzf
@@ -52,7 +52,10 @@ Plug 'tpope/vim-surround', {'frozen': 1}
 
 "coc
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug '~/code/whyreal/coc-helper/', {'do': 'yarn install --frozen-lockfile'}
+Plug '~/code/whyreal/wr-coc-helper/', {'do': 'yarn install --frozen-lockfile'}
+Plug '~/code/whyreal/coc-picgo/', {'do': 'yarn install --frozen-lockfile'}
+Plug 'rafcamlet/coc-nvim-lua'
+Plug 'euclidianAce/BetterLua.vim'
 
 Plug 'honza/vim-snippets'
 
@@ -60,8 +63,6 @@ call plug#end()
 
 syntax on
 filetype plugin indent on
-
-"lua require("GInit")
 
 au VimEnter * let g:workspace=$PWD
 

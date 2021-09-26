@@ -28,3 +28,6 @@ karabiner/automatic_backups/
 
 # vim packer
 /vim/plugin/packer_compiled.vim
+
+scripts/lib/
+vim/lua/.vim

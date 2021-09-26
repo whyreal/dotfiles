@@ -67,25 +67,8 @@ xmap <buffer> is <Plug>(coc-v-range-select-strikethrough-inner)
 omap <buffer> as <Plug>(coc-o-range-select-strikethrough-all)
 omap <buffer> is <Plug>(coc-o-range-select-strikethrough-inner)
 
+command Preview  execute 'silent !open -a "Typora.app" %:S'
 command Typora  execute 'silent !open -a "Typora.app" %:S'
+command Edge  execute 'silent !open -a "Microsoft Edge.app" %:S'
+
 command! -nargs=0 Md2doc !md2doc %
-
-function MdUnescape() abort
-	%s/\\\([\[\]\.\-\*\~\!\#\_\=\+]\)/\1/g
-	%s/  $//ge
-	write
-endfunction
-command! -nargs=0 MdUnescape call MdUnescape()
-
-function DeleteBlankLine(l1, l2) abort
-    execute a:l1 . "," . a:l2 . "g/^ *$/d"
-	write
-endfunction
-command! -nargs=0 -range DeleteBlankLine call DeleteBlankLine(<line1>, <line2>)
-
-function DeleteTailBlankSpace(l1, l2) abort
-    execute a:l1 . "," . a:l2 . "s/  *$//g"
-	write
-endfunction
-
-command! -nargs=0 -range=% DeleteTailBlankSpace call DeleteTailBlankSpace(<line1>, <line2>)
