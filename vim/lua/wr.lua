@@ -1,4 +1,4 @@
-local R = require"lamda"
+--local R = require"lamda"
 
 --_G.PROJECTS = {
     --Notes     = "~/Documents/Notes/",

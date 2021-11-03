@@ -1,3 +1,4 @@
+set -e fish_user_paths
 set -x EDITOR 'nvim'
 
 alias ls='exa'
@@ -16,6 +17,7 @@ alias pwgen='pwgen -r0oOiIlL'
 alias grep='grep --color'
 alias ssh-with-password='ssh -F /dev/null -o "PreferredAuthentications=keyboard-interactive,password"'
 # use mycli
+alias mysql='mycli'
 # alias mysql='mysql --default-auth=mysql_native_password'
 # alias mysql8='command mysql'
 alias mysqldump='mysqldump --column-statistics=0'
@@ -44,6 +46,13 @@ alias luarocks='luarocks --lua-dir=/usr/local/opt/lua@5.1'
 set -x LUA_PATH "$HOME/.luarocks/share/lua/5.1/?.lua;$HOME/.luarocks/share/lua/5.1/?/init.lua;$LUA_PATH"
 set -x LUA_CPATH "$HOME/.luarocks/lib/lua/5.1/?.so;$LUA_CPATH"
 
+# python
+# pyenv https://github.com/pyenv/pyenv
+set -Ux PYENV_ROOT $HOME/.pyenv
+set -g fish_user_paths $PYENV_ROOT/bin $fish_user_paths
+status is-login; and pyenv init --path | source
+status is-interactive; and pyenv init - | source
+
 # neovim
 set -x NVIM_LISTEN_ADDRESS /tmp/nvimsocket
 alias vim='nvim'
@@ -56,7 +65,7 @@ set -g fish_user_paths "/Users/Real/code/projects/scripts/"    $fish_user_paths
 set -g fish_user_paths "/usr/local/opt/mysql-client/bin"  $fish_user_paths
 set -g fish_user_paths "/Applications/instantclient_18_1" $fish_user_paths
 
-set -g fish_user_paths "/usr/local/apache-maven-3.6.3/bin/" $fish_user_paths
+set -g fish_user_paths "/usr/local/apache-maven-3.8.3/bin/" $fish_user_paths
 
 # nodejs
 set -g fish_user_paths "$HOME/.yarn/bin" $fish_user_paths

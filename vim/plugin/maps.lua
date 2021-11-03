@@ -15,14 +15,18 @@ keymap('i', 'kk', '<ESC>', opts)
 
 keymap('n', '<leader>bp', '<cmd>bprevious<CR>', opts)
 keymap('n', '<leader>bn', '<cmd>bnext<CR>', opts)
-keymap('n', '<leader>bd', '<cmd>bd<CR>', opts)
+--keymap('n', '<leader>bd', '<cmd>Bdelete<CR>', opts)
+keymap('n', '<leader>bd', '<cmd>bdelete<CR>', opts)
 keymap('n', '<leader>bo', '<c-^>', opts)
 
 keymap('n', '<leader>w', '<cmd>w<CR>', opts)
 
-keymap('n', '<a-=>', '<cmd>split term://$SHELL<CR>', opts)
+--keymap('n', '<a-=>', '<cmd>split term://$SHELL<CR>', opts)
+keymap('n', '<a-=>', '<Plug>(coc-terminal-toggle)', opts)
+
 
 keymap('n', '<leader>ee', '<cmd>Explore<CR>', opts)
+keymap('n', '<leader>er', '<cmd>Rexplore<CR>', opts)
 keymap('n', '<leader>et', '<cmd>Texplore<CR>', opts)
 keymap('n', '<leader>es', '<cmd>Sexplore<CR>', opts)
 keymap('n', '<leader>ev', '<cmd>Vexplore<CR>', opts)

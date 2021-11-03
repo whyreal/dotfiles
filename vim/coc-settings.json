@@ -1,4 +1,10 @@
 {
+  "workspace.ignoredFiletypes": [
+    "markdown",
+    "log",
+    "txt",
+    "help"
+  ],
   "coc.preferences.rootPatterns": [
     ".git",
     ".vim",
@@ -6,9 +12,6 @@
     ".projections.json"
   ],
   "snippets.userSnippetsDirectory": "~/.config/nvim/UltiSnips/",
-  "smartf.timeout": 2000,
-  "java.home": "/Library/Java/JavaVirtualMachines/jdk-11.0.11+9/Contents/Home",
-  "java.autobuild.enabled": false,
   "vetur.ignoreProjectWarning": true,
   "coc.preferences.extensionUpdateCheck": "daily",
   "coc.preferences.colorSupport": true,
@@ -33,5 +36,6 @@
     "Downloads": "~/Downloads",
     "Dotfile": "~/code/whyreal/dotfiles/",
     "Vimconfig": "~/code/whyreal/dotfiles/vim/"
-  }
+  },
+  "python.jediEnabled": false
 }

@@ -1,9 +1,11 @@
-" Fix: Folding and Unfolding when typing in insert mode
-" https://github.com/plasticboy/vim-markdown/issues/414
-let g:vim_markdown_folding_style_pythonic = 1
-let g:vim_markdown_folding_level = 1
-let g:vim_markdown_follow_anchor = 1
-let g:vim_markdown_fenced_languages = [
-            \ 'js=javascript',
-            \ 'ts=typescript',
-            \ 'jison=yacc']
+" for builtin markdown runtime
+let g:markdown_fenced_languages = [
+            \ 'python', 
+            \ 'sh', 
+            \ 'java',
+            \ 'xml',
+            \ 'yaml',
+            \ 'sql',
+            \ 'ini=dosini'
+            \]
+let g:markdown_syntax_conceal = 0

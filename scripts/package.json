@@ -14,7 +14,8 @@
   "bin": {
     "md2docx": "bin/md2docx.js",
     "md2pdf": "bin/md2pdf.js",
-    "docx2md": "bin/docx2md.js"
+    "docx2md": "bin/docx2md.js",
+    "m": "bin/m"
   },
   "author": "whyreal",
   "license": "ISC",

@@ -7,6 +7,9 @@ Plug 'tpope/vim-sensible'
 
 Plug 'editorconfig/editorconfig-vim'
 
+"tmux
+Plug 'roxma/vim-tmux-clipboard'
+
 "k8s
 "Plug 'rottencandy/vimkubectl'
 "Plug 'andrewstuart/vim-kubernetes'
@@ -20,29 +23,31 @@ Plug 'junegunn/gv.vim'
 "Plug 'junegunn/fzf', {'do': ':call fzf#install()'}
 "Plug 'junegunn/fzf.vim', {}
 " theme
-Plug 'NLKNguyen/papercolor-theme', {'frozen': 1}
-Plug 'challenger-deep-theme/vim', {'frozen': 1}
-Plug 'altercation/vim-colors-solarized', {'frozen': 1}
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'altercation/vim-colors-solarized'
+Plug 'rakr/vim-one'
+
 " syntax
-Plug 'Glench/Vim-Jinja2-Syntax', {'frozen': 1}
-Plug 'neoclide/jsonc.vim', {'frozen': 1}
-Plug 'dag/vim-fish', {'frozen': 1}
-Plug 'wizicer/vim-jison', {'frozen': 1}
-Plug 'wgwoods/vim-systemd-syntax', {'frozen': 1}
-Plug 'plasticboy/vim-markdown', {'frozen': 1}
-Plug 'pprovost/vim-ps1', {'frozen': 1}
+Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'neoclide/jsonc.vim'
+Plug 'dag/vim-fish'
+Plug 'wizicer/vim-jison'
+Plug 'wgwoods/vim-systemd-syntax'
+Plug 'godlygeek/tabular'
+Plug 'pprovost/vim-ps1'
 Plug 'leafgarland/typescript-vim'
+Plug 'chr4/nginx.vim'
 
 Plug 'nvim-treesitter/nvim-treesitter', { 'branch': '0.5-compat', 'do': ':TSUpdate' }
 
 " Translator
 Plug 'voldikss/vim-translator', {'frozen': 1}
 " 注释
-Plug 'scrooloose/nerdcommenter', {'frozen': 1}
+Plug 'scrooloose/nerdcommenter'
 " 对齐
-Plug 'junegunn/vim-easy-align', {'frozen': 1}
+Plug 'junegunn/vim-easy-align'
 
-Plug 'tpope/vim-surround', {'frozen': 1}
+Plug 'tpope/vim-surround'
 
 " 输入法切换
 " [smartim](https://github.com/ybian/smartim)
@@ -51,7 +56,8 @@ Plug 'tpope/vim-surround', {'frozen': 1}
 "Plug 'ybian/smartim', {'frozen':1, 'do': 'cp /usr/local/bin/macism plugin/im-select'}
 
 "coc
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug '~/Documents/GitHub/coc.nvim/'
 Plug '~/code/whyreal/wr-coc-helper/', {'do': 'yarn install --frozen-lockfile'}
 Plug '~/code/whyreal/coc-picgo/', {'do': 'yarn install --frozen-lockfile'}
 Plug 'rafcamlet/coc-nvim-lua'
@@ -59,10 +65,12 @@ Plug 'euclidianAce/BetterLua.vim'
 
 Plug 'honza/vim-snippets'
 
+Plug 'moll/vim-bbye'
+
 call plug#end()
 
-syntax on
-filetype plugin indent on
+"syntax enable
+"filetype plugin indent on
 
 au VimEnter * let g:workspace=$PWD
 

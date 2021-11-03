@@ -3,7 +3,7 @@ function CocListOpenWith(coc_list_context, cmd)
   let label_name = a:coc_list_context["targets"][0]["label"]
   call substitute(label_name, " ", "\\ ", "g")
   if list_name == "files"
-	  call system(a:cmd . " " . label_name)
+	  call system(a:cmd . " '" . label_name . "'")
   endif
 endfunction
 function! OpenWithSystemApp(coc_list_context)
