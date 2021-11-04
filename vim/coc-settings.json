@@ -26,6 +26,14 @@
     "<A-x>": "call:OpenWithSystemApp",
     "<A-r>": "call:OpenWithFinder"
   },
+  "list.source.files.command":"rg",
+  "list.source.files.args": [
+    "--color","never",
+    "--files",
+    "--hidden",
+    "-g", "!**/.git/",
+    "-g", "!**/.svn/"
+  ],
   "picgo.dataPath": "/Users/Real/.picgo/data.json",
   "picgo.configPath": "/Users/Real/.picgo/config.json",
   "Lua.diagnostics.globals": ["vim", "setfenv"],
