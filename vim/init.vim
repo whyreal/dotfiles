@@ -57,13 +57,17 @@ Plug 'tpope/vim-surround'
 
 "coc
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug '~/Documents/GitHub/coc.nvim/'
+Plug '~/code/GitHub/coc.nvim/'
+
 Plug '~/code/whyreal/wr-coc-helper/', {'do': 'yarn install --frozen-lockfile'}
 Plug '~/code/whyreal/coc-picgo/', {'do': 'yarn install --frozen-lockfile'}
+Plug '~/code/GitHub/coc-snippets/', {'do': 'yarn install --frozen-lockfile'}
+
 Plug 'rafcamlet/coc-nvim-lua'
 Plug 'euclidianAce/BetterLua.vim'
 
 Plug 'honza/vim-snippets'
+Plug 'rafamadriz/friendly-snippets'
 
 Plug 'moll/vim-bbye'
 
