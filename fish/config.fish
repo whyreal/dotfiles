@@ -1,6 +1,7 @@
 set -e fish_user_paths
 set -x EDITOR 'nvim'
 
+alias rm='trash -F'
 alias ls='exa'
 alias cat='bat'
 alias r='open -R'
