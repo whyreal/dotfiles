@@ -5,6 +5,7 @@ let g:markdown_fenced_languages = [
             \ 'java',
             \ 'xml',
             \ 'yaml',
+            \ 'json',
             \ 'sql',
             \ 'ini=dosini'
             \]
