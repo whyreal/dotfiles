@@ -22,13 +22,10 @@ export class Pandoc {
       case ["md", "docx"].toString():
         // enable \newpage \toc
         return args.concat([
-          "--lua-filter="
-          + process.env["HOME"]
-          + "/code/whyreal/dotfiles/pandoc/filter/docx-pagebreak.lua",
+          "--lua-filter=" + process.env["HOME"] + "/code/whyreal/dotfiles/pandoc/filter/docx-pagebreak.lua",
           "--shift-heading-level-by=-1",
-          "--reference-doc="
-          + process.env["HOME"]
-          + "/Documents/pandoc/template.docx"])
+          "--reference-doc=" + process.env["HOME"] + "/Documents/pandoc/template.docx"
+        ])
 
       case ["md", "pdf"].toString():
         // 渲染 mermaid 图形

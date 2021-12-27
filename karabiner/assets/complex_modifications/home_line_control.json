@@ -1,0 +1,224 @@
+{
+	"title": "home line modifiers",
+	"rules":[
+		{
+			"description": "s -> control",
+			"manipulators": [
+				{
+					"from": {
+						"key_code": "s",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "left_control",
+							"lazy": true
+						}
+					],
+					"to_if_alone": [
+						{
+							"key_code": "s"
+						}
+					],
+					"type": "basic"
+				}
+			]
+		},
+		{
+			"description": "l -> control",
+			"manipulators": [
+				{
+					"from": {
+						"key_code": "l",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+
+					},
+					"to": [
+						{
+							"key_code": "left_control",
+							"lazy": true
+						}
+					],
+					"to_if_alone": [
+						{
+							"key_code": "l"
+						}
+					],
+					"type": "basic"
+				}
+			]
+		},
+		{
+			"description": "d -> shift",
+			"manipulators": [
+				{
+					"from": {
+						"key_code": "d",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+
+					},
+					"to": [
+						{
+							"key_code": "left_shift",
+							"lazy": true
+						}
+					],
+					"to_if_alone": [
+						{
+							"key_code": "d"
+						}
+					],
+					"type": "basic"
+				}
+			]
+		},
+		{
+			"description": "k -> shift",
+			"manipulators": [
+				{
+					"from": {
+						"key_code": "k",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+
+					},
+					"to": [
+						{
+							"key_code": "right_shift",
+							"lazy": true
+						}
+					],
+					"to_if_alone": [
+						{
+							"key_code": "k"
+						}
+					],
+					"type": "basic"
+				}
+			]
+		},
+		{
+			"description": "g -> command",
+			"manipulators": [
+				{
+					"from": {
+						"key_code": "g",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "left_command",
+							"lazy": true
+						}
+					],
+					"to_if_alone": [
+						{
+							"key_code": "g"
+						}
+					],
+					"type": "basic"
+				}
+			]
+		},
+		{
+			"description": "h -> command",
+			"manipulators": [
+				{
+					"from": {
+						"key_code": "h",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "left_command",
+							"lazy": true
+						}
+					],
+					"to_if_alone": [
+						{
+							"key_code": "h"
+						}
+					],
+					"type": "basic"
+				}
+			]
+		},
+		{
+			"description": "f -> option",
+			"manipulators": [
+				{
+					"from": {
+						"key_code": "f",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "left_option",
+							"lazy": true
+						}
+					],
+					"to_if_alone": [
+						{
+							"key_code": "f"
+						}
+					],
+					"type": "basic"
+				}
+			]
+		},
+		{
+			"description": "j -> option",
+			"manipulators": [
+				{
+					"from": {
+						"key_code": "j",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "left_option",
+							"lazy": true
+						}
+					],
+					"to_if_alone": [
+						{
+							"key_code": "j"
+						}
+					],
+					"type": "basic"
+				}
+			]
+		}
+	]
+}

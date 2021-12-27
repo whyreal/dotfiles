@@ -1,1 +1,1 @@
-nmap cd lcd
+"nmap <buffer> cd lcd

@@ -11,8 +11,6 @@ keymap('c', '<a-b>', '<S-Left>', opts)
 keymap('c', '<a-f>', '<S-Right>', opts)
 vim.o.cedit="<C-x>"
 
-keymap('i', 'kk', '<ESC>', opts)
-
 keymap('n', '<leader>bp', '<cmd>bprevious<CR>', opts)
 keymap('n', '<leader>bn', '<cmd>bnext<CR>', opts)
 --keymap('n', '<leader>bd', '<cmd>Bdelete<CR>', opts)

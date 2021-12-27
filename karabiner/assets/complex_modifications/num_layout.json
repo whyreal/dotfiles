@@ -1,0 +1,277 @@
+{
+	"title": "num-layout",
+	"rules":[
+		{
+			"description": "make 1 as Fn-number",
+			"manipulators": [
+				{
+					"from": {
+						"key_code": "1",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+					},
+					"to": [
+						{
+							"set_variable": {
+								"name": "num_layout",
+								"value": 1
+							}
+						}
+					],
+					"to_after_key_up": [
+						{
+							"set_variable": {
+								"name": "num_layout",
+								"value": 0
+							}
+						}
+					],
+					"to_if_alone": [
+						{
+							"key_code": "1"
+						}
+					],
+					"type": "basic"
+				}
+			]
+		},
+		{
+			"description": "FN: NUMBER",
+			"manipulators": [
+				{
+					"conditions": [
+						{
+							"name": "num_layout",
+							"type": "variable_if",
+							"value": 1
+						}
+					],
+					"from": {
+						"key_code": "n",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "0"
+						}
+					],
+					"type": "basic"
+				},
+				{
+					"conditions": [
+						{
+							"name": "num_layout",
+							"type": "variable_if",
+							"value": 1
+						}
+					],
+					"from": {
+						"key_code": "o",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "9"
+						}
+					],
+					"type": "basic"
+				},
+				{
+					"conditions": [
+						{
+							"name": "num_layout",
+							"type": "variable_if",
+							"value": 1
+						}
+					],
+					"from": {
+						"key_code": "i",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "8"
+						}
+					],
+					"type": "basic"
+				},
+				{
+					"conditions": [
+						{
+							"name": "num_layout",
+							"type": "variable_if",
+							"value": 1
+						}
+					],
+					"from": {
+						"key_code": "u",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "7"
+						}
+					],
+					"type": "basic"
+				},
+				{
+					"conditions": [
+						{
+							"name": "num_layout",
+							"type": "variable_if",
+							"value": 1
+						}
+					],
+					"from": {
+						"key_code": "l",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "6"
+						}
+					],
+					"type": "basic"
+				},
+				{
+					"conditions": [
+						{
+							"name": "num_layout",
+							"type": "variable_if",
+							"value": 1
+						}
+					],
+					"from": {
+						"key_code": "k",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "5"
+						}
+					],
+					"type": "basic"
+				},
+				{
+					"conditions": [
+						{
+							"name": "num_layout",
+							"type": "variable_if",
+							"value": 1
+						}
+					],
+					"from": {
+						"key_code": "j",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "4"
+						}
+					],
+					"type": "basic"
+				},
+				{
+					"conditions": [
+						{
+							"name": "num_layout",
+							"type": "variable_if",
+							"value": 1
+						}
+					],
+					"from": {
+						"key_code": "period",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "3"
+						}
+					],
+					"type": "basic"
+				},
+				{
+					"conditions": [
+						{
+							"name": "num_layout",
+							"type": "variable_if",
+							"value": 1
+						}
+					],
+					"from": {
+						"key_code": "comma",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "2"
+						}
+					],
+					"type": "basic"
+				},
+				{
+					"conditions": [
+						{
+							"name": "num_layout",
+							"type": "variable_if",
+							"value": 1
+						}
+					],
+					"from": {
+						"key_code": "m",
+						"modifiers": {
+							"optional": [
+								"any"
+							]
+						}
+					},
+					"to": [
+						{
+							"key_code": "1"
+						}
+					],
+					"type": "basic"
+				}
+			]
+		}
+  ]
+}

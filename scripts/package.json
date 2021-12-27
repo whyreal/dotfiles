@@ -8,7 +8,7 @@
     "clean": "rimraf lib",
     "watch": "node esbuild.js --watch",
     "build": "node esbuild.js",
-    "relink": "npm uninstall ${npm_package_name} -g; npm link",
+    "relink": "yarn relink",
     "prepare": "node esbuild.js"
   },
   "bin": {
@@ -21,7 +21,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^14.14.41",
-    "esbuild": "^0.13.2",
-    "ramda": "^0.27.1"
-  }
+    "esbuild": "^0.13.2"
+  },
+  "dependencies": {}
 }

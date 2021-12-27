@@ -5,6 +5,8 @@ augroup clean_bg
     au ColorScheme * highlight LineNr guibg=NONE ctermbg=NONE
     au ColorScheme * highlight Folded guibg=NONE ctermbg=NONE
     au ColorScheme * highlight EndOfBuffer guibg=NONE ctermbg=NONE
+    " fix coc float win color"
+    au ColorScheme * highlight! link FgCocInfoFloatBgCocFloating NormalFloat 
 augroup END
 
 "set background=dark
@@ -28,7 +30,7 @@ augroup END
     "colorscheme desert
 "endif
 
-set notermguicolors
+set termguicolors
 set background=light
-"colorscheme PaperColor
-colorscheme one
+colorscheme PaperColor
+

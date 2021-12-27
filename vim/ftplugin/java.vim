@@ -1,3 +1,3 @@
-set foldlevel=2
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
+setlocal foldlevel=2
+setlocal foldmethod=expr
+setlocal foldexpr=nvim_treesitter#foldexpr()

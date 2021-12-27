@@ -1,8 +1,8 @@
-set sts=4 tabstop=4 shiftwidth=4
-set expandtab
-set foldmethod=expr fdl=1 fdls=1
-"set conceallevel=2
-set foldclose=all
+setlocal sts=4 tabstop=4 shiftwidth=4
+setlocal expandtab
+setlocal foldmethod=expr fdl=1 fdls=1
+"setlocal conceallevel=2
+"setlocal foldclose=all
 
 "au ColorScheme *.md highlight! link htmlBold Search
 
@@ -67,11 +67,9 @@ xmap <buffer> is <Plug>(coc-v-range-select-strikethrough-inner)
 omap <buffer> as <Plug>(coc-o-range-select-strikethrough-all)
 omap <buffer> is <Plug>(coc-o-range-select-strikethrough-inner)
 
-command Preview  execute 'silent !open -a "Typora.app" %:S'
-command Typora  execute 'silent !open -a "Typora.app" %:S'
-command Edge  execute 'silent !open -a "Microsoft Edge.app" %:S'
+command Preview  execute 'silent !open -a "Microsoft Edge.app" %:S'
 
-command! -nargs=0 Md2doc !md2doc %
+command! -nargs=0 Md2docx !md2docx %
 
 let b:fenced_block = 0
 let b:front_matter = 0

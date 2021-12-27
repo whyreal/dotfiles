@@ -1,5 +1,5 @@
 {
-	"title": "Fn-mode",
+	"title": "Fn-layout",
 	"rules":[
 		{
 			"description": "make grave_accent_and_tilde as Fn",
@@ -39,43 +39,11 @@
 			]
 		},
 		{
-			"description": "make right_option as Fn",
+			"description": "make ESC as Fn",
 			"manipulators": [
 				{
 					"from": {
-						"key_code": "right_option",
-						"modifiers": {
-							"optional": [
-								"any"
-							]
-						}
-					},
-					"to": [
-						{
-							"set_variable": {
-								"name": "fn_mode",
-								"value": 1
-							}
-						}
-					],
-					"to_after_key_up": [
-						{
-							"set_variable": {
-								"name": "fn_mode",
-								"value": 0
-							}
-						}
-					],
-					"type": "basic"
-				}
-			]
-		},
-		{
-			"description": "make tab as Fn",
-			"manipulators": [
-				{
-					"from": {
-						"key_code": "tab",
+						"key_code": "escape",
 						"modifiers": {
 							"optional": [
 								"any"
@@ -100,7 +68,7 @@
 					],
 					"to_if_alone": [
 						{
-							"key_code": "tab"
+							"key_code": "escape"
 						}
 					],
 					"type": "basic"
@@ -486,7 +454,7 @@
 			]
 		},
 		{
-			"description": "FN: q,w,o,p,i media keys",
+			"description": "FN: q,w,i,o,p media keys",
 			"manipulators": [
 				{
 					"conditions": [

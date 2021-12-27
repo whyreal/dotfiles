@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 if (process.argv.length < 3) {
-    console.error("give me a markfile file!!!")
+    console.error("give me a markdown file!!!")
   process.exit(1)
 }
 

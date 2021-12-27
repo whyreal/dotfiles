@@ -4,7 +4,7 @@ port from https://github.com/pandocker/pandoc-docx-pagebreak-py
 pandoc-docx-pagebreakpy
 Pandoc filter to insert pagebreak as openxml RawBlock
 Only for docx output
---]] 
+--]]
 
 local pandoc = require("pandoc")
 

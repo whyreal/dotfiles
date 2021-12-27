@@ -1,3 +1,12 @@
+let g:did_load_filetypes = 0
+let g:do_filetype_lua = 1
+
+let g:loaded_python3_provider = 0
+let g:loaded_python_provider = 0
+let g:loaded_node_provider = 0
+let g:loaded_ruby_provider = 0
+let g:loaded_perl_provider = 0
+
 let g:mapleader=","
 let g:maplocalleader=" "
 
@@ -35,10 +44,10 @@ Plug 'wizicer/vim-jison'
 Plug 'wgwoods/vim-systemd-syntax'
 Plug 'godlygeek/tabular'
 Plug 'pprovost/vim-ps1'
-Plug 'leafgarland/typescript-vim'
 Plug 'chr4/nginx.vim'
+Plug 'pearofducks/ansible-vim'
 
-Plug 'nvim-treesitter/nvim-treesitter', { 'branch': '0.5-compat', 'do': ':TSUpdate' }
+Plug 'nvim-treesitter/nvim-treesitter'
 
 " Translator
 Plug 'voldikss/vim-translator', {'frozen': 1}
@@ -57,19 +66,24 @@ Plug 'tpope/vim-surround'
 
 "coc
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug '~/code/GitHub/coc.nvim/'
+Plug '~/code/whyreal/coc.nvim/'
 
 Plug '~/code/whyreal/wr-coc-helper/', {'do': 'yarn install --frozen-lockfile'}
 Plug '~/code/whyreal/coc-picgo/', {'do': 'yarn install --frozen-lockfile'}
-Plug '~/code/GitHub/coc-snippets/', {'do': 'yarn install --frozen-lockfile'}
+Plug '~/code/whyreal/coc-snippets/', {'do': 'yarn install --frozen-lockfile'}
 
 Plug 'rafcamlet/coc-nvim-lua'
 Plug 'euclidianAce/BetterLua.vim'
 
+Plug 'mzlogin/vim-markdown-toc'
+
 Plug 'honza/vim-snippets'
-Plug 'rafamadriz/friendly-snippets'
+"Plug 'rafamadriz/friendly-snippets'
 
 Plug 'moll/vim-bbye'
+
+" EasyMotion
+Plug 'phaazon/hop.nvim'
 
 call plug#end()
 

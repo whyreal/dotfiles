@@ -330,7 +330,7 @@ end
 
 -- Internal method:
 function obj:reduceSize(text)
-  print(#text .. " ? " .. tostring(max_entry_size))
+  print(#text .. " ? " .. tostring(obj.max_entry_size))
   local endingpos = 3000
   local lastLowerPos = 3000
   repeat

@@ -1,3 +1,9 @@
+# FZF Tab Completions (https://github.com/jethrokuan/fzf/wiki/FZF-Tab-Completions)
+#set -U FZF_COMPLETE 0
+set -x FZF_DEFAULT_OPTS "--extended --cycle --history=$HOME/.fzf.history"
+set -x FZF_DEFAULT_COMMAND 'fd -i -I -L -H -E .git -E .svn --type f'
+set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
+
 set -q FZF_TMUX_HEIGHT; or set -U FZF_TMUX_HEIGHT "40%"
 set -q FZF_DEFAULT_OPTS; or set -U FZF_DEFAULT_OPTS "--height $FZF_TMUX_HEIGHT"
 set -q FZF_LEGACY_KEYBINDINGS; or set -U FZF_LEGACY_KEYBINDINGS 1

@@ -1,21 +1,16 @@
 {
-  "workspace.ignoredFiletypes": [
-    "markdown",
-    "log",
-    "txt",
-    "help"
+  "snippets.ultisnips.enable": false,
+  "snippets.textmateSnippetsRoots": [
+    "~/.config/nvim/textmateSnips/"
   ],
   "coc.preferences.rootPatterns": [
     ".git",
     ".vim",
     ".hg",
-    ".projections.json"
+    ".svn"
   ],
-  "snippets.userSnippetsDirectory": "~/.config/nvim/UltiSnips/",
-  "vetur.ignoreProjectWarning": true,
   "coc.preferences.extensionUpdateCheck": "daily",
   "coc.preferences.colorSupport": true,
-  "coc.preferences.formatOnType": true,
   "suggest.floatEnable": true,
   "suggest.maxCompleteItemCount": 20,
   "json.enable":true,
@@ -31,14 +26,14 @@
     "--color","never",
     "--files",
     "--hidden",
+    "--no-ignore",
+    "-L",
     "-g", "!**/.git/",
     "-g", "!**/.svn/"
   ],
   "picgo.dataPath": "/Users/Real/.picgo/data.json",
   "picgo.configPath": "/Users/Real/.picgo/config.json",
-  "Lua.diagnostics.globals": ["vim", "setfenv"],
-  "Lua.runtime.version": "Lua 5.1",
-  "javascript.suggestionActions.enabled": false,
+  "Lua.diagnostics.globals": ["vim", "setfenv", "hs"],
   "coc-helper.projects": {
     "DocBase": "~/Documents/DocBase/",
     "Downloads": "~/Downloads",

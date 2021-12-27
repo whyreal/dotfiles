@@ -1,13 +1,20 @@
 set -e fish_user_paths
 set -x EDITOR 'nvim'
 
+# use vi mode
+#fish_vi_key_bindings
+# back to emacs mode
+#fish_default_key_bindings
+
+# git
+alias g='vim +Git'
+
 alias rm='trash -F'
-alias ls='exa'
 alias cat='bat'
 alias r='open -R'
 alias e='open -e'
 alias s='ssh'
-alias d='cd "/Users/Real/Documents/DocBase/" && $EDITOR'
+alias d='cd ~/Documents/DocBase/ && $EDITOR'
 alias o='open'
 alias drawio='open -a draw.io.app'
 
@@ -32,20 +39,11 @@ alias tmux='command tmux attach || command tmux'
 
 set -x LANG "en_US.UTF-8"
 
-set -x FZF_DEFAULT_OPTS "--extended --cycle --history=$HOME/.fzf.history"
-set -x FZF_DEFAULT_COMMAND 'fd -i -I -L -H -E .git -E .svn --type f'
-set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
-
 # golang
 set -g fish_user_paths "$HOME/go/bin/" $fish_user_paths
 set -x GOPATH /Users/Real/go
 set -x GO111MODULE on # Enable the go modules feature
 set -x GOPROXY https://goproxy.cn #Set the GOPROXY environment variable
-
-# lua
-alias luarocks='luarocks --lua-dir=/usr/local/opt/lua@5.1'
-set -x LUA_PATH "$HOME/.luarocks/share/lua/5.1/?.lua;$HOME/.luarocks/share/lua/5.1/?/init.lua;$LUA_PATH"
-set -x LUA_CPATH "$HOME/.luarocks/lib/lua/5.1/?.so;$LUA_CPATH"
 
 # python
 # pyenv https://github.com/pyenv/pyenv
@@ -57,111 +55,24 @@ status is-interactive; and pyenv init - | source
 # neovim
 set -x NVIM_LISTEN_ADDRESS /tmp/nvimsocket
 alias vim='nvim'
+alias v='nvim'
 
 # use vim as man pager
 set -x MANPAGER 'nvim +Man!'
 
+# PATH
 set -g fish_user_paths "/usr/local/sbin"                  $fish_user_paths
 set -g fish_user_paths "/Users/Real/code/projects/scripts/"    $fish_user_paths
 set -g fish_user_paths "/usr/local/opt/mysql-client/bin"  $fish_user_paths
 set -g fish_user_paths "/Applications/instantclient_18_1" $fish_user_paths
-
 set -g fish_user_paths "/usr/local/apache-maven-3.8.3/bin/" $fish_user_paths
-
-# nodejs
 set -g fish_user_paths "$HOME/.yarn/bin" $fish_user_paths
 set -g fish_user_paths "$HOME/.config/yarn/global/node_modules/.bin" $fish_user_paths
-
-# python
 set -g fish_user_paths "/Users/Real/Library/Python/3.9/bin" $fish_user_paths
-
-# rustlang
 set -g fish_user_paths "$HOME/.cargo/bin" $fish_user_paths
-
-# neovim
 set -g fish_user_paths "/usr/local/nvim-osx64/bin/" $fish_user_paths
-
-# rclone
 set -g fish_user_paths "/usr/local/rclone/" $fish_user_paths
-
-function proxy.ss.active
-    git config --global http.proxy 127.0.0.1:1087
-    #git config --local http.proxy 127.0.0.1:1087
-    set -gx http_proxy "http://127.0.0.1:1087"
-    set -gx https_proxy "http://127.0.0.1:1087"
-end
-
-function proxy.ss.deactive
-    git config --global --unset http.proxy
-    #git config --local --unset http.proxy
-    set -gx http_proxy ""
-    set -gx https_proxy ""
-end
-
-function ssh.execute_local_script
-    if test -z $argv[1]
-        echo "$_ host script"
-        return 1
-    end
-    set -l host $argv[1]
-    set -l script $argv[2]
-    cat $script | ssh -T $host
-end
-
-function copy_remote_screen_exchange_content_to_local_clipboard
-    ssh $argv[1] cat /tmp/screen-exchange | pbcopy
-end
-function vpn.route.add.zkzy
-    sudo route -n add 192.168.80/22 -interface ppp0
-end
-function vpn.route.del.zkzy
-    sudo route -n delete 192.168.80/22 -interface ppp0
-end
-function safari.agent.ipad
-    defaults write com.apple.Safari CustomUserAgent "'Mozilla/5.0 (iPad; CPU OS 5_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9B176 Safari/7534.48.3'"
-end
-function safari.agent.default
-    defaults delete com.apple.Safari CustomUserAgent
-end
-function oracle.env.gb2312
-    echo export NLS_LANG=AMERICAN_AMERICA.ZHS16GBK
-end
-
-#function z
-    #if test -z $argv[1]
-        #_zlua -I .
-    #else
-        #_zlua -I $argv
-    #end
-#end
-
-zoxide init fish | source
-function z
-    if test -z $argv[1]
-        __zoxide_zi
-    else
-        __zoxide_z $argv
-    end
-end
-
-#function s
-    #if test -z $argv[1]
-        #set -l host (command cat \
-        #(command awk '/^[ \t]*[Hh]ost/ && $2 != "*" {for (i = 2; i <= NF; i++) print $i}' ~/.ssh/config /etc/ssh/ssh_config | psub) \
-        #(command awk '/^[a-z1-9]/{print $1}' /etc/hosts ~/.ssh/known_hosts | psub) \
-        #| sort -u | fzf --reverse --history="$HOME/.fzf.history")
-
-        #if test -n "$host"
-            #ssh $host
-        #end
-    #else
-        #ssh $argv
-    #end
-#end
-
 set -g fish_user_paths "/usr/local/opt/curl/bin" $fish_user_paths
 set -g fish_user_paths "/usr/local/opt/ncurses/bin" $fish_user_paths
 
-# FZF Tab Completions (https://github.com/jethrokuan/fzf/wiki/FZF-Tab-Completions)
-#set -U FZF_COMPLETE 0
 fish_add_path /usr/local/opt/llvm/bin

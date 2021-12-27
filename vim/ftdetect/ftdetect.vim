@@ -19,4 +19,4 @@ au FileType javascript,
             \xml,
             \html,
             \css
-            \ setlocal sts=2 ts=2 sw=2 fdm=indent
+            \ setlocal sts=2 ts=2 sw=2

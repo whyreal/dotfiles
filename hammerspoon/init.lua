@@ -5,6 +5,7 @@ end)
 hs.hotkey.alertDuration = 0
 hs.hints.showTitleThresh = 0
 hs.window.animationDuration = 0
+_G.spoon = {}
 
 -- ModalMgr Spoon must be loaded explicitly, because this repository heavily relies upon it.
 hs.loadSpoon("ModalMgr")
