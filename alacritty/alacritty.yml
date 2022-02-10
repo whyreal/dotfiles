@@ -1,35 +1,45 @@
 import:
   - ~/.config/alacritty/font.yml
   - ~/.config/alacritty/key_bindings.yml
-background_opacity: 1.0
+  - ~/.config/alacritty/theme-github.yml
 window:
+  opacity: 0.9
   padding:
     x: 4
     y: 0
+
+# Colors (One Half Light)
+# github Alacritty Colors
 colors:
-  name: Atelierdune (light)
-  author: Chris Kempson
+  # Default colors
   primary:
-    background: "#fefbec"
-    foreground: "#6e6b5e"
+    background: '#292C3E'
+    foreground: '#EBEBEB'
+
+  # Cursor colors
   cursor:
-    text: "#fefbec"
-    cursor: "#6e6b5e"
+    text: '#FF261E'
+    cursor: '#FF261E'
+
+  # Normal colors
   normal:
-    black: "#20201d"
-    red: "#d73737"
-    green: "#60ac39"
-    yellow: "#cfb017"
-    blue: "#6684e1"
-    magenta: "#b854d4"
-    cyan: "#1fad83"
-    white: "#a6a28c"
+    black: '#0d0d0d'
+    red: '#FF301B'
+    green: '#A0E521'
+    yellow: '#FFC620'
+    blue: '#1BA6FA'
+    magenta: '#8763B8'
+    cyan: '#21DEEF'
+    white: '#EBEBEB'
+
+  # Bright colors
   bright:
-    black: "#7d7a68"
-    red: "#d73737"
-    green: "#60ac39"
-    yellow: "#cfb017"
-    blue: "#6684e1"
-    magenta: "#b854d4"
-    cyan: "#1fad83"
-    white: "#fefbec"
+    black: '#6D7070'
+    red: '#FF4352'
+    green: '#B8E466'
+    yellow: '#FFD750'
+    blue: '#1BA6FA'
+    magenta: '#A578EA'
+    cyan: '#73FBF1'
+    white: '#FEFEF8'
+theme: Argonaut

@@ -9,28 +9,32 @@ augroup clean_bg
     au ColorScheme * highlight! link FgCocInfoFloatBgCocFloating NormalFloat 
 augroup END
 
-"set background=dark
-"if has("gui_vimr")
-    "set background=light
-"endif
+if getenv("TERM_PROGRAM") == "tmux"
+    set background=light
+    colorscheme onehalflight
+    set termguicolors
+    finish
+endif
 
-"if getenv("COLORTERM") == "truecolor"
-            "\ || getenv("TERM_PROGRAM") == "tmux"
-            "\ || getenv("LC_TERMINAL") == "iTerm2"
-            "\ || getenv("TERM_PROGRAM") == "vscode"
+if has("gui_vimr")
+    set background=light
+    colorscheme onehalflight 
+    finish
+endif
 
-    "set background=light
-    "set notermguicolors
-    ""colorscheme onedark
-    ""colorscheme base16-atelierdune
-    "colorscheme desert
+if getenv("LC_TERMINAL") == "iTerm2"
+    set background=light
+    colorscheme onehalflight
+    set termguicolors
+    finish
+endif
 
-"else
-    "set notermguicolors
-    "colorscheme desert
-"endif
+if getenv("TERM_PROGRAM") == "vscode"
+    set background=light
+    colorscheme github_light
+    finish
+endif
 
-set termguicolors
+" default
 set background=light
-colorscheme PaperColor
-
+colorscheme onehalflight

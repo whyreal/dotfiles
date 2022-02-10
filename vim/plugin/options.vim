@@ -64,3 +64,6 @@ if has("patch-8.1.1564")
 else
   set signcolumn=yes
 endif
+
+set stl^=[UM:%{get(g:,'mode','')}]
+

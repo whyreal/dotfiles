@@ -13,6 +13,7 @@ let g:maplocalleader=" "
 call plug#begin()
 "call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-sensible'
+Plug 'chrisbra/unicode.vim'
 
 Plug 'editorconfig/editorconfig-vim'
 
@@ -31,10 +32,13 @@ Plug 'junegunn/gv.vim'
 " fzf
 "Plug 'junegunn/fzf', {'do': ':call fzf#install()'}
 "Plug 'junegunn/fzf.vim', {}
+
 " theme
+Plug 'projekt0n/github-nvim-theme'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'altercation/vim-colors-solarized'
 Plug 'rakr/vim-one'
+Plug 'sonph/onehalf', {'rtp': 'vim/'}
 
 " syntax
 Plug 'Glench/Vim-Jinja2-Syntax'
@@ -66,7 +70,7 @@ Plug 'tpope/vim-surround'
 
 "coc
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug '~/code/whyreal/coc.nvim/'
+Plug '~/code/GitHub/coc.nvim/'
 
 Plug '~/code/whyreal/wr-coc-helper/', {'do': 'yarn install --frozen-lockfile'}
 Plug '~/code/whyreal/coc-picgo/', {'do': 'yarn install --frozen-lockfile'}
@@ -75,7 +79,10 @@ Plug '~/code/whyreal/coc-snippets/', {'do': 'yarn install --frozen-lockfile'}
 Plug 'rafcamlet/coc-nvim-lua'
 Plug 'euclidianAce/BetterLua.vim'
 
-Plug 'mzlogin/vim-markdown-toc'
+Plug 'godlygeek/tabular'
+Plug 'preservim/vim-markdown'
+"Plug 'mzlogin/vim-markdown-toc'
+"Plug 'masukomi/vim-markdown-folding'
 
 Plug 'honza/vim-snippets'
 "Plug 'rafamadriz/friendly-snippets'

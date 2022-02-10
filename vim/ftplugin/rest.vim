@@ -1,1 +1,1 @@
-nmap <buffer> <leader>tt <Plug>(coc-send-rest)
+nmap <buffer> <leader>cs <Plug>(coc-send-rest)

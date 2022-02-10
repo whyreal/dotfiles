@@ -1,4 +1,9 @@
 {
+  "imselect.defaultInput": "com.apple.keylayout.US",
+  "imselect.enableStatusItem": false,
+  "imselect.enableFloating": false,
+  "list.source.outline.ctagsFilestypes": ["markdown"],
+  "explorer.icon.enableNerdfont": true,
   "snippets.ultisnips.enable": false,
   "snippets.textmateSnippetsRoots": [
     "~/.config/nvim/textmateSnips/"
@@ -10,7 +15,7 @@
     ".svn"
   ],
   "coc.preferences.extensionUpdateCheck": "daily",
-  "coc.preferences.colorSupport": true,
+  "coc.preferences.jumpCommand": "edit",
   "suggest.floatEnable": true,
   "suggest.maxCompleteItemCount": 20,
   "json.enable":true,
@@ -28,6 +33,7 @@
     "--hidden",
     "--no-ignore",
     "-L",
+    "-g", "!**/_resources/",
     "-g", "!**/.git/",
     "-g", "!**/.svn/"
   ],
@@ -40,5 +46,6 @@
     "Dotfile": "~/code/whyreal/dotfiles/",
     "Vimconfig": "~/code/whyreal/dotfiles/vim/"
   },
-  "python.jediEnabled": false
+  "python.formatting.provider": "autopep8",
+  "Lua.telemetry.enable": false
 }

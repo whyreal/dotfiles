@@ -9,9 +9,3 @@ command Dos2unix e ++ff=unix | %s/\r//g
 
 " Sshconfig
 command Sshconfig tabe ~/.ssh/config
-"command Sshconfig tabe ~/code/projects/scripts/ssh.config.json
-"au BufWritePost ~/code/projects/scripts/ssh.config.json !update_ssh_config.sh
-
-" shadowsocks config
-command Ssconfig tabe ~/.ShadowsocksX/user-rule.txt
-au BufWritePost ~/.ShadowsocksX/user-rule.txt !update_ss_config.sh
