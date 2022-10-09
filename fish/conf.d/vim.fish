@@ -7,4 +7,4 @@ alias v='nvim'
 # use vim as man pager
 set -x MANPAGER 'nvim +Man!'
 
-set -g fish_user_paths "/usr/local/nvim-osx64/bin/" $fish_user_paths
+set -g fish_user_paths "/usr/local/nvim-macos/bin/" $fish_user_paths

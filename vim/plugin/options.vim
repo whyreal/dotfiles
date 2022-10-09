@@ -11,11 +11,11 @@ set autowrite
 set clipboard=unnamed
 set colorcolumn=+0
 set completeopt=menuone,noinsert,noselect
-"set cursorline
+set cursorline
 set fileencodings=utf-8,gbk,ucs-bom,cp936,gb18030,big5,latin1
-set foldlevel=99
-set foldlevelstart=0
-set foldmethod=indent
+"set foldlevel=99
+"set foldlevelstart=0
+"set foldmethod=indent
 set foldminlines=0
 set hidden
 set ignorecase
@@ -65,5 +65,5 @@ else
   set signcolumn=yes
 endif
 
-set stl^=[UM:%{get(g:,'mode','')}]
-
+" disable substitute live feedback
+set inccommand=""

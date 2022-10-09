@@ -1,6 +1,3 @@
-let g:did_load_filetypes = 0
-let g:do_filetype_lua = 1
-
 let g:loaded_python3_provider = 0
 let g:loaded_python_provider = 0
 let g:loaded_node_provider = 0
@@ -11,14 +8,13 @@ let g:mapleader=","
 let g:maplocalleader=" "
 
 call plug#begin()
-"call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-sensible'
 Plug 'chrisbra/unicode.vim'
 
 Plug 'editorconfig/editorconfig-vim'
 
 "tmux
-Plug 'roxma/vim-tmux-clipboard'
+"Plug 'roxma/vim-tmux-clipboard'
 
 "k8s
 "Plug 'rottencandy/vimkubectl'
@@ -68,13 +64,15 @@ Plug 'tpope/vim-surround'
 	" 其他切换工具切换书输入法后无法正常使用
 "Plug 'ybian/smartim', {'frozen':1, 'do': 'cp /usr/local/bin/macism plugin/im-select'}
 
+" coc-smartim
+"cd /Users/Real/.config/coc/extensions/node_modules
+"cp /usr/local/bin/macism coc-imselect/bin/select
+
 "coc
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug '~/code/GitHub/coc.nvim/'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug '~/code/whyreal/wr-coc-helper/', {'do': 'yarn install --frozen-lockfile'}
 Plug '~/code/whyreal/coc-picgo/', {'do': 'yarn install --frozen-lockfile'}
-Plug '~/code/whyreal/coc-snippets/', {'do': 'yarn install --frozen-lockfile'}
 
 Plug 'rafcamlet/coc-nvim-lua'
 Plug 'euclidianAce/BetterLua.vim'
@@ -84,13 +82,20 @@ Plug 'preservim/vim-markdown'
 "Plug 'mzlogin/vim-markdown-toc'
 "Plug 'masukomi/vim-markdown-folding'
 
-Plug 'honza/vim-snippets'
-"Plug 'rafamadriz/friendly-snippets'
-
 Plug 'moll/vim-bbye'
 
 " EasyMotion
-Plug 'phaazon/hop.nvim'
+Plug 'phaazon/hop.nvim', {'branch': 'v2'}
+
+"Plug 'kyazdani42/nvim-web-devicons' " for file icons
+"Plug 'kyazdani42/nvim-tree.lua'
+
+" plugins in lua
+Plug 'nvim-lua/plenary.nvim'
+"Plug 'nvim-telescope/telescope.nvim'
+Plug 'wellle/tmux-complete.vim'
+
+Plug 'honza/vim-snippets'
 
 call plug#end()
 

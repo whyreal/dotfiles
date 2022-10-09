@@ -6,12 +6,13 @@ set -x LANG "en_US.UTF-8"
 # back to emacs mode
 #fish_default_key_bindings
 
-alias ssl.certbot='sudo certbot certonly --manual'
+#alias ssl.certbot='sudo certbot certonly --manual'
 alias rm='trash'
 alias c='code'
+alias v='nvim'
 alias r='open -R'
-alias e='open -e'
 alias d='cd ~/Documents/DocBase/ && $EDITOR'
+alias work-commands='cd ~/Documents/DocBase/commands/ && $EDITOR'
 alias drawio='open -a draw.io.app'
 
 alias ....='cd ../../..'

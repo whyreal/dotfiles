@@ -11,31 +11,31 @@ let g:vim_markdown_folding_style_pythonic = 1
 let g:tagbar_sort=0
 let g:vim_markdown_no_default_key_mappings=1
 
-xmap <buffer> <LocalLeader>cl <Plug>(coc-markdown-create-list)
-xmap <buffer> <LocalLeader>co <Plug>(coc-markdown-create-orderlist)
-xmap <buffer> <LocalLeader>dl <Plug>(coc-markdown-delete-list)
-
-" header
-nmap <buffer> <a-[> <Plug>(coc-markdown-header-level-up)
-nmap <buffer> <a-]> <Plug>(coc-markdown-header-level-down)
-xmap <buffer> <a-[> <Plug>(coc-markdown-header-level-up-range)
-xmap <buffer> <a-]> <Plug>(coc-markdown-header-level-down-range)
+xmap <buffer> <LocalLeader>l <Plug>(coc-markdown-create-list)
+xmap <buffer> <LocalLeader>o <Plug>(coc-markdown-create-orderlist)
+xmap <buffer> <LocalLeader>d <Plug>(coc-markdown-delete-list)
 
 " Toggle Bold
-nmap <buffer> <LocalLeader>tb <Plug>(coc-wrap-bold-word)
-vmap <buffer> <LocalLeader>tb <Plug>(coc-wrap-bold-range)
+nmap <buffer> <LocalLeader>b <Plug>(coc-wrap-bold-word)
+vmap <buffer> <LocalLeader>b <Plug>(coc-wrap-bold-range)
 
 " Toggle strike through
 "nmap <buffer> <LocalLeader>s <Plug>(coc-wrap-strikethrough-word)
 "xmap <buffer> <LocalLeader>s <Plug>(coc-wrap-strikethrough-range)
 
 " Toggle Italic
-nmap <buffer> <LocalLeader>ti <Plug>(coc-wrap-italic-word)
-xmap <buffer> <LocalLeader>ti <Plug>(coc-wrap-italic-range)
+nmap <buffer> <LocalLeader>i <Plug>(coc-wrap-italic-word)
+xmap <buffer> <LocalLeader>i <Plug>(coc-wrap-italic-range)
 
 " Toggle Inline code
-nmap <buffer> <LocalLeader>tc <Plug>(coc-wrap-code-word)
-xmap <buffer> <LocalLeader>tc <Plug>(coc-wrap-code-range)
+nmap <buffer> <LocalLeader>c <Plug>(coc-wrap-code-word)
+xmap <buffer> <LocalLeader>c <Plug>(coc-wrap-code-range)
+
+" header
+nmap <buffer> <a-[> <Plug>(coc-markdown-header-level-up)
+nmap <buffer> <a-]> <Plug>(coc-markdown-header-level-down)
+xmap <buffer> <a-[> <Plug>(coc-markdown-header-level-up-range)
+xmap <buffer> <a-]> <Plug>(coc-markdown-header-level-down-range)
 
 " Bold object
 xmap <buffer> ab <Plug>(coc-v-range-select-bold-all)

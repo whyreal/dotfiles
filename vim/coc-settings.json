@@ -3,11 +3,12 @@
   "imselect.enableStatusItem": false,
   "imselect.enableFloating": false,
   "list.source.outline.ctagsFilestypes": ["markdown"],
-  "explorer.icon.enableNerdfont": true,
+  "list.source.mru.ignoreGitIgnore": true,
   "snippets.ultisnips.enable": false,
   "snippets.textmateSnippetsRoots": [
     "~/.config/nvim/textmateSnips/"
   ],
+  "snippets.snipmate.enable": true,
   "coc.preferences.rootPatterns": [
     ".git",
     ".vim",
@@ -26,26 +27,33 @@
     "<A-x>": "call:OpenWithSystemApp",
     "<A-r>": "call:OpenWithFinder"
   },
+  "list.normalMappings": {
+    "x": "call:OpenWithSystemApp",
+    "r": "call:OpenWithFinder"
+  },
   "list.source.files.command":"rg",
   "list.source.files.args": [
     "--color","never",
     "--files",
-    "--hidden",
+    //"--hidden",
     "--no-ignore",
     "-L",
     "-g", "!**/_resources/",
     "-g", "!**/.git/",
-    "-g", "!**/.svn/"
+    "-g", "!**/.svn/",
+    "-g", "!scripts/",
+    "-g", "!个人资料/"
   ],
   "picgo.dataPath": "/Users/Real/.picgo/data.json",
   "picgo.configPath": "/Users/Real/.picgo/config.json",
-  "Lua.diagnostics.globals": ["vim", "setfenv", "hs"],
   "coc-helper.projects": {
     "DocBase": "~/Documents/DocBase/",
     "Downloads": "~/Downloads",
     "Dotfile": "~/code/whyreal/dotfiles/",
     "Vimconfig": "~/code/whyreal/dotfiles/vim/"
   },
-  "python.formatting.provider": "autopep8",
-  "Lua.telemetry.enable": false
+  "browser.patterns": {
+    "*": []
+  },
+  "git.enableGutters": false
 }

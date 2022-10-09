@@ -1,6 +1,6 @@
 autocmd BufEnter * if &filetype == "" | setlocal ft=text | endif
 
-au BufNewFile,BufRead *.rest,*.http set filetype=rest
+au BufNewFile,BufRead *.rest,*.http set filetype=http
 au BufNewFile,BufRead *.json   set filetype=jsonc
 au BufNewFile,BufRead *.tsx    set filetype=typescript.tsx
 au BufNewFile,BufRead *.jsx    set filetype=javascript.jsx

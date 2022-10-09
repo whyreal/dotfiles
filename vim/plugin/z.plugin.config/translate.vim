@@ -3,3 +3,4 @@
 "this will be ['bing', 'google', 'haici', 'youdao'], otherwise ['google']
 let g:translator_default_engines=['bing']
 let g:translator_history_enable="true"
+let g:translator_history_enable="true"

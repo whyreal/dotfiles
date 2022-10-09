@@ -9,7 +9,6 @@ smart_completion = True
 # this is set to True, then the end of the statements must have a semi-colon.
 # If this is set to False then sql statements can't be split into multiple
 # lines. End of line (return) is considered as the end of the statement.
-;multi_line = False
 multi_line = True
 
 # Destructive warning mode will alert you before executing a sql statement
@@ -30,6 +29,9 @@ log_level = INFO
 
 # Timing of sql statments and table rendering.
 timing = True
+
+# Beep after long-running queries are completed; 0 to disable.
+beep_after_seconds = 0
 
 # Table format. Possible values: ascii, double, github,
 # psql, plain, simple, grid, fancy_grid, pipe, orgtbl, rst, mediawiki, html,
@@ -61,15 +63,15 @@ wider_completion_menu = False
 # \n - Newline
 # \P - AM/PM
 # \p - Port
-# \R - The current time, in 24-hour military time (0–23)
-# \r - The current time, standard 12-hour time (1–12)
+# \R - The current time, in 24-hour military time (0-23)
+# \r - The current time, standard 12-hour time (1-12)
 # \s - Seconds of the current time
 # \t - Product type (Percona, MySQL, MariaDB)
 # \A - DSN alias name (from the [alias_dsn] section)
 # \u - Username
 # \x1b[...m - insert ANSI escape sequence
-prompt = '\t \u@\h:\d> '
-prompt_continuation = '->'
+prompt = "\t \u@\h:\d> "
+prompt_continuation = ->
 
 # Skip intro info on startup and outro info on exit
 less_chatty = False
@@ -86,29 +88,30 @@ keyword_casing = auto
 
 # disabled pager on startup
 enable_pager = True
+;multi_line = False
 
 # Custom colors for the completion menu, toolbar, etc.
 [colors]
-completion-menu.completion.current = 'bg:#ffffff #000000'
-completion-menu.completion = 'bg:#008888 #ffffff'
-completion-menu.meta.completion.current = 'bg:#44aaaa #000000'
-completion-menu.meta.completion = 'bg:#448888 #ffffff'
-completion-menu.multi-column-meta = 'bg:#aaffff #000000'
-scrollbar.arrow = 'bg:#003333'
-scrollbar = 'bg:#00aaaa'
-selected = '#ffffff bg:#6666aa'
-search = '#ffffff bg:#4444aa'
-search.current = '#ffffff bg:#44aa44'
-bottom-toolbar = 'bg:#222222 #aaaaaa'
-bottom-toolbar.off = 'bg:#222222 #888888'
-bottom-toolbar.on = 'bg:#222222 #ffffff'
-search-toolbar = 'noinherit bold'
-search-toolbar.text = 'nobold'
-system-toolbar = 'noinherit bold'
-arg-toolbar = 'noinherit bold'
-arg-toolbar.text = 'nobold'
-bottom-toolbar.transaction.valid = 'bg:#222222 #00ff5f bold'
-bottom-toolbar.transaction.failed = 'bg:#222222 #ff005f bold'
+completion-menu.completion.current = "bg:#ffffff #000000"
+completion-menu.completion = "bg:#008888 #ffffff"
+completion-menu.meta.completion.current = "bg:#44aaaa #000000"
+completion-menu.meta.completion = "bg:#448888 #ffffff"
+completion-menu.multi-column-meta = "bg:#aaffff #000000"
+scrollbar.arrow = "bg:#003333"
+scrollbar = "bg:#00aaaa"
+selected = "#ffffff bg:#6666aa"
+search = "#ffffff bg:#4444aa"
+search.current = "#ffffff bg:#44aa44"
+bottom-toolbar = "bg:#222222 #aaaaaa"
+bottom-toolbar.off = "bg:#222222 #888888"
+bottom-toolbar.on = "bg:#222222 #ffffff"
+search-toolbar = noinherit bold
+search-toolbar.text = nobold
+system-toolbar = noinherit bold
+arg-toolbar = noinherit bold
+arg-toolbar.text = nobold
+bottom-toolbar.transaction.valid = "bg:#222222 #00ff5f bold"
+bottom-toolbar.transaction.failed = "bg:#222222 #ff005f bold"
 
 # style classes for colored table output
 output.header = "#00ff5f bold"
@@ -147,10 +150,9 @@ output.null = "#808080"
 
 # Favorite queries.
 [favorite_queries]
+#name = select * from abc;
 
 # Use the -d option to reference a DSN.
 # Special characters in passwords and other strings can be escaped with URL encoding.
 [alias_dsn]
 # example_dsn = mysql://[user[:password]@][host][:port][/dbname]
-root@80.72 = mysql://root:Mysql@8072@192.168.80.72
-root@80.101 = mysql://root:mysqlroot4@80101@192.168.80.101

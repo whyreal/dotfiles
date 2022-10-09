@@ -33,6 +33,8 @@ let g:map_table = {
 
 let g:mode = ""
 
+set stl^=[UM:%{get(g:,'mode','')}]
+
 function Leave_mode() abort
     let g:mode = ""
     return ""

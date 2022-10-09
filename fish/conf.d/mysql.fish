@@ -1,6 +1,5 @@
-
 # use mycli
-alias mysql='mycli'
+#alias mysql='mycli'
 # alias mysql='mysql --default-auth=mysql_native_password'
 # alias mysql8='command mysql'
 alias mysqldump='mysqldump --column-statistics=0'
