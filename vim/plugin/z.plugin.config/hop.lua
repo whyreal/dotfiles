@@ -1,3 +1,3 @@
 require'hop'.setup({
-    keys = 'rufjvmtyghbneidkcwoslx'
+    --keys = 'rufjvmtyghbneidkcwoslx'
 })

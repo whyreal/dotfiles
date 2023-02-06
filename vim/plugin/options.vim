@@ -27,13 +27,14 @@ set mouse=a
 set shortmess=filnxtToOFc
 set smartcase
 set splitbelow
+set splitright
 set statusline=%t%h%w%m%r%=%l,%c%V\ %P
 set updatetime=300
 set breakindent
 set breakindentopt=shift:0
 set nolinebreak
 set sts=4 ts=4 sw=4 et
-"set nu relativenumber
+set nu relativenumber
 
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim

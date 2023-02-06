@@ -2,25 +2,24 @@
   "imselect.defaultInput": "com.apple.keylayout.US",
   "imselect.enableStatusItem": false,
   "imselect.enableFloating": false,
-  "list.source.outline.ctagsFilestypes": ["markdown"],
-  "list.source.mru.ignoreGitIgnore": true,
-  "snippets.ultisnips.enable": false,
-  "snippets.textmateSnippetsRoots": [
-    "~/.config/nvim/textmateSnips/"
-  ],
-  "snippets.snipmate.enable": true,
-  "coc.preferences.rootPatterns": [
+
+  "workspace.rootPatterns": [
     ".git",
     ".vim",
     ".hg",
     ".svn"
   ],
+
   "coc.preferences.extensionUpdateCheck": "daily",
   "coc.preferences.jumpCommand": "edit",
-  "suggest.floatEnable": true,
+
   "suggest.maxCompleteItemCount": 20,
+  "suggest.asciiCharactersOnly": true,
+  "suggest.asciiMatch": false,
+
   "json.enable":true,
   "json.format.enable":true,
+
   "diagnostic.enable": true,
   "list.height": 30,
   "list.insertMappings": {
@@ -31,6 +30,8 @@
     "x": "call:OpenWithSystemApp",
     "r": "call:OpenWithFinder"
   },
+
+  "list.source.mru.ignoreGitIgnore": true,
   "list.source.files.command":"rg",
   "list.source.files.args": [
     "--color","never",
@@ -44,16 +45,15 @@
     "-g", "!scripts/",
     "-g", "!个人资料/"
   ],
-  "picgo.dataPath": "/Users/Real/.picgo/data.json",
-  "picgo.configPath": "/Users/Real/.picgo/config.json",
-  "coc-helper.projects": {
-    "DocBase": "~/Documents/DocBase/",
-    "Downloads": "~/Downloads",
-    "Dotfile": "~/code/whyreal/dotfiles/",
-    "Vimconfig": "~/code/whyreal/dotfiles/vim/"
-  },
+  "git.enableGutters": false,
   "browser.patterns": {
     "*": []
   },
-  "git.enableGutters": false
+  "snippets.ultisnips.enable": false,
+  "snippets.textmateSnippetsRoots": [
+    "~/.config/nvim/textmateSnips/"
+  ],
+  "snippets.snipmate.enable": true,
+  "picgo.dataPath": "/Users/Real/.picgo/data.json",
+  "picgo.configPath": "/Users/Real/.picgo/config.json"
 }

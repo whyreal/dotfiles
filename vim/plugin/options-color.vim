@@ -22,12 +22,6 @@ if getenv("LC_TERMINAL") == "iTerm2"
     finish
 endif
 
-if getenv("TERMAPP") == "vscode"
-    set background=light
-    colorscheme github_light
-    finish
-endif
-
 if getenv("TERMAPP") == "alacritty"
     set termguicolors
     set background=dark
@@ -35,13 +29,20 @@ if getenv("TERMAPP") == "alacritty"
     finish
 endif
 
-if getenv("TERM_PROGRAM") == "tmux"
-    set background=dark
-    colorscheme PaperColor
-"    set termguicolors
-    finish
-endif
+"if getenv("TERM_PROGRAM") == "tmux"
+    "set background=dark
+    "colorscheme PaperColor
+""    set termguicolors
+    "finish
+"endif
+
+"if getenv("TERMAPP") == "vscode"
+    "set background=light
+    "colorscheme github_light
+    "finish
+"endif
+
 
 " default
-set background=dark
+set background=light
 colorscheme PaperColor

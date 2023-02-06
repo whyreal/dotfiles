@@ -1,192 +1,213 @@
 -- vim: fdm=marker
-local keymap = vim.api.nvim_set_keymap
+local keyset = vim.keymap.set
 
 ---@type MapOptions
 local opts = {noremap = true}
 local plug_opts = {}
 
-keymap('n', 'j', 'gj', opts)
-keymap('n', 'k', 'gk', opts)
+--keyset('n', 'j', 'gj', opts)
+--keyset('n', 'k', 'gk', opts)
 
-keymap('n', '<localleader>s', '<cmd>w<CR>', opts)
-keymap('n', '<localleader>w', '<Plug>TranslateW', plug_opts)
-keymap('x', '<localleader>w', '<Plug>TranslateW', plug_opts)
-keymap('n', '<localleader>e', '<cmd>Explore<CR>', opts)
-keymap('n', '<localleader>t', '<cmd>CocCommand explorer<CR>', opts)
+keyset('n', '<localleader>s', '<cmd>w<CR>', opts)
+keyset('n', '<localleader>w', '<Plug>TranslateW', plug_opts)
+keyset('x', '<localleader>w', '<Plug>TranslateW', plug_opts)
+
+keyset('n', '<localleader>e', '<cmd>Explore<CR>', opts)
+keyset('n', '<localleader>r', '<cmd>Rexplore<CR>', opts)
+keyset('n', '<localleader>t', '<cmd>CocCommand explorer<CR>', opts)
 
 -- s -- scroll {{{
---keymap('n', 's', '<NOP>', opts)
---keymap('n', 'ss', 's', opts)
---keymap('n', 'sk', '<c-u>', opts)
---keymap('n', 'sj', '<c-d>', opts)
---keymap('n', 'sl', '<c-f>', opts)
---keymap('n', 'sh', '<c-b>', opts)
---keymap('n', 'st', 'zt', opts)
---keymap('n', 'sb', 'zb', opts)
---keymap('n', 'sm', 'zz', opts)
+--keyset('n', 's', '<NOP>', opts)
+--keyset('n', 'ss', 's', opts)
+--keyset('n', 'sk', '<c-u>', opts)
+--keyset('n', 'sj', '<c-d>', opts)
+--keyset('n', 'sl', '<c-f>', opts)
+--keyset('n', 'sh', '<c-b>', opts)
+--keyset('n', 'st', 'zt', opts)
+--keyset('n', 'sb', 'zb', opts)
+--keyset('n', 'sm', 'zz', opts)
 
---keymap('x', 's', '<NOP>', opts)
---keymap('x', 'ss', 's', opts)
---keymap('x', 'sk', '<c-u>', opts)
---keymap('x', 'sj', '<c-d>', opts)
---keymap('x', 'sl', '<c-f>', opts)
---keymap('x', 'sh', '<c-b>', opts)
---keymap('x', 'st', 'zt', opts)
---keymap('x', 'sb', 'zb', opts)
---keymap('x', 'sm', 'zz', opts)
+--keyset('x', 's', '<NOP>', opts)
+--keyset('x', 'ss', 's', opts)
+--keyset('x', 'sk', '<c-u>', opts)
+--keyset('x', 'sj', '<c-d>', opts)
+--keyset('x', 'sl', '<c-f>', opts)
+--keyset('x', 'sh', '<c-b>', opts)
+--keyset('x', 'st', 'zt', opts)
+--keyset('x', 'sb', 'zb', opts)
+--keyset('x', 'sm', 'zz', opts)
 -- }}}
 -- g -- goto{{{
-keymap('n', 'g0', '<Plug>(coc-goto-first)', plug_opts)
-keymap('n', 'gm', 'M', opts)
-keymap('n', 'gh', 'H', opts)
-keymap('n', 'gl', 'L', opts)
-keymap('n', 'go', '<c-o>', opts)
+keyset('n', 'gm', 'M', opts)
+keyset('n', 'gh', 'H', opts)
+keyset('n', 'gl', 'L', opts)
 
-keymap('x', 'g0', '<Plug>(coc-goto-first)', plug_opts)
-keymap('x', 'gm', 'M', opts)
-keymap('x', 'gh', 'H', opts)
-keymap('x', 'gl', 'L', opts)
+--keyset('n', 'go', '<c-o>', opts)
+--keyset('n', 'gi', '<c-i>', opts)
+
+keyset('x', 'g0', '<Plug>(coc-goto-first)', plug_opts)
+
+keyset('x', 'gm', 'M', opts)
+keyset('x', 'gh', 'H', opts)
+keyset('x', 'gl', 'L', opts)
 
 -- Use better keys for the bépo keyboard layout and set
 -- a balanced distribution of terminal / sequence keys
 require'hop'.setup { keys = 'etovxdygfblzhckisuran', jump_on_sole_occurrence = false }
 
-keymap('n', 'gj', '<cmd>HopLineAC<cr>', opts)
-keymap('n', 'gk', '<cmd>HopLineBC<cr>', opts)
-keymap('n', 'gp', '<cmd>HopPattern<cr>', opts)
-keymap('n', 'gw', '<cmd>HopWordAC<cr>', opts)
-keymap('n', 'gb', '<cmd>HopWordBC<cr>', opts)
+keyset('n', 'gj', '<cmd>HopLineAC<cr>', opts)
+keyset('n', 'gk', '<cmd>HopLineBC<cr>', opts)
+keyset('n', 'gp', '<cmd>HopPattern<cr>', opts)
+keyset('n', 'gw', '<cmd>HopWordAC<cr>', opts)
+keyset('n', 'gb', '<cmd>HopWordBC<cr>', opts)
 
-keymap('x', 'gj', '<cmd>HopLineAC<cr>', opts)
-keymap('x', 'gk', '<cmd>HopLineBC<cr>', opts)
-keymap('x', 'gp', '<cmd>HopPattern<cr>', opts)
-keymap('x', 'gw', '<cmd>HopWordAC<cr>', opts)
-keymap('x', 'gb', '<cmd>HopWordBC<cr>', opts)
+keyset('x', 'gj', '<cmd>HopLineAC<cr>', opts)
+keyset('x', 'gk', '<cmd>HopLineBC<cr>', opts)
+keyset('x', 'gp', '<cmd>HopPattern<cr>', opts)
+keyset('x', 'gw', '<cmd>HopWordAC<cr>', opts)
+keyset('x', 'gb', '<cmd>HopWordBC<cr>', opts)
 
 -- GoTo code navigation.
-keymap('n', 'gd', ' <Plug>(coc-definition)', plug_opts)
-keymap('n', 'gi', ' <Plug>(coc-implementation)', plug_opts)
-keymap('n', 'gy', ' <Plug>(coc-type-definition)', plug_opts)
-keymap('n', 'gr', ' <Plug>(coc-references)', plug_opts)
+keyset('n', 'gd', ' <Plug>(coc-definition)', plug_opts)
+keyset('n', 'gi', ' <Plug>(coc-implementation)', plug_opts)
+keyset('n', 'gy', ' <Plug>(coc-type-definition)', plug_opts)
+keyset('n', 'gr', ' <Plug>(coc-references)', plug_opts)
 
 -- Use `[g` and `]g` to navigate diagnostics
 -- Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-keymap('n', 'g[', '<Plug>(coc-diagnostic-prev)', plug_opts)
-keymap('n', 'g]', '<Plug>(coc-diagnostic-next)', plug_opts)
+keyset('n', 'g[', '<Plug>(coc-diagnostic-prev)', plug_opts)
+keyset('n', 'g]', '<Plug>(coc-diagnostic-next)', plug_opts)
 
 --}}}
 
 -- v -- visual{{{
---keymap('n', 'v', '<NOP>', opts)
---keymap('n', 'vv', 'v', opts)
---keymap('n', 'vl', '<s-v>', opts)
---keymap('n', 'vc', '<c-v>', opts)
+--keyset('n', 'v', '<NOP>', opts)
+--keyset('n', 'vv', 'v', opts)
+--keyset('n', 'vl', '<s-v>', opts)
+--keyset('n', 'vc', '<c-v>', opts)
 
---keymap('x', 'v', '<NOP>', opts)
---keymap('x', 'vv', 'v', opts)
---keymap('x', 'vl', '<s-v>', opts)
---keymap('x', 'vc', '<c-v>', opts)
+--keyset('x', 'v', '<NOP>', opts)
+--keyset('x', 'vv', 'v', opts)
+--keyset('x', 'vl', '<s-v>', opts)
+--keyset('x', 'vc', '<c-v>', opts)
 --}}}
 -- <leader>f -- picker {{{
-keymap('n', '<leader>fc', ':CocList commands<cr>', opts)
-keymap('x', '<leader>fc', ':<C-U>CocList commands<cr>', opts)
-keymap('n', '<leader>fb', ':CocList buffers<cr>', opts)
-keymap('n', '<leader>fw', ':CocList <cr>', opts)
-keymap('n', '<leader>ff', ':CocList --regex --ignore-case files<cr>', opts)
-keymap('n', '<leader>fm', ':CocList mru<cr>', opts)
---keymap('n', '<leader>fg', ':CocList grep<cr>', opts)
---keymap('n', '<leader>fl', ':CocList<cr>', opts)
-keymap('n', '<leader>fl', ':CocList lines<cr>', opts)
-keymap('n', '<leader>fa', ':CocList diagnostics<cr>', opts)
-keymap('n', '<leader>fr', ':CocList CocListResume<cr>', opts)
+keyset('n', '<leader>fc', ':CocList commands<cr>', opts)
+keyset('x', '<leader>fc', ':<C-U>CocList commands<cr>', opts)
+
+keyset('n', '<leader>fb', ':CocList buffers<cr>', opts)
+keyset('n', '<leader>ff', ':CocList --regex --ignore-case files<cr>', opts)
+keyset('n', '<leader>fm', ':CocList mru<cr>', opts)
+keyset('n', '<leader>fg', ':CocList grep<cr>', opts)
+keyset('n', '<leader>fl', ':CocList<cr>', opts)
+
+keyset('n', '<leader>fa', ':CocList diagnostics<cr>', opts)
+keyset('n', '<leader>fr', ':CocList CocListResume<cr>', opts)
 -- }}}
 -- <leader>w -- window {{{
---keymap('n', 'w', '<NOP>', opts)
---keymap('n', 'ww', 'w', opts)
+--keyset('n', 'w', '<NOP>', opts)
+--keyset('n', 'ww', 'w', opts)
 
-keymap('n', '<leader>wt', '<Plug>(coc-terminal-toggle)', plug_opts)
+keyset('n', '<leader>wt', '<Plug>(coc-terminal-toggle)', plug_opts)
 
-keymap('n', '<leader>wo', '<c-w>o', opts)
+keyset('n', '<leader>wo', '<c-w>o', opts)
 
-keymap('n', '<leader>wj', '<c-w>j', opts)
-keymap('n', '<leader>wh', '<c-w>h', opts)
-keymap('n', '<leader>wk', '<c-w>k', opts)
-keymap('n', '<leader>wl', '<c-w>l', opts)
+keyset('n', '<leader>wj', '<c-w>j', opts)
+keyset('n', '<leader>wh', '<c-w>h', opts)
+keyset('n', '<leader>wk', '<c-w>k', opts)
+keyset('n', '<leader>wl', '<c-w>l', opts)
 
-keymap('n', '<leader>wq', '<c-w>q', opts)
-keymap('n', '<leader>wn', '<c-w>w', opts)
-keymap('n', '<leader>wp', '<c-w>W', opts)
-keymap('n', '<leader>wc', '<c-w>n', opts)
-keymap('n', '<leader>wm', '<c-w>p', opts)
-keymap('n', '<leader>wv', '<c-w>v', opts)
-keymap('n', '<leader>ws', '<c-w>s', opts)
+keyset('n', '<leader>wq', '<c-w>q', opts)
+keyset('n', '<leader>wn', '<c-w>w', opts)
+keyset('n', '<leader>wp', '<c-w>W', opts)
+keyset('n', '<leader>wc', '<c-w>n', opts)
+keyset('n', '<leader>wm', '<c-w>p', opts)
+keyset('n', '<leader>wv', '<c-w>v', opts)
+keyset('n', '<leader>ws', '<c-w>s', opts)
 
-keymap('n', '<leader>w1', '1<c-w>w',opts)
-keymap('n', '<leader>w2', '2<c-w>w',opts)
-keymap('n', '<leader>w3', '3<c-w>w',opts)
-keymap('n', '<leader>w4', '4<c-w>w',opts)
-keymap('n', '<leader>w5', '5<c-w>w',opts)
-keymap('n', '<leader>w6', '6<c-w>w',opts)
-keymap('n', '<leader>w7', '7<c-w>w',opts)
-keymap('n', '<leader>w8', '8<c-w>w',opts)
-keymap('n', '<leader>w9', '9<c-w>w',opts)
+keyset('n', '<leader>w1', '1<c-w>w',opts)
+keyset('n', '<leader>w2', '2<c-w>w',opts)
+keyset('n', '<leader>w3', '3<c-w>w',opts)
+keyset('n', '<leader>w4', '4<c-w>w',opts)
+keyset('n', '<leader>w5', '5<c-w>w',opts)
+keyset('n', '<leader>w6', '6<c-w>w',opts)
+keyset('n', '<leader>w7', '7<c-w>w',opts)
+keyset('n', '<leader>w8', '8<c-w>w',opts)
+keyset('n', '<leader>w9', '9<c-w>w',opts)
 -- }}}
 -- <leader>t -- tab{{{
---keymap('n', 't', '<NOP>', opts)
---keymap('n', 'tt', 't', opts)
+--keyset('n', 't', '<NOP>', opts)
+--keyset('n', 'tt', 't', opts)
 
-keymap('n', '<leader>tn', 'gt', opts)
-keymap('n', '<leader>tp', 'gT', opts)
-keymap('n', '<leader>tm', 'g<TAB>', opts)
-keymap('n', '<leader>tc', '<cmd>tabnew<cr>', opts)
-keymap('n', '<leader>tq', '<cmd>tabclose<cr>', opts)
-keymap('n', '<leader>t1', '1gt', opts)
-keymap('n', '<leader>t2', '2gt', opts)
-keymap('n', '<leader>t3', '3gt', opts)
-keymap('n', '<leader>t4', '4gt', opts)
-keymap('n', '<leader>t5', '5gt', opts)
-keymap('n', '<leader>t6', '6gt', opts)
-keymap('n', '<leader>t7', '7gt', opts)
-keymap('n', '<leader>t8', '8gt', opts)
-keymap('n', '<leader>t9', '9gt', opts)
+keyset('n', '<leader>tn', 'gt', opts)
+keyset('n', '<leader>tp', 'gT', opts)
+keyset('n', '<leader>tm', 'g<TAB>', opts)
+keyset('n', '<leader>tc', '<cmd>tabnew<cr>', opts)
+keyset('n', '<leader>tq', '<cmd>tabclose<cr>', opts)
+keyset('n', '<leader>t1', '1gt', opts)
+keyset('n', '<leader>t2', '2gt', opts)
+keyset('n', '<leader>t3', '3gt', opts)
+keyset('n', '<leader>t4', '4gt', opts)
+keyset('n', '<leader>t5', '5gt', opts)
+keyset('n', '<leader>t6', '6gt', opts)
+keyset('n', '<leader>t7', '7gt', opts)
+keyset('n', '<leader>t8', '8gt', opts)
+keyset('n', '<leader>t9', '9gt', opts)
 --}}}
 -- <leader>b -- buffer{{{
---keymap('n', 'b', '<NOP>', opts)
---keymap('n', 'bb', 'b', opts)
+--keyset('n', 'b', '<NOP>', opts)
+--keyset('n', 'bb', 'b', opts)
 
-keymap('n', '<leader>bp', '<cmd>bprevious<CR>', opts)
-keymap('n', '<leader>bn', '<cmd>bnext<CR>', opts)
-keymap('n', '<leader>bd', '<cmd>Bdelete<CR>', opts)
---keymap('n', '<leader>bd', '<cmd>bdelete<CR>', opts)
-keymap('n', '<leader>bm', '<c-^>', opts)
+keyset('n', '<leader>bp', '<cmd>bprevious<CR>', opts)
+keyset('n', '<leader>bn', '<cmd>bnext<CR>', opts)
+--keyset('n', '<leader>bd', '<cmd>Bdelete<CR>', opts)
+keyset('n', '<leader>bd', '<cmd>bdelete<CR>', opts)
+keyset('n', '<leader>bm', '<c-^>', opts)
 --}}}
 
--- <a-cr> -- send-command & coc-list{{{
--- send
-keymap('n', '<a-cr>', '<Plug>(coc-command-send-line)', plug_opts)
-keymap('x', '<a-cr>', '<Plug>(coc-command-send-range)', plug_opts)
-keymap('i', '<a-cr>', '<c-\\><c-o><Plug>(coc-command-send-line)', plug_opts)
+-- <a-cr> -- send-command {{{
+keyset('n', '<a-cr>', '<Plug>(coc-command-send-line)', plug_opts)
+keyset('x', '<a-cr>', '<Plug>(coc-command-send-range)', plug_opts)
+keyset('i', '<a-cr>', '<c-\\><c-o><Plug>(coc-command-send-line)', plug_opts)
 --}}}
--- terminal{{{
---keymap('n', '<a-=>', '<cmd>split term://$SHELL<CR>', opts)
-keymap('n', '<a-=>', '<Plug>(coc-terminal-toggle)', plug_opts)
-keymap('t', '<c-o>', [[<c-\><c-n>]], opts)
---}}}
--- command line{{{
-keymap('c', '<c-a>', '<HOME>', opts)
-keymap('c', '<c-e>', '<END>', opts)
-keymap('c', '<c-b>', '<Left>', opts)
-keymap('c', '<c-f>', '<Right>', opts)
-keymap('c', '<a-b>', '<S-Left>', opts)
-keymap('c', '<a-f>', '<S-Right>', opts)
+-- command line edit {{{
+keyset('c', '<c-a>', '<HOME>', opts)
+keyset('c', '<c-e>', '<END>', opts)
+keyset('c', '<c-b>', '<Left>', opts)
+keyset('c', '<c-f>', '<Right>', opts)
+keyset('c', '<a-b>', '<S-Left>', opts)
+keyset('c', '<a-f>', '<S-Right>', opts)
 vim.o.cedit="<C-x>"
 --}}}
--- misc {{{
---keymap('n', '<leader>fc', '<cmd>lua require("telescope.builtin").commands()<cr>', opts)
---keymap('n', '<leader>fb', '<cmd>lua require("telescope.builtin").buffers({ sort_mru=true, cwd_only=true })<cr>', opts)
---keymap('n', '<leader>ff', '<cmd>lua require("telescope.builtin").find_files()<cr>', opts)
---keymap('n', '<leader>fm', '<cmd>lua require("telescope.builtin").oldfiles()<cr>', opts)
---keymap('n', '<leader>fg', '<cmd>lua require("telescope.builtin").live_grep()<cr>', opts)
---keymap('n', '<leader>fl', '<cmd>lua require("telescope.builtin").builtin()<cr>', opts)
---keymap('n', '<leader>fa', '<cmd>lua require("telescope.builtin").diagnostics()<cr>', opts)
+-- emacs style insert mode {{{
+keyset('i', '<c-a>', '<HOME>', opts)
+keyset('i', '<c-e>', '<END>', opts)
+keyset('i', '<c-b>', '<Left>', opts)
+keyset('i', '<c-f>', '<Right>', opts)
+keyset('i', '<a-b>', '<S-Left>', opts)
+keyset('i', '<a-f>', '<S-Right>', opts)
+
+keyset('i', '<c-k>', '<Right><Esc>C', opts)
+keyset('i', '<c-u>', '<Esc>d^s', opts)
+keyset('i', '<c-y>', '<Esc>pa', opts)
+
+keyset('i', '<a-x>', '<Esc>:', opts)
+keyset('n', '<a-x>', '<Esc>:', opts)
+
+keyset('i', '<c-v>', '<PageDown>', opts)
+keyset('i', '<a-v>', '<PageUp>:', opts)
+
+local opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
+keyset('i', '<c-p>', [[coc#pum#visible() ? coc#pum#prev(0) : "\<Up>"]], opts)
+keyset('i', '<c-n>', [[coc#pum#visible() ? coc#pum#next(0) : "\<DOWN>"]], opts)
+
+-- }}}
+-- telescope {{{
+--keyset('n', '<leader>fc', '<cmd>lua require("telescope.builtin").commands()<cr>', opts)
+--keyset('n', '<leader>fb', '<cmd>lua require("telescope.builtin").buffers({ sort_mru=true, cwd_only=true })<cr>', opts)
+--keyset('n', '<leader>ff', '<cmd>lua require("telescope.builtin").find_files()<cr>', opts)
+--keyset('n', '<leader>fm', '<cmd>lua require("telescope.builtin").oldfiles()<cr>', opts)
+--keyset('n', '<leader>fg', '<cmd>lua require("telescope.builtin").live_grep()<cr>', opts)
+--keyset('n', '<leader>fl', '<cmd>lua require("telescope.builtin").builtin()<cr>', opts)
+--keyset('n', '<leader>fa', '<cmd>lua require("telescope.builtin").diagnostics()<cr>', opts)
 -- }}}

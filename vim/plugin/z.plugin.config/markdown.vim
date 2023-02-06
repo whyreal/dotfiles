@@ -30,4 +30,3 @@ let g:markdown_fenced_languages = [
             \ 'xml',
             \ 'yaml'
             \]
-let g:markdown_syntax_conceal = 0

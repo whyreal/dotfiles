@@ -1,7 +1,22 @@
 setlocal sts=4 tabstop=4 shiftwidth=4
 setlocal expandtab
 setlocal foldmethod=expr fdl=1 fdls=1
-"setlocal conceallevel=2
+
+" https://github.com/preservim/vim-markdown/
+" conceal use Vim's standard conceal configuration.
+"set conceallevel=2
+"set concealcursor=n
+
+" conceal regardless of conceallevel setting, add the following to your .vimrc:
+"let g:vim_markdown_conceal = 1
+
+" math conceal with LaTeX math syntax enabled, add the following to your .vimrc:
+"let g:tex_conceal = ""
+"let g:vim_markdown_math = 1
+"
+" onceal for code fences requires an additional setting:
+"let g:vim_markdown_conceal_code_blocks = 1
+
 "setlocal foldclose=all
 
 "au ColorScheme *.md highlight! link htmlBold Search

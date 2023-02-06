@@ -8,17 +8,10 @@ let g:mapleader=","
 let g:maplocalleader=" "
 
 call plug#begin()
-Plug 'tpope/vim-sensible'
-Plug 'chrisbra/unicode.vim'
+"Plug 'tpope/vim-sensible'
+"Plug 'chrisbra/unicode.vim'
 
 Plug 'editorconfig/editorconfig-vim'
-
-"tmux
-"Plug 'roxma/vim-tmux-clipboard'
-
-"k8s
-"Plug 'rottencandy/vimkubectl'
-"Plug 'andrewstuart/vim-kubernetes'
 
 " git
 Plug 'tpope/vim-fugitive'
@@ -37,11 +30,11 @@ Plug 'rakr/vim-one'
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
 
 " syntax
-Plug 'Glench/Vim-Jinja2-Syntax'
+"Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'neoclide/jsonc.vim'
 Plug 'dag/vim-fish'
 Plug 'wizicer/vim-jison'
-Plug 'wgwoods/vim-systemd-syntax'
+"Plug 'wgwoods/vim-systemd-syntax'
 Plug 'godlygeek/tabular'
 Plug 'pprovost/vim-ps1'
 Plug 'chr4/nginx.vim'
@@ -77,8 +70,8 @@ Plug '~/code/whyreal/coc-picgo/', {'do': 'yarn install --frozen-lockfile'}
 Plug 'rafcamlet/coc-nvim-lua'
 Plug 'euclidianAce/BetterLua.vim'
 
-Plug 'godlygeek/tabular'
-Plug 'preservim/vim-markdown'
+"Plug 'godlygeek/tabular'
+"Plug 'preservim/vim-markdown'
 "Plug 'mzlogin/vim-markdown-toc'
 "Plug 'masukomi/vim-markdown-folding'
 
@@ -87,8 +80,9 @@ Plug 'moll/vim-bbye'
 " EasyMotion
 Plug 'phaazon/hop.nvim', {'branch': 'v2'}
 
-"Plug 'kyazdani42/nvim-web-devicons' " for file icons
-"Plug 'kyazdani42/nvim-tree.lua'
+" explorer
+Plug 'kyazdani42/nvim-web-devicons' " for file icons
+Plug 'kyazdani42/nvim-tree.lua'
 
 " plugins in lua
 Plug 'nvim-lua/plenary.nvim'
@@ -99,10 +93,9 @@ Plug 'honza/vim-snippets'
 
 call plug#end()
 
+syntax off
 "syntax enable
 "filetype plugin indent on
-
-au VimEnter * let g:workspace=$PWD
 
 " 根据焦点变化自动保存或读取文件
 "au FocusGained,BufEnter * :silent! !
