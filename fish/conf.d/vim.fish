@@ -1,4 +1,3 @@
-set -x EDITOR 'nvim'
 # neovim
 set -x NVIM_LISTEN_ADDRESS /tmp/nvimsocket
 alias vim='nvim'

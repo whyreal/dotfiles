@@ -1,0 +1,93 @@
+{
+	"title": "number line modifiers",
+	"rules":[
+		{
+			"description": "1 -> control",
+			"manipulators": [
+				{
+					"from": { "key_code": "1", "modifiers": { "optional": [ "any" ] } },
+					"to": [ { "key_code": "left_control", "lazy": true } ],
+					"to_if_alone": [ { "key_code": "1" } ],
+					"type": "basic"
+				}
+			]
+		},
+		{
+			"description": "0 -> control",
+			"manipulators": [
+				{
+					"from": { "key_code": "0", "modifiers": { "optional": [ "any" ] } },
+					"to": [ { "key_code": "right_control", "lazy": true } ],
+					"to_if_alone": [ { "key_code": "0" } ],
+					"type": "basic"
+				}
+			]
+		},
+		{
+			"description": "2 -> alt",
+			"manipulators": [
+				{
+					"from": { "key_code": "2", "modifiers": { "optional": [ "any" ] } },
+					"to": [ { "key_code": "left_option", "lazy": true } ],
+					"to_if_alone": [ { "key_code": "2" } ],
+					"type": "basic"
+				}
+			]
+		},
+		{
+			"description": "9 -> alt",
+			"manipulators": [
+				{
+					"from": { "key_code": "9", "modifiers": { "optional": [ "any" ] } },
+					"to": [ { "key_code": "right_option", "lazy": true } ],
+					"to_if_alone": [ { "key_code": "9" } ],
+					"type": "basic"
+				}
+			]
+		},
+		{
+			"description": "3 -> command",
+			"manipulators": [
+				{
+					"from": { "key_code": "3", "modifiers": { "optional": [ "any" ] } },
+					"to": [ { "key_code": "left_command", "lazy": true } ],
+					"to_if_alone": [ { "key_code": "3" } ],
+					"type": "basic"
+				}
+			]
+		},
+		{
+			"description": "8 -> command",
+			"manipulators": [
+				{
+					"from": { "key_code": "8", "modifiers": { "optional": [ "any" ] } },
+					"to": [ { "key_code": "right_command", "lazy": true } ],
+					"to_if_alone": [ { "key_code": "8" } ],
+					"type": "basic"
+				}
+			]
+		},
+		{
+			"description": "4 -> shift",
+			"manipulators": [
+				{
+					"from": { "key_code": "4", "modifiers": { "optional": [ "any" ] } },
+					"to": [ { "key_code": "left_shift", "lazy": true } ],
+					"to_if_alone": [ { "key_code": "4" } ],
+					"type": "basic"
+				}
+			]
+		},
+		{
+			"description": "7 -> shift",
+			"manipulators": [
+				{
+					"from": { "key_code": "7", "modifiers": { "optional": [ "any" ] } },
+					"to": [ { "key_code": "right_shift", "lazy": true } ],
+					"to_if_alone": [ { "key_code": "7" } ],
+					"type": "basic"
+				}
+			]
+		}
+	]
+}

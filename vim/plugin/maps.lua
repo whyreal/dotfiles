@@ -8,6 +8,8 @@ local plug_opts = {}
 --keyset('n', 'j', 'gj', opts)
 --keyset('n', 'k', 'gk', opts)
 
+keyset('n', '!', ':!', opts)
+
 keyset('n', '<localleader>s', '<cmd>w<CR>', opts)
 keyset('n', '<localleader>w', '<Plug>TranslateW', plug_opts)
 keyset('x', '<localleader>w', '<Plug>TranslateW', plug_opts)
@@ -99,6 +101,7 @@ keyset('n', '<leader>fb', ':CocList buffers<cr>', opts)
 keyset('n', '<leader>ff', ':CocList --regex --ignore-case files<cr>', opts)
 keyset('n', '<leader>fm', ':CocList mru<cr>', opts)
 keyset('n', '<leader>fg', ':CocList grep<cr>', opts)
+keyset('n', '<leader>fo', ':CocList outline<cr>', opts)
 keyset('n', '<leader>fl', ':CocList<cr>', opts)
 
 keyset('n', '<leader>fa', ':CocList diagnostics<cr>', opts)
@@ -195,7 +198,7 @@ keyset('i', '<a-x>', '<Esc>:', opts)
 keyset('n', '<a-x>', '<Esc>:', opts)
 
 keyset('i', '<c-v>', '<PageDown>', opts)
-keyset('i', '<a-v>', '<PageUp>:', opts)
+keyset('i', '<a-v>', '<PageUp>', opts)
 
 local opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
 keyset('i', '<c-p>', [[coc#pum#visible() ? coc#pum#prev(0) : "\<Up>"]], opts)

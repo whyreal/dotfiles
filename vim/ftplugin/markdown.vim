@@ -76,14 +76,13 @@ xmap <buffer> is <Plug>(coc-v-range-select-strikethrough-inner)
 omap <buffer> as <Plug>(coc-o-range-select-strikethrough-all)
 omap <buffer> is <Plug>(coc-o-range-select-strikethrough-inner)
 
-nmap <buffer> gf gx
-nmap <buffer> gx <cmd>CocCommand OpenURL<CR>
+nmap <buffer> gd <cmd>CocCommand OpenURL<CR>
 " resolv file in Finder
 nmap <buffer> gr <cmd>CocCommand RevealURL<CR>
 " copy id (joplin) or path (local , path ...)
 "keymap('n', 'gy', '<cmd>CocCommand CopyURL<CR>', opts)
 
-command Preview  execute 'silent !open -a "Google Chrome.app" %:S'
+command Preview  execute 'silent !open %:S'
 
 command! -nargs=0 Md2docx !md2docx %
 

@@ -1,5 +1,6 @@
 # set -e fish_user_paths
 set -x LANG "en_US.UTF-8"
+set -x EDITOR 'nvim'
 
 # use vi mode
 #fish_vi_key_bindings
@@ -12,8 +13,7 @@ alias c='code'
 alias v='nvim'
 alias r='open -R'
 alias d='cd ~/Documents/DocBase/ && $EDITOR'
-alias work-commands='cd ~/Documents/DocBase/commands/ && $EDITOR'
-alias drawio='open -a draw.io.app'
+alias m='make'
 
 alias ....='cd ../../..'
 alias ...='cd ../..'
@@ -26,10 +26,10 @@ alias sqlplus='rlwrap sqlplus'
 
 # PATH
 set -g fish_user_paths "/usr/local/sbin"                  $fish_user_paths
-set -g fish_user_paths "/Applications/instantclient_18_1" $fish_user_paths
+#set -g fish_user_paths "/Applications/instantclient_18_1" $fish_user_paths
 set -g fish_user_paths "/usr/local/apache-maven-3.8.3/bin/" $fish_user_paths
 set -g fish_user_paths "$HOME/.yarn/bin" $fish_user_paths
-set -g fish_user_paths "/usr/local/helix/" $fish_user_paths
-set -g fish_user_paths "/usr/local/ltex-ls/bin/" $fish_user_paths
+#set -g fish_user_paths "/usr/local/helix/" $fish_user_paths
+#set -g fish_user_paths "/usr/local/ltex-ls/bin/" $fish_user_paths
 
 fish_add_path /usr/local/opt/llvm/bin

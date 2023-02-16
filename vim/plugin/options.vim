@@ -1,17 +1,11 @@
-"let g:loaded_node_provider=0
-let g:loaded_python_provider=0
-"let g:loaded_python3_provider=0
-let g:loaded_ruby_provider=0
-let g:loaded_perl_provider=0
-let g:ft_man_folding_enable=1
-
 "set cedit=<C-R>  "open command line window
-"set cmdheight=2
-set autowrite
+set cmdheight=1
+"set autowrite
+"set autowriteall
 set clipboard=unnamed
 set colorcolumn=+0
 set completeopt=menuone,noinsert,noselect
-set cursorline
+set nocursorline
 set fileencodings=utf-8,gbk,ucs-bom,cp936,gb18030,big5,latin1
 "set foldlevel=99
 "set foldlevelstart=0
@@ -34,7 +28,7 @@ set breakindent
 set breakindentopt=shift:0
 set nolinebreak
 set sts=4 ts=4 sw=4 et
-set nu relativenumber
+"set nu relativenumber
 
 " Set internal encoding of vim, not needed on neovim, since coc.nvim using some
 " unicode characters in the file autoload/float.vim

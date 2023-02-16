@@ -1,12 +1,12 @@
 {
-  "title": "num-layout",
+  "title": "whyreal magic",
   "rules": [
     {
-      "description": "make 1 as Fn-number",
+      "description": "home line modifiers, shift(a,;),ctrl(s,l),option(d,k),cmd(f,j)",
       "manipulators": [
         {
           "from": {
-            "key_code": "1",
+            "key_code": "a",
             "modifiers": {
               "optional": [
                 "any"
@@ -15,42 +15,20 @@
           },
           "to": [
             {
-              "set_variable": {
-                "name": "num_layout",
-                "value": 1
-              }
-            }
-          ],
-          "to_after_key_up": [
-            {
-              "set_variable": {
-                "name": "num_layout",
-                "value": 0
-              }
+              "key_code": "left_shift",
+              "lazy": true
             }
           ],
           "to_if_alone": [
             {
-              "key_code": "1"
+              "key_code": "a"
             }
           ],
           "type": "basic"
-        }
-      ]
-    },
-    {
-      "description": "FN: NUMBER",
-      "manipulators": [
+        },
         {
-          "conditions": [
-            {
-              "name": "num_layout",
-              "type": "variable_if",
-              "value": 1
-            }
-          ],
           "from": {
-            "key_code": "n",
+            "key_code": "semicolon",
             "modifiers": {
               "optional": [
                 "any"
@@ -59,21 +37,20 @@
           },
           "to": [
             {
-              "key_code": "0"
+              "key_code": "right_shift",
+              "lazy": true
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "semicolon"
             }
           ],
           "type": "basic"
         },
         {
-          "conditions": [
-            {
-              "name": "num_layout",
-              "type": "variable_if",
-              "value": 1
-            }
-          ],
           "from": {
-            "key_code": "o",
+            "key_code": "s",
             "modifiers": {
               "optional": [
                 "any"
@@ -82,65 +59,18 @@
           },
           "to": [
             {
-              "key_code": "9"
+              "key_code": "left_control",
+              "lazy": true
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "s"
             }
           ],
           "type": "basic"
         },
         {
-          "conditions": [
-            {
-              "name": "num_layout",
-              "type": "variable_if",
-              "value": 1
-            }
-          ],
-          "from": {
-            "key_code": "i",
-            "modifiers": {
-              "optional": [
-                "any"
-              ]
-            }
-          },
-          "to": [
-            {
-              "key_code": "8"
-            }
-          ],
-          "type": "basic"
-        },
-        {
-          "conditions": [
-            {
-              "name": "num_layout",
-              "type": "variable_if",
-              "value": 1
-            }
-          ],
-          "from": {
-            "key_code": "u",
-            "modifiers": {
-              "optional": [
-                "any"
-              ]
-            }
-          },
-          "to": [
-            {
-              "key_code": "7"
-            }
-          ],
-          "type": "basic"
-        },
-        {
-          "conditions": [
-            {
-              "name": "num_layout",
-              "type": "variable_if",
-              "value": 1
-            }
-          ],
           "from": {
             "key_code": "l",
             "modifiers": {
@@ -151,19 +81,40 @@
           },
           "to": [
             {
-              "key_code": "6"
+              "key_code": "left_control",
+              "lazy": true
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "l"
             }
           ],
           "type": "basic"
         },
         {
-          "conditions": [
+          "from": {
+            "key_code": "d",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
             {
-              "name": "num_layout",
-              "type": "variable_if",
-              "value": 1
+              "key_code": "left_option",
+              "lazy": true
             }
           ],
+          "to_if_alone": [
+            {
+              "key_code": "d"
+            }
+          ],
+          "type": "basic"
+        },
+        {
           "from": {
             "key_code": "k",
             "modifiers": {
@@ -174,19 +125,40 @@
           },
           "to": [
             {
-              "key_code": "5"
+              "key_code": "left_option",
+              "lazy": true
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "k"
             }
           ],
           "type": "basic"
         },
         {
-          "conditions": [
+          "from": {
+            "key_code": "f",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
             {
-              "name": "num_layout",
-              "type": "variable_if",
-              "value": 1
+              "key_code": "left_command",
+              "lazy": true
             }
           ],
+          "to_if_alone": [
+            {
+              "key_code": "f"
+            }
+          ],
+          "type": "basic"
+        },
+        {
           "from": {
             "key_code": "j",
             "modifiers": {
@@ -197,21 +169,25 @@
           },
           "to": [
             {
-              "key_code": "4"
+              "key_code": "left_command",
+              "lazy": true
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "j"
             }
           ],
           "type": "basic"
-        },
+        }
+      ]
+    },
+    {
+      "description": "Caps Lock => Control or ESC",
+      "manipulators": [
         {
-          "conditions": [
-            {
-              "name": "num_layout",
-              "type": "variable_if",
-              "value": 1
-            }
-          ],
           "from": {
-            "key_code": "period",
+            "key_code": "caps_lock",
             "modifiers": {
               "optional": [
                 "any"
@@ -220,21 +196,25 @@
           },
           "to": [
             {
-              "key_code": "3"
+              "key_code": "left_control",
+              "lazy": true
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "escape"
             }
           ],
           "type": "basic"
-        },
+        }
+      ]
+    },
+    {
+      "description": "Caps Lock => ESC",
+      "manipulators": [
         {
-          "conditions": [
-            {
-              "name": "num_layout",
-              "type": "variable_if",
-              "value": 1
-            }
-          ],
           "from": {
-            "key_code": "comma",
+            "key_code": "caps_lock",
             "modifiers": {
               "optional": [
                 "any"
@@ -243,21 +223,31 @@
           },
           "to": [
             {
-              "key_code": "2"
+              "key_code": "escape"
             }
           ],
           "type": "basic"
-        },
+        }
+      ]
+    },
+    {
+      "description": "Change escape to grave accent and tilde",
+      "manipulators": [
         {
           "conditions": [
             {
-              "name": "num_layout",
-              "type": "variable_if",
-              "value": 1
+              "identifiers": [
+                {
+                  "description": "poker",
+                  "product_id": 1553,
+                  "vendor_id": 3897
+                }
+              ],
+              "type": "device_if"
             }
           ],
           "from": {
-            "key_code": "m",
+            "key_code": "escape",
             "modifiers": {
               "optional": [
                 "any"
@@ -266,7 +256,7 @@
           },
           "to": [
             {
-              "key_code": "1"
+              "key_code": "grave_accent_and_tilde"
             }
           ],
           "type": "basic"
