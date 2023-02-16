@@ -17,17 +17,12 @@ karabiner/automatic_backups/
 # fish plugin
 /fish/functions/
 
-/vim/bundle/
 /vim/.netrw*
-/vim/plugged
 /vim/sessions/
-/vim/rplugin/node/wr/yarn.lock
-/vim/rplugin/node/wr/node_modules
-/vim/rplugin/node/wr/lib
-/vim/rplugin/node/wr/src/peg/*.ts
 
-# vim packer
-/vim/plugin/packer_compiled.vim
+**/*lock*
+
+/alacritty/alacritty.yml.*.bak
+
 
 scripts/lib/
-vim/lua/.vim
