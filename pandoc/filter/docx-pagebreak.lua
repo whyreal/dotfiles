@@ -54,8 +54,15 @@ local function docx_page_break(elem)
 			print("Table of Contents")
 			local attr = {}
 			attr["custom-style"] = "TOC Heading"
-			div = pandoc.Div({pandoc.Para(pandoc.Str("目录"))}, attr)
+			local div = pandoc.Div({pandoc.Para(pandoc.Str("目录"))}, attr)
 			elem = {div, toc}
+		else
+			elem = {}
+		end
+	elseif elem.text == "\\section" then
+		if FORMAT:match 'docx' then
+			print("Section Break")
+			elem = sectionbreak
 		else
 			elem = {}
 		end

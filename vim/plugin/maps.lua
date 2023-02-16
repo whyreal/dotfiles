@@ -1,7 +1,6 @@
 -- vim: fdm=marker
 local keyset = vim.keymap.set
 
----@type MapOptions
 local opts = {noremap = true}
 local plug_opts = {}
 
@@ -200,7 +199,7 @@ keyset('n', '<a-x>', '<Esc>:', opts)
 keyset('i', '<c-v>', '<PageDown>', opts)
 keyset('i', '<a-v>', '<PageUp>', opts)
 
-local opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
+opts = {silent = true, noremap = true, expr = true, replace_keycodes = false}
 keyset('i', '<c-p>', [[coc#pum#visible() ? coc#pum#prev(0) : "\<Up>"]], opts)
 keyset('i', '<c-n>', [[coc#pum#visible() ? coc#pum#next(0) : "\<DOWN>"]], opts)
 
