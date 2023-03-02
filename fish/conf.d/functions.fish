@@ -8,8 +8,8 @@ end
 function proxy.ss.deactive
     git config --global --unset http.proxy
     #git config --local --unset http.proxy
-    set -gx http_proxy ""
-    set -gx https_proxy ""
+    set -ge http_proxy
+    set -ge https_proxy
 end
 
 function ssh.execute_local_script

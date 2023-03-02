@@ -304,7 +304,7 @@ key_bindings:
   # (macOS only)
   #- { key: K,              mods: Command, mode: ~Vi|~Search, chars: "\x0c"                 }
   #- { key: K,              mods: Command, mode: ~Vi|~Search, action: ClearHistory          }
-  #- { key: Key0,           mods: Command,                    action: ResetFontSize         }
+  - { key: Key0,           mods: Command,                    action: ResetFontSize         }
   - { key: Equals,         mods: Command,                    action: IncreaseFontSize      }
   - { key: Plus,           mods: Command,                    action: IncreaseFontSize      }
   - { key: NumpadAdd,      mods: Command,                    action: IncreaseFontSize      }
@@ -401,5 +401,6 @@ key_bindings:
   - { key: Equals,    mods: Alt,       chars: "\x1b="                       } # Alt + =    
   - { key: LBracket,    mods: Alt,       chars: "\x1b["                       } # Alt + [            
   - { key: RBracket,    mods: Alt,       chars: "\x1b]"                       } # Alt + ]    
+  - { key: Return,    mods: Alt,       chars: "\x1b\x0D"                       } # Alt + Return
   - { key: Back, action:  ReceiveChar}
 

@@ -9,42 +9,25 @@ local plug_opts = {}
 
 keyset('n', '!', ':!', opts)
 
-keyset('n', '<localleader>s', '<cmd>w<CR>', opts)
+--[[keyset('n', '<localleader>s', '<cmd>w<CR>', opts)]]
 keyset('n', '<localleader>w', '<Plug>TranslateW', plug_opts)
 keyset('x', '<localleader>w', '<Plug>TranslateW', plug_opts)
+keyset('n', '<localleader>e', '<cmd>CocCommand explorer --toggle --position left<CR>', opts)
 
-keyset('n', '<localleader>e', '<cmd>Explore<CR>', opts)
-keyset('n', '<localleader>r', '<cmd>Rexplore<CR>', opts)
-keyset('n', '<localleader>t', '<cmd>CocCommand explorer<CR>', opts)
-
--- s -- scroll {{{
---keyset('n', 's', '<NOP>', opts)
---keyset('n', 'ss', 's', opts)
---keyset('n', 'sk', '<c-u>', opts)
---keyset('n', 'sj', '<c-d>', opts)
---keyset('n', 'sl', '<c-f>', opts)
---keyset('n', 'sh', '<c-b>', opts)
---keyset('n', 'st', 'zt', opts)
---keyset('n', 'sb', 'zb', opts)
---keyset('n', 'sm', 'zz', opts)
-
---keyset('x', 's', '<NOP>', opts)
---keyset('x', 'ss', 's', opts)
---keyset('x', 'sk', '<c-u>', opts)
---keyset('x', 'sj', '<c-d>', opts)
---keyset('x', 'sl', '<c-f>', opts)
---keyset('x', 'sh', '<c-b>', opts)
---keyset('x', 'st', 'zt', opts)
---keyset('x', 'sb', 'zb', opts)
---keyset('x', 'sm', 'zz', opts)
+-- <leader>e -- file explorer {{{
+keyset('n', '<leader>el', '<cmd>CocCommand explorer --toggle --position left<CR>', opts)
+keyset('n', '<leader>et', '<cmd>CocCommand explorer --toggle --position tab<CR>', opts)
+keyset('n', '<leader>ef', '<cmd>CocCommand explorer --toggle --position floating<CR>', opts)
+keyset('n', '<leader>ee', '<cmd>CocCommand explorer --toggle<CR>', opts)
 -- }}}
+--
 -- g -- goto{{{
 keyset('n', 'gm', 'M', opts)
 keyset('n', 'gh', 'H', opts)
 keyset('n', 'gl', 'L', opts)
 
---keyset('n', 'go', '<c-o>', opts)
---keyset('n', 'gi', '<c-i>', opts)
+keyset('n', 'go', '<c-o>', opts)
+keyset('n', 'gi', '<c-i>', opts)
 
 keyset('x', 'g0', '<Plug>(coc-goto-first)', plug_opts)
 
@@ -80,18 +63,27 @@ keyset('n', 'g[', '<Plug>(coc-diagnostic-prev)', plug_opts)
 keyset('n', 'g]', '<Plug>(coc-diagnostic-next)', plug_opts)
 
 --}}}
+-- s -- scroll {{{
+keyset('n', 's', '<NOP>', opts)
+keyset('n', 'ss', 's', opts)
+keyset('n', 'sk', '<c-u>', opts)
+keyset('n', 'sj', '<c-d>', opts)
+keyset('n', 'sl', '<c-f>', opts)
+keyset('n', 'sh', '<c-b>', opts)
+keyset('n', 'st', 'zt', opts)
+keyset('n', 'sb', 'zb', opts)
+keyset('n', 'sm', 'zz', opts)
 
--- v -- visual{{{
---keyset('n', 'v', '<NOP>', opts)
---keyset('n', 'vv', 'v', opts)
---keyset('n', 'vl', '<s-v>', opts)
---keyset('n', 'vc', '<c-v>', opts)
-
---keyset('x', 'v', '<NOP>', opts)
---keyset('x', 'vv', 'v', opts)
---keyset('x', 'vl', '<s-v>', opts)
---keyset('x', 'vc', '<c-v>', opts)
---}}}
+keyset('x', 's', '<NOP>', opts)
+keyset('x', 'ss', 's', opts)
+keyset('x', 'sk', '<c-u>', opts)
+keyset('x', 'sj', '<c-d>', opts)
+keyset('x', 'sl', '<c-f>', opts)
+keyset('x', 'sh', '<c-b>', opts)
+keyset('x', 'st', 'zt', opts)
+keyset('x', 'sb', 'zb', opts)
+keyset('x', 'sm', 'zz', opts)
+-- }}}
 -- <leader>f -- picker {{{
 keyset('n', '<leader>fc', ':CocList commands<cr>', opts)
 keyset('x', '<leader>fc', ':<C-U>CocList commands<cr>', opts)
@@ -99,7 +91,7 @@ keyset('x', '<leader>fc', ':<C-U>CocList commands<cr>', opts)
 keyset('n', '<leader>fb', ':CocList buffers<cr>', opts)
 keyset('n', '<leader>ff', ':CocList --regex --ignore-case files<cr>', opts)
 keyset('n', '<leader>fm', ':CocList mru<cr>', opts)
-keyset('n', '<leader>fg', ':CocList grep<cr>', opts)
+keyset('n', '<leader>fg', ':grep ', opts)
 keyset('n', '<leader>fo', ':CocList outline<cr>', opts)
 keyset('n', '<leader>fl', ':CocList<cr>', opts)
 
@@ -162,11 +154,10 @@ keyset('n', '<leader>t9', '9gt', opts)
 
 keyset('n', '<leader>bp', '<cmd>bprevious<CR>', opts)
 keyset('n', '<leader>bn', '<cmd>bnext<CR>', opts)
---keyset('n', '<leader>bd', '<cmd>Bdelete<CR>', opts)
-keyset('n', '<leader>bd', '<cmd>bdelete<CR>', opts)
+keyset('n', '<leader>bd', '<cmd>Bdelete<CR>', opts)
+--keyset('n', '<leader>bd', '<cmd>bdelete<CR>', opts)
 keyset('n', '<leader>bm', '<c-^>', opts)
 --}}}
-
 -- <a-cr> -- send-command {{{
 keyset('n', '<a-cr>', '<Plug>(coc-command-send-line)', plug_opts)
 keyset('x', '<a-cr>', '<Plug>(coc-command-send-range)', plug_opts)
@@ -179,6 +170,7 @@ keyset('c', '<c-b>', '<Left>', opts)
 keyset('c', '<c-f>', '<Right>', opts)
 keyset('c', '<a-b>', '<S-Left>', opts)
 keyset('c', '<a-f>', '<S-Right>', opts)
+keyset('c', '<c-d>', '<delete>', opts)
 vim.o.cedit="<C-x>"
 --}}}
 -- emacs style insert mode {{{
@@ -189,9 +181,10 @@ keyset('i', '<c-f>', '<Right>', opts)
 keyset('i', '<a-b>', '<S-Left>', opts)
 keyset('i', '<a-f>', '<S-Right>', opts)
 
-keyset('i', '<c-k>', '<Right><Esc>C', opts)
-keyset('i', '<c-u>', '<Esc>d^s', opts)
+--keyset('i', '<c-k>', '<Right><Esc>C', opts)
+--keyset('i', '<c-u>', '<Esc>d^s', opts)
 keyset('i', '<c-y>', '<Esc>pa', opts)
+keyset('i', '<c-d>', '<delete>', opts)
 
 keyset('i', '<a-x>', '<Esc>:', opts)
 keyset('n', '<a-x>', '<Esc>:', opts)
@@ -213,3 +206,14 @@ keyset('i', '<c-n>', [[coc#pum#visible() ? coc#pum#next(0) : "\<DOWN>"]], opts)
 --keyset('n', '<leader>fl', '<cmd>lua require("telescope.builtin").builtin()<cr>', opts)
 --keyset('n', '<leader>fa', '<cmd>lua require("telescope.builtin").diagnostics()<cr>', opts)
 -- }}}
+-- v -- visual{{{
+--keyset('n', 'v', '<NOP>', opts)
+--keyset('n', 'vv', 'v', opts)
+--keyset('n', 'vl', '<s-v>', opts)
+--keyset('n', 'vc', '<c-v>', opts)
+
+--keyset('x', 'v', '<NOP>', opts)
+--keyset('x', 'vv', 'v', opts)
+--keyset('x', 'vl', '<s-v>', opts)
+--keyset('x', 'vc', '<c-v>', opts)
+--}}}

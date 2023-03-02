@@ -18,14 +18,14 @@ end
 
 if vim.env["LC_TERMINAL"] == "iTerm2" then
     vim.o.termguicolors = true
-    vim.o.background = "dark"
+    vim.o.background = "light"
     vim.cmd.colorscheme("PaperColor")
 end
 
 if vim.env["TERMAPP"] == "alacritty" then
     vim.o.termguicolors = true
     vim.o.background = "dark"
-    vim.cmd.colorscheme("Gruvbox")
+    vim.cmd.colorscheme("PaperColor")
 end
 
 if vim.env["TERMAPP"] == "vscode" then
@@ -36,6 +36,6 @@ end
 
 if vim.env["__CFBundleIdentifier"] == "com.apple.Terminal" then
     vim.o.termguicolors = false
-    vim.o.background = "light"
+    vim.o.background = "dark"
     vim.cmd.colorscheme("PaperColor")
 end

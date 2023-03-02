@@ -1,27 +1,36 @@
 {
+  //"snippets.ultisnips.enable": false,
+  //"snippets.textmateSnippetsRoots": [
+    //"~/.config/nvim/textmateSnips/"
+  //],
+  //"snippets.snipmate.enable": true,
   "explorer.file.cdCommand": "tcd",
-
   "imselect.defaultInput": "com.apple.keylayout.US",
   "imselect.enableStatusItem": false,
   "imselect.enableFloating": false,
-
   "workspace.rootPatterns": [
     ".git",
     ".vim",
     ".hg",
     ".svn"
   ],
-
   "coc.preferences.extensionUpdateCheck": "daily",
   "coc.preferences.jumpCommand": "edit",
-
   "suggest.maxCompleteItemCount": 20,
   "suggest.asciiCharactersOnly": true,
   "suggest.asciiMatch": false,
-
-  "json.enable":true,
-  "json.format.enable":true,
-
+  "suggest.enableFloat": true,
+  "suggest.floatConfig": {
+    "border": true,
+  },
+  "suggest.pumFloatConfig": {
+    "border": true,
+  },
+  "hover.floatConfig": {
+    "border": true
+  },
+  "json.enable": true,
+  "json.format.enable": true,
   "diagnostic.enable": true,
   "list.height": 30,
   "list.insertMappings": {
@@ -32,31 +41,35 @@
     "x": "call:OpenWithSystemApp",
     "r": "call:OpenWithFinder"
   },
-
   "list.source.mru.ignoreGitIgnore": true,
-  "list.source.files.command":"rg",
+  "list.source.files.command": "rg",
   "list.source.files.args": [
-    "--color","never",
+    "--color",
+    "never",
     "--files",
     //"--hidden",
     "--no-ignore",
     "-L",
-    "-g", "!**/_resources/",
-    "-g", "!**/.git/",
-    "-g", "!**/.svn/",
-    "-g", "!scripts/",
-    "-g", "!个人资料/"
+    "-g",
+    "!**/_resources/",
+    "-g",
+    "!**/.git/",
+    "-g",
+    "!**/.svn/",
+    "-g",
+    "!scripts/",
+    "-g",
+    "!个人资料/"
   ],
-  "git.enableGutters": false,
-  "browser.patterns": {
-    "*": []
-  },
-  "snippets.ultisnips.enable": false,
-  "snippets.textmateSnippetsRoots": [
-    "~/.config/nvim/textmateSnips/"
-  ],
-  "snippets.snipmate.enable": true,
+  "git.enableGutters": true,
   "picgo.dataPath": "/Users/Real/.picgo/data.json",
   "picgo.configPath": "/Users/Real/.picgo/config.json",
-  "Lua.telemetry.enable": false
+  //"Lua.telemetry.enable": false,
+  "rust-analyzer.checkOnSave": false,
+  "explorer.keyMappings.global": {
+    "i": false, // cancel default mapkey
+    "ss": "open:split",
+    "vs": "open:vsplit",
+    "dc": "clearCopyOrCut",
+  }
 }

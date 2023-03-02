@@ -1,13 +1,8 @@
-# set -e fish_user_paths
 set -x LANG "en_US.UTF-8"
 set -x EDITOR 'nvim'
 
-# use vi mode
-#fish_vi_key_bindings
-# back to emacs mode
-#fish_default_key_bindings
+set -x HOMEBREW_NO_ANALYTICS 1
 
-#alias ssl.certbot='sudo certbot certonly --manual'
 alias rm='trash'
 alias c='code'
 alias v='nvim'
@@ -22,14 +17,13 @@ alias pwgen='pwgen -r0oOiIlL'
 alias grep='grep --color'
 alias ldd='otool -L'
 alias sqlplus='rlwrap sqlplus'
-#alias telnet='nc -vz -w 1'
+
+alias vimdiff='nvim -d'
+alias mysqlsh.classic='mysqlsh --ssl-mode=disabled'
 
 # PATH
 set -g fish_user_paths "/usr/local/sbin"                  $fish_user_paths
-#set -g fish_user_paths "/Applications/instantclient_18_1" $fish_user_paths
 set -g fish_user_paths "/usr/local/apache-maven-3.8.3/bin/" $fish_user_paths
 set -g fish_user_paths "$HOME/.yarn/bin" $fish_user_paths
-#set -g fish_user_paths "/usr/local/helix/" $fish_user_paths
-#set -g fish_user_paths "/usr/local/ltex-ls/bin/" $fish_user_paths
 
 fish_add_path /usr/local/opt/llvm/bin
