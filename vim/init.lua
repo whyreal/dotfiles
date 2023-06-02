@@ -23,7 +23,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 
-"editorconfig/editorconfig-vim",
+"nvim-tree/nvim-web-devicons",
 -- buffer line or tab line
 "akinsho/bufferline.nvim",
 "moll/vim-bbye",
@@ -46,7 +46,7 @@ require("lazy").setup({
 "nvim-treesitter/nvim-treesitter",
 
 --" Translator
-{"voldikss/vim-translator", pin = true},
+{"voldikss/vim-translator"},
 --" 注释
 "scrooloose/nerdcommenter",
 --" 对齐

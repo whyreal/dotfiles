@@ -10,32 +10,23 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   end,
 })
 
-if vim.fn.has("gui_vimr") then
-    vim.o.termguicolors = true
-    vim.o.background = "light"
-    vim.cmd.colorscheme("PaperColor")
-end
-
-if vim.env["LC_TERMINAL"] == "iTerm2" then
-    vim.o.termguicolors = true
-    vim.o.background = "light"
-    vim.cmd.colorscheme("PaperColor")
-end
-
-if vim.env["TERMAPP"] == "alacritty" then
-    vim.o.termguicolors = true
-    vim.o.background = "dark"
-    vim.cmd.colorscheme("PaperColor")
-end
-
-if vim.env["TERMAPP"] == "vscode" then
-    vim.o.termguicolors = true
-    vim.o.background = "dark"
-    vim.cmd.colorscheme("PaperColor")
-end
-
 if vim.env["__CFBundleIdentifier"] == "com.apple.Terminal" then
     vim.o.termguicolors = false
+else
+    vim.o.termguicolors = true
+end
+
+if vim.env["VIMBG"] == "dark" then
     vim.o.background = "dark"
+    vim.cmd.colorscheme("PaperColor")
+end
+
+if vim.env["VIMBG"] == "light" then
+    vim.o.background = "light"
+    vim.cmd.colorscheme("PaperColor")
+end
+
+if vim.fn.has("gui_vimr") == 1 then
+    vim.o.background = "light"
     vim.cmd.colorscheme("PaperColor")
 end

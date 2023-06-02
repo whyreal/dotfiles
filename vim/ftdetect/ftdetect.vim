@@ -8,15 +8,15 @@ au BufNewFile,BufRead *.docker set filetype=Dockerfile
 au BufNewFile,BufRead *.fish   set filetype=fish
 au BufNewFile,BufRead */nginx/*.conf   set filetype=nginx
 
-au FileType javascript,
-            \typescript,
-            \javascript.jsx,
-            \typescript.tsx,
-            \json,
-            \jsonc,
-            \vue,
-            \jsp,
-            \xml,
-            \html,
-            \css
-            \ setlocal sts=2 ts=2 sw=2
+"au FileType javascript,
+            "\typescript,
+            "\javascript.jsx,
+            "\typescript.tsx,
+            "\json,
+            "\jsonc,
+            "\vue,
+            "\jsp,
+            "\xml,
+            "\html,
+            "\css
+            "\ setlocal sts=2 ts=2 sw=2

@@ -1,10 +1,11 @@
 {
-  //"snippets.ultisnips.enable": false,
-  //"snippets.textmateSnippetsRoots": [
-    //"~/.config/nvim/textmateSnips/"
-  //],
-  //"snippets.snipmate.enable": true,
-  "explorer.file.cdCommand": "tcd",
+  "snippets.ultisnips.enable": false,
+  "snippets.textmateSnippetsRoots": [
+    "~/.config/nvim/textmateSnips/"
+  ],
+  "snippets.snipmate.enable": true,
+  //"Lua.telemetry.enable": false,
+  //"rust-analyzer.checkOnSave": false,
   "imselect.defaultInput": "com.apple.keylayout.US",
   "imselect.enableStatusItem": false,
   "imselect.enableFloating": false,
@@ -50,26 +51,23 @@
     //"--hidden",
     "--no-ignore",
     "-L",
-    "-g",
-    "!**/_resources/",
-    "-g",
-    "!**/.git/",
-    "-g",
-    "!**/.svn/",
-    "-g",
-    "!scripts/",
-    "-g",
-    "!个人资料/"
+    "-g", "!**/_resources/",
+    "-g", "!**/.git/",
+    "-g", "!**/.svn/",
+    "-g", "!./个人资料/",
+    "-g", "!**/node_modules/"
   ],
   "git.enableGutters": true,
-  "picgo.dataPath": "/Users/Real/.picgo/data.json",
-  "picgo.configPath": "/Users/Real/.picgo/config.json",
-  //"Lua.telemetry.enable": false,
-  "rust-analyzer.checkOnSave": false,
+  "picgo.dataPath": "~/.picgo/data.json",
+  "picgo.configPath": "~/.picgo/config.json",
+  "explorer.file.cdCommand": "tcd",
+  "explorer.icon.enableNerdfont": true,
+  "explorer.icon.source": "nvim-web-devicons",
   "explorer.keyMappings.global": {
     "i": false, // cancel default mapkey
     "ss": "open:split",
     "vs": "open:vsplit",
     "dc": "clearCopyOrCut",
-  }
+  },
+  "snippets.ultisnips.pythonPrompt": false,
 }

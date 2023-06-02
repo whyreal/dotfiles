@@ -8,7 +8,7 @@ require("sos").setup {
     -- started), and a countdown of `timeout` milliseconds begins. Further buffer
     -- changes will then debounce the timer. After firing, the timer is not
     -- started again until the next buffer change.
-    timeout = 1000,
+    timeout = 20000,
 
     -- Set, and manage, Vim's 'autowrite' option (see :h 'autowrite'). Allowing
     -- sos to "manage" the option makes it so that all autosaving functionality

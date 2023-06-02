@@ -9,6 +9,7 @@ alias v='nvim'
 alias r='open -R'
 alias d='cd ~/Documents/DocBase/ && $EDITOR'
 alias m='make'
+alias fm='joshuto'
 
 alias ....='cd ../../..'
 alias ...='cd ../..'
@@ -22,8 +23,8 @@ alias vimdiff='nvim -d'
 alias mysqlsh.classic='mysqlsh --ssl-mode=disabled'
 
 # PATH
-set -g fish_user_paths "/usr/local/sbin"                  $fish_user_paths
+set -g fish_user_paths "/usr/local/opt/curl/bin"            $fish_user_paths
+set -g fish_user_paths "/usr/local/sbin"                    $fish_user_paths
 set -g fish_user_paths "/usr/local/apache-maven-3.8.3/bin/" $fish_user_paths
-set -g fish_user_paths "$HOME/.yarn/bin" $fish_user_paths
-
-fish_add_path /usr/local/opt/llvm/bin
+set -g fish_user_paths "/usr/local/opt/llvm/bin"            $fish_user_paths
+set -g fish_user_paths "$HOME/.yarn/bin"                    $fish_user_paths

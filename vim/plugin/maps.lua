@@ -9,13 +9,13 @@ local plug_opts = {}
 
 keyset('n', '!', ':!', opts)
 
---[[keyset('n', '<localleader>s', '<cmd>w<CR>', opts)]]
+keyset('n', '<localleader>s', '<cmd>w<CR>', opts)
 keyset('n', '<localleader>w', '<Plug>TranslateW', plug_opts)
 keyset('x', '<localleader>w', '<Plug>TranslateW', plug_opts)
 keyset('n', '<localleader>e', '<cmd>CocCommand explorer --toggle --position left<CR>', opts)
 
 -- <leader>e -- file explorer {{{
-keyset('n', '<leader>el', '<cmd>CocCommand explorer --toggle --position left<CR>', opts)
+keyset('n', '<leader>es', '<cmd>CocCommand explorer --toggle --position left<CR>', opts)
 keyset('n', '<leader>et', '<cmd>CocCommand explorer --toggle --position tab<CR>', opts)
 keyset('n', '<leader>ef', '<cmd>CocCommand explorer --toggle --position floating<CR>', opts)
 keyset('n', '<leader>ee', '<cmd>CocCommand explorer --toggle<CR>', opts)
@@ -35,21 +35,20 @@ keyset('x', 'gm', 'M', opts)
 keyset('x', 'gh', 'H', opts)
 keyset('x', 'gl', 'L', opts)
 
--- Use better keys for the bépo keyboard layout and set
--- a balanced distribution of terminal / sequence keys
-require'hop'.setup { keys = 'etovxdygfblzhckisuran', jump_on_sole_occurrence = false }
-
 keyset('n', 'gj', '<cmd>HopLineAC<cr>', opts)
 keyset('n', 'gk', '<cmd>HopLineBC<cr>', opts)
 keyset('n', 'gp', '<cmd>HopPattern<cr>', opts)
 keyset('n', 'gw', '<cmd>HopWordAC<cr>', opts)
 keyset('n', 'gb', '<cmd>HopWordBC<cr>', opts)
 
+keyset('n', 'gc', '<cmd>HopChar2<cr>', opts)
+
 keyset('x', 'gj', '<cmd>HopLineAC<cr>', opts)
 keyset('x', 'gk', '<cmd>HopLineBC<cr>', opts)
 keyset('x', 'gp', '<cmd>HopPattern<cr>', opts)
 keyset('x', 'gw', '<cmd>HopWordAC<cr>', opts)
 keyset('x', 'gb', '<cmd>HopWordBC<cr>', opts)
+keyset('x', 'gc', '<cmd>HopChar2<cr>', opts)
 
 -- GoTo code navigation.
 keyset('n', 'gd', ' <Plug>(coc-definition)', plug_opts)

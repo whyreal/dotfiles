@@ -2,7 +2,7 @@ import:
   - ~/.config/alacritty/font.yml
   - ~/.config/alacritty/key_bindings.yml
 env:
-  TERMAPP: alacritty
+  VIMBG: light
 window:
   # Window dimensions (changes require restart)
   #
@@ -44,7 +44,7 @@ window:
   #
   # Window opacity as a floating point number from `0.0` to `1.0`.
   # The value `0.0` is completely transparent and `1.0` is opaque.
-  opacity: 0.85
+  opacity: 1
 
   # Window title
   #title: Alacritty
@@ -52,30 +52,30 @@ window:
   dynamic_title: false
 
 colors:
-  name: Belge
-  author: ""
+  name: Alabaster
+  author: tonsky
   primary:
-    background: "#000000"
-    foreground: "#ffffff"
+    background: "#F7F7F7"
+    foreground: "#000000"
   cursor:
-    text: "#000000"
-    cursor: "#ffffff"
+    text: "#448C27"
+    cursor: "#000000"
   normal:
-    black: "#252525"
-    red: "#ef6769"
-    green: "#a6e22e"
-    yellow: "#fd971f"
-    blue: "#6495ed"
-    magenta: "#deb887"
-    cyan: "#b0c4de"
-    white: "#dbdcdc"
+    black: "#000000"
+    red: "#AA3731"
+    green: "#448C27"
+    yellow: "#CB9000"
+    blue: "#325CC0"
+    magenta: "#7A3E9D"
+    cyan: "#0083B2"
+    white: "#BBBBBB"
   bright:
-    black: "#454545"
-    red: "#fc7ca5"
-    green: "#b6e354"
-    yellow: "#fd971f"
-    blue: "#87ceeb"
-    magenta: "#996600"
-    cyan: "#87ceeb"
-    white: "#fdfdfd"
-theme: Belge
+    black: "#777777"
+    red: "#F05050"
+    green: "#60CB00"
+    yellow: "#FFBC5D"
+    blue: "#007ACC"
+    magenta: "#E64CE6"
+    cyan: "#00AACB"
+    white: "#FFFFFF"
+theme: Alabaster

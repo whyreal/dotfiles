@@ -3,5 +3,6 @@ alias t='tmux'
 alias tns='tmux new -s'
 alias ta='tmux a'
 alias tls='tmux ls'
+alias tns='tmux new-session -s'
 
 set -x TMUX_FZF_SED "gsed"
