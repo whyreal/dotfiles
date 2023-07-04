@@ -41,14 +41,8 @@
           "type": "basic"
         },
         {
-          "from": { "key_code": "f", "modifiers": { "optional": [ "any" ] } },
-          "to": [ { "key_code": "left_command", "lazy": true } ],
-          "to_if_alone": [ { "key_code": "f" } ],
-          "type": "basic"
-        },
-        {
           "from": { "key_code": "j", "modifiers": { "optional": [ "any" ] } },
-          "to": [ { "key_code": "left_command", "lazy": true } ],
+          "to": [ { "key_code": "right_command", "lazy": true } ],
           "to_if_alone": [ { "key_code": "j" } ],
           "type": "basic"
         }

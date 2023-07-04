@@ -20,7 +20,7 @@ keyset('n', '<leader>et', '<cmd>CocCommand explorer --toggle --position tab<CR>'
 keyset('n', '<leader>ef', '<cmd>CocCommand explorer --toggle --position floating<CR>', opts)
 keyset('n', '<leader>ee', '<cmd>CocCommand explorer --toggle<CR>', opts)
 -- }}}
---
+
 -- g -- goto{{{
 keyset('n', 'gm', 'M', opts)
 keyset('n', 'gh', 'H', opts)
@@ -62,27 +62,6 @@ keyset('n', 'g[', '<Plug>(coc-diagnostic-prev)', plug_opts)
 keyset('n', 'g]', '<Plug>(coc-diagnostic-next)', plug_opts)
 
 --}}}
--- s -- scroll {{{
-keyset('n', 's', '<NOP>', opts)
-keyset('n', 'ss', 's', opts)
-keyset('n', 'sk', '<c-u>', opts)
-keyset('n', 'sj', '<c-d>', opts)
-keyset('n', 'sl', '<c-f>', opts)
-keyset('n', 'sh', '<c-b>', opts)
-keyset('n', 'st', 'zt', opts)
-keyset('n', 'sb', 'zb', opts)
-keyset('n', 'sm', 'zz', opts)
-
-keyset('x', 's', '<NOP>', opts)
-keyset('x', 'ss', 's', opts)
-keyset('x', 'sk', '<c-u>', opts)
-keyset('x', 'sj', '<c-d>', opts)
-keyset('x', 'sl', '<c-f>', opts)
-keyset('x', 'sh', '<c-b>', opts)
-keyset('x', 'st', 'zt', opts)
-keyset('x', 'sb', 'zb', opts)
-keyset('x', 'sm', 'zz', opts)
--- }}}
 -- <leader>f -- picker {{{
 keyset('n', '<leader>fc', ':CocList commands<cr>', opts)
 keyset('x', '<leader>fc', ':<C-U>CocList commands<cr>', opts)
@@ -153,8 +132,8 @@ keyset('n', '<leader>t9', '9gt', opts)
 
 keyset('n', '<leader>bp', '<cmd>bprevious<CR>', opts)
 keyset('n', '<leader>bn', '<cmd>bnext<CR>', opts)
-keyset('n', '<leader>bd', '<cmd>Bdelete<CR>', opts)
---keyset('n', '<leader>bd', '<cmd>bdelete<CR>', opts)
+--keyset('n', '<leader>bd', '<cmd>Bdelete<CR>', opts)
+keyset('n', '<leader>bd', '<cmd>bdelete<CR>', opts)
 keyset('n', '<leader>bm', '<c-^>', opts)
 --}}}
 -- <a-cr> -- send-command {{{
@@ -216,3 +195,24 @@ keyset('i', '<c-n>', [[coc#pum#visible() ? coc#pum#next(0) : "\<DOWN>"]], opts)
 --keyset('x', 'vl', '<s-v>', opts)
 --keyset('x', 'vc', '<c-v>', opts)
 --}}}
+-- s -- scroll {{{
+--keyset('n', 's', '<NOP>', opts)
+--keyset('n', 'ss', 's', opts)
+--keyset('n', 'sk', '<c-u>', opts)
+--keyset('n', 'sj', '<c-d>', opts)
+--keyset('n', 'sl', '<c-f>', opts)
+--keyset('n', 'sh', '<c-b>', opts)
+--keyset('n', 'st', 'zt', opts)
+--keyset('n', 'sb', 'zb', opts)
+--keyset('n', 'sm', 'zz', opts)
+
+--keyset('x', 's', '<NOP>', opts)
+--keyset('x', 'ss', 's', opts)
+--keyset('x', 'sk', '<c-u>', opts)
+--keyset('x', 'sj', '<c-d>', opts)
+--keyset('x', 'sl', '<c-f>', opts)
+--keyset('x', 'sh', '<c-b>', opts)
+--keyset('x', 'st', 'zt', opts)
+--keyset('x', 'sb', 'zb', opts)
+--keyset('x', 'sm', 'zz', opts)
+-- }}}

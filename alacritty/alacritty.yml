@@ -1,8 +1,7 @@
 import:
   - ~/.config/alacritty/font.yml
   - ~/.config/alacritty/key_bindings.yml
-env:
-  VIMBG: light
+  - ~/.config/alacritty/env-dark.yml
 window:
   # Window dimensions (changes require restart)
   #
@@ -44,7 +43,7 @@ window:
   #
   # Window opacity as a floating point number from `0.0` to `1.0`.
   # The value `0.0` is completely transparent and `1.0` is opaque.
-  opacity: 1
+  opacity: 0.9
 
   # Window title
   #title: Alacritty
@@ -52,30 +51,35 @@ window:
   dynamic_title: false
 
 colors:
-  name: Alabaster
-  author: tonsky
-  primary:
-    background: "#F7F7F7"
-    foreground: "#000000"
   cursor:
-    text: "#448C27"
-    cursor: "#000000"
+    text: '#fefff2'
+    cursor: '#f0cc09'
+
+  selection:
+    text: '#b5b5b5'
+    background: '#18354f'
+
+  primary:
+    background: '#132738'
+    foreground: '#ffffff'
+
   normal:
-    black: "#000000"
-    red: "#AA3731"
-    green: "#448C27"
-    yellow: "#CB9000"
-    blue: "#325CC0"
-    magenta: "#7A3E9D"
-    cyan: "#0083B2"
-    white: "#BBBBBB"
+    black: '#000000'
+    red: '#ff0000'
+    green: '#38de21'
+    yellow: '#ffe50a'
+    blue: '#1460d2'
+    magenta: '#ff005d'
+    cyan: '#00bbbb'
+    white: '#bbbbbb'
+
   bright:
-    black: "#777777"
-    red: "#F05050"
-    green: "#60CB00"
-    yellow: "#FFBC5D"
-    blue: "#007ACC"
-    magenta: "#E64CE6"
-    cyan: "#00AACB"
-    white: "#FFFFFF"
-theme: Alabaster
+    black: '#555555'
+    red: '#f40e17'
+    green: '#3bd01d'
+    yellow: '#edc809'
+    blue: '#5555ff'
+    magenta: '#ff55ff'
+    cyan: '#6ae3fa'
+    white: '#ffffff'
+theme: Cobalt-2

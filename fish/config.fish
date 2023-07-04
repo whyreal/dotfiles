@@ -5,10 +5,9 @@ set -x HOMEBREW_NO_ANALYTICS 1
 
 alias rm='trash'
 alias c='code'
-alias v='nvim'
+alias e='nvim'
 alias r='open -R'
 alias d='cd ~/Documents/DocBase/ && $EDITOR'
-alias m='make'
 alias fm='joshuto'
 
 alias ....='cd ../../..'
@@ -18,9 +17,6 @@ alias pwgen='pwgen -r0oOiIlL'
 alias grep='grep --color'
 alias ldd='otool -L'
 alias sqlplus='rlwrap sqlplus'
-
-alias vimdiff='nvim -d'
-alias mysqlsh.classic='mysqlsh --ssl-mode=disabled'
 
 # PATH
 set -g fish_user_paths "/usr/local/opt/curl/bin"            $fish_user_paths

@@ -6,12 +6,13 @@ keymap = [
   # bookmarks
   # ---------------
   { keys = ["c", "d", "h"], command = "cd ~/" },
-  { keys = ["c", "d", "d"], command = "cd ~/Documents/DocBase/" },
+  { keys = ["c", "d", "n"], command = "cd ~/Documents/DocBase/" },
+  { keys = ["c", "d", "d"], command = "cd ~/Downloads" },
 
-  { keys = ["c", "d", "1"], command = "cd ~/Downloads" },
-  { keys = ["c", "d", "2"], command = "cd ~/code/whyreal/dotfiles/" },
-  { keys = ["c", "d", "3"], command = "cd ~/.config/joshuto" },
-  { keys = ["c", "d", "4"], command = "cd ~/.config/" },
+  { keys = ["c", "d", "0"], command = "cd ~/Documents/DocBase/0.未归档" },
+  { keys = ["c", "d", "1"], command = "cd ~/code/whyreal/dotfiles/" },
+  { keys = ["c", "d", "2"], command = "cd ~/.config/joshuto" },
+  { keys = ["c", "d", "3"], command = "cd ~/.config/" },
   { keys = ["c", "d", " "], command = ":cd " },
 
   # cursor

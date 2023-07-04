@@ -5,4 +5,7 @@
 alias mysqldump='mysqldump --column-statistics=0'
 alias mysqldump8='command mysqldump'
 
+alias mysqlsh.dis-ssl='mysqlsh --ssl-mode=disabled'
+alias mysql.dis-ssl='mysqlsh --ssl-mode=disabled'
+
 set -g fish_user_paths "/usr/local/opt/mysql-client/bin"  $fish_user_paths

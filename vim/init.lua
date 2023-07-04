@@ -25,10 +25,10 @@ require("lazy").setup({
 
 "nvim-tree/nvim-web-devicons",
 -- buffer line or tab line
-"akinsho/bufferline.nvim",
-"moll/vim-bbye",
+--"akinsho/bufferline.nvim",
+--"moll/vim-bbye",
 -- auto wirte
-"tmillr/sos.nvim",
+--"tmillr/sos.nvim",
 
 --" git
 "tpope/vim-fugitive",
@@ -42,7 +42,6 @@ require("lazy").setup({
 
 --" syntax
 "dag/vim-fish",
-
 "nvim-treesitter/nvim-treesitter",
 
 --" Translator
