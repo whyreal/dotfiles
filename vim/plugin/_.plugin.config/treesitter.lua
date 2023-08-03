@@ -17,6 +17,7 @@ require'nvim-treesitter.configs'.setup {
         "python",
         "vim",
         "yaml",
+        "ini",
     },
     -- List of parsers to ignore installing
     ignore_install = {},

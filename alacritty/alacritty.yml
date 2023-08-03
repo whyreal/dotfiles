@@ -1,6 +1,7 @@
 import:
   - ~/.config/alacritty/font.yml
   - ~/.config/alacritty/key_bindings.yml
+  #- ~/.config/alacritty/env-light.yml
   - ~/.config/alacritty/env-dark.yml
 window:
   # Window dimensions (changes require restart)
@@ -51,35 +52,32 @@ window:
   dynamic_title: false
 
 colors:
-  cursor:
-    text: '#fefff2'
-    cursor: '#f0cc09'
-
-  selection:
-    text: '#b5b5b5'
-    background: '#18354f'
-
+  # Default colors
   primary:
-    background: '#132738'
-    foreground: '#ffffff'
+    background: '#282c34'
+    foreground: '#abb2bf'
 
+  # Normal colors
   normal:
-    black: '#000000'
-    red: '#ff0000'
-    green: '#38de21'
-    yellow: '#ffe50a'
-    blue: '#1460d2'
-    magenta: '#ff005d'
-    cyan: '#00bbbb'
-    white: '#bbbbbb'
+    # NOTE: Use '#131613' for the `black` color if you'd like to see
+    # black text on the background.
+    black: '#282c34'
+    red: '#e06c75'
+    green: '#98c379'
+    yellow: '#d19a66'
+    blue: '#61afef'
+    magenta: '#c678dd'
+    cyan: '#56b6c2'
+    white: '#abb2bf'
 
+  # Bright colors
   bright:
-    black: '#555555'
-    red: '#f40e17'
-    green: '#3bd01d'
-    yellow: '#edc809'
-    blue: '#5555ff'
-    magenta: '#ff55ff'
-    cyan: '#6ae3fa'
+    black: '#5c6370'
+    red: '#e06c75'
+    green: '#98c379'
+    yellow: '#d19a66'
+    blue: '#61afef'
+    magenta: '#c678dd'
+    cyan: '#56b6c2'
     white: '#ffffff'
-theme: Cobalt-2
+theme: One-Dark

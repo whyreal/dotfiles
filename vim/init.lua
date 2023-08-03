@@ -7,6 +7,9 @@ vim.g.ft_man_folding_enable=1
 
 vim.g.mapleader = "," -- make sure to set `mapleader` before lazy so your mappings are correct
 vim.g.maplocalleader=",,"
+vim.g.coc_filetype_map = {
+    ["yaml.ansible"] = "ansible"
+}
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -24,6 +27,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 
 "nvim-tree/nvim-web-devicons",
+--"pearofducks/ansible-vim",
 -- buffer line or tab line
 --"akinsho/bufferline.nvim",
 --"moll/vim-bbye",

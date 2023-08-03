@@ -55,7 +55,6 @@
     "-g", "!./个人资料/",
     "-g", "!**/node_modules/"
   ],
-  "git.enableGutters": true,
   "picgo.dataPath": "~/.picgo/data.json",
   "picgo.configPath": "/Users/Real/.picgo/config.json",
   "explorer.file.cdCommand": "tcd",
@@ -63,8 +62,9 @@
   "explorer.icon.source": "nvim-web-devicons",
   "explorer.keyMappings.global": {
     "i": false, // cancel default mapkey
-    "s-": "open:split",
-    "s\\": "open:vsplit",
+    "ss": "open:split",
+    "sv": "open:vsplit",
   },
   "snippets.ultisnips.pythonPrompt": false,
+  "ansible.validation.lint.enabled": false,
 }

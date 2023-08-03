@@ -26,14 +26,14 @@ keyset('n', 'gm', 'M', opts)
 keyset('n', 'gh', 'H', opts)
 keyset('n', 'gl', 'L', opts)
 
+keyset('x', 'gm', 'M', opts)
+keyset('x', 'gh', 'H', opts)
+keyset('x', 'gl', 'L', opts)
+
 keyset('n', 'go', '<c-o>', opts)
 keyset('n', 'gi', '<c-i>', opts)
 
 keyset('x', 'g0', '<Plug>(coc-goto-first)', plug_opts)
-
-keyset('x', 'gm', 'M', opts)
-keyset('x', 'gh', 'H', opts)
-keyset('x', 'gl', 'L', opts)
 
 keyset('n', 'gj', '<cmd>HopLineAC<cr>', opts)
 keyset('n', 'gk', '<cmd>HopLineBC<cr>', opts)
@@ -66,11 +66,10 @@ keyset('n', 'g]', '<Plug>(coc-diagnostic-next)', plug_opts)
 keyset('n', '<leader>fc', ':CocList commands<cr>', opts)
 keyset('x', '<leader>fc', ':<C-U>CocList commands<cr>', opts)
 
-keyset('n', '<leader>fb', ':CocList buffers<cr>', opts)
 keyset('n', '<leader>ff', ':CocList --regex --ignore-case files<cr>', opts)
 keyset('n', '<leader>fm', ':CocList mru<cr>', opts)
 keyset('n', '<leader>fg', ':grep ', opts)
-keyset('n', '<leader>fo', ':CocList outline<cr>', opts)
+--keyset('n', '<leader>fo', ':CocList outline<cr>', opts)
 keyset('n', '<leader>fl', ':CocList<cr>', opts)
 
 keyset('n', '<leader>fa', ':CocList diagnostics<cr>', opts)
@@ -88,6 +87,11 @@ keyset('n', '<leader>wj', '<c-w>j', opts)
 keyset('n', '<leader>wh', '<c-w>h', opts)
 keyset('n', '<leader>wk', '<c-w>k', opts)
 keyset('n', '<leader>wl', '<c-w>l', opts)
+
+keyset('n', '<leader>wJ', '<c-w>J', opts)
+keyset('n', '<leader>wH', '<c-w>H', opts)
+keyset('n', '<leader>wK', '<c-w>K', opts)
+keyset('n', '<leader>wL', '<c-w>L', opts)
 
 keyset('n', '<leader>wq', '<c-w>q', opts)
 keyset('n', '<leader>wn', '<c-w>w', opts)
@@ -130,6 +134,7 @@ keyset('n', '<leader>t9', '9gt', opts)
 --keyset('n', 'b', '<NOP>', opts)
 --keyset('n', 'bb', 'b', opts)
 
+keyset('n', '<leader>bb', ':CocList buffers<cr>', opts)
 keyset('n', '<leader>bp', '<cmd>bprevious<CR>', opts)
 keyset('n', '<leader>bn', '<cmd>bnext<CR>', opts)
 --keyset('n', '<leader>bd', '<cmd>Bdelete<CR>', opts)

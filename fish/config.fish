@@ -1,4 +1,6 @@
 set -x LANG "en_US.UTF-8"
+set -x LC_ALL "en_US.utf-8"
+
 set -x EDITOR 'nvim'
 
 set -x HOMEBREW_NO_ANALYTICS 1
