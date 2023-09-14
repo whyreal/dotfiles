@@ -3,6 +3,7 @@ set -x NVIM_LISTEN_ADDRESS /tmp/nvimsocket
 alias vim='nvim'
 alias v='nvim'
 alias vimdiff='nvim -d'
+alias view='nvim -R'
 
 # use vim as man pager
 set -x MANPAGER 'nvim +Man!'

@@ -70,3 +70,4 @@ require("lazy").setup({
 })
 
 vim.cmd("syntax off")
+

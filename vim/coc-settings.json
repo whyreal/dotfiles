@@ -1,11 +1,11 @@
 {
   "snippets.ultisnips.enable": false,
+  "snippets.snipmate.enable": true,
+  "snippets.ultisnips.pythonPrompt": false,
   "snippets.textmateSnippetsRoots": [
     "~/.config/nvim/textmateSnips/"
   ],
-  "snippets.snipmate.enable": true,
-  //"Lua.telemetry.enable": false,
-  //"rust-analyzer.checkOnSave": false,
+  "volar.takeOverMode.enabled": true,
   "imselect.defaultInput": "com.apple.keylayout.US",
   "imselect.enableStatusItem": false,
   "imselect.enableFloating": false,
@@ -57,7 +57,7 @@
   ],
   "picgo.dataPath": "~/.picgo/data.json",
   "picgo.configPath": "/Users/Real/.picgo/config.json",
-  "explorer.file.cdCommand": "tcd",
+  "explorer.file.cdCommand": false,
   "explorer.icon.enableNerdfont": true,
   "explorer.icon.source": "nvim-web-devicons",
   "explorer.keyMappings.global": {
@@ -65,6 +65,5 @@
     "ss": "open:split",
     "sv": "open:vsplit",
   },
-  "snippets.ultisnips.pythonPrompt": false,
   "ansible.validation.lint.enabled": false,
 }
