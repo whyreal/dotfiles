@@ -5,7 +5,7 @@ set -x EDITOR 'nvim'
 
 set -x HOMEBREW_NO_ANALYTICS 1
 
-alias rm='trash'
+alias rmt='trash'
 alias c='code'
 alias e='nvim'
 alias r='open -R'

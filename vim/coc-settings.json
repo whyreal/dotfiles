@@ -5,7 +5,6 @@
   "snippets.textmateSnippetsRoots": [
     "~/.config/nvim/textmateSnips/"
   ],
-  "volar.takeOverMode.enabled": true,
   "imselect.defaultInput": "com.apple.keylayout.US",
   "imselect.enableStatusItem": false,
   "imselect.enableFloating": false,

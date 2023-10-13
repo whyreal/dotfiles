@@ -15,7 +15,7 @@
     "md2docx": "bin/md2docx.js",
     "md2pdf": "bin/md2pdf.js",
     "docx2md": "bin/docx2md.js",
-    "m": "bin/m"
+    "update_brew_vim": "bin/update_brew_vim.sh"
   },
   "author": "whyreal",
   "license": "ISC",

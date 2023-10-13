@@ -5,13 +5,13 @@ vim.api.nvim_create_autocmd({'ColorScheme', "UIEnter"}, {
         vim.cmd.highlight({"clear", "CocListLine"})
         vim.cmd.highlight({"link", "CocListLine", "Folded"})
 
-      vim.cmd.highlight({"Normal ", "guibg=NONE ctermbg=NONE"})
-      vim.cmd.highlight({"NonText ", "guibg=NONE ctermbg=NONE"})
-      vim.cmd.highlight({"EndOfBuffer ", "guibg=NONE ctermbg=NONE"})
-      --vim.cmd.highlight({"LineNr ", "guibg=NONE ctermbg=NONE"})
-      --vim.cmd.highlight({"Folded ", "guibg=NONE ctermbg=NONE"})
-      ---- fix coc float win color"
-      --vim.cmd.highlight({"link ", "FgCocInfoFloatBgCocFloating", "NormalFloat"})
+        vim.cmd.highlight({"Normal ", "guibg=NONE ctermbg=NONE"})
+        vim.cmd.highlight({"NonText ", "guibg=NONE ctermbg=NONE"})
+        vim.cmd.highlight({"EndOfBuffer ", "guibg=NONE ctermbg=NONE"})
+        --vim.cmd.highlight({"LineNr ", "guibg=NONE ctermbg=NONE"})
+        --vim.cmd.highlight({"Folded ", "guibg=NONE ctermbg=NONE"})
+        ---- fix coc float win color"
+        --vim.cmd.highlight({"link ", "FgCocInfoFloatBgCocFloating", "NormalFloat"})
     end
 })
 
@@ -33,7 +33,7 @@ end
 
 if vim.env["VIMBG"] == "light" then
     vim.o.background = "light"
-    vim.cmd.colorscheme(scheme)
+    vim.cmd.colorscheme("desert")
 end
 
 if vim.fn.has("gui_vimr") == 1 then

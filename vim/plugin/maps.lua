@@ -34,10 +34,11 @@ keyset('n', 'go', '<c-o>', opts)
 keyset('n', 'gi', '<c-i>', opts)
 
 keyset('x', 'g0', '<Plug>(coc-goto-first)', plug_opts)
+keyset('n', 'gp', '<cmd>Preview<cr>', opts)
 
 keyset('n', 'gj', '<cmd>HopLineAC<cr>', opts)
 keyset('n', 'gk', '<cmd>HopLineBC<cr>', opts)
-keyset('n', 'gp', '<cmd>HopPattern<cr>', opts)
+keyset('n', 'g/', '<cmd>HopPattern<cr>', opts)
 keyset('n', 'gw', '<cmd>HopWordAC<cr>', opts)
 keyset('n', 'gb', '<cmd>HopWordBC<cr>', opts)
 
