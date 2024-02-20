@@ -15,8 +15,8 @@ vim.api.nvim_create_autocmd({'ColorScheme', "UIEnter"}, {
     end
 })
 
---local scheme = "PaperColor"
-local scheme = "tokyonight"
+local dark_scheme = "tokyonight"
+local light_scheme = "PaperColor"
 --local scheme = "tokyodark"
 --local scheme = "desert"
 
@@ -28,15 +28,15 @@ end
 
 if vim.env["VIMBG"] == "dark" then
     vim.o.background = "dark"
-    vim.cmd.colorscheme(scheme)
+    vim.cmd.colorscheme(dark_scheme)
 end
 
 if vim.env["VIMBG"] == "light" then
     vim.o.background = "light"
-    vim.cmd.colorscheme("desert")
+    vim.cmd.colorscheme(light_scheme)
 end
 
 if vim.fn.has("gui_vimr") == 1 then
     vim.o.background = "light"
-    vim.cmd.colorscheme(scheme)
+    vim.cmd.colorscheme(light_scheme)
 end

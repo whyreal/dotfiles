@@ -1,6 +1,6 @@
 function proxy.ss.active
-    git config --global http.proxy  "socks5://127.0.0.1:1080"
-    git config --global https.proxy "socks5://127.0.0.1:1080"
+    git config --global http.proxy  "socks5://127.0.0.1:1081"
+    git config --global https.proxy "socks5://127.0.0.1:1081"
     set -gx http_proxy "http://127.0.0.1:1087"
     set -gx https_proxy "http://127.0.0.1:1087"
 end
@@ -50,4 +50,4 @@ function wscurl
     --header "Sec-WebSocket-Key: SGVsbG8sIHdvcmxkIQ==" \
     --header "Sec-WebSocket-Version: 13" \
     $argv # all arguments
-end 
+end
