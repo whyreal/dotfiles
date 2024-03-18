@@ -1,0 +1,15 @@
+import = [
+    "~/.config/alacritty/font.toml",
+    "~/.config/alacritty/key_bindings.toml",
+    "~/.config/alacritty/env-light.toml",
+    "~/.config/alacritty/themes/themes/ayu_light.toml"]
+
+[window]
+decorations = "full"
+dynamic_title = false
+opacity = 1
+#blur = true
+option_as_alt = "Both"
+
+[env]
+TERM = "xterm-256color"

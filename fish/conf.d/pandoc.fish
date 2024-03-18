@@ -14,6 +14,7 @@ function md2pdf
     pandoc -o (echo $argv[1] | sed 's/.md$/.pdf/') $argv[1] \
         --pdf-engine wkhtmltopdf
 end
+
 function docx2md
     pandoc -o (echo $argv[1] | sed 's/.docx?$/.md/') $argv[1] \
         --extract-media=.
