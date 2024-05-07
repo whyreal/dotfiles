@@ -1,6 +1,6 @@
-function update_brew_vim
+#!/usr/bin/env fish
 
-proxy.ss.active
+x.proxy.active
 
 brew upgrade
 brew cleanup
@@ -8,6 +8,4 @@ nvim --headless "+Lazy! sync" +qa
 nvim --headless +CocUpdateSync +qa
 nvim --headless +TSUpdateSync +qa
 
-proxy.ss.deactive
-
-end
+x.proxy.deactive

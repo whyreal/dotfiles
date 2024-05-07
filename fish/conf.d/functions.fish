@@ -1,17 +1,3 @@
-function proxy.ss.active
-    git config --global http.proxy  "socks5://127.0.0.1:1081"
-    git config --global https.proxy "socks5://127.0.0.1:1081"
-    set -gx http_proxy "http://127.0.0.1:1087"
-    set -gx https_proxy "http://127.0.0.1:1087"
-end
-
-function proxy.ss.deactive
-    git config --global --unset http.proxy
-    git config --global --unset https.proxy
-    set -ge http_proxy
-    set -ge https_proxy
-end
-
 function ssh.execute_local_script
     if test -z $argv[1]
         echo "$_ host script"

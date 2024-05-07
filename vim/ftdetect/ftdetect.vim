@@ -9,6 +9,8 @@ au BufNewFile,BufRead *.fish   set filetype=fish
 au BufNewFile,BufRead */nginx/*.conf   set filetype=nginx
 au BufNewFile,BufRead */playbooks/*.{yaml,yml}   set filetype=yaml.ansible
 au BufNewFile,BufRead */roles*/*.{yaml,yml}   set filetype=yaml.ansible
+au BufNewFile,BufRead .editorconfig   set filetype=ini commentstring=#%s
+au FileType text setlocal commentstring=#%s fdm=marker
 
 "au FileType javascript,
             "\typescript,

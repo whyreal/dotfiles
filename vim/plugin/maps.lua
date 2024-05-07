@@ -22,16 +22,16 @@ keyset('n', '<leader>ee', '<cmd>CocCommand explorer --toggle<CR>', opts)
 -- }}}
 
 -- g -- goto{{{
-keyset('n', 'gm', 'M', opts)
-keyset('n', 'gh', 'H', opts)
-keyset('n', 'gl', 'L', opts)
+--keyset('n', 'gm', 'M', opts)
+--keyset('n', 'gh', 'H', opts)
+--keyset('n', 'gl', 'L', opts)
 
-keyset('x', 'gm', 'M', opts)
-keyset('x', 'gh', 'H', opts)
-keyset('x', 'gl', 'L', opts)
+--keyset('x', 'gm', 'M', opts)
+--keyset('x', 'gh', 'H', opts)
+--keyset('x', 'gl', 'L', opts)
 
-keyset('n', 'go', '<c-o>', opts)
-keyset('n', 'gi', '<c-i>', opts)
+--keyset('n', 'go', '<c-o>', opts)
+--keyset('n', 'gi', '<c-i>', opts)
 
 keyset('x', 'g0', '<Plug>(coc-goto-first)', plug_opts)
 keyset('n', 'gp', '<cmd>Preview<cr>', opts)

@@ -1,10 +1,16 @@
 {
+    //  "java.jdt.ls.vmargs": "... -javaagent:[path_to_lombok.jar] -Xbootclasspath/a:[path_to_lombok.jar]
+    //  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -Xlog:disable -javaagent:"
+
   "snippets.ultisnips.enable": false,
-  "snippets.snipmate.enable": true,
   "snippets.ultisnips.pythonPrompt": false,
-  "snippets.textmateSnippetsRoots": [
-    "~/.config/nvim/textmateSnips/"
-  ],
+  //"snippets.snipmate.enable": true,
+  //"snippets.textmateSnippetsRoots": [
+    //"~/.config/nvim/textmateSnips/"
+  //],
+  "snippets.extends": {
+      "typescript": ["javascript"]
+  },
   "imselect.defaultInput": "com.apple.keylayout.US",
   "imselect.enableStatusItem": false,
   "imselect.enableFloating": false,
@@ -64,5 +70,4 @@
     "ss": "open:split",
     "sv": "open:vsplit",
   },
-  "ansible.validation.lint.enabled": false,
 }

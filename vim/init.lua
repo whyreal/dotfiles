@@ -62,12 +62,10 @@ require("lazy").setup({
 
 --" EasyMotion
 {"phaazon/hop.nvim", branch = 'v2', pin = true},
-
 --" plugins in lua
-"nvim-lua/plenary.nvim",
+--"nvim-lua/plenary.nvim",
 "wellle/tmux-complete.vim",
-"honza/vim-snippets"
+--"honza/vim-snippets"
 })
 
 vim.cmd("syntax off")
-

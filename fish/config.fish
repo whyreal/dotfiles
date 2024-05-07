@@ -8,11 +8,10 @@ set -x HOMEBREW_NO_ANALYTICS 1
 set -x OBJC_DISABLE_INITIALIZE_FORK_SAFETY YES
 
 alias rmt='trash'
-alias c='code'
-alias e='nvim'
+alias e='code'
 alias r='open -R'
 alias d='cd ~/Documents/DocBase/ && $EDITOR'
-alias fm='joshuto'
+#alias fm='joshuto'
 
 alias ....='cd ../../..'
 alias ...='cd ../..'

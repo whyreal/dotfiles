@@ -1,8 +1,8 @@
 function md2docx
     pandoc -o (echo $argv[1] | sed 's/.md$/.docx/') $argv[1] \
-        --lua-filter=~/code/whyreal/dotfiles/pandoc/filter/docx-pagebreak.lua \
+        --lua-filter=$HOME/code/whyreal/dotfiles/pandoc/filter/docx-pagebreak.lua \
         --shift-heading-level-by=-1 \
-        --reference-doc=~/Documents/pandoc/template.docx
+        --reference-doc=$HOME/Documents/pandoc/template.docx
 end
 
 function md2pdf

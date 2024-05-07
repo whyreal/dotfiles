@@ -1,40 +1,42 @@
-#vein.uhealthtech.cn
-#erp.uhealthtech.cn
+https://vein.uhealthtech.cn
+https://erp.uhealthtech.cn
 
-me.urhealth.net
-xz.urhealth.net
-www.urhealth.net
-erp.urhealth.net
-vein.urhealth.net
+https://me.urhealth.net
+https://xz.urhealth.net
+https://www.urhealth.net
+https://erp.urhealth.net
+https://vein.urhealth.net
 
-zyy.datonghealth.cn
-www.datonghealth.cn
-ehc.datonghealth.cn
-test-ehc.datonghealth.cn
-ih.datonghealth.cn
-ychz.datonghealth.cn
-ihtest.datonghealth.cn
+https://zyy.datonghealth.cn
+https://www.datonghealth.cn
+https://ehc.datonghealth.cn
+https://test-ehc.datonghealth.cn
+https://ih.datonghealth.cn
+https://ihsd.datonghealth.cn
+https://ychz.datonghealth.cn
+https://ihtest.datonghealth.cn
 
-5g.ewisedata.com
-temp.ewisedata.com
-dg.ewisedata.com
-tumour.ewisedata.com
-expert.ewisedata.com
-web.ewisedata.com
-activity.ewisedata.com
-dev.ewisedata.com
+https://5g.ewisedata.com
+https://temp.ewisedata.com
+https://dg.ewisedata.com
+https://tumour.ewisedata.com
+https://expert.ewisedata.com
+https://web.ewisedata.com
+https://activity.ewisedata.com
+https://dev.ewisedata.com
+https://ezm-dev.ewisedata.com
 
-dt.ttdoc.cn
-sr.ttdoc.cn
-we.ttdoc.cn
-cd.ttdoc.cn
-lhs.ttdoc.cn
+https://dt.ttdoc.cn
+https://sr.ttdoc.cn
+https://we.ttdoc.cn
+https://cd.ttdoc.cn
+https://lhs.ttdoc.cn
 
-gz.cscps.com.cn
-mr.cscps.com.cn
-ln.cscps.com.cn
-gzy.cscps.com.cn
-xz.cscps.com.cn
-dzm.cscps.com.cn
+https://gz.cscps.com.cn
+https://mr.cscps.com.cn
+https://ln.cscps.com.cn
+https://gzy.cscps.com.cn
+https://xz.cscps.com.cn
+https://dzm.cscps.com.cn
 
-www.sxmkyx.com
+https://www.sxmkyx.com
