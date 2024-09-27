@@ -9,9 +9,9 @@ set name $argv[1]
 
 umask 077
 wg genkey > $name.key
-echo "======= $name key =========="
+echo "======= $name priv key =========="
 cat $name.key
 
 wg pubkey < $name.key > $name.pub
-echo "======= $name pub =========="
+echo "======= $name pub key =========="
 cat $name.pub

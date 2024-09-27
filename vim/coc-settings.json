@@ -1,73 +1,33 @@
 {
-    //  "java.jdt.ls.vmargs": "... -javaagent:[path_to_lombok.jar] -Xbootclasspath/a:[path_to_lombok.jar]
-    //  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -Xlog:disable -javaagent:"
-
+  //"java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -Xlog:disable -javaagent:/Users/Real/.vscode/extensions/redhat.java-1.30.0-darwin-x64/lombok/lombok-1.18.32.jar", 
+  "imselect.defaultInput": "com.apple.keylayout.US",
+  "imselect.enableFloating": false,
+  "imselect.enableStatusItem": false,
+  "suggest.removeDuplicateItems": true,
   "snippets.ultisnips.enable": false,
   "snippets.ultisnips.pythonPrompt": false,
   //"snippets.snipmate.enable": true,
   //"snippets.textmateSnippetsRoots": [
     //"~/.config/nvim/textmateSnips/"
   //],
-  "snippets.extends": {
-      "typescript": ["javascript"]
-  },
-  "imselect.defaultInput": "com.apple.keylayout.US",
-  "imselect.enableStatusItem": false,
-  "imselect.enableFloating": false,
   "workspace.rootPatterns": [
     ".git",
     ".vim",
   ],
   "coc.preferences.extensionUpdateCheck": "daily",
   "coc.preferences.jumpCommand": "edit",
+  //"suggest.noselect": true,
   "suggest.maxCompleteItemCount": 20,
   "suggest.asciiCharactersOnly": true,
   "suggest.asciiMatch": false,
   "suggest.enableFloat": true,
-  "suggest.floatConfig": {
-    "border": true,
-  },
+  "suggest.insertMode": "insert",
   "suggest.pumFloatConfig": {
     "border": true,
-  },
-  "hover.floatConfig": {
-    "border": true
   },
   "json.enable": true,
   "json.format.enable": true,
   "diagnostic.enable": true,
-  "list.height": 30,
-  "list.insertMappings": {
-    "<A-x>": "call:OpenWithSystemApp",
-    "<A-r>": "call:OpenWithFinder"
-  },
-  "list.normalMappings": {
-    "x": "call:OpenWithSystemApp",
-    "r": "call:OpenWithFinder"
-  },
-  "list.source.mru.ignoreGitIgnore": true,
-  "list.source.files.command": "rg",
-  "list.source.files.args": [
-    "--color",
-    "never",
-    "--files",
-    //"--hidden",
-    "--no-ignore",
-    "-L",
-    "-g", "!**/_resources/",
-    "-g", "!**/.git/",
-    "-g", "!**/.svn/",
-    "-g", "!./个人资料/",
-    "-g", "!**/node_modules/"
-  ],
-  "picgo.dataPath": "~/.picgo/data.json",
-  "picgo.configPath": "/Users/Real/.picgo/config.json",
-  "explorer.file.cdCommand": false,
-  "explorer.icon.enableNerdfont": true,
-  "explorer.icon.source": "nvim-web-devicons",
-  "explorer.keyMappings.global": {
-    "i": false, // cancel default mapkey
-    "ss": "open:split",
-    "sv": "open:vsplit",
-  },
+  //"picgo.dataPath": "~/.picgo/data.json",
+  //"picgo.configPath": "/Users/Real/.picgo/config.json",
 }

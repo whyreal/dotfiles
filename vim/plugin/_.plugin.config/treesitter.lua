@@ -1,24 +1,14 @@
 require'nvim-treesitter.configs'.setup {
     -- one of "all", "maintained" (parsers with maintainers), or a list of languages
     ensure_installed = {
-        "bash",
         "jsdoc",
         "markdown",
-        "fish",
         "javascript",
         "typescript",
-        "sql",
-        "go",
+        "css",
         "html",
-        "http",
         "java",
-        "json",
-        "jsonc",
-        "lua",
-        "python",
-        "vim",
         "yaml",
-        "ini",
     },
     -- List of parsers to ignore installing
     ignore_install = {},
@@ -28,6 +18,6 @@ require'nvim-treesitter.configs'.setup {
         additional_vim_regex_highlighting = false,
     },
     indent = {
-        enable = false
+        enable = true
     }
 }

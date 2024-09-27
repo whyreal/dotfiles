@@ -55,7 +55,6 @@ function processMd(fpath) {
 }
 
 function processUrl(url) {
-
     const fileName = basename(url)
     const from = [docRoot, "_resources", fileName].join("/")
     var to = ""

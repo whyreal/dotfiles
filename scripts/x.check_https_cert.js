@@ -2,62 +2,69 @@
 
 import axios from 'axios';
 import fs from 'fs';
-import { project_root } from './const.js';
+import {project_root} from './const.js';
 
-class Result {
-
-  constructor(url, response){
+class Domain {
+  constructor(url) {
     this.url = url
-    this.remoteAddress = response.request.socket.remoteAddress
-    const cert = response.request.socket.getPeerCertificate()
-    this.ca = cert.issuer.O
-    this.time = Math.floor((new Date(cert.valid_to).getTime() - Date.now()) / 24 / 3600 / 1000)
+    this.cert = {}
+    this.remoteAddress = ""
   }
 
-  toString(){
-    return `${this.url}, ${this.remoteAddress}, ${this.ca}, ${this.time}`
+  toString() {
+    return `${this.url} | ${this.remoteAddress} | ${this.cert.ca} | ${this.cert.time}`
   }
-}
-
-/**
- * @param {*} url
- * @returns {Promise<Result>}
- */
-async function check_url(url) {
-  return axios.get(url, {
-    maxRedirects: 0
-  }).then(response => {
-    return response
-  }).catch(err => {
-    if (err.response) {
-      return err.response
+  async check_peer_cert() {
+    return axios.get(this.url, {
+      maxRedirects: 0
+    }).then(response => {
+      return response
+    }).catch(err => {
+      if (err.response) {
+        return err.response
+      }
+    }).then(response => {
+      const cert = response.request.socket.getPeerCertificate()
+      this.remoteAddress = response.request.socket.remoteAddress
+      this.cert.ca = cert.issuer.O
+      this.cert.time = Math.floor((new Date(cert.valid_to).getTime() - Date.now()) / 24 / 3600 / 1000)
+      return this
+    })
+  }
+  newer_then(d) {
+    if (this.cert.time > d.cert.time) {
+      return -1
     }
-  }).then(response => {
-    return new Result(url, response)
-  })
+    return 1
+  }
 }
 
-const printResult = result => {
-  console.log(result.toString());
-}
-const compareByValidToTime = (r1, r2) => r1.time > r2.time ? -1 : 1
-const sortPrintByValidToTime = res => res
-  .sort(compareByValidToTime)
-  .map(printResult)
-const printErr = e => console.log(e, ">>>> Error")
+class App {
+  /** @type Domain[] */
+  domains = []
 
-function main() {
-  const domains = process.argv.length > 2
-    ? process.argv.slice(2)
-    : fs.readFileSync(project_root + "/check_https_cert_dn.txt")
-      .toString()
-      .split(/\r?\n/)
-      .filter(l => {
-        return l.trim().length > 0 && !l.startsWith("#")
-      })
-  Promise.all(domains.map(check_url))
-    .then(sortPrintByValidToTime)
-    .catch(printErr)
+  getdomains() {
+    this.domains = process.argv.length > 2
+      ? process.argv.slice(2)
+      : fs.readFileSync(project_root + "/check_https_cert_dn.txt")
+        .toString()
+        .split(/\r?\n/)
+        .filter(l => {
+          return l.trim().length > 0 && !l.startsWith("#")
+        })
+        .map(d => new Domain(d))
+  }
+
+  async run() {
+    this.getdomains()
+
+    await Promise.all(this.domains.map(async d => {await d.check_peer_cert()}))
+      .catch(e => console.log(e, ">>>> Error"))
+
+    this.domains
+      .sort((d1, d2) => d1.newer_then(d2))
+      .map(d => console.log(d.toString()))
+  }
 }
 
-main()
+(new App()).run()

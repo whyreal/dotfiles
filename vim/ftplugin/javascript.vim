@@ -1,1 +1,1 @@
-set fdm=indent
+set fdm=expr
