@@ -7,10 +7,11 @@ set -x HOMEBREW_NO_ANALYTICS 1
 
 set -x OBJC_DISABLE_INITIALIZE_FORK_SAFETY YES
 
+alias luamake="/Users/Real/code/GitHub/luamake/luamake"
 alias rmt='trash'
 alias c='code .'
 alias r='open -R'
-alias d='cd ~/Documents/DocBase/ && $EDITOR'
+alias d='cd ~/Documents/DocBase/ && $EDITOR index.js'
 #alias fm='joshuto'
 alias 7z='7z -xr"!.DS_Store"'
 

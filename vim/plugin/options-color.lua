@@ -18,7 +18,7 @@ vim.api.nvim_create_autocmd({'ColorScheme', "UIEnter"}, {
 })
 
 local dark_scheme = "desert"
-local light_scheme = "vim"
+local light_scheme = "shine"
 --local dark_scheme = "tokyonight"
 --local scheme = "tokyodark"
 --local scheme = "desert"

@@ -27,17 +27,17 @@ function walk(path) {
         if (f.startsWith(".")) {return }
 
         const fpath = [path, f].join("/")
-        const s = statSync(fpath)
-        if (!s) {
+        const fstat = statSync(fpath)
+        if (!fstat) {
             return
         }
-        if (s.isFile()) {
+        if (fstat.isFile()) {
             if (!fpath.endsWith(".md")) {
                 return
             }
             processMd(fpath)
         }
-        if (s.isDirectory()) {
+        if (fstat.isDirectory()) {
             walk(fpath)
         }
     })

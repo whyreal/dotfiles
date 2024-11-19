@@ -1,6 +1,7 @@
 setlocal sts=4 tabstop=4 shiftwidth=4
 setlocal expandtab
-setlocal foldmethod=expr fdl=1 fdls=1
+set foldmethod=expr
+set fdl=1 fdls=1
 
 " https://github.com/preservim/vim-markdown/
 " conceal use Vim's standard conceal configuration.
@@ -76,7 +77,7 @@ xmap <buffer> is <Plug>(coc-v-range-select-strikethrough-inner)
 omap <buffer> as <Plug>(coc-o-range-select-strikethrough-all)
 omap <buffer> is <Plug>(coc-o-range-select-strikethrough-inner)
 
-nmap <buffer> gd <cmd>CocCommand OpenURL<CR>
+nmap <buffer> gl <cmd>CocCommand OpenLink<CR>
 " resolv file in Finder
 nmap <buffer> gr <cmd>CocCommand RevealURL<CR>
 " copy id (joplin) or path (local , path ...)

@@ -30,4 +30,5 @@
   "diagnostic.enable": true,
   //"picgo.dataPath": "~/.picgo/data.json",
   //"picgo.configPath": "/Users/Real/.picgo/config.json",
+    "list.height": 20
 }

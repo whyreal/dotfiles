@@ -9,8 +9,8 @@ set nocursorline
 set fileencodings=utf-8,gbk,ucs-bom,cp936,gb18030,big5,latin1
 "set foldclose=all
 set foldexpr=nvim_treesitter#foldexpr()
-set foldminlines=1
-set foldlevel=99
+set foldminlines=0
+"set foldlevel=99
 "set foldlevelstart=0
 "set foldmethod=indent
 set hidden

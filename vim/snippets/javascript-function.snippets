@@ -1,8 +1,21 @@
+#########
 # doc function
-snippet docFuntion "function"
+#########
+snippet exportDocFuntion "export doc function"
+	export function ${1:function_name}() {/**
+		${0:${VISUAL}}
+	*/ }
+
+snippet docFuntion "doc function"
 	function ${1:function_name}() {/**
 		${0:${VISUAL}}
 	*/ }
+	
+
+snippet exportFuntion "export function"
+	export function ${1:function_name}() {
+		${0:${VISUAL}}
+	}
 
 snippet arrowFunction "() =>"
 	(${1}) => ${0:${VISUAL}}

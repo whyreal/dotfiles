@@ -1,8 +1,11 @@
 alias ssh-with-password='ssh -F /dev/null -o "PreferredAuthentications=keyboard-interactive,password"'
 
-function s 
-    rsync --delete -rp ~/Documents/DocBase/work/commands/remote/xbin $argv[1]:/tmp/ \
-    && rsync --delete -rp ~/Documents/DocBase/work/commands/remote/nvim $argv[1]:.config/ \
-    && rsync -r ~/Documents/DocBase/work/commands/remote/server_utils.sh $argv[1]:/etc/profile.d/ \
+function s  --wraps "ssh"
+    set -l scriptRoot ~/Documents/DocBase/work/commands/xbin
+
+    set -l options --chmod=ugo=rwX
+
+    rsync --delete -rp $options $scriptRoot $argv[1]:/tmp/ \
+    && ssh $argv /tmp/xbin/x.init \
     && ssh $argv
 end

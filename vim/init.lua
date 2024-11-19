@@ -47,8 +47,8 @@ require("lazy").setup({
     --},
 
     --" git
-    "tpope/vim-fugitive",
-    "junegunn/gv.vim",
+    --"tpope/vim-fugitive",
+    --"junegunn/gv.vim",
 
     --" theme
     "NLKNguyen/papercolor-theme",

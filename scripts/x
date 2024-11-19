@@ -1,0 +1,5 @@
+#!/usr/bin/env fish
+
+x.mv-md-from-download.fish
+x.update-brew-and-vim-with-proxy.fish
+x.check_https_cert.js

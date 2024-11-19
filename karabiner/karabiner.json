@@ -489,7 +489,6 @@
             },
             "devices": [
                 {
-                    "disable_built_in_keyboard_if_exists": true,
                     "identifiers": {
                         "is_keyboard": true,
                         "product_id": 1553,
@@ -598,7 +597,8 @@
             ],
             "name": "Default",
             "parameters": { "delay_milliseconds_before_open_device": 1 },
-            "selected": true
+            "selected": true,
+            "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" }
         },
         {
             "fn_function_keys": [
@@ -623,7 +623,8 @@
                     "to": [{ "consumer_key_code": "fastforward" }]
                 }
             ],
-            "name": "None"
+            "name": "None",
+            "virtual_hid_keyboard": { "keyboard_type_v2": "ansi" }
         }
     ]
 }

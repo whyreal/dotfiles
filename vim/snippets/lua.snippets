@@ -1,0 +1,9 @@
+snippet class "class" b
+	${1:Name} = {
+	}
+	function ${1}:new(o)
+		o = o or {}
+		setmetatable(o, self)
+		self.__index = self
+		return o
+	end
