@@ -1,2 +1,2 @@
 # git
-alias g='vim +Git'
+alias g='gitui'
