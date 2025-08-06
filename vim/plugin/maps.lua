@@ -101,6 +101,7 @@ keyset('n', '<leader>tp', 'gT', opts)
 keyset('n', '<leader>tm', 'g<TAB>', opts)
 keyset('n', '<leader>tc', '<cmd>tabnew<cr>', opts)
 keyset('n', '<leader>tq', '<cmd>tabclose<cr>', opts)
+
 keyset('n', '<leader>t1', '1gt', opts)
 keyset('n', '<leader>t2', '2gt', opts)
 keyset('n', '<leader>t3', '3gt', opts)
@@ -141,10 +142,8 @@ vim.o.cedit = "<C-x>"
 -- emacs style insert mode {{{
 keyset('i', '<c-a>', '<HOME>', opts)
 keyset('i', '<c-e>', '<END>', opts)
-keyset('i', '<c-b>', '<Left>', opts)
-keyset('i', '<c-f>', '<Right>', opts)
-keyset('i', '<a-b>', '<S-Left>', opts)
-keyset('i', '<a-f>', '<S-Right>', opts)
+keyset('i', '<a-h>', '<S-Left>', opts)
+keyset('i', '<a-l>', '<S-Right>', opts)
 
 --keyset('i', '<c-k>', '<Right><Esc>C', opts)
 --keyset('i', '<c-u>', '<Esc>d^s', opts)

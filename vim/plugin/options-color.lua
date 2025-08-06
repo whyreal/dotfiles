@@ -10,18 +10,15 @@ vim.api.nvim_create_autocmd({'ColorScheme', "UIEnter"}, {
         vim.cmd.highlight({"NonText ", "guibg=NONE ctermbg=NONE"})
         vim.cmd.highlight({"EndOfBuffer ", "guibg=NONE ctermbg=NONE"})
 
-        --vim.cmd.highlight({"LineNr ", "guibg=NONE ctermbg=NONE"})
+        vim.cmd.highlight({"LineNr ", "guibg=NONE ctermbg=NONE"})
         --vim.cmd.highlight({"Folded ", "guibg=NONE ctermbg=NONE"})
         ---- fix coc float win color"
         --vim.cmd.highlight({"link ", "FgCocInfoFloatBgCocFloating", "NormalFloat"})
     end
 })
 
+local light_scheme = "default"
 local dark_scheme = "desert"
-local light_scheme = "shine"
---local dark_scheme = "tokyonight"
---local scheme = "tokyodark"
---local scheme = "desert"
 
 if vim.env["__CFBundleIdentifier"] == "com.apple.Terminal" then
     vim.o.termguicolors = false

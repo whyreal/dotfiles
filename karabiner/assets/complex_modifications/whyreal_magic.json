@@ -2,182 +2,42 @@
     "title": "whyreal magic",
     "rules": [
         {
-            "description": "home line modifiers, shift(a,;),ctrl(s,l),option(d,k),cmd(f,j)",
+            "description": "home line modifiers, ctrl(s,l),option(d,k),cmd(f,j)",
             "manipulators": [
                 {
-                    "from": {
-                        "key_code": "a",
-                        "modifiers": {
-                            "optional": [
-                                "any"
-                            ]
-                        }
-                    },
-                    "to": [
-                        {
-                            "key_code": "left_shift",
-                            "lazy": true
-                        }
-                    ],
-                    "to_if_alone": [
-                        {
-                            "key_code": "a"
-                        }
-                    ],
+                    "from": { "key_code": "s", "modifiers": { "optional": [ "any" ] } },
+                    "to": [ { "key_code": "left_control", "lazy": true } ],
+                    "to_if_alone": [ { "key_code": "s" } ],
                     "type": "basic"
                 },
                 {
-                    "from": {
-                        "key_code": "semicolon",
-                        "modifiers": {
-                            "optional": [
-                                "any"
-                            ]
-                        }
-                    },
-                    "to": [
-                        {
-                            "key_code": "right_shift",
-                            "lazy": true
-                        }
-                    ],
-                    "to_if_alone": [
-                        {
-                            "key_code": "semicolon"
-                        }
-                    ],
+                    "from": { "key_code": "l", "modifiers": { "optional": [ "any" ] } },
+                    "to": [ { "key_code": "left_control", "lazy": true } ],
+                    "to_if_alone": [ { "key_code": "l" } ],
                     "type": "basic"
                 },
                 {
-                    "from": {
-                        "key_code": "s",
-                        "modifiers": {
-                            "optional": [
-                                "any"
-                            ]
-                        }
-                    },
-                    "to": [
-                        {
-                            "key_code": "left_control",
-                            "lazy": true
-                        }
-                    ],
-                    "to_if_alone": [
-                        {
-                            "key_code": "s"
-                        }
-                    ],
+                    "from": { "key_code": "d", "modifiers": { "optional": [ "any" ] } },
+                    "to": [ { "key_code": "left_option", "lazy": true } ],
+                    "to_if_alone": [ { "key_code": "d" } ],
                     "type": "basic"
                 },
                 {
-                    "from": {
-                        "key_code": "l",
-                        "modifiers": {
-                            "optional": [
-                                "any"
-                            ]
-                        }
-                    },
-                    "to": [
-                        {
-                            "key_code": "left_control",
-                            "lazy": true
-                        }
-                    ],
-                    "to_if_alone": [
-                        {
-                            "key_code": "l"
-                        }
-                    ],
+                    "from": { "key_code": "k", "modifiers": { "optional": [ "any" ] } },
+                    "to": [ { "key_code": "left_option", "lazy": true } ],
+                    "to_if_alone": [ { "key_code": "k" } ],
                     "type": "basic"
                 },
                 {
-                    "from": {
-                        "key_code": "d",
-                        "modifiers": {
-                            "optional": [
-                                "any"
-                            ]
-                        }
-                    },
-                    "to": [
-                        {
-                            "key_code": "left_option",
-                            "lazy": true
-                        }
-                    ],
-                    "to_if_alone": [
-                        {
-                            "key_code": "d"
-                        }
-                    ],
+                    "from": { "key_code": "f", "modifiers": { "optional": [ "any" ] } },
+                    "to": [ { "key_code": "left_command", "lazy": true } ],
+                    "to_if_alone": [ { "key_code": "f" } ],
                     "type": "basic"
                 },
                 {
-                    "from": {
-                        "key_code": "k",
-                        "modifiers": {
-                            "optional": [
-                                "any"
-                            ]
-                        }
-                    },
-                    "to": [
-                        {
-                            "key_code": "left_option",
-                            "lazy": true
-                        }
-                    ],
-                    "to_if_alone": [
-                        {
-                            "key_code": "k"
-                        }
-                    ],
-                    "type": "basic"
-                },
-                {
-                    "from": {
-                        "key_code": "f",
-                        "modifiers": {
-                            "optional": [
-                                "any"
-                            ]
-                        }
-                    },
-                    "to": [
-                        {
-                            "key_code": "left_command",
-                            "lazy": true
-                        }
-                    ],
-                    "to_if_alone": [
-                        {
-                            "key_code": "f"
-                        }
-                    ],
-                    "type": "basic"
-                },
-                {
-                    "from": {
-                        "key_code": "j",
-                        "modifiers": {
-                            "optional": [
-                                "any"
-                            ]
-                        }
-                    },
-                    "to": [
-                        {
-                            "key_code": "right_command",
-                            "lazy": true
-                        }
-                    ],
-                    "to_if_alone": [
-                        {
-                            "key_code": "j"
-                        }
-                    ],
+                    "from": { "key_code": "j", "modifiers": { "optional": [ "any" ] } },
+                    "to": [ { "key_code": "right_command", "lazy": true } ],
+                    "to_if_alone": [ { "key_code": "j" } ],
                     "type": "basic"
                 }
             ]
@@ -186,25 +46,9 @@
             "description": "Caps Lock => Control or ESC",
             "manipulators": [
                 {
-                    "from": {
-                        "key_code": "caps_lock",
-                        "modifiers": {
-                            "optional": [
-                                "any"
-                            ]
-                        }
-                    },
-                    "to": [
-                        {
-                            "key_code": "left_control",
-                            "lazy": true
-                        }
-                    ],
-                    "to_if_alone": [
-                        {
-                            "key_code": "escape"
-                        }
-                    ],
+                    "from": { "key_code": "caps_lock", "modifiers": { "optional": [ "any" ] } },
+                    "to": [ { "key_code": "left_control", "lazy": true } ],
+                    "to_if_alone": [ { "key_code": "escape" } ],
                     "type": "basic"
                 }
             ]
@@ -213,19 +57,8 @@
             "description": "Caps Lock => ESC",
             "manipulators": [
                 {
-                    "from": {
-                        "key_code": "caps_lock",
-                        "modifiers": {
-                            "optional": [
-                                "any"
-                            ]
-                        }
-                    },
-                    "to": [
-                        {
-                            "key_code": "escape"
-                        }
-                    ],
+                    "from": { "key_code": "caps_lock", "modifiers": { "optional": [ "any" ] } },
+                    "to": [ { "key_code": "escape" } ],
                     "type": "basic"
                 }
             ]
@@ -234,25 +67,9 @@
             "description": "Space ==> control",
             "manipulators": [
                 {
-                    "from": {
-                        "key_code": "spacebar",
-                        "modifiers": {
-                            "optional": [
-                                "any"
-                            ]
-                        }
-                    },
-                    "to": [
-                        {
-                            "key_code": "left_control",
-                            "lazy": true
-                        }
-                    ],
-                    "to_if_alone": [
-                        {
-                            "key_code": "spacebar"
-                        }
-                    ],
+                    "from": { "key_code": "spacebar", "modifiers": { "optional": [ "any" ] } },
+                    "to": [ { "key_code": "left_control", "lazy": true } ],
+                    "to_if_alone": [ { "key_code": "spacebar" } ],
                     "type": "basic"
                 }
             ]
@@ -273,19 +90,8 @@
                             "type": "device_if"
                         }
                     ],
-                    "from": {
-                        "key_code": "escape",
-                        "modifiers": {
-                            "optional": [
-                                "any"
-                            ]
-                        }
-                    },
-                    "to": [
-                        {
-                            "key_code": "grave_accent_and_tilde"
-                        }
-                    ],
+                    "from": { "key_code": "escape", "modifiers": { "optional": [ "any" ] } },
+                    "to": [ { "key_code": "grave_accent_and_tilde" } ],
                     "type": "basic"
                 }
             ]

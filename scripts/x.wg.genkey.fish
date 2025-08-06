@@ -1,4 +1,4 @@
-#!/usr/local/bin/fish
+#!/usr/bin/env fish
 
 if test $(count $argv) -eq 0
     echo "---- give me a name -------"

@@ -5,34 +5,29 @@ import {project_root} from './const.js';
 import {connect} from 'tls';
 
 class Domain {
+  cert = {}
+  remoteAddress = ""
+
+  /**
+   * Creates an instance of Domain.
+   * @param {string} url
+   * @memberof Domain
+   */
   constructor(url) {
     if (!url.startsWith("https://")) {
       url = `https://${url}`
     }
     this.url = new URL(url)
-    this.cert = {}
-    this.remoteAddress = ""
   }
 
   toString() {
     return `${this.url} | ${this.remoteAddress} | ${this.cert.ca} | ${this.cert.time}`
   }
-  async check_peer_cert() {
-    let conn = connect({
-      host: this.url.host,
-      servername: this.url.host,
-      port: this.url.port || 443,
-    })
-    const cert = await new Promise((resolve, reject) => {
-      conn.on("secureConnect", () => {
-        resolve(conn.getPeerCertificate())
-      })
-    })
-    this.remoteAddress = conn.remoteAddress
-    conn.destroy()
-    this.cert.ca = cert.issuer.O
-    this.cert.time = Math.floor((new Date(cert.valid_to).getTime() - Date.now()) / 24 / 3600 / 1000)
-  }
+  /**
+   * @param {Domain} d
+   * @returns 
+   * @memberof Domain
+   */
   cert_newer_then(d) {
     if (this.cert.time > d.cert.time) {
       return -1
@@ -42,38 +37,64 @@ class Domain {
 }
 
 class DomainRepo {
-  static getdomains() {
-    return process.argv.length > 2
-      ? process.argv.slice(2)
-      : fs.readFileSync(project_root + "/check_https_cert_dn.txt")
+  getdomains() {
+    let domains = []
+    if (process.argv.length > 2) {
+      domains = process.argv.slice(2)
+    } else {
+      domains = fs.readFileSync(project_root + "/check_https_cert_dn.txt")
         .toString()
         .split(/\r?\n/)
         .filter(l => {
           return l.trim().length > 0 && !l.startsWith("#")
         })
-        .map(d => new Domain(d))
+    }
+
+    return domains.map(d => new Domain(d))
+  }
+  /**
+   * @param {Domain} domain
+   * @memberof DomainRepo
+   */
+  async loadCert(domain) {
+    let conn = connect({
+      host: domain.url.host,
+      servername: domain.url.host,
+      port: Number(domain.url.port) || 443,
+    })
+    await new Promise((resolve, _) => {
+      conn.on("secureConnect", () => {
+        const cert = conn.getPeerCertificate()
+        domain.remoteAddress = conn.remoteAddress || ""
+        domain.cert.ca = cert.issuer.O
+        domain.cert.time = Math.floor((new Date(cert.valid_to).getTime() - Date.now()) / 24 / 3600 / 1000)
+        conn.destroy()
+        resolve()
+      })
+      conn.on('error', () => {
+        domain.cert = {
+          time: 0,
+          ca: 'error'
+        }
+        resolve()
+      })
+    })
   }
 }
 
-class App {
-  constructor() {
-    /** @type Domain[] */
-    this.domains = []
-  }
-
+class AppService {
   async run() {
-    this.domains = DomainRepo.getdomains()
+    const domainRepo = new DomainRepo();
 
-    await Promise.all(this.domains.map(async d => {
-      await d.check_peer_cert()
+    const domains = domainRepo.getdomains()
+    await Promise.all(domains.map(async d => {
+      await domainRepo.loadCert(d)
     }))
-      .catch(e => console.log(e, ">>>> Error"))
 
-    this.domains
+    domains
       .sort((d1, d2) => d1.cert_newer_then(d2))
       .map(d => console.log(d.toString()))
   }
 }
 
-await (new App()).run()
-
+await (new AppService()).run()

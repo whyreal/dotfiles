@@ -22,39 +22,14 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-    --{
-    --"keaising/im-select.nvim",
-    --config = function()
-        --require("im_select").setup({
-            --default_im_select  = "com.apple.keylayout.US"
-        --})
-    --end,
-    --},
-    --[[{
-        "nvim-neo-tree/neo-tree.nvim",
-        branch = "v3.x",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-            "MunifTanjim/nui.nvim",
-            -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-        },
-    },]]
-    --{
-        --'nvim-telescope/telescope.nvim',
-        --tag = '0.1.6',
-        --dependencies = { 'nvim-lua/plenary.nvim' }
-    --},
-
-    --" git
-    --"tpope/vim-fugitive",
-    --"junegunn/gv.vim",
 
     --" theme
-    "NLKNguyen/papercolor-theme",
-    "morhetz/gruvbox",
-    "ghifarit53/tokyonight-vim",
-    "tiagovla/tokyodark.nvim",
+    --"sheerun/vim-polyglot",
+    "joshdick/onedark.vim",
+    --"NLKNguyen/papercolor-theme",
+    --"morhetz/gruvbox",
+    --"ghifarit53/tokyonight-vim",
+    --"tiagovla/tokyodark.nvim",
 
     --" syntax
     "dag/vim-fish",
@@ -77,7 +52,7 @@ require("lazy").setup({
 	{"q9w/hop.vim"},
 
     --" plugins in lua
-    "wellle/tmux-complete.vim",
+    --"wellle/tmux-complete.vim",
     --"honza/vim-snippets"
 })
 

@@ -49,7 +49,6 @@ export LUA_PATH="./?.lua;./?/init.lua;/usr/local/luarocks/share/lua/5.1/?.lua;/u
 export LUA_CPATH='./?.so;/usr/local/luarocks/share/lua/5.1/?.so'
 
 # neovim
-export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 alias vim='nvim'
 alias docs='cd ~/Documents/vim-workspace/docs && $EDITOR'
 

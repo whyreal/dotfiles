@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import axios from "axios";
 import log4js from "log4js";
 import {apis} from "./apis.js";
 
@@ -78,14 +77,14 @@ async function check_api(api) {
     url: url,
     data: data
   }).then((resp) => {
-    return resp.config.result
-  }).catch((err) => {
-    if (err.response) {
-      return err.response.request.result
-    } else {
-      logger.error(err);
-    }
-  });
+      return resp.config.result
+    }).catch((err) => {
+      if (err.response) {
+        return err.response.request.result
+      } else {
+        logger.error(err);
+      }
+    });
 }
 
 function sleep(ms) {

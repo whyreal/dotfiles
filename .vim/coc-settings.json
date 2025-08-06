@@ -1,0 +1,5 @@
+{
+  "java.compile.nullAnalysis.mode": "automatic",
+  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -Xlog:disable -javaagent:/Users/Real/.vscode/extensions/redhat.java-1.30.0-darwin-x64/lombok/lombok-1.18.32.jar -javaagent:\"/Users/Real/.config/coc/extensions/node_modules/coc-java-lombok/jar/lombok.jar\"",
+    "Lua.completion.autoRequire": true
+}

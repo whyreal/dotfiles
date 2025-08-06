@@ -1,34 +1,45 @@
 {
-  //"java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -Xlog:disable -javaagent:/Users/Real/.vscode/extensions/redhat.java-1.30.0-darwin-x64/lombok/lombok-1.18.32.jar", 
-  "imselect.defaultInput": "com.apple.keylayout.US",
-  "imselect.enableFloating": false,
-  "imselect.enableStatusItem": false,
-  "suggest.removeDuplicateItems": true,
-  "snippets.ultisnips.enable": false,
-  "snippets.ultisnips.pythonPrompt": false,
-  //"snippets.snipmate.enable": true,
-  //"snippets.textmateSnippetsRoots": [
-    //"~/.config/nvim/textmateSnips/"
-  //],
-  "workspace.rootPatterns": [
-    ".git",
-    ".vim",
-  ],
-  "coc.preferences.extensionUpdateCheck": "daily",
-  "coc.preferences.jumpCommand": "edit",
-  //"suggest.noselect": true,
-  "suggest.maxCompleteItemCount": 20,
-  "suggest.asciiCharactersOnly": true,
-  "suggest.asciiMatch": false,
-  "suggest.enableFloat": true,
-  "suggest.insertMode": "insert",
-  "suggest.pumFloatConfig": {
-    "border": true,
-  },
-  "json.enable": true,
-  "json.format.enable": true,
-  "diagnostic.enable": true,
-  //"picgo.dataPath": "~/.picgo/data.json",
-  //"picgo.configPath": "/Users/Real/.picgo/config.json",
-    "list.height": 20
+    "imselect.defaultInput": "com.apple.keylayout.ABC",
+    "imselect.enableFloating": false,
+    "imselect.enableStatusItem": false,
+
+    "suggest.removeDuplicateItems": true,
+    "snippets.ultisnips.enable": false,
+    "snippets.ultisnips.pythonPrompt": false,
+    "snippets.snipmate.enable": true,
+    "snippets.textmateSnippetsRoots": [
+        "~/.config/nvim/textmateSnips/"
+    ],
+    "workspace.rootPatterns": [
+        ".git",
+        ".vim",
+    ],
+    "coc.preferences.jumpCommand": "edit",
+    //"suggest.noselect": true,
+    "suggest.maxCompleteItemCount": 20,
+    "suggest.asciiCharactersOnly": true,
+    //"suggest.asciiMatch": false,
+    "suggest.enableFloat": true,
+    "suggest.insertMode": "insert",
+    "suggest.pumFloatConfig": {
+        "border": true,
+    },
+    "diagnostic.enable": true,
+    "list.height": 20,
+    "list.source.files.command": "fd",
+
+    "json.enable": true,
+    "json.format.enable": true,
+    //"picgo.dataPath": "~/.picgo/data.json",
+    //"picgo.configPath": "/Users/Real/.picgo/config.json",
+    //"colors.enable": true,
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-21",
+            "path": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/",
+            "default": true
+        }
+    ],
+    "java.jdt.ls.java.home": "/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home/",
+    //"java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -Xlog:disable -javaagent:/Users/Real/.vscode/extensions/redhat.java-1.44.0-darwin-arm64/lombok/lombok-1.18.39-4050.jar", 
 }

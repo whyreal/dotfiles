@@ -1,2 +1,2 @@
 # git
-alias g='gitui'
+alias g='lazygit'
