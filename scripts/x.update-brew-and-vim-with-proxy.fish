@@ -2,10 +2,10 @@
 
 #x.proxy.active
 
-brew upgrade
-brew cleanup
+#brew upgrade
+#brew cleanup
 #x.proxy.deactive
 
 nvim --headless "+Lazy! sync" +qa
 nvim --headless +CocUpdateSync +qa
-nvim --headless +TSUpdateSync +qa
+#nvim --headless +TSUpdateSync +qa

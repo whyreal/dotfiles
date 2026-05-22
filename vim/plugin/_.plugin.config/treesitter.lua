@@ -1,23 +1,19 @@
-require'nvim-treesitter.configs'.setup {
-    -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-    ensure_installed = {
-        "jsdoc",
-        "markdown",
-        "javascript",
-        "typescript",
-        "css",
-        "html",
-        "java",
-        "yaml",
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = {
+        'json', 'yaml',
+        'html',
+        'css', 'scss',
+        'javascript', 'typescript',
+        'jsx',
+        'python', 'java',
+        'lua',
+        'markdown', 'vue',
+        'fish'
     },
-    -- List of parsers to ignore installing
-    ignore_install = {},
-    highlight = {
-        enable = true,              -- false will disable the whole extension
-        disable = {},  -- list of language that will be disabled
-        additional_vim_regex_highlighting = false,
-    },
-    indent = {
-        enable = true
-    }
-}
+    callback = function()
+        vim.treesitter.start()                                    -- highlighting
+        --vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'     -- folds
+        --vim.wo.foldmethod = 'expr'
+        --vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()" -- indentation
+    end,
+})

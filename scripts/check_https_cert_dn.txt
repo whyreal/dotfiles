@@ -1,3 +1,10 @@
+https://lk.uhealthtech.cn
+https://www.uhealthtech.cn
+https://aided.remote.uhealthtech.cn
+https://dev.tcm.uhealthtech.cn
+https://tcm.uhealthtech.cn
+https://aided.demo.uhealthtech.cn
+https://dev.rpms.uhealthtech.cn
 https://meeting.dev.uhealthtech.cn
 https://dev.hms.uhealthtech.cn
 https://vein.uhealthtech.cn
@@ -47,6 +54,9 @@ https://itsm.datonghealth.cn
 #https://dev.ewisedata.com
 #https://ezm-dev.ewisedata.com
 
+https://rdc.ttdoc.cn
+https://edu.ttdoc.cn
+https://icvd.ttdoc.cn
 https://dt.ttdoc.cn
 https://sr.ttdoc.cn
 https://we.ttdoc.cn
@@ -54,17 +64,19 @@ https://cd.ttdoc.cn
 https://lhs.ttdoc.cn
 https://cscs.ttdoc.cn
 
-https://xy.cscps.com.cn
 https://bjzyyfa.cscps.com.cn
 https://client.cscps.com.cn
-https://gz.cscps.com.cn
-https://mr.cscps.com.cn
-https://ln.cscps.com.cn
-https://gzy.cscps.com.cn
-https://xz.cscps.com.cn
 https://dzm.cscps.com.cn
+https://gz.cscps.com.cn
+https://gzy.cscps.com.cn
+https://ln.cscps.com.cn
+https://imr.cscps.com.cn
+https://mr.cscps.com.cn
 https://qxfm.cscps.com.cn
+https://tcmm.cscps.com.cn
 https://wxtcm.cscps.com.cn
+https://xy.cscps.com.cn
+https://xz.cscps.com.cn
 https://zsk.cscps.com.cn
 
 https://www.sxmkyx.com
@@ -72,3 +84,7 @@ https://www.sxmkyx.com
 https://www.dtsyyy.cn
 
 https://www.china-dtkjds.com
+
+https://infrared.yikang.com.cn
+
+https://kypt.zzszyy.cn

@@ -33,7 +33,12 @@ require("lazy").setup({
 
     --" syntax
     "dag/vim-fish",
-    "nvim-treesitter/nvim-treesitter",
+    {
+        'nvim-treesitter/nvim-treesitter',
+        dependencies = { 'neovim-treesitter/treesitter-parser-registry' },
+        lazy = false,
+        build = ':TSUpdate',
+    },
 
     --" Translator
     { "voldikss/vim-translator" },

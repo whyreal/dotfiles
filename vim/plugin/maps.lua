@@ -15,7 +15,6 @@ keyset('x', '<localleader>w', '<Plug>TranslateW', plug_opts)
 
 -- g -- goto{{{
 keyset('x', 'g0', '<Plug>(coc-goto-first)', plug_opts)
-keyset('n', 'gp', '<cmd>Preview<cr>', opts)
 
 keyset('n', 'gw', '<cmd>HopWordAC<CR>', plug_opts)
 keyset('n', 'gb', '<cmd>HopWordBC<CR>', plug_opts)
@@ -119,8 +118,8 @@ keyset('n', '<leader>t9', '9gt', opts)
 keyset('n', '<leader>bb', ':CocList buffers<cr>', opts)
 keyset('n', '<leader>bp', '<cmd>bprevious<CR>', opts)
 keyset('n', '<leader>bn', '<cmd>bnext<CR>', opts)
---keyset('n', '<leader>bd', '<cmd>Bdelete<CR>', opts)
-keyset('n', '<leader>bd', '<cmd>bdelete<CR>', opts)
+--keyset('n', '<leader>bd', '<cmd>bdelete<CR>', opts)
+keyset('n', '<leader>bd', '<cmd>bp | bd #<CR>', opts)
 keyset('n', '<leader>bm', '<c-^>', opts)
 keyset('n', '<leader>bc', '<cmd>enew<CR>', opts)
 --}}}
@@ -153,6 +152,4 @@ keyset('i', '<c-d>', '<delete>', opts)
 keyset('i', '<a-x>', '<Esc>:', opts)
 keyset('n', '<a-x>', '<Esc>:', opts)
 
-keyset('i', '<c-v>', '<PageDown>', opts)
-keyset('i', '<a-v>', '<PageUp>', opts)
 -- }}}

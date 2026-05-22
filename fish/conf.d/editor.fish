@@ -1,8 +1,7 @@
 # neovim
 alias vim='nvim'
-alias v='nvim'
+alias e='nvim'
 alias vimdiff='nvim -d'
-alias view='nvim -R'
 
 # use vim as man pager
 set -x MANPAGER 'nvim +Man!'

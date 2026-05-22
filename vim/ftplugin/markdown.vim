@@ -27,6 +27,8 @@ let g:vim_markdown_folding_style_pythonic = 1
 let g:tagbar_sort=0
 let g:vim_markdown_no_default_key_mappings=1
 
+nmap <buffer> gp <cmd>Preview<cr>
+
 xmap <buffer> <LocalLeader>l <Plug>(coc-markdown-create-list)
 xmap <buffer> <LocalLeader>o <Plug>(coc-markdown-create-orderlist)
 xmap <buffer> <LocalLeader>d <Plug>(coc-markdown-delete-list)

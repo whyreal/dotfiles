@@ -9,7 +9,7 @@ local plug_opts = {}
 keyset('n', '<leader>es', '<cmd>CocCommand explorer --toggle --position left<CR>', opts)
 keyset('n', '<leader>et', '<cmd>CocCommand explorer --toggle --position tab<CR>', opts)
 keyset('n', '<leader>ef', '<cmd>CocCommand explorer --toggle --position floating<CR>', opts)
-keyset('n', '<leader>ee', '<cmd>CocCommand explorer --toggle<CR>', opts)
+keyset('n', '<leader>ee', '<cmd>CocCommand explorer --toggle --position floating<CR>', opts)
 -- }}}
 
 -- <leader>f -- picker {{{

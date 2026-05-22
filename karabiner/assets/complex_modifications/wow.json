@@ -1,0 +1,16 @@
+{
+    "title": "wow",
+    "rules": [
+        {
+            "description": "ctrl(a)",
+            "manipulators": [
+                {
+                    "from": { "key_code": "a", "modifiers": { "optional": [ "any" ] } },
+                    "to": [ { "key_code": "left_control", "lazy": true } ],
+                    "to_if_alone": [ { "key_code": "a" } ],
+                    "type": "basic"
+                }
+            ]
+        }
+    ]
+}

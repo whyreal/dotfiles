@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 
 import log4js from "log4js";
 import {apis} from "./apis.js";

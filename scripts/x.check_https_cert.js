@@ -71,7 +71,8 @@ class DomainRepo {
         conn.destroy()
         resolve()
       })
-      conn.on('error', () => {
+      conn.on('error', (e) => {
+        console.log(e)
         domain.cert = {
           time: 0,
           ca: 'error'

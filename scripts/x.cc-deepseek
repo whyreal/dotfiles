@@ -1,0 +1,12 @@
+#!/usr/bin/env fish
+
+set -x ANTHROPIC_BASE_URL             https://api.deepseek.com/anthropic
+set -x ANTHROPIC_AUTH_TOKEN           sk-9558c6c124de4dcda572ea56b44045ed
+set -x ANTHROPIC_MODEL                deepseek-v4-pro[1m]
+set -x ANTHROPIC_DEFAULT_OPUS_MODEL   deepseek-v4-pro[1m]
+set -x ANTHROPIC_DEFAULT_SONNET_MODEL deepseek-v4-pro[1m]
+set -x ANTHROPIC_DEFAULT_HAIKU_MODEL  deepseek-v4-flash
+set -x CLAUDE_CODE_SUBAGENT_MODEL     deepseek-v4-flash
+#set -x CLAUDE_CODE_EFFORT_LEVEL       max
+
+claude

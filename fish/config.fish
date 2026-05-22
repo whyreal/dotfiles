@@ -3,7 +3,7 @@ set -x LC_ALL "en_US.utf-8"
 set -x EDITOR 'nvim'
 set -x HOMEBREW_NO_ANALYTICS 1
 
-alias rmt='trash'
+alias rmtt='trash'
 alias c='code .'
 alias r='open -R'
 alias d='cd ~/Documents/DocBase/ && $EDITOR index.js'
@@ -20,9 +20,13 @@ set -g fish_user_paths "/usr/local/opt/curl/bin"            $fish_user_paths
 set -g fish_user_paths "/usr/local/sbin"                    $fish_user_paths
 set -g fish_user_paths "$HOME/code/whyreal/dotfiles/scripts/"            $fish_user_paths
 
-fish_add_path /opt/homebrew/opt/mysql-client@8.0/bin
 fish_add_path /opt/homebrew/opt/ansible@9/bin
+fish_add_path /opt/homebrew/opt/ansible@10/bin
+fish_add_path /opt/homebrew/opt/mysql-client/bin
 fish_add_path ~/Applications/rclone-v1.69.3-osx-arm64/
+fish_add_path ~/.local/bin/
+fish_add_path ~/.local/share/trae-cli/
+fish_add_path ~/.bun/bin/
 
 fzf --fish | source
 
@@ -39,3 +43,7 @@ end
 nvm use lts/jod -s
 
 #fish_vi_key_bindings
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH

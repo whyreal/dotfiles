@@ -5,6 +5,18 @@
             "description": "home line modifiers, ctrl(s,l),option(d,k),cmd(f,j)",
             "manipulators": [
                 {
+                    "from": { "key_code": "a", "modifiers": { "optional": [ "any" ] } },
+                    "to": [ { "key_code": "left_shift", "lazy": true } ],
+                    "to_if_alone": [ { "key_code": "a" } ],
+                    "type": "basic"
+                },
+                {
+                    "from": { "key_code": "semicolon", "modifiers": { "optional": [ "any" ] } },
+                    "to": [ { "key_code": "left_shift", "lazy": true } ],
+                    "to_if_alone": [ { "key_code": "semicolon" } ],
+                    "type": "basic"
+                },
+                {
                     "from": { "key_code": "s", "modifiers": { "optional": [ "any" ] } },
                     "to": [ { "key_code": "left_control", "lazy": true } ],
                     "to_if_alone": [ { "key_code": "s" } ],
