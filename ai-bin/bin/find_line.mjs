@@ -16,7 +16,7 @@
 
 import fs from "node:fs";
 import { Command } from "commander";
-import { skipString, findMatchingBrace } from "./code_utils.mjs";
+import { skipString, findMatchingBrace } from "../lib/code_utils.mjs";
 
 /**
  * 查找锚点所在行号（1-based）。

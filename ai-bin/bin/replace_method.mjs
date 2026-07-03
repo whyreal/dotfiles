@@ -27,7 +27,7 @@
 
 import { Command } from "commander";
 import fs from "node:fs";
-import { skipString, findMatchingBrace } from "./code_utils.mjs";
+import { skipString, findMatchingBrace } from "../lib/code_utils.mjs";
 
 const NEW_BODY_FILE = "_new_body.txt";
 
