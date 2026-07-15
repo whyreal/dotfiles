@@ -51,8 +51,8 @@ keyset('n', 'gr', ' <Plug>(coc-references)', plug_opts)
 
 -- Use `[g` and `]g` to navigate diagnostics
 -- Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-keyset('n', 'g[', '<Plug>(coc-diagnostic-prev)', plug_opts)
-keyset('n', 'g]', '<Plug>(coc-diagnostic-next)', plug_opts)
+keyset('n', '<leader>dp', '<Plug>(coc-diagnostic-prev)', plug_opts)
+keyset('n', '<leader>dn', '<Plug>(coc-diagnostic-next)', plug_opts)
 
 --}}}
 -- <leader>w -- window {{{

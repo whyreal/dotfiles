@@ -4,7 +4,7 @@ https://aided.remote.uhealthtech.cn
 https://dev.tcm.uhealthtech.cn
 https://tcm.uhealthtech.cn
 https://aided.demo.uhealthtech.cn
-https://dev.rpms.uhealthtech.cn
+#https://dev.rpms.uhealthtech.cn
 https://meeting.dev.uhealthtech.cn
 https://dev.hms.uhealthtech.cn
 https://vein.uhealthtech.cn

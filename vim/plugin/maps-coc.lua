@@ -21,9 +21,8 @@ keyset('n', '<leader>sm', ':CocList mru<cr>', opts)
 keyset('n', '<leader>sl', ':CocList lines<cr>', opts)
 keyset('n', '<leader>sg', ':grep ', opts)
 keyset('n', '<leader>so', ':CocList outline<cr>', opts)
---keyset('n', '<leader>sl', ':CocList<cr>', opts)
-
---keyset('n', '<leader>sa', ':CocList diagnostics<cr>', opts)
+keyset('n', '<leader>sl', ':CocList<cr>', opts)
+keyset('n', '<leader>dl', ':CocList diagnostics<cr>', opts)
 -- }}}
 
 -- Manage extensions

@@ -20,6 +20,10 @@ set -g fish_user_paths "/usr/local/opt/curl/bin"            $fish_user_paths
 set -g fish_user_paths "/usr/local/sbin"                    $fish_user_paths
 set -g fish_user_paths "$HOME/code/whyreal/dotfiles/scripts/"            $fish_user_paths
 
+fish_add_path /opt/homebrew/opt/gnu-sed/libexec/gnubin
+fish_add_path /opt/homebrew/opt/gawk/libexec/gnubin
+fish_add_path /opt/homebrew/opt/coreutils/libexec/gnubin
+
 fish_add_path /opt/homebrew/opt/ansible@9/bin
 fish_add_path /opt/homebrew/opt/ansible@10/bin
 fish_add_path /opt/homebrew/opt/mysql-client/bin
@@ -27,6 +31,7 @@ fish_add_path ~/Applications/rclone-v1.69.3-osx-arm64/
 fish_add_path ~/.local/bin/
 fish_add_path ~/.local/share/trae-cli/
 fish_add_path ~/.bun/bin/
+
 
 fzf --fish | source
 
@@ -47,3 +52,6 @@ nvm use lts/jod -s
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
+
+# Added by codebase-memory-mcp install
+fish_add_path /Users/real/.local/bin

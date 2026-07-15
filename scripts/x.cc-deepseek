@@ -2,11 +2,22 @@
 
 set -x ANTHROPIC_BASE_URL             https://api.deepseek.com/anthropic
 set -x ANTHROPIC_AUTH_TOKEN           sk-9558c6c124de4dcda572ea56b44045ed
-set -x ANTHROPIC_MODEL                deepseek-v4-pro[1m]
-set -x ANTHROPIC_DEFAULT_OPUS_MODEL   deepseek-v4-pro[1m]
-set -x ANTHROPIC_DEFAULT_SONNET_MODEL deepseek-v4-pro[1m]
+
+# 1. 默认主模型
+set -x ANTHROPIC_MODEL                deepseek-v4-flash[1m]
+
+# 2. 原Opus档位对应的模型（原本Claude最高档模型，这里替换成DeepSeek）
+set -x ANTHROPIC_DEFAULT_OPUS_MODEL   deepseek-v4-flash[1m]
+
+# 3. 原Sonnet中档模型
+set -x ANTHROPIC_DEFAULT_SONNET_MODEL deepseek-v4-flash[1m]
+
+# 4. 原Haiku轻量快速模型
 set -x ANTHROPIC_DEFAULT_HAIKU_MODEL  deepseek-v4-flash
+# Haiku极速轻量档位：用 deepseek-v4-flash 极速版，速度快、成本低
+
+# 5. 代码子智能体专用模型
 set -x CLAUDE_CODE_SUBAGENT_MODEL     deepseek-v4-flash
-#set -x CLAUDE_CODE_EFFORT_LEVEL       max
+# 代码执行、工具调用、子Agent任务，统一使用极速flash模型
 
 claude

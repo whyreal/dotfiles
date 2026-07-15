@@ -1,0 +1,19 @@
+#!/usr/bin/env fish
+
+if test (count $argv) -ne 3
+    echo "用法: slice <文件路径> <起始行号> <结束行号>"
+    echo "示例: slice src/views/Page.vue 100 300"
+    exit 1
+end
+
+set FILE $argv[1]
+set START $argv[2]
+set END $argv[3]
+
+if test $START -gt $END
+    echo "错误：起始行不能大于结束行"
+    exit 1
+end
+
+# 使用 sed 截取指定行区间
+sed -n "$START,$END p" $FILE
